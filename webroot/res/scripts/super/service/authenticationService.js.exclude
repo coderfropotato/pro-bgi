@@ -1,0 +1,20 @@
+﻿/*
+**创建人：高洪涛
+**创建时间：2015-12-27
+**功能简介：处理用户的认证。它只有一个布尔值，用来表示用户是否被授权
+*/
+define("superApp.authenticationService", ["angular"], function (angular)
+{
+    var superApp = angular.module("superApp.authenticationService", []);
+
+    superApp.service("authenticationService", authenticationService);
+    authenticationService.$inject = ["$log"];
+    function authenticationService($log)
+    {
+        var auth = {
+            isLogged: false
+        }
+
+        return auth;
+    }
+});

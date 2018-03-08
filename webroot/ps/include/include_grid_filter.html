@@ -1,0 +1,63 @@
+﻿<div class="tsg_btns"><!--style="visibility:hidden;"-->
+    <button class="btn btn-default btn-sm btn_filter" title="筛选条件" >
+        <span class="sort_icn"></span>
+    </button>
+</div>
+<div class="tsg_panel" style="display:none">
+    <ul class="tsg_menu">
+        <li id="{{liSortID1}}" class="filter_sort" ng-click="li_Sort_OnClick($event,'asc',liSortID1)" ng-hide="filtertype=='boolean'">
+            <span class="sort_icn sort_asc"></span>
+            <span class="txt">升序排序</span>
+        </li>
+        <li id="{{liSortID2}}" class="filter_sort" ng-click="li_Sort_OnClick($event,'desc',liSortID2)" ng-hide="filtertype=='boolean'">
+            <!-- class="active" -->
+            <span class="sort_icn sort_desc"></span>
+            <span class="txt">降序排序</span>
+        </li>
+        <li class="bottom_line"></li>
+        <li class="noHover" style="cursor:default;">
+            <!-- class="active" -->
+            <span class="iconglyph icon-filter" style="cursor:default;display: inline-block;margin-left: 6px;margin-right: 11px;color: #5cb85c;"></span>
+            <span class="txt filter_text" style="cursor:default;">数字筛选：</span>
+        </li>
+        <li class="noHover">
+            <select class="super-select" ng-model="filterFindEntity.searchType" ng-change="ddl_SearchType_OnChange()" style="width:180px; float:right;" ng-hide="filtertype == 'boolean'">
+                <option value="range" ng-hide="(filtertype == 'string')">范围（ A~B ）</option>
+                <option value="equal">等于（ = ）</option>
+                <option value="$ne">不等于（ != ）</option>
+                <option value="regExp" ng-show="(filtertype == 'string' || filtertype == 'all')">模糊（ Like ）</option>
+                <option value="$in" ng-hide="(filtertype == 'datetime')">包含（ In ）</option>
+                <option value="$gt" ng-hide="(filtertype == 'string')">大于（ > ）</option>
+                <option value="$lt" ng-hide="(filtertype == 'string')">小于（ < ）</option>
+                <option value="$gte" ng-hide="(filtertype == 'string')">大于等于（ > = ）</option>
+                <option value="$lte" ng-hide="(filtertype == 'string')">小于等于（ < = ）</option>
+            </select>
+            <div ng-if="filtertype=='all'">
+                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+            </div>
+            <div ng-if="filtertype!='all' && filtertype != 'boolean'">
+                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+            </div>
+            <div ng-if="filtertype =='boolean'">
+                <select class="super-select" style="width:180px; float:right;" ng-model="filterFindEntity.searchOne">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+            </div>
+</li>
+        <li class="bottom_line"></li>
+        <li class="noHover">
+            <div class="btnPanel">
+                <button type="button" class="btn btn-success searchBtn" ng-click="btn_QueDing_OnClick()" style="width:45px!important;">确定</button>
+                <button type="button" class="btn btn-default searchBtn" ng-click="btn_QuXiao_OnClick()" style="width:45px!important;margin-right: 0px;">关闭</button>
+                <button type="button" class="btn btn-default searchBtn" ng-click="btn_QingKong_OnClick()" style="width:45px!important;">清空</button>
+            </div>
+        </li>
+    </ul>
+</div>

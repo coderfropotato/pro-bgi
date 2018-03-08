@@ -1,0 +1,49 @@
+*{margin:0;padding:0;font-family:'Microsoft YaHei';outline:none}
+ul{list-style:none}
+
+.lgn_header {height:75px;border-bottom:1px solid #E3E3E3;position:relative;background:#fcfcfc;}
+	.lgn_logo {width:217px;height:34px;background:url(../images/login_logo_text.png) left top;float:left;margin-top:17px;margin-left:35px;}
+	.lgn_topnav {float:right;color:#ccc;margin-top:26px;margin-right:45px;}
+	.lgn_topnav a {color:#666;}
+
+.orange {color:#f60!important;}
+
+.lgn_main {margin:60px auto 0;width:960px;height:390px;border:1px solid #E3E3E3;border-radius:10px;position:relative;background:url(../images/login_ban.png) no-repeat 10% center #f8f8f8;}
+	.lm_right {width:333px;height:390px;background:#fff;border:1px solid #E3E3E3;border-radius:10px;position:absolute;right:-1px;top:-1px;}
+
+.lgn_login_board {margin:50px 43px 0;}
+	.llb_title {font-size:24px;font-family:'microsoft yahei';color:#4D4D4D;padding-bottom:22px;border-bottom:1px solid #ccc;color:#555;}
+	.llb_name {margin-top:24px;font-weight:bold;margin-bottom:10px;color:#555;}
+	.forget {float:right;}
+	.llb_submit {margin-top:30px;}
+
+.lgn_footer {clear:both;border-top:1px solid #E5E5E5;padding:35px;margin-top:75px;}
+
+.lgn_footer {text-align:center;}
+	.lf_lnks {font-size:14px;}
+	.lf_lnks a {color:#666;}
+	.lf_lnks a:hover {color:#666;}
+	.lf_copyright {color:#999;}
+
+
+
+/******************************************************/
+/*                    宽度自适应                      */
+/******************************************************/
+@media screen and (max-width: 970px) {
+	.lgn_main {width:100%;background-position:left center;}
+}
+
+@media screen and (max-width: 767px) {
+
+	.lgn_main {background:none;width:100%}
+	.lm_right {width:100%;}
+	.lgn_login_board {width:auto;}
+}
+
+@media screen and (max-width: 560px) {
+	.lgn_topnav {position:absolute;left:0;top:60px;width:100%;text-align:center;}
+}
+
+
+

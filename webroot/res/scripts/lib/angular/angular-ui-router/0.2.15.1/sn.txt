@@ -1,0 +1,7 @@
+﻿
+在：
+this.fromUrl = function (url, params){}
+
+增加了url的问号
+
+添加了方法，解决劫持

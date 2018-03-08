@@ -1,0 +1,7 @@
+.vscode/
+node_modules/
+# 以下均为打包生成的文件
+develop/
+production/
+inner/
+rev/

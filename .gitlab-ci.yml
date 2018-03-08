@@ -1,0 +1,14 @@
+variables:
+    DOCKER_NAME: $CI_PROJECT_NAME
+
+clean-build:
+  stage: build
+  script:
+   - sudo rsync -avzP --delete --exclude-from 'exclude.txt' . /data/ga/gene-report-web
+   - cd /data/ga/up
+   - sudo /usr/bin/sh -x 3-gene-web.sh
+  allow_failure: true
+  only:
+    - develop
+  tags:
+    - Internal

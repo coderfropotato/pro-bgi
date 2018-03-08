@@ -1,31 +1,3 @@
-
-[submodule "webroot/ps/rnaseq"]
-	path = webroot/ps/rnaseq
-	url = git@54.223.70.246:report-web/rnaseq.git
-[submodule "webroot/ps/its"]
-	path = webroot/ps/its
-	url = git@54.223.70.246:report-web/its.git
-[submodule "webroot/ps/gwas"]
-	path = webroot/ps/gwas
-	url = git@54.223.70.246:report-web/gwas.git
-[submodule "webroot/ps/miRNA"]
-	path = webroot/ps/miRNA
-	url = git@54.223.70.246:report-web/miRNA.git
-[submodule "webroot/ps/dnaReseq"]
-	path = webroot/ps/dnaReseq
-	url = git@54.223.70.246:report-web/dnaReseq.git
-[submodule "webroot/ps/chipseq"]
-	path = webroot/ps/chipseq
-	url = git@54.223.70.246:report-web/chipseq.git
-[submodule "webroot/ps/rna16s"]
-	path = webroot/ps/rna16s
-	url = git@54.223.70.246:report-web/rna16s.git
-[submodule "webroot/ps/RADseq"]
-	path = webroot/ps/RADseq
-	url = git@54.223.70.246:report-web/RADseq.git
-[submodule "webroot/ps/bsa"]
-	path = webroot/ps/bsa
-	url = git@54.223.70.246:report-web/bsa.git
-[submodule "webroot/ps/mangerSystem"]
-	path = webroot/ps/mangerSystem
-	url = git@54.223.70.246:report-web/mangerSystem.git
+[submodule "webroot/ps/mrna"]
+	path = webroot/ps/mrna
+	url = git@54.223.70.246:report-child-web/mrna.git

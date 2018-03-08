@@ -165,8 +165,8 @@ define(['loginApp'], function (loginApp) {
                         toolLoginService.sessionStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', $scope.formEntity.LCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
-                        if (responseData.LCTYPE == "radseq") { responseData.LCTYPE = "RADseq" }
-                        window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
+                        // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
+                        window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                     } else {
                         if (responseData.Status == "Wrong username or password") {
                             var myPromise = toolLoginService.popMesgWindow('对不起，您输入的流程编号或密码错误！');

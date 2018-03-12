@@ -168,24 +168,6 @@ define("superApp.reportDire",
 
         };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /*
         ** 创建人：高洪涛
         ** 创建日期：2015-12-16
@@ -265,6 +247,20 @@ define("superApp.reportDire",
 
             $scope.handlerMouseLeave = function (parent) {
                 parent.showPop = false;
+            }
+
+            // 三级菜单点击事件  加载父级页面并滚动到对应栏
+            $scope.handlerPopClick = function (parent,threeItem) {
+                if(!parent.isActive){
+                    $rootScope.leftData.forEach(function(val,index){
+                        val.isActive = false;
+                    })
+                    parent.isActive = true;
+                    // 需要先加载页面；
+                    reportService.IndexLoadPage(parent);
+                }
+                // scroll to 
+                console.log('scroll to '+threeItem.text);
             }
 
             //功能树点击方法
@@ -675,7 +671,7 @@ define("superApp.reportDire",
                     if (val.GNSID === parentItemGNSID && val.JDPID == -1) {
                         val.isExpand = true;
                         $('.sidebar_nav_two ol').slideUp();
-                        $('#div_'+val.GNSID).parent().find('.sidebar_nav_two ol').slideDown();
+                        $('#div_' + val.GNSID).parent().find('.sidebar_nav_two ol').slideDown();
                     } else {
                         if (val.isExpand != 'undefined') val.isExpand = false;
                     }

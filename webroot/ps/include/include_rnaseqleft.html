@@ -48,7 +48,7 @@
                                 {{item.JDMC}}
                                 <!-- 三级 -->
                                 <ul ng-show="item.children.length && item.showPop " class="sidebar_nav_pop">
-                                    <li   ng-repeat="popitem in item.children track by $index" >{{($index+1)+' '+popitem.text}}</li>
+                                    <li ng-click="handlerPopClick(item,popitem)" ng-repeat="popitem in item.children track by $index" >{{($index+1)+' '+popitem.text}}</li>
                                 </ul>
                             </li>
 

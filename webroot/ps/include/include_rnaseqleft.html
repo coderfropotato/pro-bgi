@@ -41,13 +41,13 @@
                         </span>
                     </div>
                     <!-- 二级 -->
-                    <div class="sidebar_nav_two" ng-init="list=(leftDataJson | checkPidFilter : leftList.GNSID)">
+                    <div ng-show="isViewFull" class="sidebar_nav_two" ng-init="list=(leftDataJson | checkPidFilter : leftList.GNSID)">
                         <ol>
                             <!-- <li>{{leftList.JDMC}}</li> -->
                             <li ng-repeat="item in list track by $index" class="sidebar_nav_two_item" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)" ng-mouseleave="handlerMouseLeave(item)" ng-click="li_OnClick(item,list)" id="li_{{item.GNSID}}">
                                 {{item.JDMC}}
                                 <!-- 三级 -->
-                                <ul ng-show="item.children.length && item.showPop " class="sidebar_nav_pop">
+                                <ul ng-show="item.children.length && item.showPop" class="sidebar_nav_pop">
                                     <li ng-click="handlerPopClick(item,popitem)" ng-repeat="popitem in item.children track by $index" >{{($index+1)+' '+popitem.text}}</li>
                                 </ul>
                             </li>

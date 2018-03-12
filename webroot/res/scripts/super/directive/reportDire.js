@@ -250,9 +250,9 @@ define("superApp.reportDire",
             }
 
             // 三级菜单点击事件  加载父级页面并滚动到对应栏
-            $scope.handlerPopClick = function (parent,threeItem) {
-                if(!parent.isActive){
-                    $rootScope.leftData.forEach(function(val,index){
+            $scope.handlerPopClick = function (parent, threeItem) {
+                if (!parent.isActive) {
+                    $rootScope.leftData.forEach(function (val, index) {
                         val.isActive = false;
                     })
                     parent.isActive = true;
@@ -260,7 +260,7 @@ define("superApp.reportDire",
                     reportService.IndexLoadPage(parent);
                 }
                 // scroll to 
-                console.log('scroll to '+threeItem.text);
+                console.log('parentId : ' + parent.GNSID + '  scroll to ' + threeItem.text);
             }
 
             //功能树点击方法

@@ -492,6 +492,50 @@ function (SUPER_CONSOLE_MESSAGE)
             });
         };
 
+        /*
+            ** 功能简介：弹出输入对话框，修改图的标题
+            ** 参数说明：
+            **      popTitle:确认框左上角的标题
+            **      chartWidth：图的宽度
+            **      textNode：文本node
+            **         value：输入框的value
+            **      dialogClass:
+            **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
+            **          如果不传，默认为default
+        */
+        this.popPrompt = function (popTitle,chartWidth,textNode, value, dialogClass, top, width, height)
+        {
+            top = top ? top : 100;
+            var _width = width ? width - 24 : 450;
+            var _height = height ? height - 24 - 27 : 'auto';
+            popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
+            value = (angular.isUndefined(value) || value == "") ? "请输入" : value;
+            dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
+            ngDialog.open({
+                plain: true,
+                template: "<div><input type='text' id='TextInput' value='"+value+"' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                className: "ngdialog-theme-default",
+                dialogClass: dialogClass,
+                title: popTitle,
+                top: top,
+                width: _width,
+                height: _height,
+                scope: $rootScope,
+                controller: function ($rootScope) {
+                    $rootScope.confirm = function (){
+                        var val = $("#TextInput").val();
+                        if(val != null && val !=""){
+                            value = val;
+                        }
+                        textNode.textContent = value;
+                        var textWidth = textNode.getBoundingClientRect().width;
+                        var transform_x = (chartWidth - textWidth)/2;
+                        textNode.setAttribute("transform", "translate(" + transform_x + ",0)");
+                        ngDialog.close();
+                    };
+                }
+            });
+        };
 
         /*
         ** 功能简介：加载等待框显示与关闭

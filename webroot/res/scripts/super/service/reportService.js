@@ -842,9 +842,11 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         var oEvent = ev || event;
                         oEvent.stopPropagation();
 
-                        var curColor = this.currentStyle ? RGBToHex(this.currentStyle['backgroundColor']) : RGBToHex(getComputedStyle(this, null)['backgroundColor']);
                         $(".backDiv").css("display", "none");
+                        $("#div_ViewProduct").css("overflow", "auto");
 
+                        var curColor = this.currentStyle ? RGBToHex(this.currentStyle['backgroundColor']) : RGBToHex(getComputedStyle(this, null)['backgroundColor']);
+                       
                         element.setAttribute("fill", curColor);
 
                         for (var i = 0; i < chartNodes.length; i++) {

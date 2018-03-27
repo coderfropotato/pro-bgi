@@ -3157,3 +3157,37 @@ div.tipsContainer {
     left: 1px;
     border-right: 10px white solid;
 }
+
+/* 颜色选择器样式 */
+.backDiv{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.colorSelector {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 4px 2px;
+    border: 1px solid #ddd;
+    width: 246px;
+    background: #fff;
+    left:0;
+    right: 0;
+    margin:0 auto;
+}
+
+.colorSelector:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.colorSelector ul li {
+    margin: 2px;
+    width: 20px;
+    height: 20px;
+    float: left;
+    cursor: pointer;
+}

@@ -501,7 +501,7 @@ function (SUPER_CONSOLE_MESSAGE)
             **         value：输入框的value
             **      dialogClass:
             **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
-            **          如果不传，默认为default
+            **          如果不传，默认为dialog-default
         */
         this.popPrompt = function (popTitle,chartWidth,textNode, value, dialogClass, top, width, height)
         {

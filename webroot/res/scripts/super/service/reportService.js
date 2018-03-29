@@ -794,7 +794,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
            ** 创建日期：2018-03-23
            ** 功能简介：颜色选择器
            ** 参数：element:当期点击的图例元素；
-                    chartNodes:图中需要改变颜色的节点组合；
+                    chartNodes:图中需要改变颜色的节点数组；形如：[{element:xxxx,attr:"fill"}],element是元素，attr是要改变的属性（"fill" or "stroke"）
                     top：色盘top,默认250px；
                     coloArr：颜色数组，默认defaultColorArr；
            ** 返回：点击色块返回当前颜色
@@ -848,9 +848,10 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         var curColor = this.currentStyle ? RGBToHex(this.currentStyle['backgroundColor']) : RGBToHex(getComputedStyle(this, null)['backgroundColor']);
                        
                         element.setAttribute("fill", curColor);
+                        element.setAttribute("stroke", curColor);
 
                         for (var i = 0; i < chartNodes.length; i++) {
-                            chartNodes[i].setAttribute("fill", curColor);
+                            chartNodes[i].element.setAttribute(chartNodes[i].attr, curColor);
                         }
                     })
 

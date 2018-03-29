@@ -497,15 +497,18 @@ function (SUPER_CONSOLE_MESSAGE)
             ** 参数说明：
             **      popTitle:确认框左上角的标题
             **      chartWidth：图的宽度
+                    chartHeight：图高度
+                    trans_y:偏移
             **      textNode：文本node
             **         value：输入框的value
             **      dialogClass:
             **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
             **          如果不传，默认为dialog-default
         */
-        this.popPrompt = function (popTitle,chartWidth,textNode, value, dialogClass, top, width, height)
+        this.popPrompt = function (popTitle,chartWidth,chartHeight,textNode, value,trans_y ,dialogClass, top, width, height)
         {
             top = top ? top : 100;
+            trans_y = trans_y ? trans_y : 0;
             var _width = width ? width - 24 : 450;
             var _height = height ? height - 24 - 27 : 'auto';
             popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
@@ -528,9 +531,17 @@ function (SUPER_CONSOLE_MESSAGE)
                             value = val;
                         }
                         textNode.textContent = value;
-                        var textWidth = textNode.getBoundingClientRect().width;
-                        var transform_x = (chartWidth - textWidth)/2;
-                        textNode.setAttribute("transform", "translate(" + transform_x + ",0)");
+                        if(chartWidth != null && chartHeight == null){
+                            var textWidth = textNode.getBoundingClientRect().width;
+                            var transform_x = Math.ceil((chartWidth - textWidth)/2);
+                            textNode.setAttribute("transform", "translate(" + transform_x + ","+trans_y+")");
+                        }
+                        if(chartHeight != null && chartWidth == null){
+                            var textHeight = textNode.getBoundingClientRect().height;
+                            var transform_y = Math.ceil((chartHeight - textHeight)/2);
+                            textNode.setAttribute("transform", "translate(0," + transform_y + ") rotate(90)");
+                        }
+                       
                         ngDialog.close();
                     };
                 }

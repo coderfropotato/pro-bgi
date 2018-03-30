@@ -496,16 +496,14 @@ function (SUPER_CONSOLE_MESSAGE)
             ** 功能简介：弹出输入对话框，修改图的标题
             ** 参数说明：
             **      popTitle:确认框左上角的标题
-            **      chartWidth：图的宽度
-                    chartHeight：图高度
-                    trans_y:偏移
+                    trans_y:top偏移
             **      textNode：文本node
             **         value：输入框的value
             **      dialogClass:
             **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
             **          如果不传，默认为dialog-default
         */
-        this.popPrompt = function (popTitle,chartWidth,chartHeight,textNode, value,trans_y ,dialogClass, top, width, height)
+        this.popPrompt = function (popTitle,textNode, value,trans_y ,dialogClass, top, width, height)
         {
             top = top ? top : 100;
             trans_y = trans_y ? trans_y : 0;
@@ -531,16 +529,6 @@ function (SUPER_CONSOLE_MESSAGE)
                             value = val;
                         }
                         textNode.textContent = value;
-                        if(chartWidth != null && chartHeight == null){
-                            var textWidth = textNode.getBoundingClientRect().width;
-                            var transform_x = Math.ceil((chartWidth - textWidth)/2);
-                            textNode.setAttribute("transform", "translate(" + transform_x + ","+trans_y+")");
-                        }
-                        if(chartHeight != null && chartWidth == null){
-                            var textHeight = textNode.getBoundingClientRect().height;
-                            var transform_y = Math.ceil((chartHeight - textHeight)/2);
-                            textNode.setAttribute("transform", "translate(0," + transform_y + ") rotate(90)");
-                        }
                        
                         ngDialog.close();
                     };

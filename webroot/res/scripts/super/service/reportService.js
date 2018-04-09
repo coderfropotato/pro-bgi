@@ -555,7 +555,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 if (item.ISREPORT) {
                     //在有在线报告的情况下
                     directiveName = item.LJLJ;
-                    if (item.GNSID.length >= 9) {
+                    if (item.GNSID.length >= 10) {
                         directivePanelID = "div_" + item.JDPID + "_panel";
                     } else {
                         directivePanelID = "div_" + item.GNSID + "_panel";
@@ -846,7 +846,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         $("#div_ViewProduct").css("overflow", "auto");
 
                         var curColor = this.currentStyle ? RGBToHex(this.currentStyle['backgroundColor']) : RGBToHex(getComputedStyle(this, null)['backgroundColor']);
-                       
+
                         element.setAttribute("fill", curColor);
                         element.setAttribute("stroke", curColor);
 

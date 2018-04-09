@@ -193,21 +193,6 @@ define("superApp.reportDire",
         superApp.controller("superOnlinereportFrameLeftCtr", superOnlinereportFrameLeftCtr);
         superOnlinereportFrameLeftCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "ajaxService", "reportService"];
         function superOnlinereportFrameLeftCtr($rootScope, $scope, $log, $state, $timeout, ajaxService, reportService) {
-            $scope.twoList = getTwo($scope.leftDataJson,);
-            function getTwo(input, pid) {
-                if (isNaN(input)) {
-                    var output = [];
-                    angular.forEach(input, function (item, index, array) {
-                        if (item.JDPID === pid) {
-                            output.push(item);
-                        }
-                    });
-                    return output;
-                }
-                else {
-                    return input;
-                }
-            }
             //二级节点展开与关闭事件
             $scope.LeftNav_Toggle = function (event, item) {
                 item.folded = !item.folded;

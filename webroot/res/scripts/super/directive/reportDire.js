@@ -26,8 +26,8 @@ define("superApp.reportDire",
         };
 
         superApp.controller("OnLineReportFrameTopCtr", OnLineReportFrameTopCtr);
-        OnLineReportFrameTopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
-        function OnLineReportFrameTopCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        OnLineReportFrameTopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "ajaxService", "toolService", "reportService"];
+        function OnLineReportFrameTopCtr($rootScope, $scope, $log, $state, $timeout, $window, ajaxService, toolService, reportService) {
 
             $scope.isTest = $rootScope.isTest; //是否测试版
             $scope.isMangerSys = $rootScope.isMangerSystem;
@@ -53,38 +53,59 @@ define("superApp.reportDire",
             }
 
             $scope.GoHome = function () {
-                var item = {
-                    GNSID: "001001",
-                    JDPID: "001",
-                    LJLJ: "fen-xi-liu-cheng-zong-shu1",
-                    ISREPORT: true
-                };
-                //定义快速菜单信息
-                $rootScope.quickMenuList = [];
-                var tempItemJDPID = item.JDPID;
-                angular.forEach($scope.$parent.leftData, function (leftListitem, index, array) {
-                    //判断当前选中的目录有没有父目录，如果有父目录则需要置父目录的选中状态为选中
-                    if (leftListitem.GNSID == item.JDPID) {
-                        leftListitem.isActive = true;
-                    }
-                    else if (leftListitem.GNSID == item.GNSID) {
-                        leftListitem.isActive = true;
-                    }
-                    else {
-                        leftListitem.isActive = false;
-                    }
-                    //设置快速调转菜单的数据信息
-                    if (tempItemJDPID != -1) {
-                        //证明当前选中的节点是二级菜单节点，此时需要获取同级所有的二级菜单信息
-                        if (leftListitem.JDPID == tempItemJDPID) {
-                            $rootScope.quickMenuList.push(leftListitem);
+                $timeout(function () {
+                    var oUl = document.getElementsByClassName('sidebar_nav_pop')[0];
+                    var firstLi = $('.sidebar_nav_pop li').eq(0);
+                    firstLi = firstLi.get(0);
+                    angular.element(firstLi).triggerHandler('click');
+                    // slide
+                    $('.sidebar_nav_two ol').not('.sidebar_nav_two ol:first').slideUp();
+                    $('.sidebar_nav_two ol').eq(0).slideDown();
+
+                    // isExpand
+                    $rootScope.leftData.forEach(function (val, index) {
+                        if (val.JDPID === '-1' && val.GNSID !=='001') {
+                            val.isExpand = false;
                         }
-                    }
-                    else {
-                        $rootScope.quickMenuList = [];
-                    }
-                });
-                reportService.IndexLoadPage(item);
+                        // GNSID 001 JDPID -1
+                        if (val.GNSID === '001' && val.JDPID === '-1') {
+                            val.isExpand = true;
+                        }
+                    });
+                }, 0)
+
+                // var item = {
+                //     GNSID: "001001",
+                //     JDPID: "001",
+                //     LJLJ: "fen-xi-liu-cheng-zong-shu1",
+                //     ISREPORT: true
+                // };
+                // //定义快速菜单信息
+                // $rootScope.quickMenuList = [];
+                // var tempItemJDPID = item.JDPID;
+                // angular.forEach($scope.$parent.leftData, function (leftListitem, index, array) {
+                //     //判断当前选中的目录有没有父目录，如果有父目录则需要置父目录的选中状态为选中
+                //     if (leftListitem.GNSID == item.JDPID) {
+                //         leftListitem.isActive = true;
+                //     }
+                //     else if (leftListitem.GNSID == item.GNSID) {
+                //         leftListitem.isActive = true;
+                //     }
+                //     else {
+                //         leftListitem.isActive = false;
+                //     }
+                //     //设置快速调转菜单的数据信息
+                //     if (tempItemJDPID != -1) {
+                //         //证明当前选中的节点是二级菜单节点，此时需要获取同级所有的二级菜单信息
+                //         if (leftListitem.JDPID == tempItemJDPID) {
+                //             $rootScope.quickMenuList.push(leftListitem);
+                //         }
+                //     }
+                //     else {
+                //         $rootScope.quickMenuList = [];
+                //     }
+                // });
+                // reportService.IndexLoadPage(item);
             };
 
             $scope.ExportPDF = function () {
@@ -294,6 +315,7 @@ define("superApp.reportDire",
                             }
                         }
                     });
+
                     threeItem.isActive = true;
 
                     // 三级菜单点击 加载三级页面

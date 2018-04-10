@@ -26,8 +26,8 @@ define("superApp.reportDire",
         };
 
         superApp.controller("OnLineReportFrameTopCtr", OnLineReportFrameTopCtr);
-        OnLineReportFrameTopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
-        function OnLineReportFrameTopCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        OnLineReportFrameTopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "ajaxService", "toolService", "reportService"];
+        function OnLineReportFrameTopCtr($rootScope, $scope, $log, $state, $timeout, $window, ajaxService, toolService, reportService) {
 
             $scope.isTest = $rootScope.isTest; //是否测试版
             $scope.isMangerSys = $rootScope.isMangerSystem;
@@ -53,38 +53,59 @@ define("superApp.reportDire",
             }
 
             $scope.GoHome = function () {
-                var item = {
-                    GNSID: "001001",
-                    JDPID: "001",
-                    LJLJ: "fen-xi-liu-cheng-zong-shu1",
-                    ISREPORT: true
-                };
-                //定义快速菜单信息
-                $rootScope.quickMenuList = [];
-                var tempItemJDPID = item.JDPID;
-                angular.forEach($scope.$parent.leftData, function (leftListitem, index, array) {
-                    //判断当前选中的目录有没有父目录，如果有父目录则需要置父目录的选中状态为选中
-                    if (leftListitem.GNSID == item.JDPID) {
-                        leftListitem.isActive = true;
-                    }
-                    else if (leftListitem.GNSID == item.GNSID) {
-                        leftListitem.isActive = true;
-                    }
-                    else {
-                        leftListitem.isActive = false;
-                    }
-                    //设置快速调转菜单的数据信息
-                    if (tempItemJDPID != -1) {
-                        //证明当前选中的节点是二级菜单节点，此时需要获取同级所有的二级菜单信息
-                        if (leftListitem.JDPID == tempItemJDPID) {
-                            $rootScope.quickMenuList.push(leftListitem);
+                $timeout(function () {
+                    var oUl = document.getElementsByClassName('sidebar_nav_pop')[0];
+                    var firstLi = $('.sidebar_nav_pop li').eq(0);
+                    firstLi = firstLi.get(0);
+                    angular.element(firstLi).triggerHandler('click');
+                    // slide
+                    $('.sidebar_nav_two ol').not('.sidebar_nav_two ol:first').slideUp();
+                    $('.sidebar_nav_two ol').eq(0).slideDown();
+
+                    // isExpand
+                    $rootScope.leftData.forEach(function (val, index) {
+                        if (val.JDPID === '-1' && val.GNSID !=='001') {
+                            val.isExpand = false;
                         }
-                    }
-                    else {
-                        $rootScope.quickMenuList = [];
-                    }
-                });
-                reportService.IndexLoadPage(item);
+                        // GNSID 001 JDPID -1
+                        if (val.GNSID === '001' && val.JDPID === '-1') {
+                            val.isExpand = true;
+                        }
+                    });
+                }, 0)
+
+                // var item = {
+                //     GNSID: "001001",
+                //     JDPID: "001",
+                //     LJLJ: "fen-xi-liu-cheng-zong-shu1",
+                //     ISREPORT: true
+                // };
+                // //定义快速菜单信息
+                // $rootScope.quickMenuList = [];
+                // var tempItemJDPID = item.JDPID;
+                // angular.forEach($scope.$parent.leftData, function (leftListitem, index, array) {
+                //     //判断当前选中的目录有没有父目录，如果有父目录则需要置父目录的选中状态为选中
+                //     if (leftListitem.GNSID == item.JDPID) {
+                //         leftListitem.isActive = true;
+                //     }
+                //     else if (leftListitem.GNSID == item.GNSID) {
+                //         leftListitem.isActive = true;
+                //     }
+                //     else {
+                //         leftListitem.isActive = false;
+                //     }
+                //     //设置快速调转菜单的数据信息
+                //     if (tempItemJDPID != -1) {
+                //         //证明当前选中的节点是二级菜单节点，此时需要获取同级所有的二级菜单信息
+                //         if (leftListitem.JDPID == tempItemJDPID) {
+                //             $rootScope.quickMenuList.push(leftListitem);
+                //         }
+                //     }
+                //     else {
+                //         $rootScope.quickMenuList = [];
+                //     }
+                // });
+                // reportService.IndexLoadPage(item);
             };
 
             $scope.ExportPDF = function () {
@@ -231,13 +252,6 @@ define("superApp.reportDire",
                 } else {
                     $('.sidebar_nav_' + index).find('.sidebar_nav_two ol').slideUp();
                 }
-
-                // 默认load第一个二级
-                var pageLoadId = item.GNSID + '001';
-                var el = document.getElementById('li_' + pageLoadId);
-                $timeout(function () {
-                    angular.element(el).triggerHandler('click');
-                }, 0, false);
             }
 
             // 二级菜单hover 默认传入三级菜单父级
@@ -249,57 +263,67 @@ define("superApp.reportDire",
                 parent.showPop = false;
             }
 
-            // 三级菜单点击事件  加载父级页面并滚动到对应栏
-            $scope.handlerPopClick = function (parent, threeItem) {
-                if (!parent.isActive) {
-                    $rootScope.leftData.forEach(function (val, index) {
-                        val.isActive = false;
-                    })
-                    parent.isActive = true;
-                    // 需要先加载页面；
-                    reportService.IndexLoadPage(parent);
-                }
-                // scroll to 
-                console.log('parentId : ' + parent.GNSID + '  scroll to ' + threeItem.text);
-            }
-
-            //功能树点击方法
-            $scope.li_OnClick = function (item, itemList) {
-                //如果点击的是当前选中的item，则什么都不执行
-                if (item.isActive) return;
-                if (item.LJLJ == null) return;
-                //$log.log(item);
-                //定义快速菜单信息
+            // 二级菜单点击事件
+            $scope.handlerTwoClick = function (two) {
+                var threeGNSID = two.GNSID + '001';
+                var hasThreeChild = false;
                 $rootScope.quickMenuList = [];
-                var tempItemJDPID = item.JDPID;
-                //设置当前选中
-                angular.forEach($scope.leftDataJson, function (leftListitem, index, array) {
-                    //判断当前选中的目录有没有父目录，如果有父目录则需要置父目录的选中状态为选中
-                    if (leftListitem.GNSID == item.JDPID) {
-                        leftListitem.isActive = true;
+
+                $rootScope.leftData.forEach(function (val, index) {
+                    val.isActive = false;
+
+                    if (val.JDPID === two.GNSID) {
+                        hasThreeChild = true;
+                        $rootScope.quickMenuList.push(val);
                     }
-                    else {
-                        leftListitem.isActive = false;
-                    }
-                    //设置快速调转菜单的数据信息
-                    if (tempItemJDPID != -1) {
-                        //证明当前选中的节点是二级菜单节点，此时需要获取同级所有的二级菜单信息
-                        if (leftListitem.JDPID == tempItemJDPID) {
-                            $rootScope.quickMenuList.push(leftListitem);
-                        }
-                    }
-                    else {
-                        $rootScope.quickMenuList = [];
+
+                    if (val.GNSID === threeGNSID) {
+                        val.isActive = true;
+                        reportService.IndexLoadPage(val);
                     }
                 });
-                item.isActive = true;
 
-                //加载页面
-                reportService.IndexLoadPage(item);
+                if (!hasThreeChild) {
+                    $rootScope.quickMenuList.push(two);
+                    reportService.IndexLoadPage(two);
+                }
 
-                $scope.ResizeBody();
-                //$log.log(contentPanel.html());
-            };
+                two.isActive = true;
+            }
+
+            // 三级菜单点击加载页面
+            $scope.handlerPopClick = function (threeItem, $event) {
+                var tempItemJDPID = threeItem.JDPID;
+                $rootScope.leftData.forEach(function (val, index) {
+                    if (val.GNSID == tempItemJDPID) parent = val;
+                });
+                if (parent.LJLJ == null) return;
+                if (!threeItem.isActive) {
+                    // 重置所有三级菜单的激活状态
+                    $rootScope.quickMenuList = [];
+                    // 重置二级激活状态
+                    $rootScope.leftData.forEach(function (val, index) {
+                        if (val.GNSID === threeItem.JDPID) {
+                            val.isActive = true;
+                        } else {
+                            val.isActive = false;
+                        }
+
+                        if (val.JDPID != -1 && val.Index !== '-2') {
+                            if (val.JDPID == tempItemJDPID) {
+                                $rootScope.quickMenuList.push(val);
+                            }
+                        }
+                    });
+
+                    threeItem.isActive = true;
+
+                    // 三级菜单点击 加载三级页面
+                    reportService.IndexLoadPage(threeItem);
+                    $scope.ResizeBody();
+                }
+                $event.stopPropagation();
+            }
 
             //监听选中信息，供index页或默认页显示的时候，设置左边树的选中值
             $scope.$watch("isActiveName", function (newVal) {
@@ -525,12 +549,10 @@ define("superApp.reportDire",
         checkPidFilter.$inject = ["$log"];
         function checkPidFilter($log) {
             return function (input, pid) {
-                //var args = Array.prototype.slice.call(arguments);
-                //console.log("arguments=", params);
-
                 if (isNaN(input)) {
                     var output = [];
                     angular.forEach(input, function (item, index, array) {
+                        // 二级菜单 GNSID => '001001'
                         if (item.JDPID === pid) {
                             output.push(item);
                         }
@@ -589,7 +611,7 @@ define("superApp.reportDire",
                     + "</button>"
                     + "<button ng-if='currentIndex<menulist.length - 1' ng-click='btnNext_OnClick();' type='button' class='btn btn-info btn-sm'>"
                     // + " {{menulist[currentIndex+1].TBTEXT}} {{menulist[currentIndex+1].JDMC}} "
-                    + " {{currentIndex+2}} {{menulist[currentIndex+1].JDMC}} "
+                    + " {{currentIndex+2}} {{menulist[currentIndex+1].JDMC}}"
                     + "<span class='glyphicon glyphicon-arrow-right'>"
                     + "</span>"
                     + "</button>"
@@ -607,6 +629,9 @@ define("superApp.reportDire",
 
                     //获取当前 active 索引
                     scope.currentIndex = 0;
+                    // menu长度
+                    scope.currentMenuLength = scope.menulist.length;
+
                     for (var i = 0; i < scope.menulist.length; i++) {
                         if (scope.menulist[i].isActive) {
                             scope.currentIndex = i;
@@ -622,32 +647,67 @@ define("superApp.reportDire",
         reportPageFooterCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function reportPageFooterCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.nextSectionMenuList = [];
+            $scope.secGNSIDList = [];
+            // 找到所有二级的GNSID
+            $rootScope.leftData.forEach(function (val, index) {
+                if (val.Index === '-2') {
+                    $scope.secGNSIDList.push(val.GNSID);
+                }
+            });
+
             $scope.findNextSectionMenuList = function () {
                 // 如果菜单长度是 0 ，那么是第一章菜单，循环找到第二章菜单
                 if ($scope.menulist.length == 0) {
                     angular.forEach($rootScope.leftData, function (listItem, index, array) {
-                        if (listItem.JDPID == "002") {
+                        // 直接无子集的二级
+                        if (listItem.Index === '-2' && /^002/.test(listItem.GNSID) && !listItem.hasChild) {
+                            $scope.nextSectionMenuList.push(listItem);
+                        }
+                        // 三级
+                        if (/^002/.test(listItem.JDPID) && listItem.GNSID.length == 9) {
                             $scope.nextSectionMenuList.push(listItem);
                         }
                     });
                     return;
                 }
-                var temp = $scope.menulist[$scope.menulist.length - 1];
-                function pad(num, n) {
-                    var len = num.toString().length;
-                    while (len < n) {
-                        num = "0" + num;
-                        len++;
-                    }
-                    return num;
+
+                var cur = $scope.menulist[$scope.menulist.length - 1]
+                var nextStartsWidth, index;
+                if (cur.Index !== '-2') {
+                    // 三级页面
+                    index = indexInArr(cur.JDPID, $scope.secGNSIDList).nextIndex;
+                } else {
+                    // 二级页面
+                    index = indexInArr(cur.GNSID, $scope.secGNSIDList).nextIndex;
                 }
-                var tempJDPID = pad(parseInt(temp.JDPID) + 1, 3);
-                angular.forEach($rootScope.leftData, function (listItem, index, array) {
-                    if (listItem.JDPID == tempJDPID) {
-                        $scope.nextSectionMenuList.push(listItem);
+
+                function indexInArr(a, arr) {
+                    var len = arr.length;
+                    for (var p = 0; p < len; p++) {
+                        if (a === arr[p]) {
+                            return { curIndex: p, nextIndex: p + 1 >= len ? null : p + 1 }
+                        }
                     }
-                });
+                }
+
+                if (index === null) {
+                    $scope.nextSectionMenuList = [];
+                } else {
+                    var reg = new RegExp("^" + $scope.secGNSIDList[index]);
+
+                    angular.forEach($rootScope.leftData, function (listItem, index, array) {
+                        // 直接无子集的二级
+                        if (listItem.Index === '-2' && reg.test(listItem.GNSID) && !listItem.hasChild) {
+                            $scope.nextSectionMenuList.push(listItem);
+                        }
+                        // 三级
+                        if (reg.test(listItem.JDPID) && listItem.GNSID.length == 9) {
+                            $scope.nextSectionMenuList.push(listItem);
+                        }
+                    });
+                }
             }
+
             $scope.findNextSectionMenuList();
 
             $scope.btnPrev_OnClick = function () {
@@ -667,20 +727,43 @@ define("superApp.reportDire",
                 // 获取下一章菜单，并把新章和该章菜单中的第一个子菜单设置为选中
                 // start 2018年3月12日10:20:41 add Expand 
                 var parentItemGNSID = $rootScope.quickMenuList[0].JDPID;
+
+                // 是二级还是三级菜单
+                // 如果是二级 就直接给active
+                // 如果是三级 就找到二级给active
+                // 展开主目录
+                // 重置其他
+
+                $('.sidebar_nav_two ol').slideUp();
+
                 $rootScope.leftData.forEach(function (val, index) {
-                    if (val.GNSID === parentItemGNSID && val.JDPID == -1) {
+
+                    if (val.JDPID == -1 && val.GNSID === parentItemGNSID.substring(0, 3)) {
                         val.isExpand = true;
                         $('.sidebar_nav_two ol').slideUp();
                         $('#div_' + val.GNSID).parent().find('.sidebar_nav_two ol').slideDown();
                     } else {
                         if (val.isExpand != 'undefined') val.isExpand = false;
                     }
-                })
+
+                    if (parentItemGNSID.length > 6) {
+                        if (val.GNSID === parentItemGNSID.substring(0, 7)) {
+                            val.isActive = true;
+                        } else {
+                            val.isActive = false;
+                        }
+                    } else {
+                        if (val.GNSID === parentItemGNSID) {
+                            val.isActive = true;
+                        } else {
+                            val.isActive = false;
+                        }
+                    }
+                });
                 // end 2018年3月12日10:22:12 add Expand 
 
                 $rootScope.quickMenuList[0].isActive = true;
                 // 点击下一章默认展开
-
                 angular.forEach($rootScope.leftData, function (leftListItem) {
                     if (leftListItem.JDPID == -1) {
                         leftListItem.isActive = false;
@@ -688,7 +771,8 @@ define("superApp.reportDire",
                             leftListItem.isActive = true;
                         }
                     }
-                })
+                });
+
                 reportService.IndexLoadPage($rootScope.quickMenuList[0]);
             }
 
@@ -696,10 +780,18 @@ define("superApp.reportDire",
                 //如果点击的是当前选中的item，则什么都不执行
                 if (item.isActive) return;
                 if (item.LJLJ == null) return;
+                var flag = false;
+
+                // 三级页面还是二级页面 二级false 三级true
+                item.Index !== '-2' ? flag = true : flag = false;
+
+                // 三级
                 angular.forEach($rootScope.quickMenuList, function (listItem, index, array) {
                     listItem.isActive = false;
                 });
+
                 item.isActive = true;
+
                 //加载页面
                 reportService.IndexLoadPage(item);
 
@@ -714,11 +806,6 @@ define("superApp.reportDire",
                     $(window).resize();
                 }, 100);
             }
-
-
         }
-
-
-
     });
 

@@ -803,6 +803,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
            */
             this.ColorSelector = {
                 Show: function (ev, element, chartNodes, top, colorArr) {
+                    clearEventBubble(ev);
                     $(".backDiv").remove();
                     top = top ? top : 250;
                     var event = ev || event;
@@ -846,7 +847,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         $("#div_ViewProduct").css("overflow", "auto");
 
                         var curColor = this.currentStyle ? RGBToHex(this.currentStyle['backgroundColor']) : RGBToHex(getComputedStyle(this, null)['backgroundColor']);
-                       
+
                         element.setAttribute("fill", curColor);
                         element.setAttribute("stroke", curColor);
 
@@ -858,7 +859,21 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 },
 
             }
+            //阻止冒泡
+            function clearEventBubble(evt) {
+                if (evt.stopPropagation) {
+                    evt.stopPropagation();
+                } else {
+                    evt.cancelBubble = true;
+                }
 
+                if (evt.preventDefault) {
+                    evt.preventDefault();
+                } else {
+                    evt.returnValue = false;
+                }
+
+            }
         }
 
 

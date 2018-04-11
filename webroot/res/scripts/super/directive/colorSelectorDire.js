@@ -1,8 +1,8 @@
 /*
 
-模块名称：toolTipDire
-整理时间：2016-06-20
-功能简介：常用的界面工具提示类，如 下拉菜单、弹出提示框 等
+模块名称：colorSelectorDire
+整理时间：2018-04-10
+功能简介：自定义颜色选择器
 
 */
 
@@ -16,7 +16,7 @@ define("superApp.colorSelectorDire",
 
 
         /*
-        ** 创建日期：2016-06-21
+        ** 创建日期：2018-04-10
         ** 功能简介：选择颜色
         ** 形如：
         
@@ -88,10 +88,10 @@ define("superApp.colorSelectorDire",
 
             $scope.SetColor = function ($event, color) {
                 $event.stopPropagation();
-                $scope.curColor = RGBToHex(color);
+                var curColor = RGBToHex(color);
                 $scope.isShow = false;
 
-                $scope.getCurColor({color:$scope.curColor});  //参数必须是对象{}
+                $scope.getCurColor({color:curColor});  //参数必须是对象
             }
         }
 

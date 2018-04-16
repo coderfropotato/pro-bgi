@@ -827,10 +827,13 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     $("#div_ViewProduct").css("overflow", "hidden");
                     $(".colorSelector").css("top", top + "px");
 
-                    $("body").on("click", function () {
+                    $("body").on("click", hideColorPanel);
+                    $("ul.sidebar_nav_pop li").on("click", hideColorPanel);
+
+                    function hideColorPanel() {
                         $(".backDiv").css("display", "none");
                         $("#div_ViewProduct").css("overflow", "auto");
-                    })
+                    }
 
                     // $(document).on("click", ".colorSelector", function (ev) {
                     //     var oEvent = ev || event;

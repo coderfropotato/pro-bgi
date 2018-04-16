@@ -3158,7 +3158,7 @@ div.tipsContainer {
     border-right: 10px white solid;
 }
 
-/* 颜色选择器样式 */
+/* 颜色选择器样式--reportService */
 .backDiv{
     background-color: rgba(0,0,0,0.2);
     width: 100%;
@@ -3191,6 +3191,7 @@ div.tipsContainer {
     float: left;
     cursor: pointer;
 }
+<<<<<<< HEAD
 /* thead control css */
 .thead-tree i{
     margin-right:6px;
@@ -3207,3 +3208,44 @@ div.tipsContainer {
 .thead-tree .tree-label{
     /* line-height:1.5; */
 }
+=======
+
+
+/* 色盘面板---colorSelectorDire */
+.colors_select{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.colors_select ul li {
+    margin: 2px;
+    width: 20px;
+    height: 20px;
+    float: left;
+    cursor: pointer;
+}
+.colors_select ul:after {
+    display: block;
+    content: "";
+    clear: both;
+} 
+.color_list{
+    width: 246px;
+    padding: 2px 2px;
+    border: 1px solid #ddd;
+    background: #fff;
+    position: absolute;
+    left:0;
+    right:0;
+    top:35%;
+    margin: auto;
+}
+.color_list:after {
+    display: block;
+    content: "";
+    clear: both;
+} 
+>>>>>>> c466b3ba8b6771a3a3a29e3c9004a049383a72a9

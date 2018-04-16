@@ -3191,3 +3191,19 @@ div.tipsContainer {
     float: left;
     cursor: pointer;
 }
+/* thead control css */
+.thead-tree i{
+    margin-right:6px;
+}
+.thead-tree .tree-label span{
+    cursor: pointer;
+}
+.thead-tree .treecontrol li i.tree-branch-head{
+    vertical-align: middle!important;
+}
+.thead-tree .tree-label.tree-selected span{
+    font-weight: normal!important;
+}
+.thead-tree .tree-label{
+    /* line-height:1.5; */
+}

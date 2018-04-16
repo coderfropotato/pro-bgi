@@ -3191,7 +3191,6 @@ div.tipsContainer {
     float: left;
     cursor: pointer;
 }
-<<<<<<< HEAD
 /* thead control css */
 .thead-tree i{
     margin-right:6px;
@@ -3208,7 +3207,6 @@ div.tipsContainer {
 .thead-tree .tree-label{
     /* line-height:1.5; */
 }
-=======
 
 
 /* 色盘面板---colorSelectorDire */
@@ -3248,4 +3246,3 @@ div.tipsContainer {
     content: "";
     clear: both;
 } 
->>>>>>> c466b3ba8b6771a3a3a29e3c9004a049383a72a9

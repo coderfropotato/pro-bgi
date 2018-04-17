@@ -1,217 +1,164 @@
-/*
-模块名称：theadControlDire
-整理时间：2018-4-10 11:29:04
-功能简介：树形组件，控制表头的显示隐藏
-*/
-
+/**
+ * 表头增删指令
+ */
 define("superApp.theadControlDire",
     ["angular", "super.superMessage", "select2"],
     function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.theadControlDire", []);
-
-        superApp.directive('theadControlTree', theadControlTree);
-        theadControlTree.$inject = ["$log"];
-        function theadControlTree($log) {
+        /**
+         * [
+                { groupName: "样本表达量", list: ["sampleA1", "sampleA2", "sampleA3"] },
+                { groupName: "样本差异", list: ["sampleA1", "sampleA2", "sampleA3"] },
+                { groupName: "组间差异", list: ['A', "B", "C", "D"] },
+                { groupName: "比对注释", list: ["GO", "KEGG", "COG", "Swissport"] },
+                { groupName: "其他", list: ["null"] },
+            ]
+         */
+        superApp.directive('theadControl', theadControlDirective);
+        theadControlDirective.$inject = ["$log"];
+        function theadControlDirective($log) {
             return {
                 restrict: "ACE",
-                template: '<treecontrol class="tree-light thead-tree" tree-model="treedata"'
-                    + 'options="opts" on-selection="toggleStatus(node,$path())">'
-                    + '<i class="icon" ng-class="{\'icon-check-empty\': node.isChecked === -1,'
-                    + '\'icon-check\': node.isChecked === 1, \'icon-check-minus\': node.isChecked === 0}"></i>'
-                    + 'label: {{ node.name }}'
-                    + '({{ node.age }})'
-                    + '</treecontrol >',
-                scope: {
-                    thead: "=",
-                    callback: "&",
-                    options: "=",
-                    data: "="
-                },
+                template: "<button class=\"btn btn-default\" ng-click=\"toggleShow()\">AddColumns</button>"
+                    + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
+                    + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
+                    + "<ul>"
+                    + "<li class=\"thead-title\">{{group.groupName}}</li>"
+                    + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item.name}}</li>"
+                    + "</ul ></li ></ol>"
+                    + "</div>"
+                    + "<div class=\"thead-btns\">"
+                    + "<button class=\"btn btn-default\" ng-click=\"cancel()\">取消</button>"
+                    + "<button class=\"btn btn-default\" ng-click=\"apply()\">应用</button>"
+                    + "<button class=\"btn btn-danger\" ng-click=\"clear()\">清除</button>"
+                    + "<button class=\"btn btn-default\"  ng-click=\"confirm()\">确定</button>"
+                    + "</div>"
+                    + "</div>",
                 replace: false,
                 transclude: true,
-                link: function (scope, element, attrs) {
-                },
-                controller: "theadControlTreeCtr"
+                controller: "theadControlCtr",
+                scope: {
+                    data: "=",
+                    handlerTheadChange: "&"
+                }
             }
         }
 
-        superApp.controller("theadControlTreeCtr", theadControlTreeCtr);
-        theadControlTreeCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
-        function theadControlTreeCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            // tree options
-            $scope.treeOptions = $scope.options || {
-                nodeChildren: "children",
-                dirSelectable: true,  // 目录是否可被选中
-                multiSelection: true,  // 是否支持多选
-                injectClasses: {
-                    ul: "a1",
-                    li: "a2",
-                    liSelected: "a7",
-                    iExpanded: "a3",
-                    iCollapsed: "a4",
-                    iLeaf: "a5",
-                    label: "a6",
-                    labelSelected: "a8"
-                }
-            };
-            // tree data
-            $scope.treedata = data || [
-                {
-                    "name": "Joe",
-                    "age": "21",
-                    "children": [
-                        { "name": "Smith", "age": "42", "children": [] },
-                        {
-                            "name": "Gary",
-                            "age": "21",
-                            "children": [
-                                {
-                                    "name": "Jenifer",
-                                    "age": "23",
-                                    "children": [
-                                        { "name": "Dani", "age": "32", "children": [] },
-                                        { "name": "Max", "age": "34", "children": [] }
-                                    ]
+        superApp.controller("theadControlCtr", theadControlCtr);
+        theadControlCtr.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+        function theadControlCtr($scope, $log, $state, $window, $compile, ajaxService, toolService) {
+
+            // 初始化数据
+            $scope.initData = function () {
+                // 是否清除
+                $scope.remove = false;
+                // 按点击顺序存储选项
+                // 所有当前的选中项
+                $scope.activeByClick = [];
+                // 是否显示面板
+                $scope.show = false;
+                // 历史所有选中的项
+                $scope.allActiveItems = [];
+
+                $scope.data.forEach(function (val, index) {
+
+                    val.list.forEach(function (item, idx) {
+                        var json = {};
+                        json.name = item;
+                        json.isActive = false;
+                        val.list[idx] = json;
+                    });
+
+                    // 根据length 初始化私有数据
+                    $scope.activeByClick.push([]);
+                    $scope.allActiveItems.push([]);
+                });
+            }
+
+            // 初始化点击私有数据
+            $scope.initActiveByClick = function () {
+                $scope.activeByClick.length = 0;
+
+                $scope.data.forEach(function (val, index) {
+                    $scope.activeByClick.push([]);
+                });
+            }
+
+
+            // 点击面板显示、隐藏
+            $scope.toggleShow = function () {
+                $scope.show = !$scope.show;
+                if (!$scope.show) {
+                    $scope.activeByClick.forEach(function (val, index) {
+                        if (val.length) {
+                            for (var i = 0; i < val.length; i++) {
+                                for (var j = 0; j < $scope.data[index].list.length; j++) {
+                                    if (val[i].name === $scope.data[index].list[j].name) {
+                                        $scope.data[index].list[j].isActive = false;
+                                        break;
+                                    }
                                 }
-                            ]
-                        }
-                    ]
-                },
-                { "name": "Albert", "age": "33", "children": [] },
-                { "name": "Ron", "age": "29", "children": [] }
-            ];
-
-            // 初始化树节点信息 
-            $scope.initTreeData = function (tree) {
-                tree.forEach(function (val, index) {
-                    val.isChecked = -1;
-                    if (val.children.length) $scope.initTreeData(val.children);
-                });
-            }
-
-            // 选中全部子级
-            $scope.selectAllChildren = function (children) {
-                children.forEach(function (val, index) {
-                    val.isChecked = 1;
-                    val.children.length && $scope.selectAllChildren(val.children);
-                });
-            }
-
-
-            // 取消选中所有子级
-            $scope.unSelectAllChildren = function (children) {
-                children.forEach(function (val, index) {
-                    val.isChecked = -1;
-                    val.children.length && $scope.unSelectAllChildren(val.children);
-                });
-            }
-
-            // 向上应用 check 状态
-            $scope.upUnCheckToCheck = function (node, path) {
-                $scope.setAllParentStatus(path);
-            }
-
-            // 向上应用 不确定 -> 取消 0 -> -1状态
-            $scope.upNormalToUnCheck = function (node, path) {
-                $scope.setAllParentStatus(path);
-            }
-
-            $scope.findSublings = function (node, path) {
-                console.log(node, path);
-                var name = node.name;
-                // path第零个是自己,第一个是父级
-                if (!path[1]) {
-                    // 没有同级
-                    return [];
-                } else {
-                    var parent = path[1];
-                    for (var i = 0; i < parent.children.length; i++) {
-                        if (name === parent.children[i].name) {
-                            var arr = angular.copy(parent.children);
-                            arr.splice(i, 1);
-                            return arr;
-                        }
-                    }
-                }
-            }
-
-            // 找到所有父级同级 设置所有的父级状态
-            $scope.setAllParentStatus = function (path) {
-                for (var j = 1; j < path.length; j++) {
-                    if (path[j].children.length == 0) {
-                        path[j].isChecked = path[j].children[0].isChecked;
-                    } else {
-                        var allChecked = 0
-                        var allUnChecked = 0;
-                        for (var k = 0; k < path[j].children.length; k++) {
-                            if (path[j].children[k].isChecked === 1) {
-                                allChecked++;
-                            } else if (path[j].children[k].isChecked === -1) {
-                                allUnChecked++;
                             }
                         }
-                        if (allChecked === path[j].children.length) {
-                            path[j].isChecked = 1;
-                            continue;
-                        } else if (allUnChecked === path[j].children.length) {
-                            path[j].isChecked = -1;
-                            continue;
-                        } else {
-                            path[j].isChecked = 0;
-                            continue;
+                    });
+
+                    $scope.initActiveByClick();
+                }
+            }
+
+            // 所有按钮的点击事件
+            $scope.handlerItemClick = function (item, index) {
+                item.isActive = !item.isActive;
+
+                if (item.isActive) {
+                    $scope.activeByClick[index].push(item);
+                    $scope.allActiveItems[index].push(item);
+                } else {
+                    for (var i = 0; i < $scope.activeByClick[index].length; i++) {
+                        if ($scope.activeByClick[index][i].name === item.name) {
+                            $scope.activeByClick[index].splice(i, 1);
+                            break;
                         }
                     }
-                }
-            }
-            // 同级是否选中
-            // 点击切换选中状态
-            $scope.toggleStatus = function (node, path) {
-                switch (node.isChecked) {
-                    case -1:
-                        // 未选中->选中
-                        node.isChecked = 1;
-                        if (path.length != 1) {
-                            // 不是root
-                            // 点亮子级 && 向上查找
-                            // 只需要跟同级比较，
-                            // 如果同级选中了，那么所有的父级都选中，
-                            // 如果同级没有选中，所有的父级都是不确定状态
-                            // 如果同级不确定，所有的父级都是不确定
-                            $scope.upUnCheckToCheck(node, path);
-                        }
-                        // 点亮子级
-                        path[0].children.length && $scope.selectAllChildren(path[0].children);
-                        break;
-                    case 0:
-                        // 不确定->取消
-                        node.isChecked = -1;
-                        if (path.length != 1) {
-                            // 取消选中所有子级 && 向上查找
-                            // 如果同级选中了，那么所有的父级都是不确定状态，
-                            // 如果同级没有选中，所有的父级都是未选中状态
-                            // 如果同级不确定，所有的父级都是未确定
-                            $scope.upNormalToUnCheck(node, path);
-                        }
-                        path[0].children.length && $scope.unSelectAllChildren(path[0].children);
-                        break;
-                    case 1:
-                        // 选中->未选中
-                        node.isChecked = -1;
-                        if (path.length != 1) {
-                            // 向上查找
-                            // 如果同级选中了，那么所有的父级都是不确定状态，
-                            // 如果同级没有选中，所有的父级都是未选中状态
-                            // 如果同级不确定，所有的父级都是不确定
-                            $scope.upNormalToUnCheck(node, path);
-                        }
-                        path[0].children.length && $scope.unSelectAllChildren(path[0].children);
-                        break;
+                    // 删除历史选中的记录
+                    $scope.allActiveItems[index].forEach(function (val, k) {
+                        if (val.name === item.name) $scope.allActiveItems[index].splice(k, 1);
+                    });
                 }
             }
 
+            //确定
+            $scope.confirm = function () {
+                $scope.show = false;
+                $scope.initActiveByClick();
+            }
 
+            // 清除
+            $scope.clear = function () {
+                $scope.reset();
+                $scope.remove = true;
+                console.log($scope.allActiveItems);
+            }
 
-            $scope.initTreeData($scope.treedata);
+            // 应用
+            $scope.apply = function () {
+                $scope.initActiveByClick();
+            }
+
+            // 取消
+            $scope.cancel = function () {
+
+            }
+
+            // 重置所有状态
+            $scope.reset = function () {
+                $scope.data.forEach(function (val, index) {
+                    val.list.forEach(function (d, i) {
+                        d.isActive = false;
+                    })
+                })
+            }
+
         }
     });
 

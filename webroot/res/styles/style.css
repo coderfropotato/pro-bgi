@@ -97,7 +97,7 @@ h1, .h1, h2, .h2, h3, .h3 { margin-top: 10px; margin-bottom: 10px; }
 a:hover .glyphicon-trash { color: #C9302C; }
 
 .btn .glyphicon-trash { color: #fff; }
-.view_topbar { position: fixed; width: 100%; height: 50px; background:#386CCA/*#4397D9*/ ; z-index: 101; line-height: #50px; color: #fff; }
+.view_topbar { position: fixed; width: 100%; height: 64px; background:#386CCA/*#4397D9*/ ; z-index: 101; line-height: #50px; color: #fff; }
 /*
 .view_topbar { position: fixed; width: 100%; height: 50px; background: #4397D9; z-index: 101; line-height: #50px; color: #fff; 
                background-color: #F2F2F2; background: -webkit-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: -moz-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: -o-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: linear-gradient(to bottom,#70c7ff 0,#2499f8 100%); background-repeat: repeat-x; color:white;
@@ -129,21 +129,21 @@ a:hover .glyphicon-trash { color: #C9302C; }
 .fRight { float: right !important; }
 
 /* 顶部 */
-.topbar_logo { display: block; width: 179px; background: url(../images/topbar_logo_icn.png) no-repeat 14px 12px; color: #FFF; text-align: left; line-height: 50px; height: 50px; margin-left: 0; padding-left: 47px; font-size: 19px; }
+.topbar_logo { display: block; width: 179px; background: url(../images/topbar_logo_icn.png) no-repeat 14px 19px; color: #FFF; text-align: left; line-height: 64px; height: 64px; margin-left: 0; padding-left: 47px; font-size: 19px; }
 
 .super-frame-top a { color: #fff; }
 .super-manger-frame-top a { color: #fff; }
 
 .topbar_btn { padding: 0 20px; display: inline-block; height: 50px; color: #fff; font-size: 16px; line-height: 48px; }
 
-.topbar_btn:hover,
-.topbar_btn.active { background: #4A7DDA; color: #fff; text-decoration: none; }
+/* .topbar_btn:hover, */
+/* .topbar_btn.active { background: #4A7DDA; color: #fff; text-decoration: none; } */
 
-
+.topbar_btn span,a.topbar_btn {cursor: default!important;}
 .topbar_btn .icon-arrow_triangle-down { font-size: 9px; margin-left: 4px; transition: all 0.15s linear; font-size: 16px; transform: translateY(2px); -webkit-transform: translateY(2px); -moz-transform: translateY(2px); -ms-transform: translateY(2px); -o-transform: translateY(2px); }
 
 .topbar_info { /*margin-right:20px;line-height: 50px;*/ }
-.topbar_info a:hover { color: #C3DDF2; }
+/* .topbar_info a:hover { color: #C3DDF2; } */
 
 
 .topbar_user_info { color: #333; line-height: 22px; min-width: 260px; }

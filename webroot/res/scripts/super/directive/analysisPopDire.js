@@ -1,0 +1,55 @@
+/**
+ * 我的分析面板
+ * 2018年4月18日10:27:14 
+ */
+
+define("superApp.analysisPopDire",
+    ["angular", "super.superMessage", "select2"],
+    function (angular, SUPER_CONSOLE_MESSAGE) {
+        var superApp = angular.module("superApp.analysisPopDire", []);
+        superApp.directive('analysisPop', analysisPopDirective);
+        analysisPopDirective.$inject = ["$log"];
+        function analysisPopDirective($log) {
+            return {
+                restrict: "ACE",
+                template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
+                    + "<span ng-show=\"analysisList.length\" class=\"analysis-title\">my analysis</span>"
+                    // + "<table class=\"table table-hover\">"
+                    // + "<thead>"
+                    // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
+                    // + "</thead></table>" 
+                    + "<div ng-show=\"analysisList.length\" class=\"table-wrap\"><table class=\"table table-hover\"><thead>"
+                    + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
+                    + "</thead><tbody>"
+                    + "<tr ng-click=\"handlerClick(val)\" ng-repeat=\"val in analysisList\" track by $index>"
+                    + "<td>{{val.name}}</td><td>{{val.progress}}</td><td>{{val.time | date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>"
+                    + "</tbody>"
+                    + "</table></div>"
+                    + "<div class=\"analysis-arrow\" ng-click=\"toggleShow()\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
+                    + "<p class=\"error-tips\" ng-show=\"!analysisList.length\">暂无分析信息</p></div>",
+                scope: {
+                    analysisList: "=",
+                    handlerAnalysisDetail: "&"
+                },
+                replace: false,
+                transclude: true,
+                controller: "analysisPopCtr"
+            }
+        }
+
+        superApp.controller("analysisPopCtr", analysisPopCtr);
+        analysisPopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+        function analysisPopCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+            // 是否显示面板
+            $scope.isExpand = false;
+            //切换显示面板
+            $scope.toggleShow = function () {
+                $scope.isExpand = !$scope.isExpand;
+            }
+            // 查看分析详情
+            $scope.handlerClick = function (item) {
+                $scope.handlerAnalysisDetail && $scope.handlerAnalysisDetail(item);
+            }
+        }
+    });
+

@@ -19,7 +19,7 @@ define("superApp.theadControlDire",
         function theadControlDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<button class=\"btn btn-default\" ng-click=\"toggleShow()\">AddColumns</button>"
+                template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns</button>"
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<ul>"
@@ -39,7 +39,7 @@ define("superApp.theadControlDire",
                 controller: "theadControlCtr",
                 scope: {
                     data: "=",
-                    handlerApplyThead: "&"
+                    handleTheadChange: "&"
                 }
             }
         }
@@ -59,6 +59,8 @@ define("superApp.theadControlDire",
                 $scope.show = false;
                 // 历史所有选中的项
                 $scope.allActiveItems = [];
+                // 记住之前传入回掉的激活项
+                $scope.beforeActiveItems = [];
 
                 $scope.data.forEach(function (val, index) {
 
@@ -72,6 +74,7 @@ define("superApp.theadControlDire",
                     // 根据length 初始化私有数据
                     $scope.activeByClick.push([]);
                     $scope.allActiveItems.push([]);
+                    $scope.beforeActiveItems.push([]);
                 });
             }
 
@@ -140,9 +143,9 @@ define("superApp.theadControlDire",
                 $scope.initActiveByClick();
                 // 收起面板
                 $scope.show = false;
-                // 回调
-                $scope.handlerApplyThead && $scope.handlerApplyThead(combineArr($scope.allActiveItems));
-                console.log($scope.allActiveItems);
+
+                // 回调 值改变了才回调
+                $scope.callback();
             }
 
             // 清除
@@ -168,13 +171,22 @@ define("superApp.theadControlDire",
                 if ($scope.remove) $scope.initAllActiveItems();
                 // 点击应用 去掉remove状态
                 $scope.remove = false;
-                // 如果没有点击选择过 就return
-                if (isEmpty($scope.activeByClick)) return;
+                // 如果没有点击选择过 
+                // 只有可能点过remove 如果点过remove那么所有的激活项就是空
+                // 如果之前的状态是空 那么就相等不回调
+                // 如果之前不是空 那么就不想等 回调
+
+                // 如果没有点过remove
+                // 激活了某些选项 触发最底部的回调
+                // 如果没有激活选项 那么之前的状态和当前的状态就是相等的 那么判断里的回调内部 还是不会回调
+                if (isEmpty($scope.activeByClick)) {
+                    $scope.callback();
+                    return;
+                }
                 // 默认重置点击选择的项
                 $scope.initActiveByClick();
-                // 回调
-                $scope.handlerApplyThead && $scope.handlerApplyThead(combineArr($scope.allActiveItems));
-                console.log($scope.allActiveItems);
+                // 回调 值改变了才回调
+                $scope.callback();
             }
 
             // 取消
@@ -203,6 +215,49 @@ define("superApp.theadControlDire",
                         d.isActive = false;
                     })
                 })
+            }
+
+            // 回调
+            $scope.callback = function () {
+                if (!angular.equals($scope.beforeActiveItems, $scope.allActiveItems)) {
+                    // $scope.handleTheadChange && $scope.handleTheadChange(combineArr($scope.allActiveItems));
+                    var items = $scope.classify($scope.allActiveItems);
+                    $scope.handleTheadChange && $scope.handleTheadChange({arg:items});
+                    // 更新旧值为新值
+                    $scope.beforeActiveItems = angular.copy($scope.allActiveItems);
+                }
+            }
+
+            // 每次回调 把删除的项和新增的项分类 返回出去
+            $scope.classify = function () {
+                // 当前选择是空  那么就是删除了之前所有
+                var temp = { add: [], delete: [], all: [] };
+
+                if (isEmpty($scope.allActiveItems)) {
+                    // 全部是删除
+                    temp.delete = combineArr(angular.copy($scope.beforeActiveItems));
+                } else if (isEmpty($scope.beforeActiveItems)) {
+                    // 全部是新增
+                    temp.add = combineArr(angular.copy($scope.allActiveItems));
+                } else {
+                    // 一半一半
+                    var before = combineArr($scope.beforeActiveItems);
+                    var current = combineArr($scope.allActiveItems);
+
+                    for (var j = 0, l = current.length; j < l; j++) {
+                        // 当前选择的在之前选择里有 就在原来的数组里删除相同的  剩下的就是删除的
+                        // 没有就是 新增
+                        var status = isInArr(current[j], before);
+                        if (status.flag) {
+                            before.splice(status.index, 1);
+                        } else {
+                            temp.add.push(current[j]);
+                        }
+                    }
+                    temp.delete = angular.copy(before);
+                }
+                temp.all = combineArr($scope.allActiveItems);
+                return temp;
             }
 
             // 重置所有选择的项
@@ -277,6 +332,16 @@ define("superApp.theadControlDire",
                     if (!arr[i].length) count++;
                 }
                 return count === len;
+            }
+
+            // 是否在数组内 [{name:xx,isActive:xx}]
+            function isInArr(n, arr) {
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    if (n.name === arr[i].name) {
+                        return { flag: true, index: i };
+                    }
+                }
+                return { flag: false, index: null };
             }
 
         }

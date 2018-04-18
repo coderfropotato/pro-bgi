@@ -39,7 +39,7 @@ define("superApp.theadControlDire",
                 controller: "theadControlCtr",
                 scope: {
                     data: "=",
-                    handlerTheadChange: "&"
+                    handlerApplyThead: "&"
                 }
             }
         }
@@ -75,7 +75,7 @@ define("superApp.theadControlDire",
                 });
             }
 
-            // 初始化点击私有数据
+            // 初始化当前点击选中项数组
             $scope.initActiveByClick = function () {
                 $scope.activeByClick.length = 0;
 
@@ -91,8 +91,8 @@ define("superApp.theadControlDire",
                 if (!$scope.show) {
                     $scope.activeByClick.forEach(function (val, index) {
                         if (val.length) {
-                            for (var i = 0; i < val.length; i++) {
-                                for (var j = 0; j < $scope.data[index].list.length; j++) {
+                            for (var i = 0, len = val.length; i < len; i++) {
+                                for (var j = 0, l = $scope.data[index].list.length; j < l; j++) {
                                     if (val[i].name === $scope.data[index].list[j].name) {
                                         $scope.data[index].list[j].isActive = false;
                                         break;
@@ -114,7 +114,8 @@ define("superApp.theadControlDire",
                     $scope.activeByClick[index].push(item);
                     $scope.allActiveItems[index].push(item);
                 } else {
-                    for (var i = 0; i < $scope.activeByClick[index].length; i++) {
+                    // 删除当前选择数组里对应的项
+                    for (var i = 0, len = $scope.activeByClick[index].length; i < len; i++) {
                         if ($scope.activeByClick[index][i].name === item.name) {
                             $scope.activeByClick[index].splice(i, 1);
                             break;
@@ -125,29 +126,74 @@ define("superApp.theadControlDire",
                         if (val.name === item.name) $scope.allActiveItems[index].splice(k, 1);
                     });
                 }
+
+                console.log($scope.allActiveItems);
             }
 
-            //确定
+            // 确定
             $scope.confirm = function () {
-                $scope.show = false;
+                // 如果上一步是点的清除 那么就重置所有以选择的项
+                if ($scope.remove) $scope.initAllActiveItems();
+                // 点击应用 去掉remove状态
+                $scope.remove = false;
+                // 默认重置点击选择的项
                 $scope.initActiveByClick();
+                // 收起面板
+                $scope.show = false;
+                // 回调
+                $scope.handlerApplyThead && $scope.handlerApplyThead(combineArr($scope.allActiveItems));
+                console.log($scope.allActiveItems);
             }
 
             // 清除
             $scope.clear = function () {
+                // 重复点击清除 return
+                if ($scope.remove) return;
+                // 如果没有选择
+                if (isEmpty($scope.allActiveItems)) return;
+                // 有选择项 就重置原始数据 保留历史选择记录
                 $scope.reset();
+                // 根据当前选择 删除历史记录
+                $scope.deleteBycurrentActiveItems();
+                // 重置当前选择
+                $scope.initActiveByClick();
+                // 添加remove标记
                 $scope.remove = true;
                 console.log($scope.allActiveItems);
             }
 
             // 应用
             $scope.apply = function () {
+                // 如果上一步是点的清除 那么就重置所有以选择的项
+                if ($scope.remove) $scope.initAllActiveItems();
+                // 点击应用 去掉remove状态
+                $scope.remove = false;
+                // 如果没有点击选择过 就return
+                if (isEmpty($scope.activeByClick)) return;
+                // 默认重置点击选择的项
                 $scope.initActiveByClick();
+                // 回调
+                $scope.handlerApplyThead && $scope.handlerApplyThead(combineArr($scope.allActiveItems));
+                console.log($scope.allActiveItems);
             }
 
             // 取消
             $scope.cancel = function () {
+                // 收起面板
+                $scope.show = false;
 
+                if ($scope.remove) {
+                    $scope.remove = false;
+                    // 根据历史选择记录 选中大数据
+                    $scope.applyHistory();
+                } else {
+                    if (isEmpty($scope.activeByClick)) return;
+                    // 根据当前选择重置大数据
+                    $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data);
+                }
+                // 重置当前选择
+                $scope.initActiveByClick();
+                console.log($scope.allActiveItems);
             }
 
             // 重置所有状态
@@ -157,6 +203,80 @@ define("superApp.theadControlDire",
                         d.isActive = false;
                     })
                 })
+            }
+
+            // 重置所有选择的项
+            $scope.initAllActiveItems = function () {
+                $scope.allActiveItems.length = 0;
+
+                $scope.data.forEach(function (val, index) {
+                    $scope.allActiveItems.push([]);
+                });
+            }
+
+            // 根据历史选择确定大数据的选中状态
+            $scope.applyHistory = function () {
+                if (!isEmpty($scope.allActiveItems)) {
+                    $scope.allActiveItems.forEach(function (val, index) {
+                        if (val.length) {
+                            val.forEach(function (d, i) {
+                                for (var i = 0, len = $scope.data[index].list.length; i < len; i++) {
+                                    if (d.name === $scope.data[index].list[i].name) {
+                                        $scope.data[index].list[i].isActive = true;
+                                        break;
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+
+            // 根据当前选项  取消选中大数据
+            $scope.cancelBycurrentActiveItems = function (arr, parentarr) {
+                arr.forEach(function (val, index) {
+                    if (val.length) {
+                        for (var i = 0, len = parentarr.length; i < len; i++) {
+                            var curList = parentarr[i].list;
+                            for (var k = 0, l = curList.length; k < l; k++) {
+                                if (val.name === curList[k].name) {
+                                    curList[k].isActive = false;
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                })
+            }
+
+            // 根据当前选择删除历史记录
+            $scope.deleteBycurrentActiveItems = function () {
+                $scope.activeByClick.forEach(function (val, index) {
+                    if (val.length) {
+                        val.forEach(function (d, i) {
+                            $scope.allActiveItems[index].splice(i, 1);
+                        })
+                    }
+                });
+            }
+
+            // 按顺序拼接二维数组
+            function combineArr(arr) {
+                var res = [];
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    if (arr[i].length) res = res.concat(arr[i]);
+                }
+                return res;
+            }
+
+            // 判断二维数组是否为空
+            function isEmpty(arr) {
+                var count = 0;
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    if (!arr[i].length) count++;
+                }
+                return count === len;
             }
 
         }

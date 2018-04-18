@@ -25,7 +25,7 @@ define("superApp.analysisPopDire",
                     + "<td>{{val.name}}</td><td>{{val.progress}}</td><td>{{val.time | date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>"
                     + "</tbody>"
                     + "</table></div>"
-                    + "<div class=\"analysis-arrow\" ng-click=\"toggleShow()\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
+                    + "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
                     + "<p class=\"error-tips\" ng-show=\"!analysisList.length\">暂无分析信息</p></div>",
                 scope: {
                     analysisList: "=",
@@ -43,13 +43,19 @@ define("superApp.analysisPopDire",
             // 是否显示面板
             $scope.isExpand = false;
             //切换显示面板
-            $scope.toggleShow = function () {
+            $scope.toggleShow = function (ev) {
                 $scope.isExpand = !$scope.isExpand;
+                ev.stopPropagation();
             }
             // 查看分析详情
             $scope.handlerClick = function (item) {
                 $scope.handlerAnalysisDetail && $scope.handlerAnalysisDetail(item);
             }
+
+            // document.addEventListener('click', function () { 
+            //     $scope.isExpand = false;
+            //     $scope.$apply();
+            // }, false);
         }
     });
 

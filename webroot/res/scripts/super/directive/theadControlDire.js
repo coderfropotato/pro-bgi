@@ -19,7 +19,7 @@ define("superApp.theadControlDire",
         function theadControlDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<button class=\"btn btn-default\" ng-click=\"toggleShow()\">AddColumns</button>"
+                template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns</button>"
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<ul>"

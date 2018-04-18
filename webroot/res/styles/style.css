@@ -3191,23 +3191,6 @@ div.tipsContainer {
     float: left;
     cursor: pointer;
 }
-/* thead control css */
-.thead-tree i{
-    margin-right:6px;
-}
-.thead-tree .tree-label span{
-    cursor: pointer;
-}
-.thead-tree .treecontrol li i.tree-branch-head{
-    vertical-align: middle!important;
-}
-.thead-tree .tree-label.tree-selected span{
-    font-weight: normal!important;
-}
-.thead-tree .tree-label{
-    /* line-height:1.5; */
-}
-
 
 /* 色盘面板---colorSelectorDire */
 .colors_select{
@@ -3246,3 +3229,59 @@ div.tipsContainer {
     content: "";
     clear: both;
 } 
+
+/* thead control css */
+.thead-tree i{
+    margin-right:6px;
+}
+.thead-tree .tree-label span{
+    cursor: pointer;
+}
+.thead-tree .treecontrol li i.tree-branch-head{
+    vertical-align: middle!important;
+}
+.thead-tree .tree-label.tree-selected span{
+    font-weight: normal!important;
+}
+.thead-tree .tree-label{
+    /* line-height:1.5; */
+}
+
+/* 聚类图设置面板样式 */
+.heatsetPanel{
+    width:280px;
+    left:inherit;
+    right:0;
+    padding: 10px 0;
+}
+.heatsetPanel p{
+    font-size:14px !important; 
+}
+.heatsetFoot{
+    text-align:right;
+    text-indent:0;
+}
+.oneline_foot button{
+    margin-right:5px;
+    width:60px;
+    margin-top:10px;
+}
+.heatSort ul::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.heatSort ul li{
+ height: 25px;
+ padding: 2px 28px;
+ float:left;
+}
+.heatSort ul .moveBtns{
+    float: right;
+}
+.heatSort ul .moveBtns button{
+    width:25px;
+    height:25px;
+    padding: 0;
+    margin-right: 5px;
+}

@@ -1,5 +1,5 @@
 /**
- * 顶部快捷菜单导航
+ * 页面一级标题
  */
 define("superApp.reportPageTitleDire",
     ["angular", "super.superMessage", "select2"],
@@ -15,7 +15,7 @@ define("superApp.reportPageTitleDire",
                 transclude: true,
                 controller: "reportPageTitleCtr",
                 scope: {
-                    currentPageDirective: "@",
+                    currentPageDirective: "@",   // 当前页面的指令
                 }
             }
         }
@@ -30,29 +30,20 @@ define("superApp.reportPageTitleDire",
             $scope.one = null;
             // 二级页面
             $scope.two = null;
+            // 当前页面
+            $scope.currentPage = $rootScope.leftDataOrderByLjlj[$scope.currentPageDirective];
 
-            var currentPage;
-            for (var i = 0, len = $rootScope.leftData.length; i < len; i++) {
-                if ($rootScope.leftData[i].LJLJ === $scope.currentPageDirective) {
-                    currentPage = $rootScope.leftData[i];
-                    break;
-                }
-            }
-            console.log(currentPage)
             // 三级
-            if (currentPage.GNSID.length > 6) {
-                var oneId = currentPage.GNSID.substring(0, 3);
-                var twoId = currentPage.GNSID.substring(0, 6);
+            if ($scope.currentPage.GNSID.length > 6) {
+                var oneId = $scope.currentPage.GNSID.substring(0, 3);
+                var twoId = $scope.currentPage.GNSID.substring(0, 6);
 
                 $scope.one = $rootScope.leftDataOrderById[oneId];
                 $scope.two = $rootScope.leftDataOrderById[twoId];
-
-                console.log($scope.one, $scope.two)
             } else {
                 // 二级
-                var oneId = currentPage.JDPID;
+                var oneId = $scope.currentPage.JDPID;
                 $scope.one = $rootScope.leftDataOrderById[oneId]
-                console.log($scope.one)
             }
         }
     });

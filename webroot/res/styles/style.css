@@ -3261,10 +3261,19 @@ div.tipsContainer {
     text-align:right;
     text-indent:0;
 }
+.oneline_foot{
+    padding-left: 0px !important;
+}
 .oneline_foot button{
     margin-right:5px;
     width:60px;
-    margin-top:10px;
+}
+.heatSort{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.heatsetFoot .opreatBtns{
+    margin-top: 8px;
 }
 .heatSort ul::after{
     content: "";
@@ -3273,7 +3282,7 @@ div.tipsContainer {
 }
 .heatSort ul li{
  height: 25px;
- padding: 2px 28px;
+ padding: 2px 10px;
  float:left;
 }
 .heatSort ul .moveBtns{
@@ -3283,5 +3292,13 @@ div.tipsContainer {
     width:25px;
     height:25px;
     padding: 0;
-    margin-right: 5px;
+    margin-right: 8px;
+}
+.sortDiv::after{
+    content:"";
+    display: block;
+    clear: both;
+}
+.sortDiv{
+    padding: 5px;
 }

@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; font-family: 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei';; outline: none; }
 
 html { font-size: 14px; }
-
+em{font-style: normal;}
 body { font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "\5B8B\4F53" !important; }
 
 body, div, span, table, td, th, p { cursor: default; }

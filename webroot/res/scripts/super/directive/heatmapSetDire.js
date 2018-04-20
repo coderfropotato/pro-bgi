@@ -59,7 +59,7 @@ define("superApp.heatmapSetDire",
                     "</div>",
                 scope: {
                     rowNames: "=",
-                    getSetOptions:"&"
+                    getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
                 },
@@ -93,8 +93,9 @@ define("superApp.heatmapSetDire",
             //确定
             $scope.confirm = function () {
                 $scope.confirmOptions = angular.copy($scope.setOptions);
-                $scope.confirmOptions.sortNames = angular.copy($scope.rowNames);                $scope.isShowSetPanel = false;
-                $scope.getSetOptions({setObj:$scope.confirmOptions});
+                $scope.confirmOptions.sortNames = angular.copy($scope.rowNames);
+                $scope.isShowSetPanel = false;
+                $scope.getSetOptions({ setObj: $scope.confirmOptions });
             }
 
             //取消

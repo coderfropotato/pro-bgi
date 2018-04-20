@@ -26,7 +26,6 @@ define("superApp.gridFilterDire",
                 restrict: "ACE",
                 scope: {
                     callback: "&",           // 开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
-                    allAddThead:"="          // 相比基础表头 所有的新增表头
                 },
                 templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.girdFilterPath,
                 replace: false,
@@ -43,7 +42,7 @@ define("superApp.gridFilterDire",
                     //filtertype：datetime、 string、double [default]、int
                     scope.filtertype = attrs.filtertype;
                     scope.parentId = attrs.parentid
-
+                    // 如果没有提供外部查询参数
                     scope.filterFindEntity = {
                         filterName: scope.filterName,           //查询字段名字
                         filternamezh: scope.filternamezh,       //查询字段中文
@@ -56,7 +55,6 @@ define("superApp.gridFilterDire",
                         searchTwo: "",                          //查询内容2
                         isTopFilter: false                       //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
                     };
-
                     scope.directiveID = attrs.id;
 
                     var tableObj = $("#" + scope.tableid);
@@ -166,7 +164,7 @@ define("superApp.gridFilterDire",
                 }
             };
 
-            
+
         };
 
         superApp.controller("gridFilterController", gridFilterController);
@@ -464,7 +462,7 @@ define("superApp.gridFilterDire",
                     callback: "&",           //开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
                     clearFilter: "=",         //关闭筛选
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
-                    delete:"="               // 删除的表头
+                    delete: "="               // 删除的表头
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
                     + "                    <span class=\"iconglyph icon-filter\"></span></button>",
@@ -495,12 +493,12 @@ define("superApp.gridFilterDire",
             // Add:2018年3月23日14:27:04
             $scope.$watch('tablehead', function (newValue, oldValue) {
                 if (!newValue) return;
-                if (!angular.equals(newValue,oldValue)) {
+                if (!angular.equals(newValue, oldValue)) {
                     // TODO
                     // 需要知道原始的表头（无新增和删除）
                     // 选择出新增的和删除的
-                        // 新增 在之前的length后编译新增的表头
-                        // 删除 遍历searchContentList 删除对应的查询条件
+                    // 新增 在之前的length后编译新增的表头
+                    // 删除 遍历searchContentList 删除对应的查询条件
                     // 重新获取数据
                     var flag = !oldValue ? true : newValue.length > oldValue.length;
                     if ($scope.shaiXuanIsActive) {

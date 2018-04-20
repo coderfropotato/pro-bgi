@@ -52,13 +52,14 @@ define("superApp.heatmapSetDire",
                     "</div>" +
                     "</ul>" +
                     " </div>" +
-                    "<button class='btn btn-success btn-sm opreatBtns' ng-click='confirm(setOptions)'> 确定</button>" +
+                    "<button class='btn btn-success btn-sm opreatBtns' ng-click='confirm()'> 确定</button>" +
                     "<button class='btn btn-default btn-sm opreatBtns' ng-click='cancel()'>取消</button>" +
                     "</div>" +
                     "</div>" +
                     "</div>",
                 scope: {
                     rowNames: "=",
+                    getSetOptions:"&"
                 },
                 link: function (scope, element, attrs) {
                 },
@@ -90,18 +91,16 @@ define("superApp.heatmapSetDire",
                 $scope.rowNames[index] = tmp;
             }
             //确定
-            $scope.confirm = function (options) {
-                $scope.confirmOptions = angular.copy(options);
-                $scope.confirmOptions.sortNames = angular.copy($scope.rowNames);
-                console.log($scope.confirmOptions.sortNames);
-                $scope.isShowSetPanel = false;
+            $scope.confirm = function () {
+                $scope.confirmOptions = angular.copy($scope.setOptions);
+                $scope.confirmOptions.sortNames = angular.copy($scope.rowNames);                $scope.isShowSetPanel = false;
+                $scope.getSetOptions({setObj:$scope.confirmOptions});
             }
 
             //取消
             $scope.cancel = function () {
                 $scope.setOptions = angular.copy($scope.confirmOptions);
                 $scope.setOptions.sortNames = angular.copy($scope.confirmOptions.sortNames);
-                console.log($scope.setOptions.sortNames);
                 $scope.isShowSetPanel = false;
             }
 

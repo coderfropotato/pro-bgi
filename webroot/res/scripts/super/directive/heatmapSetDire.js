@@ -59,6 +59,7 @@ define("superApp.heatmapSetDire",
                     "</div>",
                 scope: {
                     rowNames: "=",
+                    setOptions:"=",
                     getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
@@ -70,11 +71,7 @@ define("superApp.heatmapSetDire",
         superApp.controller("heatmapSetCtr", heatmapSetCtr);
         heatmapSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function heatmapSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            $scope.setOptions = {
-                isShowName: false,
-                isShowTopLine: true,
-                sortNames: $scope.rowNames
-            };
+
             $scope.confirmOptions = angular.copy($scope.setOptions);
 
             //上移

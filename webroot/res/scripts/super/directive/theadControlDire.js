@@ -23,10 +23,11 @@ define("superApp.theadControlDire",
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<div class=\"thead-title\">{{group.groupName}}</div>"
-                    + "<ul>"
+                    + "<ul ng-class=\"{'showmore':group.isShowMore}\">"
                     + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item.name}}</li>"
                     + "</ul >"
-                    + "<div class=\"thead-title more\">更多</div>"
+                    + "<div ng-click=\"handlerIsShowMoreClick($index)\" ng-if=\"!group.isShowMore &&group.showMore\" class=\"thead-title more\">查看更多</div>"
+                    + "<div ng-click=\"handlerExpandClick($index)\" ng-if=\"group.isShowMore && group.showMore \" class=\"thead-title more\">收起</div>"
                     + "</li></ol>"
                     + "</div>"
                     + "<div class=\"thead-btns\">"
@@ -46,7 +47,11 @@ define("superApp.theadControlDire",
                 link: function (scope, element, attrs) {
                     scope.data.forEach(function (val, index) {
                         val.showMore = false;
+                        val.isShowMore = false;
                     });
+
+                    // 每一个标签的marginright
+                    scope.mr = 12;
                 }
             }
         }
@@ -65,7 +70,7 @@ define("superApp.theadControlDire",
                 // 所有当前的取消项
                 $scope.cancelByClick = [];
                 // 是否显示面板
-                $scope.show = true;
+                $scope.show = false;
                 // 历史所有选中的项
                 $scope.allActiveItems = [];
                 // 记住之前传入回掉的激活项
@@ -88,9 +93,6 @@ define("superApp.theadControlDire",
                 });
             }
 
-            $timeout(function(){
-                console.log($('.thead-control-dire ul').width())
-            },30)
 
 
             // 初始化当前点击选中项数组
@@ -130,6 +132,11 @@ define("superApp.theadControlDire",
                 } else {
                     $scope.initActiveByClick();
                     $scope.initCancelByClick();
+
+                    // 显示面板的时候计算dom
+                    $timeout(function () {
+                        $scope.computedDOM();
+                    }, 30)
                 }
             }
 
@@ -392,12 +399,40 @@ define("superApp.theadControlDire",
                 return { flag: false, index: null };
             }
 
-
-            // 计算dom 是否显示更多
-            $scope.computedDOM = function () {
-                console.log($scope.oUlWidth);
+            // 更多点击事件
+            $scope.handlerIsShowMoreClick = function (index) {
+                $scope.data[index].isShowMore = true;
             }
 
+            // 收起点击事件
+            $scope.handlerExpandClick = function (index) {
+                $scope.data[index].isShowMore = false;
+            }
+            // 计算dom 是否显示更多
+            $scope.computedDOM = function () {
+                $scope.width = $('.thead-control-dire ul').eq(0).width();
+                var aUl = $('.thead-control-dire ul');
+                var childLengthCollection = [];
+                for (var i = 0, len = aUl.length; i < len; i++) {
+                    var child = aUl.eq(i).children('li');
+                    var childLen = child.length;
+                    var sum = 0;
+                    for (var j = 0; j < childLen; j++) {
+                        sum += child.eq(j).outerWidth() + $scope.mr;
+                    }
+                    childLengthCollection.push(sum);
+                }
+
+                childLengthCollection.forEach(function (val, index) {
+                    $scope.data[index].showMore = val > ($scope.width - 10)
+                });
+                $scope.$apply();
+            }
+
+            // document resize 
+            window.addEventListener('resize', function () {
+                if ($scope.show) $scope.computedDOM();
+            }, false);
         }
     });
 

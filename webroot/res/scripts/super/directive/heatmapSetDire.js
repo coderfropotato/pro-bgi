@@ -30,7 +30,7 @@ define("superApp.heatmapSetDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='dropdown'>" +
-                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow = !isShow' ng-class='{active:isShow}' title='设置'>" +
+                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow=true' ng-class='{active:isShow}' title='设置'>" +
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
@@ -63,7 +63,6 @@ define("superApp.heatmapSetDire",
                     getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
-                    scope.initOptions = angular.copy(scope.setOptions);
                 },
                 controller: "heatmapSetCtr"
             }
@@ -90,31 +89,15 @@ define("superApp.heatmapSetDire",
             }
             //确定
             $scope.confirm = function (option) {
-                var status = { top: false, bot: false };
-
                 confirmOptions = angular.copy(option);
-                // 判断 是和否有没有改变
-                if (confirmOptions.isShowName !== $scope.initOptions.isShowName || confirmOptions.isShowTopLine !== $scope.initOptions.isShowTopLine) {
-                    status.top = true;
-                }
-                // 判断顺序有没有改变
-                if (!angular.equals($scope.initOptions.sortNames, confirmOptions.sortNames)) {
-                    status.bot = true;
-                }
-
                 $scope.isShow = false;
-                if (status.top || status.bot) {
-                    $scope.initOptions = angular.copy(confirmOptions);
-                    console.log('变了')
-                    $scope.getSetOptions({ setObj: confirmOptions,status });
-                }
+                $scope.getSetOptions({ setObj: confirmOptions });
             }
 
             //取消
             $scope.cancel = function () {
                 $scope.setOptions = angular.copy(confirmOptions);
                 $scope.isShow = false;
-                console.log(confirmOptions);
             }
 
         }

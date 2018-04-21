@@ -23,9 +23,6 @@ define("superApp.reportPageTitleDire",
         superApp.controller("reportPageTitleCtr", reportPageTitleCtr);
         reportPageTitleCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService", "reportService"];
         function reportPageTitleCtr($rootScope, $scope, $log, $state, $window, $compile, ajaxService, toolService, reportService) {
-            console.log($scope.currentPageDirective);
-            console.log($rootScope.leftData);
-
             // 一级页面
             $scope.one = null;
             // 二级页面

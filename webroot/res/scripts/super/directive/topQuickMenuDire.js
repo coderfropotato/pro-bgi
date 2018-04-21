@@ -29,7 +29,6 @@ define("superApp.topQuickMenuDire",
         superApp.controller("topQuickMenuCtr", topQuickMenuCtr);
         topQuickMenuCtr.$inject = ["$rootScope","$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService", "reportService"];
         function topQuickMenuCtr($rootScope,$scope, $log, $state, $window, $compile, ajaxService, toolService, reportService) {
-            console.log($scope.quickMenuList)
             $scope.QuickMenu_OnClick = function (item) {
                 //如果点击的是当前选中的item，则什么都不执行
                 if (item.isActive) return;

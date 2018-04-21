@@ -55,6 +55,8 @@ define("superApp.theadControlDire",
                 // 按点击顺序存储选项
                 // 所有当前的选中项
                 $scope.activeByClick = [];
+                // 所有当前的取消项
+                $scope.cancelByClick = [];
                 // 是否显示面板
                 $scope.show = false;
                 // 历史所有选中的项
@@ -65,17 +67,19 @@ define("superApp.theadControlDire",
                 $scope.data.forEach(function (val, index) {
 
                     val.list.forEach(function (item, idx) {
-                        var json = {};
-                        json.name = item;
-                        json.isActive = false;
-                        val.list[idx] = json;
+                        item.isActive = false;
+                        // var json = {};
+                        // json.name = item;
+                        // json.isActive = false;
+                        // val.list[idx] = json;
                     });
-
                     // 根据length 初始化私有数据
                     $scope.activeByClick.push([]);
+                    $scope.cancelByClick.push([]);
                     $scope.allActiveItems.push([]);
                     $scope.beforeActiveItems.push([]);
                 });
+
             }
 
             // 初始化当前点击选中项数组
@@ -87,6 +91,14 @@ define("superApp.theadControlDire",
                 });
             }
 
+            // 初始化当前取消选中数组
+            $scope.initCancelByClick = function () {
+                $scope.cancelByClick.length = 0;
+
+                $scope.data.forEach(function (val, index) {
+                    $scope.cancelByClick.push([]);
+                });
+            }
 
             // 点击面板显示、隐藏
             $scope.toggleShow = function () {
@@ -104,8 +116,9 @@ define("superApp.theadControlDire",
                             }
                         }
                     });
-
+                } else {
                     $scope.initActiveByClick();
+                    $scope.initCancelByClick();
                 }
             }
 
@@ -126,11 +139,13 @@ define("superApp.theadControlDire",
                     }
                     // 删除历史选中的记录
                     $scope.allActiveItems[index].forEach(function (val, k) {
-                        if (val.name === item.name) $scope.allActiveItems[index].splice(k, 1);
+                        if (val.name === item.name) {
+                            $scope.allActiveItems[index].splice(k, 1);
+                        }
                     });
-                }
 
-                console.log($scope.allActiveItems);
+                    $scope.cancelByClick[index].push(item);
+                }
             }
 
             // 确定
@@ -141,6 +156,8 @@ define("superApp.theadControlDire",
                 $scope.remove = false;
                 // 默认重置点击选择的项
                 $scope.initActiveByClick();
+                // 默认重置取消选择的项
+                $scope.initCancelByClick();
                 // 收起面板
                 $scope.show = false;
 
@@ -162,7 +179,6 @@ define("superApp.theadControlDire",
                 $scope.initActiveByClick();
                 // 添加remove标记
                 $scope.remove = true;
-                console.log($scope.allActiveItems);
             }
 
             // 应用
@@ -185,6 +201,8 @@ define("superApp.theadControlDire",
                 }
                 // 默认重置点击选择的项
                 $scope.initActiveByClick();
+                // 默认重置取消选择的项
+                $scope.initCancelByClick();
                 // 回调 值改变了才回调
                 $scope.callback();
             }
@@ -199,13 +217,33 @@ define("superApp.theadControlDire",
                     // 根据历史选择记录 选中大数据
                     $scope.applyHistory();
                 } else {
-                    if (isEmpty($scope.activeByClick)) return;
-                    // 根据当前选择重置大数据
-                    $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data);
+                    if (isEmpty($scope.activeByClick) && isEmpty($scope.cancelByClick)) return;
+                    if (isEmpty($scope.activeByClick)) {
+                        // 把取消选中的项状态应用到原始数据
+                        $scope.cancelBycurrentActiveItems($scope.cancelByClick, $scope.data, true);
+
+                    } else {
+                        // 删除历史记录
+                        $scope.activeByClick.forEach(function (val, index) {
+                            if (val.length) {
+                                val.forEach(function (d, l) {
+                                    for (var i = 0; i < $scope.allActiveItems[index].length; i++) {
+                                        if (d.name === $scope.allActiveItems[index][i].name) {
+                                            $scope.allActiveItems[index].splice(i, 1);
+                                            break;
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                        // 根据当前选择重置大数据
+                        $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data, false);
+                    }
                 }
                 // 重置当前选择
                 $scope.initActiveByClick();
-                console.log($scope.allActiveItems);
+                // 默认重置取消选择的项
+                $scope.initCancelByClick();
             }
 
             // 重置所有状态
@@ -222,7 +260,7 @@ define("superApp.theadControlDire",
                 if (!angular.equals($scope.beforeActiveItems, $scope.allActiveItems)) {
                     // $scope.handleTheadChange && $scope.handleTheadChange(combineArr($scope.allActiveItems));
                     var items = $scope.classify($scope.allActiveItems);
-                    $scope.handleTheadChange && $scope.handleTheadChange({arg:items});
+                    $scope.handleTheadChange && $scope.handleTheadChange({ arg: items });
                     // 更新旧值为新值
                     $scope.beforeActiveItems = angular.copy($scope.allActiveItems);
                 }
@@ -288,18 +326,17 @@ define("superApp.theadControlDire",
             }
 
             // 根据当前选项  取消选中大数据
-            $scope.cancelBycurrentActiveItems = function (arr, parentarr) {
+            $scope.cancelBycurrentActiveItems = function (arr, parentarr, flag) {
                 arr.forEach(function (val, index) {
                     if (val.length) {
-                        for (var i = 0, len = parentarr.length; i < len; i++) {
-                            var curList = parentarr[i].list;
+                        for (var i = 0; i < val.length; i++) {
+                            var curList = parentarr[index].list;
                             for (var k = 0, l = curList.length; k < l; k++) {
-                                if (val.name === curList[k].name) {
-                                    curList[k].isActive = false;
+                                if (val[i].name === curList[k].name) {
+                                    curList[k].isActive = flag;
                                     break;
                                 }
                             }
-                            break;
                         }
                     }
                 })

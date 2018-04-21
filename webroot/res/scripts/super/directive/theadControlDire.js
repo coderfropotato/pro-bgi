@@ -26,7 +26,7 @@ define("superApp.theadControlDire",
                     + "<ul>"
                     + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item.name}}</li>"
                     + "</ul >"
-                    + "<div class=\"thead-title more\">更多</div>"
+                    // + "<div class=\"thead-title more\">更多</div>"
                     + "</li></ol>"
                     + "</div>"
                     + "<div class=\"thead-btns\">"

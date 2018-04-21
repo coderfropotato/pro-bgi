@@ -52,13 +52,12 @@ define("superApp.heatmapSetDire",
                     "</div>" +
                     "</ul>" +
                     " </div>" +
-                    "<button class='btn btn-success btn-sm opreatBtns' ng-click='confirm()'> 确定</button>" +
+                    "<button class='btn btn-success btn-sm opreatBtns' ng-click='confirm(setOptions)'> 确定</button>" +
                     "<button class='btn btn-default btn-sm opreatBtns' ng-click='cancel()'>取消</button>" +
                     "</div>" +
                     "</div>" +
                     "</div>",
                 scope: {
-                    rowNames: "=",
                     setOptions:"=",
                     getSetOptions: "&"
                 },
@@ -71,35 +70,35 @@ define("superApp.heatmapSetDire",
         superApp.controller("heatmapSetCtr", heatmapSetCtr);
         heatmapSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function heatmapSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-
-            $scope.confirmOptions = angular.copy($scope.setOptions);
+            
+            var confirmOptions = angular.copy($scope.setOptions);
 
             //上移
             $scope.upMove = function (item, index) {
-                var tmp = angular.copy($scope.rowNames[index - 1]);
-                $scope.rowNames[index - 1] = $scope.rowNames[index];
-                $scope.rowNames[index] = tmp;
+                var tmp = angular.copy($scope.setOptions.sortNames[index - 1]);
+                $scope.setOptions.sortNames[index - 1] = $scope.setOptions.sortNames[index];
+                $scope.setOptions.sortNames[index] = tmp;
             }
 
             //下移
             $scope.downMove = function (item, index) {
-                var tmp = angular.copy($scope.rowNames[index + 1]);
-                $scope.rowNames[index + 1] = $scope.rowNames[index];
-                $scope.rowNames[index] = tmp;
+                var tmp = angular.copy($scope.setOptions.sortNames[index + 1]);
+                $scope.setOptions.sortNames[index + 1] = $scope.setOptions.sortNames[index];
+                $scope.setOptions.sortNames[index] = tmp;
             }
             //确定
-            $scope.confirm = function () {
-                $scope.confirmOptions = angular.copy($scope.setOptions);
-                $scope.confirmOptions.sortNames = angular.copy($scope.rowNames);
+            $scope.confirm = function (option) {
+                confirmOptions = angular.copy(option);
                 $scope.isShowSetPanel = false;
-                $scope.getSetOptions({ setObj: $scope.confirmOptions });
+                $scope.getSetOptions({ setObj: confirmOptions });
+                console.log(confirmOptions);
             }
 
             //取消
             $scope.cancel = function () {
-                $scope.setOptions = angular.copy($scope.confirmOptions);
-                $scope.setOptions.sortNames = angular.copy($scope.confirmOptions.sortNames);
+                $scope.setOptions = angular.copy(confirmOptions);
                 $scope.isShowSetPanel = false;
+                console.log(confirmOptions);
             }
 
         }

@@ -30,7 +30,7 @@ define("superApp.heatmapSetDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='dropdown'>" +
-                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow = !isShow' ng-class='{active:isShow}' title='设置'>" +
+                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow=true' ng-class='{active:isShow}' title='设置'>" +
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
@@ -92,14 +92,12 @@ define("superApp.heatmapSetDire",
                 confirmOptions = angular.copy(option);
                 $scope.isShow = false;
                 $scope.getSetOptions({ setObj: confirmOptions });
-                console.log(confirmOptions);
             }
 
             //取消
             $scope.cancel = function () {
                 $scope.setOptions = angular.copy(confirmOptions);
                 $scope.isShow = false;
-                console.log(confirmOptions);
             }
 
         }

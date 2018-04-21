@@ -30,10 +30,10 @@ define("superApp.heatmapSetDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='dropdown'>" +
-                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShowSetPanel = !isShowSetPanel' ng-class='{active:isShowSetPanel}' title='设置'>" +
+                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow = !isShow' ng-class='{active:isShow}' title='设置'>" +
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
-                    " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShowSetPanel'>" +
+                    " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>是否显示行名称：</span><label><input type='radio' name='geneName' ng-value='true' ng-model='setOptions.isShowName'>是</label> <label><input type='radio' name='geneName' ng-value='false' ng-model='setOptions.isShowName' ng-checked='true'>否</label></p>" +
                     "<p><span>是否显示列聚类：</span><label><input type='radio' name='topCluster' ng-value='true' ng-model='setOptions.isShowTopLine' ng-checked='true'>是 </label><label><input type='radio' name='topCluster' ng-value='false'  ng-model='setOptions.isShowTopLine'>否</label> </p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
@@ -58,7 +58,8 @@ define("superApp.heatmapSetDire",
                     "</div>" +
                     "</div>",
                 scope: {
-                    setOptions:"=",
+                    isShow: "=",
+                    setOptions: "=",
                     getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
@@ -70,7 +71,7 @@ define("superApp.heatmapSetDire",
         superApp.controller("heatmapSetCtr", heatmapSetCtr);
         heatmapSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function heatmapSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            
+            $scope.isShow = false;
             var confirmOptions = angular.copy($scope.setOptions);
 
             //上移
@@ -89,7 +90,7 @@ define("superApp.heatmapSetDire",
             //确定
             $scope.confirm = function (option) {
                 confirmOptions = angular.copy(option);
-                $scope.isShowSetPanel = false;
+                $scope.isShow = false;
                 $scope.getSetOptions({ setObj: confirmOptions });
                 console.log(confirmOptions);
             }
@@ -97,7 +98,7 @@ define("superApp.heatmapSetDire",
             //取消
             $scope.cancel = function () {
                 $scope.setOptions = angular.copy(confirmOptions);
-                $scope.isShowSetPanel = false;
+                $scope.isShow = false;
                 console.log(confirmOptions);
             }
 

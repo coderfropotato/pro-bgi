@@ -1845,6 +1845,10 @@ a .icon-rotate-90:before, a .icon-rotate-180:before, a .icon-rotate-270:before, 
   content: "\f057";
 }
 
-.icon-check-square:before {
-  content: "\f14a";
+.icon-square-o:before {
+  content: "\f096";
+}
+
+.icon-check-square-o:before {
+  content: "\f046";
 }

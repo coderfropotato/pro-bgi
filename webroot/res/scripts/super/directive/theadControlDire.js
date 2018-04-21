@@ -424,7 +424,7 @@ define("superApp.theadControlDire",
                 }
 
                 childLengthCollection.forEach(function (val, index) {
-                    $scope.data[index].showMore = val > ($scope.width - 10)
+                    $scope.data[index].showMore = val > ($scope.width - 5)
                 });
                 $scope.$apply();
             }

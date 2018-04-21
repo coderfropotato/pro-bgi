@@ -26,7 +26,7 @@ define("superApp.theadControlDire",
                     + "<ul>"
                     + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item.name}}</li>"
                     + "</ul >"
-                    // + "<div class=\"thead-title more\">更多</div>"
+                    + "<div class=\"thead-title more\">更多</div>"
                     + "</li></ol>"
                     + "</div>"
                     + "<div class=\"thead-btns\">"
@@ -42,13 +42,19 @@ define("superApp.theadControlDire",
                 scope: {
                     data: "=",
                     handleTheadChange: "&"
+                },
+                link: function (scope, element, attrs) {
+                    scope.data.forEach(function (val, index) {
+                        val.showMore = false;
+                    });
+                    scope.oUlWidth = $(element);
                 }
             }
         }
 
         superApp.controller("theadControlCtr", theadControlCtr);
-        theadControlCtr.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
-        function theadControlCtr($scope, $log, $state, $window, $compile, ajaxService, toolService) {
+        theadControlCtr.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+        function theadControlCtr($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
 
             // 初始化数据
             $scope.initData = function () {
@@ -60,7 +66,7 @@ define("superApp.theadControlDire",
                 // 所有当前的取消项
                 $scope.cancelByClick = [];
                 // 是否显示面板
-                $scope.show = false;
+                $scope.show = true;
                 // 历史所有选中的项
                 $scope.allActiveItems = [];
                 // 记住之前传入回掉的激活项
@@ -81,7 +87,6 @@ define("superApp.theadControlDire",
                     $scope.allActiveItems.push([]);
                     $scope.beforeActiveItems.push([]);
                 });
-
             }
 
             // 初始化当前点击选中项数组
@@ -381,6 +386,12 @@ define("superApp.theadControlDire",
                     }
                 }
                 return { flag: false, index: null };
+            }
+
+
+            // 计算dom 是否显示更多
+            $scope.computedDOM = function () {
+                console.log($scope.oUlWidth);
             }
 
         }

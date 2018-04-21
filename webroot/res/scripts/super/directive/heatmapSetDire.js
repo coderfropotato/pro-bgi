@@ -60,9 +60,11 @@ define("superApp.heatmapSetDire",
                 scope: {
                     isShow: "=",
                     setOptions: "=",
+                    isRefresh:"=",
                     getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
+                    scope.initOptions = angular.copy(scope.setOptions);
                 },
                 controller: "heatmapSetCtr"
             }
@@ -72,7 +74,7 @@ define("superApp.heatmapSetDire",
         heatmapSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function heatmapSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.isShow = false;
-            var confirmOptions = angular.copy($scope.setOptions);
+            $scope.confirmOptions = angular.copy($scope.setOptions);
 
             //上移
             $scope.upMove = function (item, index) {
@@ -89,21 +91,27 @@ define("superApp.heatmapSetDire",
             }
             //确定
             $scope.confirm = function (option) {
-                confirmOptions = angular.copy(option);
+                $scope.confirmOptions = angular.copy(option);
                 $scope.isShow = false;
-                $scope.getSetOptions({ setObj: confirmOptions });
+                $scope.getSetOptions({ setObj: $scope.confirmOptions });
             }
 
             //取消
             $scope.cancel = function () {
-                $scope.setOptions = angular.copy(confirmOptions);
+                console.log($scope.confirmOptions);
+                $scope.setOptions = angular.copy($scope.confirmOptions);
                 $scope.isShow = false;
             }
 
+            $scope.$watch('isRefresh', function (newVal, oldVal) {
+                if (newVal) {
+                    $scope.confirmOptions = angular.copy($scope.initOptions);
+                    $scope.setOptions = angular.copy($scope.initOptions);
+
+                    console.log($scope.confirmOptions);
+                    console.log($scope.setOptions);
+                }
+            })
         }
-
-
-
-
     });
 

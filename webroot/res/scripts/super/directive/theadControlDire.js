@@ -47,7 +47,6 @@ define("superApp.theadControlDire",
                     scope.data.forEach(function (val, index) {
                         val.showMore = false;
                     });
-                    scope.oUlWidth = $(element);
                 }
             }
         }
@@ -88,6 +87,11 @@ define("superApp.theadControlDire",
                     $scope.beforeActiveItems.push([]);
                 });
             }
+
+            $timeout(function(){
+                console.log($('.thead-control-dire ul').width())
+            },30)
+
 
             // 初始化当前点击选中项数组
             $scope.initActiveByClick = function () {

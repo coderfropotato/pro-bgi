@@ -2,7 +2,7 @@
 <html lang="zh-CN" ng-controller="toolsController" ng-init="InitPage()">
 
 <head>
-    <title ng-bind="pageTitle"></title>
+    <title>古奥基因云计算v1.0 动态报告-小工具</title>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,8 +31,10 @@
 
 <body class="body_login">
     <div ng-if="loadingComplete">
-        tools
     </div>
+    <a ui-sref="heatmap">heatmap</a>
+    <a ui-sref="venn">venn</a>
+    <div ui-view></div>
     <div class="loading_mask" ng-hide="loadingComplete"></div>
     <div class="graph_loading" ng-hide="loadingComplete"><span class="icn"></span><br><span class="loadingMessage">正在加载，请稍候</span></div>
 </body>

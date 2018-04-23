@@ -36,8 +36,21 @@ define([
         "superApp.svgNewExportDire",
         "superApp.tableCopyDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", function ($logProvider, $httpProvider) {
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", function ($logProvider, $httpProvider, $stateProvider) {
         $logProvider.debugEnabled(true);
+        // router config 
+        $stateProvider
+            .state("home", { url: "/home", templateUrl: "./index.html" })
+            .state("heatmap", {
+                url: "/home/heatmap",
+                cache:"true",
+                templateUrl: "../tools/pages/heatmap.html",
+            })
+            .state("venn", {
+                url: "/home/venn",
+                cache:"true",
+                templateUrl: "../tools/pages/venn.html",
+            })
     }]);
     return toolsApp;
 })

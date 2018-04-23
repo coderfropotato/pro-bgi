@@ -41,7 +41,9 @@ require.config({
 
 
         'toolsApp': 'ps/tools/toolsApp',
-        'toolsController': 'ps/tools/toolsController'
+        'toolsController': 'ps/tools/toolsController',
+        "heatmapController": "ps/tools/pages/heatmapController",
+        "vennController": "ps/tools/pages/vennController",
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -61,7 +63,14 @@ require.config({
     }
 });
 
-require(['jQuery', 'angular', 'toolsApp', 'toolsController'], function (jquery, angular) {
+require([
+    'jQuery',
+    'angular', 
+    'toolsApp',
+    'toolsController',
+    "heatmapController",
+    "vennController"
+], function (jquery, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['toolsApp']);
     });

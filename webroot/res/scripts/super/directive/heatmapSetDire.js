@@ -91,9 +91,14 @@ define("superApp.heatmapSetDire",
             }
             //确定
             $scope.confirm = function (option) {
-                $scope.confirmOptions = angular.copy(option);
                 $scope.isShow = false;
+                $scope.confirmOptions = angular.copy(option);
+                if($scope.confirmOptions.isShowTopLine){
+                    $scope.confirmOptions.sortNames = angular.copy($scope.initOptions.sortNames);
+                    $scope.setOptions.sortNames = angular.copy($scope.initOptions.sortNames);
+                }
                 $scope.getSetOptions({ setObj: $scope.confirmOptions });
+                
             }
 
             //取消

@@ -98,7 +98,6 @@ define("superApp.heatmapSetDire",
 
             //取消
             $scope.cancel = function () {
-                console.log($scope.confirmOptions);
                 $scope.setOptions = angular.copy($scope.confirmOptions);
                 $scope.isShow = false;
             }
@@ -107,11 +106,9 @@ define("superApp.heatmapSetDire",
                 if (newVal) {
                     $scope.confirmOptions = angular.copy($scope.initOptions);
                     $scope.setOptions = angular.copy($scope.initOptions);
-
-                    console.log($scope.confirmOptions);
-                    console.log($scope.setOptions);
                 }
             })
+
         }
     });
 

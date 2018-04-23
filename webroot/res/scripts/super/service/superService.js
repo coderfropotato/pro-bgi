@@ -430,16 +430,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 ** 功能简介：弹出输入对话框，修改图的标题
                 ** 参数说明：
                 **      popTitle:确认框左上角的标题
-                        trans_y:top偏移
                 **      textNode：文本node
                 **         value：输入框的value
                 **      dialogClass:
                 **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
                 **          如果不传，默认为dialog-default
             */
-            this.popPrompt = function (popTitle, textNode, value, trans_y, dialogClass, top, width, height) {
+            this.popPrompt = function (popTitle, textNode, value, dialogClass, top, width, height) {
                 top = top ? top : 100;
-                trans_y = trans_y ? trans_y : 0;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
@@ -447,7 +445,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div><input type='text' id='TextInput' value='" + value + "' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popPrompt'><input type='text' id='TextInput' value='" + value + "' class='form-control'><span ng-show='isError' class='errorInfo'>不能为空，请输入名称</span></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     title: popTitle,
@@ -456,14 +454,44 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     height: _height,
                     scope: $rootScope,
                     controller: function ($rootScope) {
+                        $rootScope.isError = false;
                         $rootScope.confirm = function () {
                             var val = $("#TextInput").val();
-                            if (val != null && val != "") {
+                            var allNullExp = /^[ ]+$/;
+                            if (val == null || val == "" || allNullExp.test(val)) {
+                                $rootScope.isError = true;
+                            } else{
                                 value = val;
+                                ngDialog.close();
                             }
                             textNode.textContent = value;
 
-                            ngDialog.close();
+                        };
+                    }
+                });
+            };
+
+            this.popAnalysis = function (popTitle, value, dialogClass, top, width, height) {
+                top = top ? top : 100;
+                var _width = width ? width - 24 : 450;
+                var _height = height ? height - 24 - 27 : 'auto';
+                popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
+                value = (angular.isUndefined(value) || value == "") ? "请输入" : value;
+                dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
+                ngDialog.open({
+                    plain: true,
+                    template: "<div class='popAnalysis'><div><button class='popTitle'>任务命名</button><span>'"+ value +"'</span></div><div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item'></li></ul></div><div><button class='popTitle'>资源</button><span>'"+ value +"'</span></div></div>    <div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    className: "ngdialog-theme-default",
+                    dialogClass: dialogClass,
+                    title: popTitle,
+                    top: top,
+                    width: _width,
+                    height: _height,
+                    scope: $rootScope,
+                    controller: function ($rootScope) {
+                        $rootScope.chooseList = ["sample1","sample222","abc"];
+                        $rootScope.confirm = function () {
+                           
                         };
                     }
                 });

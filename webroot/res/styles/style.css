@@ -3157,6 +3157,10 @@ div.tipsContainer {
     left: 1px;
     border-right: 10px white solid;
 }
+.popPrompt .errorInfo{
+    color:red;
+    font-size:14px
+}
 
 /* 颜色选择器样式--reportService */
 .backDiv{
@@ -3301,4 +3305,41 @@ div.tipsContainer {
 }
 .sortDiv{
     padding: 5px;
+}
+
+/* 重分析弹窗样式 */
+.popAnalysis .popTitle{
+    background-color: #108CEE;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    margin-right: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 6px;
+    width: 75px;
+}
+.popTitle span{
+    vertical-align: middle;
+    font-size: 15px;
+}
+.popAnalysis .dataChoose ul::after{
+    content:'';
+    display: block;
+    clear: both;
+}
+.dataChoose ul li {
+    float: left;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    margin-right: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 6px;
+}
+.dataChoose button {
+    float:left;
 }

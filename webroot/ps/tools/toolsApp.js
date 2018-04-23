@@ -43,12 +43,10 @@ define([
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmap", {
                 url: "/home/heatmap",
-                cache:"true",
                 templateUrl: "../tools/pages/heatmap.html",
             })
             .state("venn", {
                 url: "/home/venn",
-                cache:"true",
                 templateUrl: "../tools/pages/venn.html",
             })
     }]);

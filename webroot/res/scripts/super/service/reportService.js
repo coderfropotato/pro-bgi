@@ -859,9 +859,9 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         }
                     })
 
-                },
-
+                }
             }
+
             //阻止冒泡
             function clearEventBubble(evt) {
                 if (evt.stopPropagation) {
@@ -877,6 +877,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 }
 
             }
+
         }
 
 

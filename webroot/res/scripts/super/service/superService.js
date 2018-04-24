@@ -479,7 +479,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>任务命名</button><span>" + taskInfo.name + "</span></div><div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>任务命名</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>类型</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div><div class='noChooseSpan' ng-hide='isChoose'>请至少选择一种数据</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     title: popTitle,
@@ -488,14 +488,49 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     height: _height,
                     scope: $rootScope,
                     controller: function ($rootScope) {
+                        $rootScope.isChoose = true;
+                        //数据
+                        $rootScope.data = taskInfo.data;
                         $rootScope.chooseList = [];
-                        var chooseList = taskInfo.chooseList;
+
+                        for (var i = 0; i < $rootScope.data.length; i++) {
+                            $rootScope.data[i].isChecked = false;
+                        }
+
+                        //默认
+                        $rootScope.data[0].isChecked = true;
+
+                        var chooseList = $rootScope.data[0].chooseList;
                         for (var i = 0; i < chooseList.length; i++) {
                             $rootScope.chooseList.push({
                                 name: chooseList[i],
                                 isChecked: false
                             })
                         }
+                        $rootScope.chooseList[0].isChecked = true;
+
+                        // 类型选择
+                        $rootScope.chooseType = function (item) {
+                            chooseList = [];
+                            $rootScope.chooseList = [];
+
+                            for (var i = 0; i < $rootScope.data.length; i++) {
+                                $rootScope.data[i].isChecked = false;
+                            }
+
+                            item.isChecked = true;
+                            chooseList = item.chooseList;
+
+                            for (var i = 0; i < chooseList.length; i++) {
+                                $rootScope.chooseList.push({
+                                    name: chooseList[i],
+                                    isChecked: false
+                                })
+                            }
+                            $rootScope.chooseList[0].isChecked = true;
+
+                        }
+
 
                         //数据选择
                         $rootScope.chooseData = function (item) {
@@ -505,12 +540,18 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //确定
                         $rootScope.confirm = function () {
                             var checkedItems = [];
-                            for(var i=0;i<$rootScope.chooseList.length;i++){
-                                if($rootScope.chooseList[i].isChecked){
+                            for (var i = 0; i < $rootScope.chooseList.length; i++) {
+                                if ($rootScope.chooseList[i].isChecked) {
                                     checkedItems.push($rootScope.chooseList[i].name);
                                 }
                             }
-                            ngDialog.close();
+                            if (checkedItems.length == 0) {
+                                $rootScope.isChoose = false;
+                            } else {
+                                $rootScope.isChoose = true;
+                                ngDialog.close();
+                                return checkedItems;
+                            }
                         };
                     }
                 });

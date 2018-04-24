@@ -3332,6 +3332,11 @@ div.tipsContainer {
     display: block;
     clear: both;
 }
+.popAnalysis .noChooseSpan{
+color:red;
+font-size:14px;
+text-align: center;
+}
 .dataChoose ul li {
     float: left;
     padding: 4px 8px;

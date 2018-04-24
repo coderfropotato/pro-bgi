@@ -1787,7 +1787,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             ** 返回类型：pageFindEntity
             ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
             */
-            this.SetGridFilterFindEntity = function (pageFindEntity, filterName, filtertype, searchType, searchOne) {
+            this.SetGridFilterFindEntity = function (pageFindEntity, filterName, filtertype, searchType, searchOne, isTopFilter) {
                 if (filterName == "") {
                     return pageFindEntity;
                 }
@@ -1804,6 +1804,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         sortType: "",                                   //排序类型，暂时没用
                         isTopFilter: true                                //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
                     };
+                    if (isTopFilter === 'false') {
+                        tempFindEntity.isTopFilter = false;
+                    }
                     //判断有没有，如果没有则添加，有则更新
                     var isAddFlag = true;
                     //$log.log(pageFindEntity.searchContentList);
@@ -1856,7 +1859,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 var filterText = [];
                 var sortText = "";
                 var filterType = "";
-
                 //angular.forEach(pageFindEntity.searchContentList, function (item, key)
                 if (pageFindEntity.searchContentList.length > 0) {
 

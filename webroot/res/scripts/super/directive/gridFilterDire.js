@@ -481,8 +481,8 @@ define("superApp.gridFilterDire",
         };
 
         superApp.controller("gridFilterBeginController", gridFilterBeginController);
-        gridFilterBeginController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
-        function gridFilterBeginController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
+        gridFilterBeginController.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+        function gridFilterBeginController($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
             $scope.clearFilter = function () {
                 //清空
                 $scope.shaiXuanIsActive = true;
@@ -492,26 +492,29 @@ define("superApp.gridFilterDire",
             // 检查table数据变动，改变新数据的筛选状态
             // Add:2018年3月23日14:27:04
             $scope.$watch('tablehead', function (newValue, oldValue) {
-                if (!newValue) return;
-                if (!angular.equals(newValue, oldValue)) {
-                    // TODO
-                    // 需要知道原始的表头（无新增和删除）
-                    // 选择出新增的和删除的
-                    // 新增 在之前的length后编译新增的表头
-                    // 删除 遍历searchContentList 删除对应的查询条件
-                    // 重新获取数据
-                    var flag = !oldValue ? true : newValue.length > oldValue.length;
-                    if ($scope.shaiXuanIsActive) {
-                        if (flag) {
-                            var count = oldValue ? oldValue.length : 0;
-                            var gridPanel = $("#" + $scope.tableid);
-                            for (var i = count; i < newValue.length; i++) {
-                                var el = $(gridPanel).find(".grid_filter_panel").eq(i);
-                                $scope.compileTemplate(el, i);
+                // dom渲染完再渲染
+                $timeout(function () {
+                    if (!newValue) return;
+                    if (!angular.equals(newValue, oldValue)) {
+                        // TODO
+                        // 需要知道原始的表头（无新增和删除）
+                        // 选择出新增的和删除的
+                        // 新增 在之前的length后编译新增的表头
+                        // 删除 遍历searchContentList 删除对应的查询条件
+                        // 重新获取数据
+                        var flag = !oldValue ? true : newValue.length > oldValue.length;
+                        if ($scope.shaiXuanIsActive) {
+                            if (flag) {
+                                var count = oldValue ? oldValue.length : 0;
+                                var gridPanel = $("#" + $scope.tableid);
+                                for (var i = count; i < newValue.length; i++) {
+                                    var el = $(gridPanel).find(".grid_filter_panel").eq(i);
+                                    $scope.compileTemplate(el, i);
+                                }
                             }
                         }
                     }
-                }
+                }, 30)
             }, true);
 
             // 编译模板

@@ -3308,6 +3308,9 @@ div.tipsContainer {
 }
 
 /* 重分析弹窗样式 */
+.popAnalysis span{
+    font-size:14px!important;
+}
 .popAnalysis .popTitle{
     background-color: #108CEE;
     color: #fff;
@@ -3340,6 +3343,14 @@ div.tipsContainer {
     text-align: center;
     margin-bottom: 6px;
 }
+.dataChoose ul li:hover,.dataChoose ul li.active{
+    background-color: rgb(91, 177, 243);
+    color:#ffffff;
+}
 .dataChoose button {
     float:left;
+}
+
+.taskName ,.dataChoose ,.resources{
+    margin:10px;
 }

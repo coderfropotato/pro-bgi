@@ -13,7 +13,7 @@ define("superApp.analysisPopDire",
             return {
                 restrict: "ACE",
                 template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
-                    + "<span ng-show=\"analysisList.length\" class=\"analysis-title\">my analysis</span>"
+                    + "<span ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析</span>"
                     // + "<table class=\"table table-hover\">"
                     // + "<thead>"
                     // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"

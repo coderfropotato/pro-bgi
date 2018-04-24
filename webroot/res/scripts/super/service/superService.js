@@ -471,6 +471,16 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 });
             };
 
+             /*
+                ** 功能简介：聚类重分析弹窗
+                ** 参数说明：
+                **      taskInfo：数据
+                **      popTitle:确认框左上角的标题
+                **      dialogClass:
+                **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
+                **          如果不传，默认为dialog-default
+            */
+
             this.popAnalysis = function (taskInfo, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;

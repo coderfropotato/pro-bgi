@@ -51,7 +51,10 @@ define("superApp.reportDire",
             $scope.topNav_Mobile_Toggle = function () {
                 $scope.topMobile_IsOpen = !$scope.topMobile_IsOpen;
             }
-
+            $scope.myAnalysisClick=function(){
+                toolService.sessionStorage.set('type', 'myAnalysis');
+                $window.open('../tools/index.html');
+            }
             $scope.GoHome = function () {
                 $timeout(function () {
                     var oUl = document.getElementsByClassName('sidebar_nav_pop')[0];

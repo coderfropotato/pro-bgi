@@ -49,6 +49,10 @@ define([
                 url: "/home/venn",
                 templateUrl: "../tools/pages/venn.html",
             })
+            .state("myAnalysis", {
+                url: "/home/myAnalysis",
+                templateUrl: "../tools/pages/myAnalysis.html",
+            })
     }]);
     return toolsApp;
 })

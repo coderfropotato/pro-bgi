@@ -44,6 +44,7 @@ require.config({
         'toolsController': 'ps/tools/toolsController',
         "heatmapController": "ps/tools/pages/heatmapController",
         "vennController": "ps/tools/pages/vennController",
+        "myAnalysisController":"ps/tools/pages/myAnalysisController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -69,7 +70,8 @@ require([
     'toolsApp',
     'toolsController',
     "heatmapController",
-    "vennController"
+    "vennController",
+    "myAnalysisController"
 ], function (jquery, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['toolsApp']);

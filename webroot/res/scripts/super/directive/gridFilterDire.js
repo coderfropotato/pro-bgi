@@ -42,7 +42,10 @@ define("superApp.gridFilterDire",
                     //filtertype：datetime、 string、double [default]、int
                     scope.filtertype = attrs.filtertype;
                     scope.parentId = attrs.parentid
-                    // 如果没有提供外部查询参数
+                    // 接受外部查询参数
+                    scope.searchType = attrs.searchtype;
+                    scope.searchOne = attrs.searchone;
+
                     scope.filterFindEntity = {
                         filterName: scope.filterName,           //查询字段名字
                         filternamezh: scope.filternamezh,       //查询字段中文
@@ -86,7 +89,12 @@ define("superApp.gridFilterDire",
                         $(tsgPanel).find(".filter_text").html("文本检索");
                     }
 
-
+                    // 应用自定义查询条件
+                    if (scope.searchOne && scope.filterFindEntity.filterName === 'GeneID') {
+                        scope.filterFindEntity.searchOne = scope.searchOne;
+                        scope.filterFindEntity.searchType = scope.searchType;
+                        console.log(scope.filterFindEntity)
+                    }
                     //点击小箭头过滤面版
                     $(element).find(".tsg_btns .btn:eq(0)").click(function (event) {
                         //先把页面上所有的过滤面板隐藏掉
@@ -168,8 +176,8 @@ define("superApp.gridFilterDire",
         };
 
         superApp.controller("gridFilterController", gridFilterController);
-        gridFilterController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
-        function gridFilterController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
+        gridFilterController.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+        function gridFilterController($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
             $scope.placeholderOne = "请输入您要查询的关键字";
             $scope.placeholderTwo = "请输入您要查询的关键字";
             //是否范围查询标识
@@ -198,6 +206,12 @@ define("superApp.gridFilterDire",
                 searchTwo: "",                          //查询内容2
                 isTopFilter: false                      //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
             }
+
+            // 触发自定义查询参数的点击事件
+            $timeout(function () {
+                if ($scope.searchOne) $scope.btn_QueDing_OnClick();
+            }, 30);
+
             //确定按钮点击事件
             $scope.btn_QueDing_OnClick = function () {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
@@ -210,7 +224,6 @@ define("superApp.gridFilterDire",
             $scope.QueDing_CallEvent = function () {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
-
                 $scope.filterFindEntity.filterName = $scope.filterName;
                 $scope.filterFindEntity.filternamezh = $scope.filternamezh;
                 $scope.filterFindEntity.filtertype = $scope.filtertype;
@@ -461,8 +474,9 @@ define("superApp.gridFilterDire",
                 scope: {
                     callback: "&",           //开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
                     clearFilter: "=",         //关闭筛选
+                    searchOne: "=",
+                    searchType: "=",
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
-                    delete: "="               // 删除的表头
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
                     + "                    <span class=\"iconglyph icon-filter\"></span></button>",
@@ -496,12 +510,6 @@ define("superApp.gridFilterDire",
                 $timeout(function () {
                     if (!newValue) return;
                     if (!angular.equals(newValue, oldValue)) {
-                        // TODO
-                        // 需要知道原始的表头（无新增和删除）
-                        // 选择出新增的和删除的
-                        // 新增 在之前的length后编译新增的表头
-                        // 删除 遍历searchContentList 删除对应的查询条件
-                        // 重新获取数据
                         var flag = !oldValue ? true : newValue.length > oldValue.length;
                         if ($scope.shaiXuanIsActive) {
                             if (flag) {
@@ -517,6 +525,16 @@ define("superApp.gridFilterDire",
                 }, 30)
             }, true);
 
+            // watch searchOne
+            $scope.$watch('searchOne', function (newVal, oldVal) {
+                if (!angular.equals(newVal, oldVal)) {
+                    $timeout(function () {
+                        var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
+                        $scope.compileTemplate(curPanel, 0);
+                    }, 30);
+                }
+            }, true);
+
             // 编译模板
             // Modified:2018年3月23日14:27:40
             $scope.compileTemplate = function (el, index) {
@@ -528,12 +546,18 @@ define("superApp.gridFilterDire",
                 var filternamezh = el.attr("filternamezh");
                 //查询字段类型 filtertype：datetime、 string、double、int、boolean（新增）
                 var filtertype = el.attr("filtertype");
+
+                // 接受自定义参数
+                var searchType = el.attr('searchtype');
+                var searchOne = el.attr('searchone');
                 if (filtertype == undefined) filtertype = "double";
                 var filterDireID = "div_filterDire_" + $scope.tableid + "_" + index;
                 tempDirHtmlStr = " <div id=\"" + filterDireID + "\" class=\"grid-filter\" "
                     + " filtername=\"" + filtername + "\" "
                     + " filternamezh=\"" + filternamezh + "\" "
                     + " filtertype=\"" + filtertype + "\" "
+                    + " searchtype=\"" + $scope.searchType + "\" "
+                    + " searchone=\"" + $scope.searchOne + "\" "
                     + " callback=\"" + $scope.callbackname + "(arg1)\" "
                     + " parentid=\"" + $scope.parentId + "\" "
                     + " icon=\"sort_arrow\" tableid=\"" + $scope.tableid + "\"></div>";
@@ -541,7 +565,7 @@ define("superApp.gridFilterDire",
 
                 // 清除原来的结构 加了表格监听以后隐藏列的时候没有清空，所以新增的时候清空一下，避免出错。
                 // Add：2018年3月23日14:30:08 
-                el.innerHTML = '';
+                el.html('');
 
                 el.append($directiveObj);
                 angular.element(document).injector().invoke(["$compile", function ($compile) {

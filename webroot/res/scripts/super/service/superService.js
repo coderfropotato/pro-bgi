@@ -471,17 +471,17 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 });
             };
 
-             /*
-                ** 功能简介：聚类重分析弹窗
-                ** 参数说明：
-                **      taskInfo：数据
-                **      popTitle:确认框左上角的标题
-                **      dialogClass:
-                **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
-                **          如果不传，默认为dialog-default
-            */
+            /*
+               ** 功能简介：聚类重分析弹窗 <肖芳>
+               ** 参数说明：
+               **      taskInfo：数据
+               **      popTitle:确认框左上角的标题
+               **      dialogClass:
+               **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
+               **          如果不传，默认为dialog-default
+           */
 
-            this.popAnalysis = function (taskInfo, popTitle, dialogClass, top, width, height) {
+            this.popAnalysis = function (taskInfo, callback, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -550,6 +550,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //确定
                         $rootScope.confirm = function () {
                             var checkedItems = [];
+                            var type = "";
+                            
                             for (var i = 0; i < $rootScope.chooseList.length; i++) {
                                 if ($rootScope.chooseList[i].isChecked) {
                                     checkedItems.push($rootScope.chooseList[i].name);
@@ -559,8 +561,15 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 $rootScope.isChoose = false;
                             } else {
                                 $rootScope.isChoose = true;
+                                // 回调
+                                for(var i=0;i< $rootScope.data.length;i++){
+                                    if($rootScope.data[i].isChecked){
+                                        type = $rootScope.data[i].name;
+                                        break;
+                                    }
+                                }
+                                callback && callback(type,checkedItems);
                                 ngDialog.close();
-                                return checkedItems;
                             }
                         };
                     }

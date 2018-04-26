@@ -35,11 +35,11 @@ define("superApp.heatmapSetDire",
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
-                    "<p><span>是否显示列聚类：</span>"+
-                    "<div class='onoffswitch switch-one' ng-click='handlerSwitchOneClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "<p><span>行名称：</span>"+
+                    "<div class='onoffswitch' ng-click='handlerSwitchOneClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
                     "</p>" +
-                    "<p><span>是否显示行名称：</span>"+
-                    "<div class='onoffswitch switch-two' ng-click='handlerSwitchTwoClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "<p><span>列聚类：</span>"+
+                    "<div class='onoffswitch' ng-click='handlerSwitchTwoClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
                     "</p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
                     "<div class='heatSort'>" +

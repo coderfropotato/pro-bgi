@@ -86,8 +86,23 @@ define("superApp.colorSelectorDire",
                 }
             }
 
+            //阻止冒泡
+            function clearEventBubble(evt) {
+                if (evt.stopPropagation) {
+                    evt.stopPropagation();
+                } else {
+                    evt.cancelBubble = true;
+                }
+
+                if (evt.preventDefault) {
+                    evt.preventDefault();
+                } else {
+                    evt.returnValue = false;
+                }
+            }
+
             $scope.SetColor = function ($event, color) {
-                $event.stopPropagation();
+                clearEventBubble($event);
                 var curColor = RGBToHex(color);
                 $scope.isShow = false;
 

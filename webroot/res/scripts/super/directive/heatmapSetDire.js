@@ -36,10 +36,10 @@ define("superApp.heatmapSetDire",
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>行名称：</span>"+
-                    "<div class='onoffswitch' ng-click='handlerSwitchOneClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "<div class='onoffswitch' ng-click='handlerSwitchOneClick()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
                     "</p>" +
                     "<p><span>列聚类：</span>"+
-                    "<div class='onoffswitch' ng-click='handlerSwitchTwoClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "<div class='onoffswitch' ng-click='handlerSwitchTwoClick()'><input type='checkbox' id='twoOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='twoOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
                     "</p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
                     "<div class='heatSort'>" +

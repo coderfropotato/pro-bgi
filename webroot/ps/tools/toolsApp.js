@@ -12,10 +12,18 @@ define([
     "superApp.selectRangeDire",
     "superApp.gridExportDire",
     "superApp.selectColorDire",
+    "superApp.colorSelectorDire",
+    "superApp.heatmapSetDire",
     "superApp.imgExportDire",
     "superApp.tokenInterceptorFactory",
     "superApp.svgNewExportDire",
-    "superApp.tableCopyDire"
+    "superApp.tableCopyDire",
+    "superApp.theadControlDire",
+    "superApp.analysisPopDire",
+    "superApp.topQuickMenuDire",
+    "superApp.reportPageTitleDire",
+    "superApp.reportPageSubTitleDire",
+    "superApp.reAnalysisDire"
 ], function () {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
@@ -31,10 +39,18 @@ define([
         "superApp.selectRangeDire",
         "superApp.gridExportDire",
         "superApp.selectColorDire",
+        "superApp.colorSelectorDire",
+        "superApp.heatmapSetDire",
         "superApp.imgExportDire",
         "superApp.tokenInterceptorFactory",
         "superApp.svgNewExportDire",
-        "superApp.tableCopyDire"
+        "superApp.tableCopyDire",
+        "superApp.theadControlDire",
+        "superApp.analysisPopDire",
+        "superApp.topQuickMenuDire",
+        "superApp.reportPageTitleDire",
+        "superApp.reportPageSubTitleDire",
+        "superApp.reAnalysisDire"
     ]);
     toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", function ($logProvider, $httpProvider, $stateProvider) {
         $logProvider.debugEnabled(true);

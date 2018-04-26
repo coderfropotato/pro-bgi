@@ -1833,7 +1833,7 @@ function (angular, SUPER_CONSOLE_MESSAGE) {
     ** 创建日期：2016-2-29
     ** 功能简介：日期选择控件
     */
-    superApp.directive('datepicker', datepickerDirective);
+    superApp.directive('datetimepicker', datepickerDirective);
     datepickerDirective.$inject = ["$log"];
     function datepickerDirective($log) {
         return {

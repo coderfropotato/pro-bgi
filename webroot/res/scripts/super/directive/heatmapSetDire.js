@@ -34,9 +34,13 @@ define("superApp.heatmapSetDire",
                     "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow=true' ng-class='{active:isShow}' title='设置'>" +
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
-                    " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
-                    "<p><span>是否显示行名称：</span><span ng-show='setOptions.isShowName'>是</span><span ng-show='!setOptions.isShowName'>否</span><span ng-click='handlerShowNameClick()' ng-class=\"{'active':setOptions.isShowName}\" class='switch'><span class='circle' ng-class=\"{'active':setOptions.isShowName}\"></span><span></p>" +
-                    "<p><span>是否显示列聚类：</span><span ng-show='setOptions.isShowTopLine'>是</span><span ng-show='!setOptions.isShowTopLine'>否</span><span ng-click='handlerShowLineClick()' ng-class=\"{'active':setOptions.isShowTopLine}\" class='switch'><span class='circle' ng-class=\"{'active':setOptions.isShowTopLine}\"></span><span></p>" +
+                    " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
+                    "<p><span>是否显示列聚类：</span>"+
+                    "<div class='onoffswitch switch-one' ng-click='handlerSwitchOneClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "</p>" +
+                    "<p><span>是否显示行名称：</span>"+
+                    "<div class='onoffswitch switch-two' ng-click='handlerSwitchTwoClick()'><input type='checkbox' id='myonoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='myonoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
+                    "</p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
                     "<div class='heatSort'>" +
                     "<ul>" +
@@ -116,15 +120,12 @@ define("superApp.heatmapSetDire",
                 }
             })
 
-            // showname switch click 
-            $scope.handlerShowNameClick = function () {
-                $scope.setOptions.isShowName = !$scope.setOptions.isShowName;
+            $scope.handlerSwitchOneClick = function () {
+                $scope.setOptions.isShowName = !$scope.setOptions.isShowName ;
             }
-            
-            // showTopLine switch click
-            $scope.handlerShowLineClick = function () {
-                $scope.setOptions.isShowTopLine = !$scope.setOptions.isShowTopLine;
+            $scope.handlerSwitchTwoClick = function () {
+                $scope.setOptions.isShowTopLine = !$scope.setOptions.isShowTopLine ;
             }
-        }
+      }
     });
 

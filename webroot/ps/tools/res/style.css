@@ -35,7 +35,8 @@
 }
 
 .btns {
-    padding: 12px 24px;
+    padding: 12px 20px;
+    position: relative;
 }
 
 .btn-tools {
@@ -72,7 +73,7 @@
     opacity: 1.0;
 }
 
-.btn-tools.btn-tools-default:hover {
+.btn-tools.btn-tools-default:hover,.btn-tools.btn-tools-default.active {
     color: #FFFFFF;
     background-color: #666666;
 }
@@ -83,7 +84,7 @@
     color: #BCC0CD;
 }
 
-.tools-body .table_noData{
+.tools-body .table_noData {
     border-top-width: 1px;
 }
 
@@ -91,25 +92,103 @@
     background-color: #EBF5FD!important;
 }
 
-.filter{
-    position:relative;
+.filter {
+    position: relative;
     height: 27px;
 }
-.filter input{
+
+.filter input {
     height: inherit;
     font-size: 14px;
     line-height: 27px;
     outline: none;
     padding-left: 24px;
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     transition: .3s all ease;
     border-radius: 2px;
 }
-.filter input:focus{
+
+.filter input:focus {
     border-color: #666666;
 }
-.filter i{
+
+.filter i {
     position: absolute;
     left: 4px;
     top: 5px;
+}
+
+.advance-panel  {
+    position: absolute;
+    top: 44px;
+    right: 20px;
+    padding: 18px;
+    width: 408px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0 0 10px 0 #ccc;
+    background-color: #FFFFFF;
+    z-index: 10;
+}
+
+.advance-panel ul>li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #CDD0DA;
+}
+
+.advance-panel ul>li span {
+    width: 74px;
+}
+
+.advance-panel ul>li ol {
+    flex: 1;
+}
+
+.advance-panel ul>li ol:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.advance-panel ul>li ol li {
+    float: left;
+    font-size: 14px;
+    padding: 1px 6px;
+    border: 1px solid #E8E8E8;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #333333;
+    text-align: center;
+    width: 60px;
+    transition: 0.3s all ease;
+}
+
+.advance-panel ul>li ol li:hover,.advance-panel ul ol.date li input:focus {
+    border-color: #333;
+}
+
+.advance-panel ul>li:first-child ol li {
+    width: 120px;
+}
+
+.advance-panel ul ol.date li {
+    padding:1px 0;
+    width: auto;
+    border: none;
+}
+.advance-panel ul ol.date li input{
+    transition: .3s all ease;
+    padding-left: 6px;
+    height: 30px;
+    line-height: 30px;
+    width: 120px;
+    border: 1px solid #E8E8E8;
+}
+.advance-panel button{
+    line-height: 16px;
 }

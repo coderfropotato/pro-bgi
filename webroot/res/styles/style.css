@@ -3312,6 +3312,7 @@ div.tipsContainer {
     display: inline-block;
     position: relative;
     width: 82px;
+    top:14px;
   }
   .onoffswitch-checkbox {
     display: none;
@@ -3365,20 +3366,10 @@ div.tipsContainer {
   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
   }
-
-  .switchpanel{
-      position:relative;
+  .switchpanel >P {
+      display:inline-block;
+      margin-right:20px;
   }
-  .switch-one{
-      position:absolute;
-      top:10px;
-      right:22px;
-  }
-  .switch-two{
-    position:absolute;
-    top:46px;
-    right:22px;
-}
 /* 重分析弹窗样式 */
 .popAnalysis span{
     font-size:14px!important;

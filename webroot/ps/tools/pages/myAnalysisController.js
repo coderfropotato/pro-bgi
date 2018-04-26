@@ -59,6 +59,8 @@ define(['toolsApp'], function (toolsApp) {
                     }
                 ]
             };
+            // 是否显示查询面板
+            $scope.isFilter = false;
             // 查询参数
             $scope.analysisEntity = {
                 LCID: toolService.sessionStorage.get("LCID"),
@@ -106,5 +108,27 @@ define(['toolsApp'], function (toolsApp) {
                 toolService.gridFilterLoading.close("myanalysis-table");
             })
         }
+
+        // 高级筛选
+        $scope.handlerAdvanceClick = function (event) {
+            $scope.isFilter = !$scope.isFilter;
+            event.stopPropagation();
+        }
+
+        // 筛选面板点击事件
+        $scope.handlerFilterPanelClick = function (event) {
+            event.stopPropagation();
+        }
+
+        // 筛选
+        $scope.handlerFilterClick = function () {
+            $scope.isFilter = false;
+        }
+
+        // document click close filter panel
+        document.addEventListener('click', function () {
+            $scope.isFilter = false;
+            $scope.$apply();
+        }, false);
     }
 });

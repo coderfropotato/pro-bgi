@@ -18,6 +18,7 @@ require.config({
         "heatmap": "res/scripts/lib/Highcharts/4.2.1/modules/heatmap",
         "highcharts-data": "res/scripts/lib/Highcharts/4.2.1/modules/data",
         "d3": "res/scripts/lib/d3/build/d3",
+        "angularjs-date-picker":"res/scripts/lib/angularjs-datepicker/angular-datepicker.min",
 
         "super.superMessage": "config",
         "superApp.superDire": "res/scripts/super/directive/superDire",
@@ -70,7 +71,8 @@ require.config({
         "ngCookies": { deps: ["angular"] },
         "ui.router": { deps: ["angular"] },
         "treeControl": { deps: ["angular"] },
-        "d3": { exports: "d3" }
+        "d3": { exports: "d3" },
+        "angularjs-date-picker":{deps:["angular"]}
     }
 });
 

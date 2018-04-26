@@ -1,6 +1,7 @@
 define([
     "ui.router",
     "treeControl",
+    "angularjs-date-picker",
     "superApp.superDire",
     "superApp.superService",
     "superApp.reportDire",
@@ -28,6 +29,7 @@ define([
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
         "treeControl",
+        "720kb.datepicker",
         "superApp.superDire",
         "superApp.superService",
         "superApp.reportDire",

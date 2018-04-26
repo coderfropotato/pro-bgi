@@ -26,6 +26,7 @@ define("superApp.heatmapSetDire",
         superApp.directive('heatmapSet', heatmapSetDirective);
         heatmapSetDirective.$inject = ["$log"];
         function heatmapSetDirective($log) {
+            // <label><input type='radio' name='geneName' ng-value='true' ng-model='setOptions.isShowName'>是</label> <label><input type='radio' name='geneName' ng-value='false' ng-model='setOptions.isShowName' ng-checked='true'>否</label>
             return {
                 restrict: "ACE",
                 replace: true,
@@ -34,8 +35,8 @@ define("superApp.heatmapSetDire",
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
-                    "<p><span>是否显示行名称：</span><label><input type='radio' name='geneName' ng-value='true' ng-model='setOptions.isShowName'>是</label> <label><input type='radio' name='geneName' ng-value='false' ng-model='setOptions.isShowName' ng-checked='true'>否</label></p>" +
-                    "<p><span>是否显示列聚类：</span><label><input type='radio' name='topCluster' ng-value='true' ng-model='setOptions.isShowTopLine' ng-checked='true'>是 </label><label><input type='radio' name='topCluster' ng-value='false'  ng-model='setOptions.isShowTopLine'>否</label> </p>" +
+                    "<p><span>是否显示行名称：</span><span ng-show='setOptions.isShowName'>是</span><span ng-show='!setOptions.isShowName'>否</span><span ng-click='handlerShowNameClick()' ng-class=\"{'active':setOptions.isShowName}\" class='switch'><span class='circle' ng-class=\"{'active':setOptions.isShowName}\"></span><span></p>" +
+                    "<p><span>是否显示列聚类：</span><span ng-show='setOptions.isShowTopLine'>是</span><span ng-show='!setOptions.isShowTopLine'>否</span><span ng-click='handlerShowLineClick()' ng-class=\"{'active':setOptions.isShowTopLine}\" class='switch'><span class='circle' ng-class=\"{'active':setOptions.isShowTopLine}\"></span><span></p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
                     "<div class='heatSort'>" +
                     "<ul>" +
@@ -60,11 +61,12 @@ define("superApp.heatmapSetDire",
                 scope: {
                     isShow: "=",
                     setOptions: "=",
-                    isRefresh:"=",
+                    isRefresh: "=",
                     getSetOptions: "&"
                 },
                 link: function (scope, element, attrs) {
                     scope.initOptions = angular.copy(scope.setOptions);
+                    console.log(scope.initOptions);
                 },
                 controller: "heatmapSetCtr"
             }
@@ -93,12 +95,12 @@ define("superApp.heatmapSetDire",
             $scope.confirm = function (option) {
                 $scope.isShow = false;
                 $scope.confirmOptions = angular.copy(option);
-                if($scope.confirmOptions.isShowTopLine){
+                if ($scope.confirmOptions.isShowTopLine) {
                     $scope.confirmOptions.sortNames = angular.copy($scope.initOptions.sortNames);
                     $scope.setOptions.sortNames = angular.copy($scope.initOptions.sortNames);
                 }
                 $scope.getSetOptions({ setObj: $scope.confirmOptions });
-                
+
             }
 
             //取消
@@ -114,6 +116,15 @@ define("superApp.heatmapSetDire",
                 }
             })
 
+            // showname switch click 
+            $scope.handlerShowNameClick = function () {
+                $scope.setOptions.isShowName = !$scope.setOptions.isShowName;
+            }
+            
+            // showTopLine switch click
+            $scope.handlerShowLineClick = function () {
+                $scope.setOptions.isShowTopLine = !$scope.setOptions.isShowTopLine;
+            }
         }
     });
 

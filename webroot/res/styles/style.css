@@ -3359,3 +3359,35 @@ text-align: center;
 .taskName ,.dataChoose ,.resources{
     margin:10px;
 }
+
+span.switch.active{
+    background-color: #04A704;
+}
+span.switch{
+    transition: .3s all ease;
+    width:44px;
+    height:24px;
+    display:inline-block;
+    border-radius:26px;
+    vertical-align: middle;
+    margin-left: 12px;
+    position: relative;
+    cursor:pointer;
+    background-color: #FFFFFF;
+    border: 1px solid #E8E8E8;
+}
+span.switch .circle{
+    transition:.3s all ease;
+    width:20px;
+    height:20px;
+    top:1px;
+    left:1px;
+    position:absolute;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    border:1px solid #E8E8E8;
+    cursor:pointer;
+}
+span.switch .circle.active{
+    left:19px;
+}

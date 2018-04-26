@@ -1,46 +1,45 @@
 <div class="myAnalysis-page" ng-init="InitPage()" ng-controller="myAnalysisController">
-    <div class="tablePanel">
-        <div class="pageTitle">
-
+    <div class="report-page-title" custom-title="我的分析"></div>
+    <div class="tools-analysis-panel">
+        <p class="title">我的分析</p>
+        <div class="btns clearfix">
+            <button class="btn-tools btn-tools-default pull-right">advanced</button>
+            <div class="filter pull-right">
+                <input placeholder="关键字筛选">
+                <i class="glyphicon glyphicon-search"></i>
+            </div>
         </div>
-        <div class="searchBtns">
+        <div class="tablePanel" id="myanalysis-table">
+            <div class="table_scroll_wrap">
+                <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                    <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>状态</th>
+                            <th>链路</th>
+                            <th>提交时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in analysisList.rows track by $index">
+                            <td ng-bind="item.name"></td>
+                            <td ng-bind="item.status"></td>
+                            <td>链路</td>
+                            <td ng-bind="item.submitTime"></td>
+                            <td>
+                                <button class="btn-tools btn-tools-primary">查看</button>
+                                <button class="btn-tools btn-tools-warning">删除</button>
+                            </td>
 
-        </div>
-        <div class="table_scroll_wrap">
-            <table id="table_kbjjfxTJ" class="table table-bordered table-hover table-striped table_grid table-fixed">
-                <thead>
-                    <tr>
-                        <th>
-                            项目
-                        </th>
-                        <th>
-                            状态
-                        </th>
-                        <th>
-                            链路
-                        </th>
-                        <th>
-                            提交时间
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in tableData track by $index">
-                        <td ng-bind="item.name"></td>
-                        <td ng-bind="item.status"></td>
-                        <td>链路</td>
-                        <td ng-bind="item.submitTime"></td>
-                        <td>
-                            <button>查看</button>
-                            <button>删除</button>
-                        </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- error -->
+                <div style="width:100%;" class="table-nodata" error-type="analysisError"></div>
+                <!-- Page grid -->
+                <div ng-hide="analysisError" class="pager-grid" grid-data="analysisList" side="left " callback="GetAnalysisList(arg1) "></div>
+            </div>
         </div>
     </div>
 </div>

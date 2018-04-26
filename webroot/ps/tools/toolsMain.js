@@ -30,10 +30,20 @@ require.config({
         "superApp.selectRangeDire": "res/scripts/super/directive/selectRangeDire",
         "superApp.gridExportDire": "res/scripts/super/directive/gridExportDire",
         "superApp.selectColorDire": "res/scripts/super/directive/selectColorDire",
+        "superApp.colorSelectorDire": "res/scripts/super/directive/colorSelectorDire",
+        "superApp.heatmapSetDire": "res/scripts/super/directive/heatmapSetDire",
         "superApp.svgNewExportDire": "res/scripts/super/directive/svgNewExportDire",
         "superApp.tableCopyDire": "res/scripts/super/directive/tableCopyDire",
+        "superApp.theadControlDire":"res/scripts/super/directive/theadControlDire",
+        "superApp.analysisPopDire": "res/scripts/super/directive/analysisPopDire",
+        "superApp.topQuickMenuDire": "res/scripts/super/directive/topQuickMenuDire",
+        "superApp.reportPageTitleDire": "res/scripts/super/directive/reportPageTitleDire",
+        "superApp.reportPageSubTitleDire": "res/scripts/super/directive/reportPageSubTitleDire",
+        "superApp.reAnalysisDire": "res/scripts/super/directive/reAnalysisDire",
+        
         "superApp.superService": "res/scripts/super/service/superService",
         "superApp.reportService": "res/scripts/super/service/reportService",
+        
         "superApp.tokenInterceptorFactory": "res/scripts/super/factory/tokenInterceptorFactory",
         "superApp.markerFactory": "res/scripts/super/factory/markerFactory",
 

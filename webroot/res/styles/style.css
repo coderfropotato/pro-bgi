@@ -3307,7 +3307,7 @@ div.tipsContainer {
     padding: 5px;
 }
 
-/* switch开关 */
+/* 聚类图设置面板-switch开关 */
 .onoffswitch {
     display: inline-block;
     position: relative;
@@ -3318,8 +3318,10 @@ div.tipsContainer {
     display: none;
   }
   .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 1px solid #ccc; border-radius: 4px;
+    display: block; 
+    overflow: hidden; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
   }
   .onoffswitch-inner {
     width: 200%;
@@ -3330,9 +3332,17 @@ div.tipsContainer {
     transition: margin 0.3s ease-in 0s;
   }
   .onoffswitch-inner:before, .onoffswitch-inner:after {
-  float: left; width: 50%; height: 24px; padding: 0; line-height: 24px;
-  font-size: 16px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    float: left; 
+    width: 50%; 
+    height: 24px; 
+    padding: 0; 
+    line-height: 24px;
+    font-size: 16px; 
+    color: white; 
+    font-weight: bold;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
   }
   .onoffswitch-inner:before {
     content: "on";
@@ -3355,9 +3365,14 @@ div.tipsContainer {
     border: 1px solid #ccc;
     border-left:0;
     border-radius: 4px;
-    position: absolute; top: 0; bottom: 0; right: 50px;
-    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    right: 50px;
+    -moz-transition: all 0.3s ease-in 0s; 
+    -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s;
+     transition: all 0.3s ease-in 0s;
   
   }
   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
@@ -3366,10 +3381,11 @@ div.tipsContainer {
   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
   }
-  .switchpanel >P {
+  .switchpanel > P {
       display:inline-block;
       margin-right:20px;
   }
+
 /* 重分析弹窗样式 */
 .popAnalysis span{
     font-size:14px!important;

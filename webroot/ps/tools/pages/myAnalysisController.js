@@ -41,7 +41,7 @@ define(['toolsApp'], function (toolsApp) {
                         submitTime: "2017-1-4 17:12:50"
                     },
                     {
-                        name: "文恩图",
+                        name: "维恩图",
                         status: "failure",
                         link: [{
                             type: "样本表达",
@@ -84,12 +84,11 @@ define(['toolsApp'], function (toolsApp) {
             // toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
+            $scope.analysisListUrl = 'http://192.168.29.203/gooalbgfxxt/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $scope.analysisEntity,
-                url: options.api.mrnaseq_url + '/analysis/GetAnalysisList'
+                url: $scope.analysisListUrl
             }
-            console.log(ajaxConfig);
-            return;
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
                 toolService.gridFilterLoading.close("myanalysis-table");

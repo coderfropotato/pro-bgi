@@ -106,6 +106,7 @@ function (SUPER_CONSOLE_MESSAGE)
                 })
                 .error(function (data, status, headers, config)
                 {
+                    console.log(arguments);
                     try
                     {
                         $log.error(data);

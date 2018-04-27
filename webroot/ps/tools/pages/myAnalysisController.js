@@ -1,7 +1,7 @@
 define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('myAnalysisController', myAnalysisController);
-    myAnalysisController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
-    function myAnalysisController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+    myAnalysisController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+    function myAnalysisController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
 
         $scope.InitPage = function () {
             $timeout(function () {
@@ -63,20 +63,29 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isFilter = false;
             // 查询参数
             $scope.analysisEntity = {
-                LCID: toolService.sessionStorage.get("LCID"),
+                LCID: "test03_seb",
                 pageNum: 1,
                 pageSize: 10,
                 searchContent: {
                     timeStart: "",
                     timeEnd: "",
-                    type: [],
+                    chartType: [],
                     status: []
                 }
             };
+            // toolService.gridFilterLoading.open("myanalysis-table");
+            $http({
+                method: "POST",
+                url: "http://192.168.29.203/bgfxxt/analysis/GetAnalysisList",
+                data: $scope.analysisEntity,
+                headers: { "Content-Type": "application/json;charset=UTF-8" }
+            }).success(function (data) {
+                console.log(data)
+            })
 
             $scope.analysisError = false;
-            $scope.GetAnalysisList(1);
             // url options.api.mrnaseq_url +'/analysis/GetAnalysisList'
+            // $scope.GetAnalysisList(1);
         }
 
         $scope.GetAnalysisList = function (pageNum) {
@@ -84,7 +93,7 @@ define(['toolsApp'], function (toolsApp) {
             // toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
-            $scope.analysisListUrl = 'http://192.168.29.203/gooalbgfxxt/analysis/GetAnalysisList'
+            $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl

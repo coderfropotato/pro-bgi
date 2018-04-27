@@ -1,3 +1,240 @@
-<div class="heatmap-page" ng-init="InitPage()" ng-controller="heatmapController">
-    {{test}}
-</div>
+<div class="heatmap-page" ng-controller="heatmapController" ng-init="InitPage()">
+        <div class="report-page-title" custom-title="聚类分析"></div>
+        <div id="div_heatmap_page">
+            <h5 class="subtitle">2.3 聚类图</h5>
+            <div class="graph_group" id="heatmapClusterPanel" style="min-width:1000px">
+                <div class="graph_header">
+                    <ul class="fLeft">
+                        <li>
+                            <div class="selector_area">
+                                <select class="super-select" style="width: 200px" ng-model="clusterEntity.compareGroup" ng-change="GetHeatmapData();">
+                                    <option value="{{item}}" ng-repeat="item in groupList track by $index">{{item}}</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="fRight">
+                        <li>
+                            <div class="heatmap-set" is-show="isShowSetPanel" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
+                        </li>
+                        <li>
+                            <div class="svg-new-export" chartid="chartClusterpic" saveimgname="聚类图"></div>
+                        </li>
+                        <li>
+                            <button class="btn btn-default btn-sm btn-silver list_btn tool-tip" title="刷新" ng-click="GetHeatmapData('refresh')">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-switch-chart">
+                    <div class="chart_wrap">
+                        <div class="chart_graph panel_center">
+                            <div id="chartClusterpic" style="text-align:center;">
+                                <svg xmlns="http://www.w3.org/2000/svg"></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="color-selector" is-show="isShowColorPanel" get-cur-color="colorChange(color)"></div>
+            </div>
+                    <!-- table start -->
+            <!-- test -->
+            <div class="thead-control" data="data" handle-thead-change="theadChange(arg)"></div>
+            <div class="tableListPanel" id="panel_table_1">
+                <div class="btn_options_filelist">
+                    <ul class="ul_left grid_filter_ul">
+                        <li>
+                            <div ng-hide="goAnnoError" class="grid-export" find-entity="goAnnoFindEntity" export-location="exportLocationGOAnno" savefilename="GO注释结果"></div>
+                        </li>
+                        <li>
+                            <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetGOAnnoList(1)">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </li>
+                        <!-- <li>
+                            <button class="btn btn-default btn-sm list_btn tool-tip btn-sliver" title="初始化GeneID">reset</button>
+                        </li> -->
+                        <li>
+                            <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
+                            <!-- 2018年4月19日15:58:03 tablehead -->
+                            <div class="grid-filter-begin" tablehead="GOAnnoData.thead" tableid="filter-table-id" callback="InitFindEntity1(arg1)" parentid="filter-table-id-1" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType"></div>
+                        </li>
+                        <li>
+                            <div class="selector_area" style="margin-top:-2px;">
+                                <select class="super-select" style="width: 260px" ng-model="goAnnoFindEntity.CompareGroup" ng-change="GetGOAnnoList(1,true)">
+                                    <option value="{{item}}" ng-repeat="item in CompareGroupList">{{item}}</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="fRight">
+                        <li>
+                            <div class="selector_normal" style="width: 120px;">
+                                <select super-select ng-model="accuracy" class="form-control" is-search="false">
+                                    <option value=1>精度:1位小数</option>
+                                    <option value=2>精度:2位小数</option>
+                                    <option value=3>精度:3位小数</option>
+                                    <option value=4>精度:4位小数</option>
+                                    <option value=5>精度:5位小数</option>
+                                    <option value=6>精度:6位小数</option>
+                                    <option value=7>精度:7位小数</option>
+                                    <option value=-1>精度:全数据</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- genelist panel  -->
+                            <div class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}" ng-mouseenter="handlerMouseEnter()"
+                                ng-mouseleave="handlerMouseLeave()">
+                                <button class="btn btn-default btn-silver btn-sm">
+                                    未选中GeneList
+                                    <span class="red">({{geneUnselectListLength}})</span>
+                                    <span class="icon-caret-down"></span>
+                                </button>
+                                <div class="dropdown-menu div_gn_droplist">
+                                    <div style="max-height:400px; overflow-y:auto; overflow-x:hidden;">
+                                        <table class="table table-bordered table-hover table-striped table_grid table-fixed" cellpadding="0" cellspacing="0" border="0">
+                                            <thead>
+                                                <tr>
+                                                    <th width="40"></th>
+                                                    <th style="width: 60px; text-align: center;">
+                                                        NO.
+                                                    </th>
+                                                    <th>GeneID</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-if="geneUnselectListLength == 0">
+                                                    <td colspan="3" style="text-align:center;">
+                                                        暂无未选中列表
+                                                    </td>
+                                                </tr>
+                                                <tr ng-repeat="(key,val) in geneUnselectList track by $index">
+                                                    <td>
+                                                        <button ng-click="removeGeneItem(key)" type="button" class="btn btn-default btn-silver btn_tiny" style="margin-right: 0px;">
+                                                            <span class="iconglyph icon-minus"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td align="center" ng-bind="$index+1"></td>
+                                                    <td ng-bind="key"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="btnPanel" style="margin-top:10px; border-top:1px solid #ddd;" ng-show="geneUnselectListLength">
+                                        <button ng-click="handlerClearUnselect()" type="button" class="btn btn-default searchBtn btn-danger" style="margin-right: 0px;">清空</button>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <!-- filter content -->
+                <div class="div_filterContent" ng-init="filterText1=undefind" ng-class="{hide:(!filterText1.filterText.length && !filterText1.sortText)}">
+                    <div class="div_filterText" ng-show="filterText1.filterText.length">
+                        <span>筛选条件：</span>
+                        <div class="filter-right">
+                            <span class="filter-content" title="{{geneidCustomSearchOne}}" ng-repeat="f in filterText1.filterText track by $index">
+                                <span class="filter-item" ng-bind-html="f"></span>
+                                <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="div_sortText" ng-show="filterText1.sortText">
+                        <span>排序条件：</span>
+                        <span class="sort-item" style="cursor:normal;" ng-bind-html="filterText1.sortText"></span>
+                    </div>
+                </div>
+                <!-- filter content over -->
+                <!-- table wrap -->
+                <div class="table_fixed_wrap">
+                    <div id="filter-table-id-1">
+                        <!-- left table -->
+                        <div ng-hide="goAnnoError" class="table_leftside">
+                            <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                                <thead>
+                                    <tr>
+                                        <!-- checkbox -->
+                                        <th style="width:40px;text-align:center;">
+                                            <i ng-click="handlerCheckedAll()" class="icon choose-icon" ng-class="{'icon-eye-slash':!checkedAll,'icon-eye':checkedAll}"></i>
+                                        </th>
+                                        <!-- geneid -->
+                                        <th style="width:40px;">
+                                            <div class="grid_head">GeneID</div>
+                                            <div class="grid_filter_panel filter_panel_geneig" filtername="GeneID" filternamezh="GeneID" filtertype="string"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-class="{'unChecked':!val.isChecked}" ng-repeat="val in GOAnnoData.rows track by $index">
+                                        <td style="width:40px; text-align:center;">
+                                            <i ng-click="handlerChecked($index,$event)"  class="icon choose-icon" ng-class="{'icon-eye-slash':!val.isChecked,'icon-eye':val.isChecked,}"></i>
+                                        </td>
+                                        <!-- accuracy filter > exponentialFilter: findEntity.accuracy -->
+                                        <td>{{val['GeneID']}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-hide="goAnnoError" class="table_rightside">
+                            <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                                <thead>
+                                    <tr>
+                                        <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
+                                        <th ng-if="item!=='GeneID'" ng-repeat="item in GOAnnoData.thead" style="width: 320px;">
+                                            <div class="grid_head">{{item}}</div>
+                                            <div class="grid_filter_panel" filtername="{{item}}" filternamezh="{{item}}" filtertype="string"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-hide="goAnnoError">
+                                    <tr ng-class="{'unChecked':!fileListItem.isChecked}"  ng-repeat="fileListItem in GOAnnoData.rows track by $index">
+                                        <!-- accuracy filter > exponentialFilter: findEntity.accuracy -->
+                                        <td ng-if="val!=='GeneID'" ng-repeat="val in GOAnnoData.thead track by $index">
+                                            {{fileListItem[val]}}</td>
+                                        <!-- <td>
+                                                <a href="javascript:void(0);" ng-click="showGeneInfo(fileListItem.GeneID)">{{fileListItem.GeneID}}</a>
+                                            </td>
+                                            <td>
+                                                <span ng-repeat="item in fileListItem.GOIDList track by $index">
+                                                    <a href="javascript:void(0)" ng-bind="item" ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{item}}" target="_blank"></a>
+                                                    <span ng-if="$index + 1 != fileListItem.GOIDList.length">,</span>
+                                                </span>
+                                            </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- error box -->
+                        <div class="table-nodata" error-type="goAnnoError"></div>
+                    </div>
+                </div>
+                <!-- table bottom -->
+                <div class="table-bottom" style="position:relative;">
+                    <div class="pager-grid" ng-hide="goAnnoError" grid-data="GOAnnoData" side="left" callback="GetGOAnnoList(arg1)"></div>
+                    <ul ng-hide="goAnnoError" class="bottom-pagesize">
+                        <li>
+                            <div class="selector_normal" style="width: 110px;">
+                                <select super-select ng-model="goAnnoFindEntity.pageSize" class="form-control" is-search="false" ng-change="GetGOAnnoList(1)">
+                                    <option value="10">每页 10 条</option>
+                                    <option value="20">每页 20 条</option>
+                                    <option value="50">每页 50 条</option>
+                                    <option value="100">每页 100 条</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <!-- reanalysis content -->
+                <div class="re-analysis"></div>
+            </div>
+            <!-- table over -->
+    
+        </div>
+        <div class="report-page-footer" menulist="quickMenuList"></div>
+    
+    </div>

@@ -53,7 +53,7 @@ require.config({
 
         'toolsApp': 'ps/tools/toolsApp',
         'toolsController': 'ps/tools/toolsController',
-        "heatmapController": "ps/tools/pages/heatmapController",
+        "heatmapGroupController": "ps/tools/pages/heatmapGroupController",
         "vennController": "ps/tools/pages/vennController",
         "myAnalysisController":"ps/tools/pages/myAnalysisController"
     },
@@ -81,7 +81,7 @@ require([
     'angular', 
     'toolsApp',
     'toolsController',
-    "heatmapController",
+    "heatmapGroupController",
     "vennController",
     "myAnalysisController"
 ], function (jquery, angular) {

@@ -1,7 +1,7 @@
 define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('myAnalysisController', myAnalysisController);
-    myAnalysisController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
-    function myAnalysisController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+    myAnalysisController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+    function myAnalysisController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
 
         $scope.InitPage = function () {
             $timeout(function () {
@@ -63,20 +63,22 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isFilter = false;
             // 查询参数
             $scope.analysisEntity = {
-                LCID: toolService.sessionStorage.get("LCID"),
+                LCID: "test01",
                 pageNum: 1,
                 pageSize: 10,
                 searchContent: {
                     timeStart: "",
                     timeEnd: "",
-                    type: [],
+                    chartType: [],
                     status: []
-                }
+                },
+                total:0
             };
+            // toolService.gridFilterLoading.open("myanalysis-table");
 
             $scope.analysisError = false;
-            $scope.GetAnalysisList(1);
             // url options.api.mrnaseq_url +'/analysis/GetAnalysisList'
+            $scope.GetAnalysisList(1);
         }
 
         $scope.GetAnalysisList = function (pageNum) {
@@ -84,26 +86,28 @@ define(['toolsApp'], function (toolsApp) {
             // toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
-            $scope.analysisListUrl = 'http://192.168.29.203/gooalbgfxxt/analysis/GetAnalysisList'
+            $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
             }
-            var promise = ajaxService.GetDeferData(ajaxConfig);
+            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
+                console.log(res);
                 toolService.gridFilterLoading.close("myanalysis-table");
                 if (res.Error) {
-                    $scope.IndelError = 'syserror';
+                    $scope.analysisError = 'syserror';
                     return;
-                } else if (res.analysisList.length == 0) {
-                    $scope.IndelError = 'nodata';
+                } else if (res.analysisList.rows.length == 0) {
+                    $scope.analysisError = 'nodata';
                     return;
                 } else {
                     $scope.analysisList = res;
-                    $scope.IndelError = false;
+                    console.log($scope.analysisList);
+                    $scope.analysisError = false;
                 }
             }, function () {
-                $scope.IndelError = 'syserror'
+                $scope.analysisError = 'syserror'
                 toolService.gridFilterLoading.close("myanalysis-table");
             })
         }

@@ -59,9 +59,13 @@ define([
         // router config 
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
-            .state("heatmap", {
-                url: "/home/heatmap",
-                templateUrl: "../tools/pages/heatmap.html",
+            .state("heatmapGroup", {
+                url: "/home/heatmapGroup",
+                templateUrl: "../tools/pages/heatmapGroup.html",
+            })
+            .state("heatmapSample", {
+                url: "/home/heatmapSample",
+                templateUrl: "../tools/pages/heatmapSample.html",
             })
             .state("venn", {
                 url: "/home/venn",

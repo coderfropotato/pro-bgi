@@ -5,32 +5,23 @@ define("superApp.theadControlDire",
     ["angular", "super.superMessage", "select2"],
     function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.theadControlDire", []);
-        /**
-         * [
-                { groupName: "样本表达量", list: ["sampleA1", "sampleA2", "sampleA3"] },
-                { groupName: "样本差异", list: ["sampleA1", "sampleA2", "sampleA3"] },
-                { groupName: "组间差异", list: ['A', "B", "C", "D"] },
-                { groupName: "比对注释", list: ["GO", "KEGG", "COG", "Swissport"] },
-                { groupName: "其他", list: ["null"] },
-            ]
-         */
         superApp.directive('theadControl', theadControlDirective);
         theadControlDirective.$inject = ["$log"];
         function theadControlDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns</button>"
+                template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns<span ng-if=\"nodata\">（暂无数据）</span></button>"
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<div class=\"thead-title\">{{group.groupName}}</div>"
                     + "<ul ng-class=\"{'showmore':group.isShowMore}\">"
-                    + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item.name}}</li>"
+                    + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item._id}}</li>"
                     + "</ul >"
                     + "<div ng-click=\"handlerIsShowMoreClick($index)\" ng-if=\"!group.isShowMore &&group.showMore\" class=\"thead-title more\">查看更多</div>"
                     + "<div ng-click=\"handlerExpandClick($index)\" ng-if=\"group.isShowMore && group.showMore \" class=\"thead-title more\">收起</div>"
                     + "</li></ol>"
                     + "</div>"
-                    + "<div class=\"thead-btns\">"
+                    + "<div ng-show=\"!nodata\" class=\"thead-btns\">"
                     + "<button class=\"btn btn-default\" ng-click=\"cancel()\">取消</button>"
                     + "<button class=\"btn btn-default\" ng-click=\"apply()\">应用</button>"
                     + "<button class=\"btn btn-danger\" ng-click=\"clear()\">清除</button>"
@@ -75,22 +66,28 @@ define("superApp.theadControlDire",
                 $scope.allActiveItems = [];
                 // 记住之前传入回掉的激活项
                 $scope.beforeActiveItems = [];
-
-                $scope.data.forEach(function (val, index) {
-
-                    val.list.forEach(function (item, idx) {
-                        item.isActive = false;
-                        // var json = {};
-                        // json.name = item;
-                        // json.isActive = false;
-                        // val.list[idx] = json;
+                // 无数据
+                $scope.nodata = false;
+                if ($scope.data.length) {
+                    $scope.data.forEach(function (val, index) {
+                        val.list.forEach(function (item, idx) {
+                            item.isActive = false;
+                            // var json = {};
+                            // json._id = item;
+                            // json.isActive = false;
+                            // val.list[idx] = json;
+                        });
+                        // 根据length 初始化私有数据
+                        $scope.activeByClick.push([]);
+                        $scope.cancelByClick.push([]);
+                        $scope.allActiveItems.push([]);
+                        $scope.beforeActiveItems.push([]);
                     });
-                    // 根据length 初始化私有数据
-                    $scope.activeByClick.push([]);
-                    $scope.cancelByClick.push([]);
-                    $scope.allActiveItems.push([]);
-                    $scope.beforeActiveItems.push([]);
-                });
+                    $scope.nodata = false;
+                } else {
+                    $scope.nodata = true;
+                }
+
             }
 
 
@@ -115,28 +112,30 @@ define("superApp.theadControlDire",
 
             // 点击面板显示、隐藏
             $scope.toggleShow = function () {
-                $scope.show = !$scope.show;
-                if (!$scope.show) {
-                    $scope.activeByClick.forEach(function (val, index) {
-                        if (val.length) {
-                            for (var i = 0, len = val.length; i < len; i++) {
-                                for (var j = 0, l = $scope.data[index].list.length; j < l; j++) {
-                                    if (val[i].name === $scope.data[index].list[j].name) {
-                                        $scope.data[index].list[j].isActive = false;
-                                        break;
+                if (!$scope.nodata) {
+                    $scope.show = !$scope.show;
+                    if (!$scope.show) {
+                        $scope.activeByClick.forEach(function (val, index) {
+                            if (val.length) {
+                                for (var i = 0, len = val.length; i < len; i++) {
+                                    for (var j = 0, l = $scope.data[index].list.length; j < l; j++) {
+                                        if (val[i]._id === $scope.data[index].list[j]._id) {
+                                            $scope.data[index].list[j].isActive = false;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
-                    });
-                } else {
-                    $scope.initActiveByClick();
-                    $scope.initCancelByClick();
+                        });
+                    } else {
+                        $scope.initActiveByClick();
+                        $scope.initCancelByClick();
 
-                    // 显示面板的时候计算dom
-                    $timeout(function () {
-                        $scope.computedDOM();
-                    }, 30)
+                        // 显示面板的时候计算dom
+                        $timeout(function () {
+                            $scope.computedDOM();
+                        }, 30)
+                    }
                 }
             }
 
@@ -150,14 +149,14 @@ define("superApp.theadControlDire",
                 } else {
                     // 删除当前选择数组里对应的项
                     for (var i = 0, len = $scope.activeByClick[index].length; i < len; i++) {
-                        if ($scope.activeByClick[index][i].name === item.name) {
+                        if ($scope.activeByClick[index][i]._id === item._id) {
                             $scope.activeByClick[index].splice(i, 1);
                             break;
                         }
                     }
                     // 删除历史选中的记录
                     $scope.allActiveItems[index].forEach(function (val, k) {
-                        if (val.name === item.name) {
+                        if (val._id === item._id) {
                             $scope.allActiveItems[index].splice(k, 1);
                         }
                     });
@@ -246,7 +245,7 @@ define("superApp.theadControlDire",
                             if (val.length) {
                                 val.forEach(function (d, l) {
                                     for (var i = 0; i < $scope.allActiveItems[index].length; i++) {
-                                        if (d.name === $scope.allActiveItems[index][i].name) {
+                                        if (d._id === $scope.allActiveItems[index][i]._id) {
                                             $scope.allActiveItems[index].splice(i, 1);
                                             break;
                                         }
@@ -332,7 +331,7 @@ define("superApp.theadControlDire",
                         if (val.length) {
                             val.forEach(function (d, i) {
                                 for (var i = 0, len = $scope.data[index].list.length; i < len; i++) {
-                                    if (d.name === $scope.data[index].list[i].name) {
+                                    if (d._id === $scope.data[index].list[i]._id) {
                                         $scope.data[index].list[i].isActive = true;
                                         break;
                                     }
@@ -350,7 +349,7 @@ define("superApp.theadControlDire",
                         for (var i = 0; i < val.length; i++) {
                             var curList = parentarr[index].list;
                             for (var k = 0, l = curList.length; k < l; k++) {
-                                if (val[i].name === curList[k].name) {
+                                if (val[i]._id === curList[k]._id) {
                                     curList[k].isActive = flag;
                                     break;
                                 }
@@ -389,10 +388,10 @@ define("superApp.theadControlDire",
                 return count === len;
             }
 
-            // 是否在数组内 [{name:xx,isActive:xx}]
+            // 是否在数组内 [{_id:xx,isActive:xx}]
             function isInArr(n, arr) {
                 for (var i = 0, len = arr.length; i < len; i++) {
-                    if (n.name === arr[i].name) {
+                    if (n._id === arr[i]._id) {
                         return { flag: true, index: i };
                     }
                 }

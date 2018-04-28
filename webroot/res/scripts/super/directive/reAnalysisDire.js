@@ -13,7 +13,7 @@ define("superApp.reAnalysisDire",
             return {
                 restrict: "ACE",
                 replace: true,
-                template: "<div class=\"re-analysis-panel clearfix\"><button class=\"btn btn-default btn-silver pull-right\">重新分析</button></div>",
+                template: "<div class=\"re-analysis-panel clearfix\"><button class=\"btn btn-default tool-tip pull-right\" title=\"聚类重分析\">heatmap</button></div>",
                 scope: {
                 },
                 link: function (scope, element, attrs) {

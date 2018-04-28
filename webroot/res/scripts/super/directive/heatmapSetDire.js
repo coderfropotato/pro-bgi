@@ -103,7 +103,6 @@ define("superApp.heatmapSetDire",
                     $scope.setOptions.sortNames = angular.copy($scope.initOptions.sortNames);
                 }
                 $scope.getSetOptions({ setObj: $scope.confirmOptions });
-
             }
 
             //取消
@@ -112,8 +111,9 @@ define("superApp.heatmapSetDire",
                 $scope.isShow = false;
             }
 
-            $scope.$watch('isRefresh', function (newVal, oldVal) {
+            $scope.$watch('isRefresh', function (newVal) {
                 if (newVal) {
+                    $scope.isShow = false;
                     $scope.confirmOptions = angular.copy($scope.initOptions);
                     $scope.setOptions = angular.copy($scope.initOptions);
                 }

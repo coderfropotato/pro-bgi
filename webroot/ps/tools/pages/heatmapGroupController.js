@@ -1,8 +1,8 @@
-define(['toolsApp'], function (toolsApp) {
-    toolsApp.controller('heatmapGroupController', heatmapController);
-    heatmapController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
-    function heatmapController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+define(["toolsApp"], function (toolsApp) {
+    toolsApp.controller("heatmapGroupController", heatmapGroupController);
+    heatmapGroupController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
+    function heatmapGroupController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
         $scope.InitPage = function () {
             //定时关闭等待框
@@ -11,61 +11,20 @@ define(['toolsApp'], function (toolsApp) {
                     toolService.pageLoading.close();
                 }, 300);
 
-            $scope.isShowColorPanel = false;
-            $scope.isShowSetPanel = false;
-            $scope.isRefresh = false;
-
+            $scope.isShowColorPanel = false; //是否显示颜色面板
+            $scope.isShowSetPanel = false;  //是否显示设置面板
+            $scope.isRefresh = false;  //是否点击了刷新
+            $scope.compareGroup = '';
+            //聚类图请求entity
             $scope.clusterEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
                 "id": "",
                 "compareGroup": ""
             }
 
-            $scope.groupList = ["gruop11111111111111", "gruop11111111111122", "gruop3333333311111111"];
-
-            // 默认
-            $scope.clusterEntity.compareGroup = $scope.groupList[0];
-
+            //图颜色
             var colorArr = ["#bac5fd", "#ef9794", "#91d691"];
             toolService.sessionStorage.set('colors', colorArr);
-
-            /* table params */
-            $scope.data = [
-                {
-                    groupName: "样本表达量", list: [
-                        { name: "sampleA1", children: ["sampleA1"] },
-                        { name: "sampleA2", children: ["sampleA2"] },
-                        { name: "sampleA3", children: ["sampleA3"] },
-                        { name: "sampleA4", children: ["sampleA4"] },
-                        { name: "sampleA5", children: ["sampleA5"] },
-                        { name: "sampleA6", children: ["sampleA6"] },
-                        { name: "sampleA7", children: ["sampleA7"] },
-                        { name: "sampleA8", children: ["sampleA8"] },
-                        { name: "sampleA9", children: ["sampleA9"] },
-                        { name: "sampleA10", children: ["sampleA10"] }
-                    ]
-                },
-                {
-                    groupName: "组间差异", list: [
-                        { name: "sampleA1", children: ["sampleA1"] },
-                        { name: "sampleA2", children: ["sampleA2"] },
-                        { name: "sampleA3", children: ["sampleA3"] }
-                    ]
-                },
-                {
-                    groupName: "比对注释", list: [
-                        { name: "A", children: ["A"] },
-                        { name: "B", children: ["B"] },
-                        { name: "C", children: ["C"] },
-                        { name: "D", children: ["D"] }
-                    ]
-                },
-                {
-                    groupName: "其他", list: [
-                        { name: "其他", children: ["null"] }
-                    ]
-                }
-            ]
 
             $scope.goAnnoFindEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
@@ -79,956 +38,70 @@ define(['toolsApp'], function (toolsApp) {
                 "thead": [],          // 增删列
             };
             $scope.accuracy = 2;
-            $scope.GetCompareGroupList();
-            $scope.GetHeatmapData();
-        };
-
-        $scope.GetHeatmapData = function (flag) {
-            $scope.isShowSetPanel = false;
-
-            // toolService.gridFilterLoading.open("heatmapClusterPanel");
-            // var ajaxConfig = {
-            //     data: $scope.clusterEntity,
-            //     url: options.api.mrnaseq_url + "/clusterHeatmap/GetClusterHeatmapData"
-            // }
-            // var promise = ajaxService.GetDeferData(ajaxConfig);
-            // promise.then(function (res) {
-            //     if (res.result) {
-            //         $scope.clusterError = "syserror";
-            //     } else if (res.heatmapData.length == 0) {
-            //         $scope.clusterError = "nodata";
-            //     } else {
-            // $scope.clusterError="";
-            //         $scope.setOption = {
-            //             isShowName: false,
-            //             isShowTopLine: true,
-            //             sortNames: data.heatmapData
-            //         }
-
-            //         $scope.drawClusterHeatmap(data, $scope.setOption);
-
-            //         if (flag && flag === 'refresh') {
-            //             $scope.isRefresh = true;
-            //             $timeout(function () {
-            //                 $scope.isRefresh = false;
-            //             }, 30)
-            //         }
-
-            //         $scope.chartData = data;
-            //     }
-            // })
-
-            var data = {
-                "maxValue": 2,
-                "minValue": 0,
-                "topClusterData": { "name": "TN3", "children": [{ "name": "SRR1370915" }, { "name": "TN2", "children": [{ "name": "SRR1370913" }, { "name": "TN1", "children": [{ "name": "SRR1370914" }, { "name": "SRR1370920" }] }] }] },
-                "leftClusterData":
-                    {
-                        "name": "TN3637",
-                        "children": [
-                            {
-                                "name": "TN3637",
-                                "children": [
-                                    {
-                                        "name": "TN3629",
-                                        "children": [
-                                            {
-                                                "name": "TN3613",
-                                                "children": [
-                                                    {
-                                                        "name": "AT2G09340"
-                                                    },
-                                                    {
-                                                        "name": "TN3583",
-                                                        "children": [
-                                                            {
-                                                                "name": "TN3532",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "AT5G08840"
-                                                                    },
-                                                                    {
-                                                                        "name": "AT2G13555"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "name": "TN3533",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "AT5G22505"
-                                                                    },
-                                                                    {
-                                                                        "name": "AT3G47348"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "name": "TN3614",
-                                                "children": [
-                                                    {
-                                                        "name": "TN3584",
-                                                        "children": [
-                                                            {
-                                                                "name": "AT1G06083"
-                                                            },
-                                                            {
-                                                                "name": "AT3G02275"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "name": "TN3585",
-                                                        "children": [
-                                                            {
-                                                                "name": "TN3534",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "AT4G09985"
-                                                                    },
-                                                                    {
-                                                                        "name": "TN3442",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "AT1G02710"
-                                                                            },
-                                                                            {
-                                                                                "name": "AT4G05015"
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "name": "TN3535",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "AT3G08515"
-                                                                    },
-                                                                    {
-                                                                        "name": "TN3443",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "AT5G03460"
-                                                                            },
-                                                                            {
-                                                                                "name": "AT1G07901"
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "name": "TN3630",
-                                        "children": [
-                                            {
-                                                "name": "TN3615",
-                                                "children": [
-                                                    {
-                                                        "name": "TN3586",
-                                                        "children": [
-                                                            {
-                                                                "name": "TN3536",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "TN3444",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "AT3G08365"
-                                                                            },
-                                                                            {
-                                                                                "name": "TN3297",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT2G09495"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3065",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT1G03550"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT3G10185"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "name": "TN3445",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "TN3298",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT4G22463"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3066",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT2G20390"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT1G14205"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "name": "TN3299",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "TN3067",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT2G18970"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "TN2706",
-                                                                                                "children": [
-                                                                                                    {
-                                                                                                        "name": "AT1G70690"
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name": "AT4G09490"
-                                                                                                    }
-                                                                                                ]
-                                                                                            }
-                                                                                        ]
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3068",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT1G08567"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "TN2707",
-                                                                                                "children": [
-                                                                                                    {
-                                                                                                        "name": "AT4G38860"
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name": "AT3G02935"
-                                                                                                    }
-                                                                                                ]
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "name": "TN3537",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "TN3446",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "TN3300",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT2G22088"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "AT1G04105"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "name": "TN3301",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT2G42110"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3069",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT3G63420"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "TN2708",
-                                                                                                "children": [
-                                                                                                    {
-                                                                                                        "name": "AT4G01026"
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name": "AT1G24600"
-                                                                                                    }
-                                                                                                ]
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "name": "TN3447",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "TN3302",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT1G77540"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3070",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT3G50210"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT3G23325"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "name": "TN3303",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "TN3071",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT1G02180"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT1G22270"
-                                                                                            }
-                                                                                        ]
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3072",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT4G19045"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT2G41312"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "name": "TN3587",
-                                                        "children": [
-                                                            {
-                                                                "name": "TN3538",
-                                                                "children": [
-                                                                    {
-                                                                        "name": "TN3448",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "TN3304",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT4G36840"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3073",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT5G16140"
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "AT3G51220"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "name": "TN3305",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "AT5G42110"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "TN3074",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "TN2709",
-                                                                                                "children": [
-                                                                                                    {
-                                                                                                        "name": "AT1G63170"
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name": "AT3G50860"
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "TN2710",
-                                                                                                "children": [
-                                                                                                    {
-                                                                                                        "name": "AT5G17650"
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name": "TN2235",
-                                                                                                        "children": [
-                                                                                                            {
-                                                                                                                "name": "AT4G38480"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "name": "AT5G62430"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "name": "TN3449",
-                                                                        "children": [
-                                                                            {
-                                                                                "name": "TN3306",
-                                                                                "children": [
-                                                                                    {
-                                                                                        "name": "TN3075",
-                                                                                        "children": [
-                                                                                            {
-                                                                                                "name": "AT1G15885"
-                                                                                            }
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                "heatmapData": [
-                    {
-                        "name": "head200w_01",
-                        "heatmap": [
-                            {
-                                "x": "AT1G75510123456",
-                                "y": 0.19057719806481
-                            },
-                            {
-                                "x": "AT1G26750",
-                                "y": 1.48171930093508
-                            },
-                            {
-                                "x": "AT5G54250",
-                                "y": 1.47815511971912
-                            },
-                            {
-                                "x": "AT1G34780",
-                                "y": 1.4876649117202
-                            },
-                            {
-                                "x": "AT3G59600",
-                                "y": 1.50643229591559
-                            },
-                            {
-                                "x": "AT2G24290",
-                                "y": 1.50856851828501
-                            },
-                            {
-                                "x": "AT3G58670",
-                                "y": 1.50245978106175
-                            },
-                            {
-                                "x": "AT2G01080",
-                                "y": 1.496322203366
-                            }, {
-                                "x": "AT2G45080",
-                                "y": 0.906359757442846
-                            },
-                            {
-                                "x": "AT2G17970",
-                                "y": 0.922042916788755
-                            },
-                            {
-                                "x": "AT1G09460",
-                                "y": 0.922782888495231
-                            },
-                            {
-                                "x": "AT3G12830",
-                                "y": 0.92293103425644
-                            },
-                            {
-                                "x": "AT5G04690",
-                                "y": 0.58547275752019
-                            },
-                            {
-                                "x": "AT5G52860",
-                                "y": 0.585268437027508
-                            },
-                            {
-                                "x": "AT5G11730",
-                                "y": 0.582012315651184
-                            },
-                            {
-                                "x": "AT2G16570",
-                                "y": 0.581202085750145
-                            },
-                            {
-                                "x": "AT5G23480",
-                                "y": 0.580393364697527
-                            },
-                            {
-                                "x": "AT5G59700",
-                                "y": 0.597841220812404
-                            },
-                            {
-                                "x": "AT5G16340",
-                                "y": 0.589992302438348
-                            },
-                            {
-                                "x": "AT1G74750",
-                                "y": 0.589510720894029
-                            },
-                            {
-                                "x": "AT2G46570",
-                                "y": 0.637980087287756
-                            },
-                            {
-                                "x": "AT3G60050",
-                                "y": 0.639597536103406
-                            },
-                            {
-                                "x": "AT1G74540",
-                                "y": 0.640988731760263
-                            },
-                            {
-                                "x": "AT3G46690",
-                                "y": 0.647540563804015
-                            },
-                            {
-                                "x": "AT4G13920",
-                                "y": 0.648484661381618
-                            },
-                            {
-                                "x": "AT3G26290",
-                                "y": 0.64919408391875
-                            },
-                            {
-                                "x": "AT3G07040",
-                                "y": 0.645541145354123
-                            }, {
-                                "x": "AT4G10390",
-                                "y": 0.663631476618582
-                            },
-                            {
-                                "x": "AT1G26240",
-                                "y": 0.664121087792201
-                            },
-                            {
-                                "x": "AT1G47960",
-                                "y": 1.13394913003213
-                            },
-                            {
-                                "x": "AT1G45010",
-                                "y": 1.13575943402153
-                            },
-                            {
-                                "x": "AT4G26090",
-                                "y": 1.14258537146995
-                            },
-                            {
-                                "x": "AT4G22755",
-                                "y": 1.13940283893153
-                            },
-                            {
-                                "x": "AT3G12380",
-                                "y": 1.13794180702007
-                            },
-                            {
-                                "x": "AT4G15093",
-                                "y": 1.13794180702007
-                            },
-                            {
-                                "x": "AT5G50780",
-                                "y": 1.19243834769679
-                            },
-                            {
-                                "x": "AT5G24660",
-                                "y": 1.65063406110623
-                            },
-                            {
-                                "x": "AT3G48115",
-                                "y": 1.56516638594323
-                            },
-                        ]
-                    },
-                    {
-                        "name": "head200w_02",
-                        "heatmap": [
-                            {
-                                "x": "AT1G75510123456",
-                                "y": 0.286701532438409
-                            },
-                            {
-                                "x": "AT1G26750",
-                                "y": 0.89914619264261
-                            },
-                            {
-                                "x": "AT5G54250",
-                                "y": 0.898515416933
-                            },
-                            {
-                                "x": "AT1G34780",
-                                "y": 0.898305361792551
-                            },
-                            {
-                                "x": "AT3G59600",
-                                "y": 0.907645271263285
-                            },
-                            {
-                                "x": "AT2G24290",
-                                "y": 0.905932097052515
-                            },
-                            {
-                                "x": "AT3G58670",
-                                "y": 1.1866784267283
-                            },
-                            {
-                                "x": "AT2G01080",
-                                "y": 1.15832219853358
-                            },
-                            {
-                                "x": "AT2G45080",
-                                "y": 1.1633079243461
-                            },
-                            {
-                                "x": "AT2G17970",
-                                "y": 1.16864217587
-                            },
-                            {
-                                "x": "AT1G09460",
-                                "y": 0.64355089013376
-                            },
-                            {
-                                "x": "AT3G12830",
-                                "y": 0.642617446242545
-                            },
-                            {
-                                "x": "AT5G04690",
-                                "y": 0.642617446242545
-                            },
-                            {
-                                "x": "AT5G52860",
-                                "y": 0.739350683000292
-                            },
-                            {
-                                "x": "AT5G11730",
-                                "y": 0.739350683000292
-                            },
-                            {
-                                "x": "AT2G16570",
-                                "y": 0.7398364078822
-                            },
-                            {
-                                "x": "AT5G23480",
-                                "y": 0.739642052732706
-                            },
-                            {
-                                "x": "AT5G59700",
-                                "y": 0.700286361088874
-                            },
-                            {
-                                "x": "AT5G16340",
-                                "y": 0.702243007552311
-                            },
-                            {
-                                "x": "AT1G74750",
-                                "y": 0.701441495445502
-                            },
-                            {
-                                "x": "AT2G46570",
-                                "y": 0.707624562343354
-                            },
-                            {
-                                "x": "AT3G60050",
-                                "y": 0.70613797446551
-                            },
-                            {
-                                "x": "AT1G74540",
-                                "y": 0.672530060908573
-                            },
-                            {
-                                "x": "AT3G46690",
-                                "y": 0.674783492007874
-                            },
-                            {
-                                "x": "AT4G13920",
-                                "y": 0.674281718071923
-                            },
-                            {
-                                "x": "AT3G26290",
-                                "y": 0.682380514509639
-                            },
-                            {
-                                "x": "AT3G07040",
-                                "y": 0.682891739363393
-                            },
-
-                            {
-                                "x": "AT4G10390",
-                                "y": 1.60833095409556
-                            },
-                            {
-                                "x": "AT1G26240",
-                                "y": 1.57493464042063
-                            },
-                            {
-                                "x": "AT1G47960",
-                                "y": 1.75112051450415
-                            },
-                            {
-                                "x": "AT1G45010",
-                                "y": 1.66820690712266
-                            },
-                            {
-                                "x": "AT4G26090",
-                                "y": 1.69621559160848
-                            },
-                            {
-                                "x": "AT4G22755",
-                                "y": 1.69010482705113
-                            },
-                            {
-                                "x": "AT3G12380",
-                                "y": 1.62352985267147
-                            },
-                            {
-                                "x": "AT4G15093",
-                                "y": 1.60461291077915
-                            },
-                            {
-                                "x": "AT5G50780",
-                                "y": 1.62323249322939
-                            },
-                            {
-                                "x": "AT5G24660",
-                                "y": 1.06340475092421
-                            },
-                            {
-                                "x": "AT3G48115",
-                                "y": 1.07063105341942
-                            }
-                        ]
-                    },
-                    {
-                        "name": "head200w_03",
-                        "heatmap": [
-
-                            {
-                                "x": "AT1G75510123456",
-                                "y": 0.39057719806481
-                            },
-                            {
-                                "x": "AT1G26750",
-                                "y": 1.48171930093508
-                            },
-                            {
-                                "x": "AT5G54250",
-                                "y": 1.47815511971912
-                            },
-                            {
-                                "x": "AT1G34780",
-                                "y": 1.4876649117202
-                            },
-                            {
-                                "x": "AT3G59600",
-                                "y": 1.50643229591559
-                            },
-                            {
-                                "x": "AT2G24290",
-                                "y": 1.50856851828501
-                            },
-                            {
-                                "x": "AT3G58670",
-                                "y": 1.50245978106175
-                            },
-                            {
-                                "x": "AT2G01080",
-                                "y": 1.496322203366
-                            }, {
-                                "x": "AT2G45080",
-                                "y": 0.906359757442846
-                            },
-                            {
-                                "x": "AT2G17970",
-                                "y": 0.922042916788755
-                            },
-                            {
-                                "x": "AT1G09460",
-                                "y": 0.922782888495231
-                            },
-                            {
-                                "x": "AT3G12830",
-                                "y": 0.92293103425644
-                            },
-                            {
-                                "x": "AT5G04690",
-                                "y": 0.58547275752019
-                            },
-                            {
-                                "x": "AT5G52860",
-                                "y": 0.585268437027508
-                            },
-                            {
-                                "x": "AT5G11730",
-                                "y": 0.582012315651184
-                            },
-                            {
-                                "x": "AT2G16570",
-                                "y": 0.581202085750145
-                            },
-                            {
-                                "x": "AT5G23480",
-                                "y": 0.580393364697527
-                            },
-                            {
-                                "x": "AT5G59700",
-                                "y": 0.597841220812404
-                            },
-                            {
-                                "x": "AT5G16340",
-                                "y": 0.589992302438348
-                            },
-                            {
-                                "x": "AT1G74750",
-                                "y": 0.589510720894029
-                            },
-                            {
-                                "x": "AT2G46570",
-                                "y": 0.637980087287756
-                            },
-                            {
-                                "x": "AT3G60050",
-                                "y": 0.639597536103406
-                            },
-                            {
-                                "x": "AT1G74540",
-                                "y": 0.640988731760263
-                            },
-                            {
-                                "x": "AT3G46690",
-                                "y": 0.647540563804015
-                            },
-                            {
-                                "x": "AT4G13920",
-                                "y": 0.648484661381618
-                            },
-                            {
-                                "x": "AT3G26290",
-                                "y": 0.64919408391875
-                            },
-                            {
-                                "x": "AT3G07040",
-                                "y": 0.645541145354123
-                            }, {
-                                "x": "AT4G10390",
-                                "y": 0.663631476618582
-                            },
-                            {
-                                "x": "AT1G26240",
-                                "y": 0.664121087792201
-                            },
-                            {
-                                "x": "AT1G47960",
-                                "y": 1.13394913003213
-                            },
-                            {
-                                "x": "AT1G45010",
-                                "y": 1.13575943402153
-                            },
-                            {
-                                "x": "AT4G26090",
-                                "y": 1.14258537146995
-                            },
-                            {
-                                "x": "AT4G22755",
-                                "y": 1.13940283893153
-                            },
-                            {
-                                "x": "AT3G12380",
-                                "y": 1.13794180702007
-                            },
-                            {
-                                "x": "AT4G15093",
-                                "y": 1.13794180702007
-                            },
-                            {
-                                "x": "AT5G50780",
-                                "y": 1.19243834769679
-                            },
-                            {
-                                "x": "AT5G24660",
-                                "y": 1.65063406110623
-                            },
-                            {
-                                "x": "AT3G48115",
-                                "y": 1.56516638594323
-                            },
-                        ]
-                    }
-                ]
-            }
 
             $scope.setOption = {
                 isShowName: false,
                 isShowTopLine: true,
-                sortNames: data.heatmapData
+                sortNames: []
             }
+            //获取比较组            
+            var CompareGroupList = toolService.sessionStorage.get("CompareGroupList");
+            $scope.CompareGroupList = JSON.parse(CompareGroupList);
+            // 获取增删列dire数据
+            $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
+            //设置第一个选中
+            $scope.compareGroup = $scope.CompareGroupList[0].name;
+            $scope.clusterEntity.compareGroup = $scope.compareGroup;
+            $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
+            // 获取聚类图数据
+            // $scope.GetHeatmapData();
+            // $scope.GetGOAnnoList(1);
+        };
+        // 样本改变
+        $scope.compareGroupChange = function () {
+            $scope.clusterEntity.compareGroup = $scope.compareGroup;
+            $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
+            $scope.GetHeatmapData();
+            // $scope.GetGOAnnoList(1);
+            // // 重置未选中列表 改变table状态
+            // $scope.geneUnselectList = {};
+            // $scope.checkedAll = true;
+            // $scope.checkAll();
+        }
 
-            $scope.drawClusterHeatmap(data, $scope.setOption);
+        //获取聚类图数据
+        $scope.GetHeatmapData = function (flag) {
+            $scope.isShowSetPanel = false;
 
-            if (flag && flag === 'refresh') {
-                $scope.isRefresh = true;
-                $timeout(function () {
-                    $scope.isRefresh = false;
-                }, 30)
+            toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
+            var ajaxConfig = {
+                data: $scope.clusterEntity,
+                url: options.api.mrnaseq_url + "/clusterHeatmap/GetClusterHeatmapData"
             }
+            var promise = ajaxService.GetDeferData(ajaxConfig);
+            promise.then(function (res) {
+                if (res.Error) {
+                    $scope.clusterError = "syserror";
+                } else if (res.length == 0) {
+                    $scope.clusterError = "nodata";
+                } else {
+                    $scope.clusterError = "";
+                    $scope.setOption.sortNames = res.heatmapData;
 
-            $scope.chartData = data;
+                    $scope.drawClusterHeatmap(res, $scope.setOption);
+
+                    if (flag && flag === 'refresh') {
+                        $scope.isRefresh = true;
+                        $timeout(function () {
+                            $scope.isRefresh = false;
+                        }, 30)
+                    }
+
+                    $scope.chartData = res;
+                }
+
+                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
+            })
         }
 
         //设置面板点击确定的回调函数
@@ -1135,7 +208,7 @@ define(['toolsApp'], function (toolsApp) {
                 .attr("text-anchor", "middle")
                 .on("click", function () {
                     var textNode = d3.select(this).node();
-                    toolService.popPrompt("修改标题", textNode, textNode.textContent);
+                    toolService.popPrompt(textNode, textNode.textContent);
                 })
 
             if (setOption.isShowTopLine) {
@@ -1325,6 +398,18 @@ define(['toolsApp'], function (toolsApp) {
                     var upIndex = getIndex(up_x, up_y);
                     var up_j = upIndex.y_index;
 
+                    if (down_j > up_j) {
+                        var geneId = resdata.heatmapData[0].heatmap.slice(up_j, down_j + 1);
+                    } else {
+                        var geneId = resdata.heatmapData[0].heatmap.slice(down_j, up_j + 1);
+                    }
+                    var resGeneId = [];
+                    geneId.forEach(function (val, index) {
+                        resGeneId.push(val.x);
+                    });
+                    $scope.setGeneList(resGeneId);
+
+
                     var high_j = d3.min([up_j, down_j]),
                         low_j = d3.max([up_j, down_j]);
                     var highHeight = high_j * single_rect_height;
@@ -1347,12 +432,12 @@ define(['toolsApp'], function (toolsApp) {
                     reportService.GenericTip.Hide();
                 });
 
-                $("#heatmapClusterPanel .tab-switch-chart").on("mousedown", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mousedown", function () {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
 
-                $("#heatmapClusterPanel .tab-switch-chart").on("mouseup", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mouseup", function () {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
@@ -1500,7 +585,7 @@ define(['toolsApp'], function (toolsApp) {
         /* table start */
         // 指定外部调用筛选指令的查询参数集合
         $scope.geneidCustomSearchType = "$in";
-        $scope.geneidCustomSearchOne = "";
+        $scope.geneidCustomSearchOne = "AT2G31880\nAT3G55980\nAT3G57530";
 
         // test delete columns/ add columns
         // 改变筛选条件  切换比较组 框选基因  都需要重置 基因列表
@@ -1559,6 +644,10 @@ define(['toolsApp'], function (toolsApp) {
             } else {
                 $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
             }
+            // 重置未选择列表
+            $scope.geneUnselectList = {};
+            $scope.checkAll();
+            $scope.checkedAll = true;
         }
 
         // thead change event
@@ -1568,18 +657,10 @@ define(['toolsApp'], function (toolsApp) {
             console.warn('调用')
         }
 
-        // 获取比较组
-        $scope.GetCompareGroupList = function () {
-            $scope.CompareGroupList = toolService.sessionStorage.get("CompareGroup").split(",");
-            //设置第一个选中
-            $scope.goAnnoFindEntity.CompareGroup = $scope.CompareGroupList[0];
-            $scope.GetGOAnnoList(1);
-        };
 
         //过滤GO注释表格数据  
         $scope.InitFindEntity1 = function (filterFindEntity) {
             //获得页面查询实体信息
-            console.log(filterFindEntity)
             $scope.goAnnoFindEntity = toolService.GetGridFilterFindEntity($scope.goAnnoFindEntity, filterFindEntity);
             //获得页面查询条件转译信息
             $scope.filterText1 = toolService.GetFilterContentText($scope.goAnnoFindEntity);
@@ -1598,8 +679,8 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         //获取注释表数据
-        $scope.GetGOAnnoList = function (pageNumber, CompareGroupChangeFlag) {
-            toolService.gridFilterLoading.open("filter-table-id-1");
+        $scope.GetGOAnnoList = function (pageNumber) {
+            toolService.gridFilterLoading.open("analysis-heatmap-table");
             $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
             $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "CompareGroup", "string", "equal", $scope.goAnnoFindEntity.CompareGroup);
 
@@ -1610,17 +691,12 @@ define(['toolsApp'], function (toolsApp) {
                 url: $scope.exportLocationGOAnno,
             };
 
-            // 切换比较组的时候  重置未选择的基因列表
-            if (CompareGroupChangeFlag) $scope.geneUnselectList = '';
 
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (responseData) {
                 if (responseData.Error) {
-                    //系统异常
                     $scope.goAnnoError = "syserror";
-
                 } else if (responseData.length == 0) {
-                    //无数据异常
                     $scope.goAnnoFindEntity.searchContentList.length == 2 ? $scope.goAnnoError = "fjnodata" : $scope.goAnnoError = "nodata";
                 } else {
                     $scope.goAnnoError = "";
@@ -1646,16 +722,14 @@ define(['toolsApp'], function (toolsApp) {
                             }
                         }
                     });
+
                     isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
-
-
                 }
-                toolService.gridFilterLoading.close("filter-table-id-1");
-            },
-                function (errorMesg) {
-                    toolService.gridFilterLoading.close("filter-table-id-1");
-                    $scope.goAnnoError = "syserror";
-                });
+                toolService.gridFilterLoading.close("analysis-heatmap-table");
+            }, function (errorMesg) {
+                toolService.gridFilterLoading.close("analysis-heatmap-table");
+                $scope.goAnnoError = "syserror";
+            });
         };
 
         // 点击GeneID获取Gene信息
@@ -1665,7 +739,7 @@ define(['toolsApp'], function (toolsApp) {
                 genomeVersion: genomeVersion,
                 geneID: GeneID
             };
-            pageFactory.set(geneInfo);
+            // pageFactory.set(geneInfo);
             toolService.popWindow("cyjyfx_2_pop.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
         }
 
@@ -1781,5 +855,5 @@ define(['toolsApp'], function (toolsApp) {
                 }
             }
         }, true)
-    }
+    };
 });

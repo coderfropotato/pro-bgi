@@ -72,7 +72,7 @@ define(['toolsApp'], function (toolsApp) {
                     chartType: [],
                     status: []
                 },
-                total:0
+                total: 0
             };
             // toolService.gridFilterLoading.open("myanalysis-table");
 
@@ -82,8 +82,7 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         $scope.GetAnalysisList = function (pageNum) {
-            //loading
-            // toolService.gridFilterLoading.open("myanalysis-table");
+            toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
             $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
@@ -98,12 +97,11 @@ define(['toolsApp'], function (toolsApp) {
                 if (res.Error) {
                     $scope.analysisError = 'syserror';
                     return;
-                } else if (res.analysisList.rows.length == 0) {
+                } else if (res.rows.length == 0) {
                     $scope.analysisError = 'nodata';
                     return;
                 } else {
                     $scope.analysisList = res;
-                    console.log($scope.analysisList);
                     $scope.analysisError = false;
                 }
             }, function () {
@@ -126,6 +124,17 @@ define(['toolsApp'], function (toolsApp) {
         // 筛选
         $scope.handlerFilterClick = function () {
             $scope.isFilter = false;
+        }
+
+        // 查看
+        $scope.handlerSeeClick = function (id,type) {
+            var type = 'heatmapGroup'
+            $window.open('../tools/index.html#/home/'+type+'/'+id+'/'+'');
+        }
+
+        // 删除
+        $scope.handlerDeleteClick = function (id) {
+
         }
 
         // document click close filter panel

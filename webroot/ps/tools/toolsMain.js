@@ -22,7 +22,6 @@ require.config({
 
         "super.superMessage": "config",
         "superApp.superDire": "res/scripts/super/directive/superDire",
-        "superApp.reportDire": "res/scripts/super/directive/reportDire",
         "superApp.gridFilterDire": "res/scripts/super/directive/gridFilterDire",
         "superApp.svgExportDire": "res/scripts/super/directive/svgExportDire",
         "superApp.imgExportDire": "res/scripts/super/directive/imgExportDire",
@@ -50,6 +49,7 @@ require.config({
 
         "command": "res/scripts/super/command",
 
+        "pageFactory": "ps/tools/aFactory",
 
         'toolsApp': 'ps/tools/toolsApp',
         'toolsController': 'ps/tools/toolsController',
@@ -79,6 +79,7 @@ require.config({
 require([
     'jQuery',
     'angular', 
+    "pageFactory",
     'toolsApp',
     'toolsController',
     "heatmapGroupController",

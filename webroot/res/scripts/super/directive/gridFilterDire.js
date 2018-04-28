@@ -90,7 +90,7 @@ define("superApp.gridFilterDire",
                     }
 
                     // 应用自定义查询条件
-                    if (scope.searchOne && scope.filterFindEntity.filterName === 'GeneID') {
+                    if (scope.searchOne && scope.filterFindEntity.filterName === 'gene_id') {
                         scope.filterFindEntity.searchOne = scope.searchOne;
                         scope.filterFindEntity.searchType = scope.searchType;
                         console.log(scope.filterFindEntity)
@@ -209,7 +209,8 @@ define("superApp.gridFilterDire",
 
             // 触发自定义查询参数的点击事件
             $timeout(function () {
-                if ($scope.searchOne) $scope.btn_QueDing_OnClick();
+                console.log($scope.searchOne);
+                if ($scope.searchOne && $scope.filterFindEntity.filterName=='gene_id') $scope.btn_QueDing_OnClick();
             }, 30);
 
             //确定按钮点击事件
@@ -253,8 +254,11 @@ define("superApp.gridFilterDire",
                 if ($(tsgPanel).find(".filter_sort").hasClass("active")) {
                     //如果有被选中的
                     $scope.filterFindEntity.isSort = true;
+                    console.log($scope)
                     $scope.filterFindEntity.sortName = $scope.filterName;
+                    $scope.filterFindEntity.sortnamezh = $scope.filternamezh;
                     //$scope.filterFindEntity.sortType  不用赋值，已经在排序按钮点击时赋值了
+                    console.log($scope.filterFindEntity);
                 }
                 else {
                     $scope.filterFindEntity.isSort = false;
@@ -532,6 +536,7 @@ define("superApp.gridFilterDire",
                         var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                         $scope.compileTemplate(curPanel, 0);
                     }, 30);
+                } else {
                 }
             }, true);
 

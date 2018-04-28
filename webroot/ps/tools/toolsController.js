@@ -8,22 +8,7 @@ define(['toolsApp'], function (toolsApp) {
         $scope.InitPage = function () {
             $timeout(function () {
                 $scope.loadingComplete = true;
-                // $scope.testToken();
-                // url传参
-                function urlParams() {
-                    console.log($window.location.href);
-                    var search = $window.location.search.substring(1);
-                    var type = search.split('&')[0].split('=')[1];
-                    var id = search.split('&')[1].split('=')[1];
-                    $state.go(type);
-                }
-                // session 穿传参
-                sessionParams();
-                function sessionParams(){
-                    var type = toolService.sessionStorage.get('type');
-                    var id = toolService.sessionStorage.get('id');
-                    $state.go(type);
-                }
+                console.log($state.params)
             }, 300);
 
         }

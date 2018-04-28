@@ -64,13 +64,13 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
-                            <td ng-bind="item.name"></td>
-                            <td ng-bind="item.status"></td>
+                            <td ng-bind="item.projectName"></td>
+                            <td ng-bind="item.process"></td>
                             <td>链路</td>
-                            <td ng-bind="item.submitTime"></td>
+                            <td ng-bind="item.time"></td>
                             <td>
-                                <button class="btn-tools btn-tools-primary">查看</button>
-                                <button class="btn-tools btn-tools-warning">删除</button>
+                                <button class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
+                                <button class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>
 
                         </tr>

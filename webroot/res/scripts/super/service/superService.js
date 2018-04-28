@@ -1762,6 +1762,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //如果当前查询实体有排序，则记录排序字段
                         pageFindEntity.sortName = filterFindEntity.filterName;
                         pageFindEntity.sortType = filterFindEntity.sortType;
+                        pageFindEntity.sortnamezh = filterFindEntity.sortnamezh;
                     }
 
                     if (filterFindEntity.searchType == "range") {
@@ -1829,6 +1830,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 else {
                     //清空
                     pageFindEntity.sortName = "";
+                    pageFindEntity.sortnamezh = "";
                     pageFindEntity.sortType = "";
                     pageFindEntity.searchContentList = [];
                 }
@@ -1950,6 +1952,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             }
 
                             if (this.Trim(filterType) == "IN") {
+                                console.log( item.filternamezh )
                                 item.searchOne = item.searchOne.toString();
                                 item.searchTwo = "";
                                 if (item.searchOne.toString() != "") {
@@ -2003,7 +2006,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 if (pageFindEntity.sortName != "") {
                     // if (filterText !="") filterText += "<br/>"
                     // filterText = filterText + "排序条件： " + pageFindEntity.sortName;
-                    sortText = pageFindEntity.sortName;
+                    console.log(pageFindEntity);
+                    sortText = pageFindEntity.sortnamezh;
                     if (pageFindEntity.sortType == "asc") {
                         sortText = $sce.trustAsHtml(sortText + " ，&nbsp;&nbsp;<font color='red'>升序</font>");
                     }

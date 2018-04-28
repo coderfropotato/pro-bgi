@@ -2,7 +2,7 @@
         <div class="report-page-title" custom-title="聚类分析"></div>
         <div id="div_heatmap_page">
             <h5 class="subtitle">2.3 聚类图</h5>
-            <div class="graph_group" id="heatmapClusterPanel" style="min-width:1000px">
+            <div class="graph_group" id="analysis-heatmapClusterPanel" style="min-width:1000px">
                 <div class="graph_header">
                     <ul class="fLeft">
                         <li>
@@ -40,8 +40,8 @@
             </div>
                     <!-- table start -->
             <!-- test -->
-            <div class="thead-control" data="data" handle-thead-change="theadChange(arg)"></div>
-            <div class="tableListPanel" id="panel_table_1">
+            <div class="thead-control" data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
+            <div class="tableListPanel" id="analysis-heatmapGroup">
                 <div class="btn_options_filelist">
                     <ul class="ul_left grid_filter_ul">
                         <li>
@@ -58,7 +58,7 @@
                         <li>
                             <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                             <!-- 2018年4月19日15:58:03 tablehead -->
-                            <div class="grid-filter-begin" tablehead="GOAnnoData.thead" tableid="filter-table-id" callback="InitFindEntity1(arg1)" parentid="filter-table-id-1" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType"></div>
+                            <div class="grid-filter-begin" tablehead="GOAnnoData.thead" tableid="filter-table-id" callback="InitFindEntity1(arg1)" parentid="analysis-heatmap-table" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType"></div>
                         </li>
                         <li>
                             <div class="selector_area" style="margin-top:-2px;">
@@ -151,7 +151,7 @@
                 <!-- filter content over -->
                 <!-- table wrap -->
                 <div class="table_fixed_wrap">
-                    <div id="filter-table-id-1">
+                    <div id="analysis-heatmap-table">
                         <!-- left table -->
                         <div ng-hide="goAnnoError" class="table_leftside">
                             <table class="table table-bordered table-hover table-striped table_grid table-fixed">

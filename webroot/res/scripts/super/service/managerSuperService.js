@@ -1818,6 +1818,7 @@ function (SUPER_CONSOLE_MESSAGE)
                     //如果当前查询实体有排序，则记录排序字段
                     pageFindEntity.sortName = filterFindEntity.filterName;
                     pageFindEntity.sortType = filterFindEntity.sortType;
+                    pageFindEntity.sortnamezh = filterFindEntity.sortnamezh;  
                 }
                 
                 if (filterFindEntity.searchType == "range")
@@ -1898,6 +1899,7 @@ function (SUPER_CONSOLE_MESSAGE)
             {
                 //清空
                 pageFindEntity.sortName = "";
+                pageFindEntity.sortnamezh = "";
                 pageFindEntity.sortType = "";
                 pageFindEntity.searchContentList = [];
             }
@@ -2005,7 +2007,7 @@ function (SUPER_CONSOLE_MESSAGE)
                                     filterText += " <font color='red'>AND</font> ";
                                 }
                                 filterStatus = 1;
-                                filterText += " ( " + item.filternamezh + "<font color='red'>" + filterType + "</font>" + item.searchOne + " ~ " + item.searchTwo + " ) ";
+                                filterText += " ( " + item.filterName + "<font color='red'>" + filterType + "</font>" + item.searchOne + " ~ " + item.searchTwo + " ) ";
                             }
 
                         }
@@ -2050,7 +2052,7 @@ function (SUPER_CONSOLE_MESSAGE)
                                     filterText += " <font color='red'>AND</font> ";
                                 }
                                 filterStatus = 1;
-                                filterText += " ( " + item.filternamezh + "<font color='red'>" + filterType + "</font>" + tempSearchOne + " ) ";
+                                filterText += " ( " + item.filterName + "<font color='red'>" + filterType + "</font>" + tempSearchOne + " ) ";
                             }
                         }
 
@@ -2062,7 +2064,7 @@ function (SUPER_CONSOLE_MESSAGE)
                                     filterText += " <font color='red'>AND</font> ";
                                 }
                                 filterStatus = 1;
-                                filterText += " ( " + item.filternamezh + "<font color='red'>" + filterType + "</font>" + item.searchOne + " ) ";
+                                filterText += " ( " + item.filterName + "<font color='red'>" + filterType + "</font>" + item.searchOne + " ) ";
                             }
                         }
                         //filterText = filterText + "(" + item.filterName + filterType + tiem.searchOne + ")";

@@ -4,7 +4,6 @@ define([
     "angularjs-date-picker",
     "superApp.superDire",
     "superApp.superService",
-    "superApp.reportDire",
     "superApp.gridFilterDire",
     "superApp.svgExportDire",
     "superApp.toolTipDire",
@@ -32,7 +31,6 @@ define([
         "720kb.datepicker",
         "superApp.superDire",
         "superApp.superService",
-        "superApp.reportDire",
         "superApp.gridFilterDire",
         "superApp.svgExportDire",
         "superApp.toolTipDire",
@@ -54,21 +52,20 @@ define([
         "superApp.reportPageSubTitleDire",
         "superApp.reAnalysisDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", function ($logProvider, $httpProvider, $stateProvider) {
-        $logProvider.debugEnabled(true);
-        // router config 
+    toolsApp.config(["$logProvider", "$httpProvider","$stateProvider","$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider,$urlRouterProvider) {
+        $urlRouterProvider.otherwise('/home/myAnalysis');
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {
-                url: "/home/heatmapGroup",
+                url: "/home/heatmapGroup/:id/:pid",
                 templateUrl: "../tools/pages/heatmapGroup.html",
             })
             .state("heatmapSample", {
-                url: "/home/heatmapSample",
+                url: "/home/heatmapSample/:id/:pid",
                 templateUrl: "../tools/pages/heatmapSample.html",
             })
             .state("venn", {
-                url: "/home/venn",
+                url: "/home/venn/:id/:pid",
                 templateUrl: "../tools/pages/venn.html",
             })
             .state("myAnalysis", {

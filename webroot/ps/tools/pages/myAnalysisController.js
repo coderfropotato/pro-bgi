@@ -63,7 +63,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isFilter = false;
             // 查询参数
             $scope.analysisEntity = {
-                LCID: "test03_seb",
+                LCID: "test01",
                 pageNum: 1,
                 pageSize: 10,
                 searchContent: {
@@ -71,21 +71,14 @@ define(['toolsApp'], function (toolsApp) {
                     timeEnd: "",
                     chartType: [],
                     status: []
-                }
+                },
+                total:0
             };
             // toolService.gridFilterLoading.open("myanalysis-table");
-            $http({
-                method: "POST",
-                url: "http://192.168.29.203/bgfxxt/analysis/GetAnalysisList",
-                data: $scope.analysisEntity,
-                headers: { "Content-Type": "application/json;charset=UTF-8" }
-            }).success(function (data) {
-                console.log(data)
-            })
 
             $scope.analysisError = false;
             // url options.api.mrnaseq_url +'/analysis/GetAnalysisList'
-            // $scope.GetAnalysisList(1);
+            $scope.GetAnalysisList(1);
         }
 
         $scope.GetAnalysisList = function (pageNum) {
@@ -98,21 +91,23 @@ define(['toolsApp'], function (toolsApp) {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
             }
-            var promise = ajaxService.GetDeferData(ajaxConfig);
+            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
+                console.log(res);
                 toolService.gridFilterLoading.close("myanalysis-table");
                 if (res.Error) {
-                    $scope.IndelError = 'syserror';
+                    $scope.analysisError = 'syserror';
                     return;
-                } else if (res.analysisList.length == 0) {
-                    $scope.IndelError = 'nodata';
+                } else if (res.analysisList.rows.length == 0) {
+                    $scope.analysisError = 'nodata';
                     return;
                 } else {
                     $scope.analysisList = res;
-                    $scope.IndelError = false;
+                    console.log($scope.analysisList);
+                    $scope.analysisError = false;
                 }
             }, function () {
-                $scope.IndelError = 'syserror'
+                $scope.analysisError = 'syserror'
                 toolService.gridFilterLoading.close("myanalysis-table");
             })
         }

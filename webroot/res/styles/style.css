@@ -3275,6 +3275,8 @@ div.tipsContainer {
 .heatSort{
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
 }
 .heatsetFoot .opreatBtns{
     margin-top: 8px;

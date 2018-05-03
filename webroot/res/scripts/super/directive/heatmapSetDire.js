@@ -35,12 +35,10 @@ define("superApp.heatmapSetDire",
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
-                    "<p><span>行名称：</span>"+
+                    "<p><span>行名称：</span></p>"+
                     "<div class='onoffswitch' ng-click='setOptions.isShowName = !setOptions.isShowName'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowName'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
-                    "</p>" +
-                    "<p><span>列聚类：</span>"+
+                    "<p><span>列聚类：</span></p>"+
                     "<div class='onoffswitch' ng-click='setOptions.isShowTopLine = !setOptions.isShowTopLine'><input type='checkbox' id='twoOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='setOptions.isShowTopLine'><label class='onoffswitch-label' for='twoOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>"+
-                    "</p>" +
                     "<div class='oneline_foot heatsetFoot'>" +
                     "<div class='heatSort'>" +
                     "<ul>" +

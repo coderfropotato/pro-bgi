@@ -19,10 +19,11 @@ define("superApp.analysisPopDire",
                     // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
                     // + "</thead></table>" 
                     + "<div ng-show=\"analysisList.length\" class=\"table-wrap\"><table class=\"table table-hover\"><thead>"
-                    + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
+                    + "<tr><th class=\"text-center\">任务名称</th> <th class=\"text-center\">进度</th> <th class=\"text-center\">提交时间</th><th class=\"text-center\">操作</th></tr>"
                     + "</thead><tbody>"
-                    + "<tr ng-click=\"handlerClick(val)\" ng-repeat=\"val in analysisList\" track by $index>"
-                    + "<td>{{val.name}}</td><td>{{val.progress}}</td><td>{{val.time | date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>"
+                    + "<tr ng-repeat=\"val in analysisList\" track by $index>"
+                    + "<td>{{val.name}}</td><td>{{val.progress}}</td><td>{{val.time | date:'yyyy-MM-dd hh:mm:ss'}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>"
+                    +"</tr>"
                     + "</tbody>"
                     + "</table></div>"
                     + "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
@@ -48,8 +49,9 @@ define("superApp.analysisPopDire",
                 ev.stopPropagation();
             }
             // 查看分析详情
-            $scope.handlerClick = function (item) {
-                $scope.handlerAnalysisDetail && $scope.handlerAnalysisDetail(item);
+            $scope.handlerAnalysisDetail = function (item) {
+                console.log(item);
+
             }
 
             // document.addEventListener('click', function () { 

@@ -483,7 +483,7 @@ define("superApp.gridFilterDire",
                     searchType: "=",
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
                     geneidtruekey: "=",
-                    filterStatusCallback:"&"        // 是否筛选中，定义外部布局样式
+                    filterStatusCallback: "&"        // 是否筛选中，定义外部布局样式
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
                     + "                    <span class=\"iconglyph icon-filter\"></span></button>",
@@ -507,7 +507,7 @@ define("superApp.gridFilterDire",
             $scope.clearFilter = function () {
                 //清空
                 $scope.shaiXuanIsActive = true;
-                $scope.filterStatusCallback && $scope.filterStatusCallback({status:$scope.shaiXuanIsActive});
+                $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
                 $scope.btn_ShaXuan_OnClick();
             }
 
@@ -536,15 +536,16 @@ define("superApp.gridFilterDire",
             // watch searchOne
             $scope.$watch('searchOne', function (newVal, oldVal) {
                 if (!angular.equals(newVal, oldVal)) {
-                    $timeout(function () {
-                        var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
-                        $scope.compileTemplate(curPanel, 0);
-                    }, 30);
-                } else {
+                    if (newVal) {
+                        $timeout(function () {
+                            var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
+                            $scope.compileTemplate(curPanel, 0);
+                        }, 30);
+                    }
                 }
             }, true);
 
-            
+
             // 编译模板
             // Modified:2018年3月23日14:27:40
             $scope.compileTemplate = function (el, index) {
@@ -589,7 +590,7 @@ define("superApp.gridFilterDire",
             //筛选按钮点击事件
             $scope.btn_ShaXuan_OnClick = function () {
                 $scope.shaiXuanIsActive = !$scope.shaiXuanIsActive;
-                $scope.filterStatusCallback && $scope.filterStatusCallback({status:$scope.shaiXuanIsActive});
+                $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
 
                 //获取grid对象
                 var gridPanel = $("#" + $scope.tableid);

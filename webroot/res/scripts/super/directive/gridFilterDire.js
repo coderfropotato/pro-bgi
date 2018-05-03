@@ -45,6 +45,7 @@ define("superApp.gridFilterDire",
                     // 接受外部查询参数
                     scope.searchType = attrs.searchtype;
                     scope.searchOne = attrs.searchone;
+                    scope.geneidtruekey = attrs.geneidtruekey;
 
                     scope.filterFindEntity = {
                         filterName: scope.filterName,           //查询字段名字
@@ -90,10 +91,9 @@ define("superApp.gridFilterDire",
                     }
 
                     // 应用自定义查询条件
-                    if (scope.searchOne && scope.filterFindEntity.filterName === 'gene_id') {
+                    if (scope.searchOne && scope.filterFindEntity.filterName === scope.geneidtruekey) {
                         scope.filterFindEntity.searchOne = scope.searchOne;
                         scope.filterFindEntity.searchType = scope.searchType;
-                        console.log(scope.filterFindEntity)
                     }
                     //点击小箭头过滤面版
                     $(element).find(".tsg_btns .btn:eq(0)").click(function (event) {
@@ -209,8 +209,9 @@ define("superApp.gridFilterDire",
 
             // 触发自定义查询参数的点击事件
             $timeout(function () {
-                console.log($scope.searchOne);
-                if ($scope.searchOne && $scope.filterFindEntity.filterName=='gene_id') $scope.btn_QueDing_OnClick();
+                if ($scope.searchOne && $scope.filterFindEntity.filterName == $scope.geneidtruekey) {
+                    $scope.btn_QueDing_OnClick();
+                }
             }, 30);
 
             //确定按钮点击事件
@@ -481,6 +482,8 @@ define("superApp.gridFilterDire",
                     searchOne: "=",
                     searchType: "=",
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
+                    geneidtruekey: "=",
+                    filterStatusCallback:"&"        // 是否筛选中，定义外部布局样式
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
                     + "                    <span class=\"iconglyph icon-filter\"></span></button>",
@@ -504,6 +507,7 @@ define("superApp.gridFilterDire",
             $scope.clearFilter = function () {
                 //清空
                 $scope.shaiXuanIsActive = true;
+                $scope.filterStatusCallback && $scope.filterStatusCallback({status:$scope.shaiXuanIsActive});
                 $scope.btn_ShaXuan_OnClick();
             }
 
@@ -540,6 +544,7 @@ define("superApp.gridFilterDire",
                 }
             }, true);
 
+            
             // 编译模板
             // Modified:2018年3月23日14:27:40
             $scope.compileTemplate = function (el, index) {
@@ -563,6 +568,7 @@ define("superApp.gridFilterDire",
                     + " filtertype=\"" + filtertype + "\" "
                     + " searchtype=\"" + $scope.searchType + "\" "
                     + " searchone=\"" + $scope.searchOne + "\" "
+                    + " geneidtruekey=\"" + $scope.geneidtruekey + "\" "
                     + " callback=\"" + $scope.callbackname + "(arg1)\" "
                     + " parentid=\"" + $scope.parentId + "\" "
                     + " icon=\"sort_arrow\" tableid=\"" + $scope.tableid + "\"></div>";
@@ -583,6 +589,8 @@ define("superApp.gridFilterDire",
             //筛选按钮点击事件
             $scope.btn_ShaXuan_OnClick = function () {
                 $scope.shaiXuanIsActive = !$scope.shaiXuanIsActive;
+                $scope.filterStatusCallback && $scope.filterStatusCallback({status:$scope.shaiXuanIsActive});
+
                 //获取grid对象
                 var gridPanel = $("#" + $scope.tableid);
                 if ($scope.shaiXuanIsActive) {

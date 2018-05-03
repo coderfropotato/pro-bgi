@@ -551,7 +551,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $rootScope.confirm = function () {
                             var checkedItems = [];
                             var type = "";
-                            
+
                             for (var i = 0; i < $rootScope.chooseList.length; i++) {
                                 if ($rootScope.chooseList[i].isChecked) {
                                     checkedItems.push($rootScope.chooseList[i].name);
@@ -562,13 +562,19 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             } else {
                                 $rootScope.isChoose = true;
                                 // 回调
-                                for(var i=0;i< $rootScope.data.length;i++){
-                                    if($rootScope.data[i].isChecked){
-                                        type = $rootScope.data[i].name;
+                                for (var i = 0; i < $rootScope.data.length; i++) {
+                                    if ($rootScope.data[i].isChecked) {
+                                        switch ($rootScope.data[i].name) {
+                                            case '样本差异':
+                                                type = 'group';
+                                                break;
+                                            default:
+                                                type = 'sample';
+                                        }
                                         break;
                                     }
                                 }
-                                callback && callback(type,checkedItems);
+                                callback && callback({ options: { 'type': type, 'check': checkedItems } });
                                 ngDialog.close();
                             }
                         };
@@ -1952,7 +1958,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             }
 
                             if (this.Trim(filterType) == "IN") {
-                                console.log( item.filternamezh )
                                 item.searchOne = item.searchOne.toString();
                                 item.searchTwo = "";
                                 if (item.searchOne.toString() != "") {
@@ -2006,7 +2011,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 if (pageFindEntity.sortName != "") {
                     // if (filterText !="") filterText += "<br/>"
                     // filterText = filterText + "排序条件： " + pageFindEntity.sortName;
-                    console.log(pageFindEntity);
                     sortText = pageFindEntity.sortnamezh;
                     if (pageFindEntity.sortType == "asc") {
                         sortText = $sce.trustAsHtml(sortText + " ，&nbsp;&nbsp;<font color='red'>升序</font>");

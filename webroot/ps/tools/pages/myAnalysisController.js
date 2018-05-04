@@ -78,37 +78,37 @@ define(['toolsApp'], function (toolsApp) {
 
             $scope.analysisError = false;
             // url options.api.mrnaseq_url +'/analysis/GetAnalysisList'
-            $scope.GetAnalysisList(1);
+            // $scope.GetAnalysisList(1);
         }
 
-        $scope.GetAnalysisList = function (pageNum) {
-            toolService.gridFilterLoading.open("myanalysis-table");
-            $scope.analysisEntity.pageNum = pageNum;
-            //配置请求参数
-            $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
-            var ajaxConfig = {
-                data: $scope.analysisEntity,
-                url: $scope.analysisListUrl
-            }
-            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
-            promise.then(function (res) {
-                console.log(res);
-                toolService.gridFilterLoading.close("myanalysis-table");
-                if (res.Error) {
-                    $scope.analysisError = 'syserror';
-                    return;
-                } else if (res.rows.length == 0) {
-                    $scope.analysisError = 'nodata';
-                    return;
-                } else {
-                    $scope.analysisList = res;
-                    $scope.analysisError = false;
-                }
-            }, function () {
-                $scope.analysisError = 'syserror'
-                toolService.gridFilterLoading.close("myanalysis-table");
-            })
-        }
+        // $scope.GetAnalysisList = function (pageNum) {
+        //     toolService.gridFilterLoading.open("myanalysis-table");
+        //     $scope.analysisEntity.pageNum = pageNum;
+        //     //配置请求参数
+        //     $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
+        //     var ajaxConfig = {
+        //         data: $scope.analysisEntity,
+        //         url: $scope.analysisListUrl
+        //     }
+        //     var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+        //     promise.then(function (res) {
+        //         console.log(res);
+        //         toolService.gridFilterLoading.close("myanalysis-table");
+        //         if (res.Error) {
+        //             $scope.analysisError = 'syserror';
+        //             return;
+        //         } else if (res.rows.length == 0) {
+        //             $scope.analysisError = 'nodata';
+        //             return;
+        //         } else {
+        //             // $scope.analysisList = res;
+        //             $scope.analysisError = false;
+        //         }
+        //     }, function () {
+        //         $scope.analysisError = 'syserror'
+        //         toolService.gridFilterLoading.close("myanalysis-table");
+        //     })
+        // }
 
         // 高级筛选
         $scope.handlerAdvanceClick = function (event) {
@@ -128,6 +128,7 @@ define(['toolsApp'], function (toolsApp) {
 
         // 查看
         $scope.handlerSeeClick = function (id,type) {
+            var id = 123;
             var type = 'heatmapGroup'
             $window.open('../tools/index.html#/home/'+type+'/'+id+'/'+'');
         }

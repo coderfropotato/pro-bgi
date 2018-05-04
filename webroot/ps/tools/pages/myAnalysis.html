@@ -6,7 +6,7 @@
             <button class="btn-advance btn-tools btn-tools-default pull-right" ng-class="{'active': isFilter}" ng-click="handlerAdvanceClick($event)">advance</button>
             <!-- filter panel -->
             <div class="advance-panel" ng-show="isFilter">
-                <ul  ng-click="handlerFilterPanelClick($event)">
+                <ul ng-click="handlerFilterPanelClick($event)">
                     <li>
                         <span class="advance-title">提交时间</span>
                         <ol class="date">
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div>
-            <div class="table_scroll_wrap">
+            <div class="table_scroll_wrap" style="overflow:visible;">
                 <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed">
                     <thead>
                         <tr>
@@ -66,7 +66,25 @@
                         <tr ng-repeat="item in analysisList.rows track by $index">
                             <td ng-bind="item.projectName"></td>
                             <td ng-bind="item.process"></td>
-                            <td>链路</td>
+                            <td>
+                                <div class="links">
+                                    链路
+                                    <ul class="link-lists">
+                                        <li>
+                                            <p>类型：样本表达</p>
+                                            <p>命名：xxx项目1</p>
+                                        </li>
+                                        <li>
+                                            <p>类型：样本表达</p>
+                                            <p>命名：xxx项目1</p>
+                                        </li>
+                                        <li>
+                                            <p>类型：样本表达</p>
+                                            <p>命名：xxx项目1</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
                             <td ng-bind="item.time"></td>
                             <td>
                                 <button class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>

@@ -129,8 +129,6 @@ define("superApp.gridFilterDire",
 
                             //如果在 group 里面，减去 group 的偏移 
                             if (scope.parentId && scope.parentId != "undefined") {
-                                //console.log(tsgPanelTop);
-                                //console.log(tsgPanelLeft);
                                 var $parentDiv = $("#" + scope.parentId);
                                 var offset = $parentDiv.offset();
                                 var offLeft = offset.left - $(".report_view_leftside").width() - 1;
@@ -255,11 +253,9 @@ define("superApp.gridFilterDire",
                 if ($(tsgPanel).find(".filter_sort").hasClass("active")) {
                     //如果有被选中的
                     $scope.filterFindEntity.isSort = true;
-                    console.log($scope)
                     $scope.filterFindEntity.sortName = $scope.filterName;
                     $scope.filterFindEntity.sortnamezh = $scope.filternamezh;
                     //$scope.filterFindEntity.sortType  不用赋值，已经在排序按钮点击时赋值了
-                    console.log($scope.filterFindEntity);
                 }
                 else {
                     $scope.filterFindEntity.isSort = false;
@@ -534,17 +530,18 @@ define("superApp.gridFilterDire",
             }, true);
 
             // watch searchOne
-            $scope.$watch('searchOne', function (newVal, oldVal) {
-                if (!angular.equals(newVal, oldVal)) {
-                    if (newVal) {
-                        $timeout(function () {
-                            var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
-                            $scope.compileTemplate(curPanel, 0);
-                        }, 30);
+            if ($scope.searchOne != undefined && $scope.searchOne != null) {
+                $scope.$watch('searchOne', function (newVal, oldVal) {
+                    if (!angular.equals(newVal, oldVal)) {
+                        if (newVal) {
+                            $timeout(function () {
+                                var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
+                                $scope.compileTemplate(curPanel, 0);
+                            }, 30);
+                        }
                     }
-                }
-            }, true);
-
+                }, true);
+            }
 
             // 编译模板
             // Modified:2018年3月23日14:27:40
@@ -563,13 +560,17 @@ define("superApp.gridFilterDire",
                 var searchOne = el.attr('searchone');
                 if (filtertype == undefined) filtertype = "double";
                 var filterDireID = "div_filterDire_" + $scope.tableid + "_" + index;
-                tempDirHtmlStr = " <div id=\"" + filterDireID + "\" class=\"grid-filter\" "
+                tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" "
                     + " filtername=\"" + filtername + "\" "
                     + " filternamezh=\"" + filternamezh + "\" "
                     + " filtertype=\"" + filtertype + "\" "
-                    + " searchtype=\"" + $scope.searchType + "\" "
-                    + " searchone=\"" + $scope.searchOne + "\" "
-                    + " geneidtruekey=\"" + $scope.geneidtruekey + "\" "
+                    + " searchtype=\"" + $scope.searchType + "\" ";
+
+                if ($scope.searchOne != undefined && $scope.searchOne != null) {
+                    tempDirHtmlStr += " searchone=\"" + $scope.searchOne + "\" ";
+                }
+
+                tempDirHtmlStr += " geneidtruekey=\"" + $scope.geneidtruekey + "\" "
                     + " callback=\"" + $scope.callbackname + "(arg1)\" "
                     + " parentid=\"" + $scope.parentId + "\" "
                     + " icon=\"sort_arrow\" tableid=\"" + $scope.tableid + "\"></div>";

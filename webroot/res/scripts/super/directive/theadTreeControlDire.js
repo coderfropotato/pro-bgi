@@ -117,7 +117,6 @@ define("superApp.theadControlDire",
             }
 
             $scope.findSublings = function (node, path) {
-                console.log(node, path);
                 var name = node.name;
                 // path第零个是自己,第一个是父级
                 if (!path[1]) {

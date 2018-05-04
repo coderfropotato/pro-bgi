@@ -9,11 +9,18 @@ define("superApp.reAnalysisDire",
         var superApp = angular.module("superApp.reAnalysisDire", []);
         superApp.directive('reAnalysis', reAnalysisDirective);
         reAnalysisDirective.$inject = ["$log"];
+        // "<button ng-click=\"handlerReanalysisClick('heatmap')\" class=\"btn btn-default tool-tip pull-right\" title=\"聚类重分析\">聚类重分析</button>
         function reAnalysisDirective($log) {
             return {
                 restrict: "ACE",
                 replace: true,
-                template: "<div class=\"re-analysis-panel clearfix\"><button ng-click=\"handlerReanalysisClick('heatmap')\" class=\"btn btn-default tool-tip pull-right\" title=\"聚类重分析\">聚类重分析</button></div>",
+                template: "<div class='re-analysis-panel clearfix'>"
+                    + "<ul class='pull-right clearfix'>"
+                    + "<li class='pull-left' data-toggle='tooltip' title='聚类重分析' ng-click=\"handlerReanalysisClick('heatmap')\">聚类</li>"
+                    + "<li class='pull-left' data-toggle='tooltip' title='韦恩图重分析' ng-click=\"handlerReanalysisClick('venn')\">维恩</li>"
+                    + "<li class='pull-left' data-toggle='tooltip' title='弦图重分析' ng-click=\"handlerReanalysisClick('circos')\">弦图</li>"
+                    +"</ul>"
+                    + "</div>",
                 scope: {
                     callback: "&",
                 },
@@ -36,7 +43,7 @@ define("superApp.reAnalysisDire",
                     data: $scope.reAnalysisEntity,
                     url: options.api.mrnaseq_url + "/analysis/GetAnalysisPop",
                 };
-                
+
                 var promise = ajaxService.GetDeferData(ajaxConfig);
                 promise.then(function (responseData) {
                     if (responseData.Error) {

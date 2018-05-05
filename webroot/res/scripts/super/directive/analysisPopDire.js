@@ -30,7 +30,8 @@ define("superApp.analysisPopDire",
                     + "<p class=\"error-tips\" ng-show=\"!analysisList.length\">暂无分析信息</p></div>",
                 scope: {
                     analysisList: "=",
-                    handlerAnalysisDetail: "&"
+                    handlerAnalysisDetail: "&",
+                    isExpand:"=",
                 },
                 replace: false,
                 transclude: true,
@@ -41,8 +42,6 @@ define("superApp.analysisPopDire",
         superApp.controller("analysisPopCtr", analysisPopCtr);
         analysisPopCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
         function analysisPopCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            // 是否显示面板
-            $scope.isExpand = false;
             //切换显示面板
             $scope.toggleShow = function (ev) {
                 $scope.isExpand = !$scope.isExpand;
@@ -51,7 +50,6 @@ define("superApp.analysisPopDire",
             // 查看分析详情
             $scope.handlerAnalysisDetail = function (item) {
                 console.log(item);
-
             }
 
             // document.addEventListener('click', function () { 

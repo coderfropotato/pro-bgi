@@ -220,7 +220,6 @@ function (angular, SUPER_CONSOLE_MESSAGE) {
                     $this.data("direct", ($this.attr('toolTipDirect')) ? $this.attr('toolTipDirect') : "right");
                     /* 判断元素是否位于极左 或 极右，如是，反向之 */
                     if ($this.data("direct") == "right") {
-                        console.log($this.offset());
                         if ($this.offset().left + 200 > $(window).width()) {
                             $this.data("direct", "left");
                         }
@@ -337,7 +336,6 @@ function (angular, SUPER_CONSOLE_MESSAGE) {
                     $this.data("direct", ($this.attr('toolTipDirect')) ? $this.attr('toolTipDirect') : "right");
                     /* 判断元素是否位于极左 或 极右，如是，反向之 */
                     if ($this.data("direct") == "right") {
-                        console.log($this.offset());
                         if ($this.offset().left + 200 > $(window).width()) {
                             $this.data("direct", "left");
                         }

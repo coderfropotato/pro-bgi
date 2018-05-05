@@ -6,39 +6,26 @@
             <button class="btn-advance btn-tools btn-tools-default pull-right" ng-class="{'active': isFilter}" ng-click="handlerAdvanceClick($event)">advance</button>
             <!-- filter panel -->
             <div class="advance-panel" ng-show="isFilter">
-                <ul  ng-click="handlerFilterPanelClick($event)">
+                <ul ng-click="handlerFilterPanelClick($event)">
                     <li>
                         <span class="advance-title">提交时间</span>
                         <ol class="date">
                             <li>
-                                <datepicker date-format="yyyy-MM-dd HH-SS-MM">
-                                    <input ng-model="timeStart" type="text" placeholder="/年" readonly/>
+                                <datepicker date-format="yyyy-MM-dd">
+                                    <input ng-model="analysisEntity.searchContent.timeStart" type="text" placeholder="/年/月/日" readonly/>
                                 </datepicker>
                             </li>
                             <li>
                                 <datepicker date-format="yyyy-MM-dd">
-                                    <input ng-model="timeEnd" type="text" placeholder="/年" readonly />
+                                    <input ng-model="analysisEntity.searchContent.timeEnd" type="text" placeholder="/年/月/日" readonly />
                                 </datepicker>
                             </li>
                         </ol>
                     </li>
-                    <li>
-                        <span class="advance-title">类型</span>
-                        <ol>
-                            <li>聚类图</li>
-                            <li>韦恩图</li>
-                            <li>GO</li>
-                            <li>韦恩图</li>
-                            <li>GO</li>
-                        </ol>
-                    </li>
-                    <li>
-                        <span class="advance-title">状态</span>
-                        <ol>
-                            <li>成功</li>
-                            <li>失败</li>
-                            <li>运行中</li>
-                            <li>排队中</li>
+                    <li ng-repeat="item in advanceParams track by $index">
+                        <span class="advance-title" ng-repeat="(key,val) in item">{{key}}</span>
+                        <ol ng-repeat="(key,val) in item">
+                            <li ng-repeat="i in val" ng-click='handlerParamsClick(i)' ng-class="{'active':i.isActive}">{{i.name}}</li>
                         </ol>
                     </li>
                 </ul>
@@ -51,24 +38,44 @@
             </div>
         </div>
         <div>
-            <div class="table_scroll_wrap">
+            <div class="table_scroll_wrap" style="overflow:visible;">
                 <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed">
                     <thead>
                         <tr>
-                            <th>项目</th>
-                            <th>状态</th>
-                            <th>链路</th>
-                            <th>提交时间</th>
-                            <th>操作</th>
+                            <th class="text-center">项目</th>
+                            <th class="text-center">状态</th>
+                            <th class="text-center">链路</th>
+                            <th class="text-center">提交时间</th>
+                            <th class="text-center">操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
-                            <td ng-bind="item.projectName"></td>
-                            <td ng-bind="item.process"></td>
-                            <td>链路</td>
-                            <td ng-bind="item.time"></td>
-                            <td>
+                            <td class="text-center" ng-bind="item.projectName"></td>
+                            <td class="text-center" ng-bind="item.process"></td>
+                            <td class="text-center">
+                                <div class="links">
+                                    <span>链路
+                                        <ul class="link-lists">
+                                            <li>
+                                                <p>类型：样本表达</p>
+                                                <p>命名：xxx项目1</p>
+                                            </li>
+                                            <li>
+                                                <p>类型：样本表达</p>
+                                                <p>命名：xxx项目1</p>
+                                            </li>
+                                            <li>
+                                                <p>类型：样本表达</p>
+                                                <p>命名：xxx项目1</p>
+                                            </li>
+                                        </ul>
+                                    </span>
+
+                                </div>
+                            </td>
+                            <td class="text-center" ng-bind="item.time"></td>
+                            <td class="text-center">
                                 <button class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
                                 <button class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>

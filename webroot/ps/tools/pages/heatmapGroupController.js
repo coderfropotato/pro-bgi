@@ -2,6 +2,7 @@ define(["toolsApp"], function (toolsApp) {
     toolsApp.controller("heatmapGroupController", heatmapGroupController);
     heatmapGroupController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
+
     function heatmapGroupController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
         $scope.InitPage = function () {
@@ -10,15 +11,16 @@ define(["toolsApp"], function (toolsApp) {
                 function () {
                     toolService.pageLoading.close();
                 }, 300);
-
+            $scope.id = $state.params.id;       // 重分析id
             $scope.isShowColorPanel = false; //是否显示颜色面板
             $scope.isShowSetPanel = false;  //是否显示设置面板
             $scope.isRefresh = false;  //是否点击了刷新
             $scope.compareGroup = '';
+            $scope.isBeginFilter = false;
             //聚类图请求entity
             $scope.clusterEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
-                "id": "",
+                "id": $scope.id,
                 "compareGroup": ""
             }
 
@@ -27,17 +29,16 @@ define(["toolsApp"], function (toolsApp) {
             toolService.sessionStorage.set('colors', colorArr);
 
             $scope.goAnnoFindEntity = {
+                "id": $scope.id,
                 "LCID": toolService.sessionStorage.get("LCID"),
                 "pageSize": 10,
                 "pageNum": 1,
                 "searchContentList": [],
                 "sortName": "",
                 "sortType": "",
-                "CompareGroup": "",
-                "geneList": [],     // 聚类图选中的geneList
-                "thead": [],          // 增删列
+                "compareGroup": "",
             };
-            $scope.accuracy = 2;
+            $scope.accuracy = -1;  // 精度默认 全数据
 
             $scope.setOption = {
                 isShowName: false,
@@ -54,19 +55,20 @@ define(["toolsApp"], function (toolsApp) {
             $scope.clusterEntity.compareGroup = $scope.compareGroup;
             $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
             // 获取聚类图数据
-            // $scope.GetHeatmapData();
-            // $scope.GetGOAnnoList(1);
+            $scope.GetHeatmapData();
+            // 获取表格数据
+            $scope.GetGOAnnoList(1);
         };
         // 样本改变
         $scope.compareGroupChange = function () {
             $scope.clusterEntity.compareGroup = $scope.compareGroup;
             $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
             $scope.GetHeatmapData();
-            // $scope.GetGOAnnoList(1);
-            // // 重置未选中列表 改变table状态
-            // $scope.geneUnselectList = {};
-            // $scope.checkedAll = true;
-            // $scope.checkAll();
+            $scope.GetGOAnnoList(1);
+            // 重置未选中列表 改变table状态
+            $scope.geneUnselectList = {};
+            $scope.checkedAll = true;
+            $scope.checkAll();
         }
 
         //获取聚类图数据
@@ -74,6 +76,7 @@ define(["toolsApp"], function (toolsApp) {
             $scope.isShowSetPanel = false;
 
             toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
+
             var ajaxConfig = {
                 data: $scope.clusterEntity,
                 url: options.api.mrnaseq_url + "/clusterHeatmap/GetClusterHeatmapData"
@@ -82,7 +85,7 @@ define(["toolsApp"], function (toolsApp) {
             promise.then(function (res) {
                 if (res.Error) {
                     $scope.clusterError = "syserror";
-                } else if (res.length == 0) {
+                } else if (JSON.stringify(res) === '{}') { // js: JSON.stringify(res)==='{}' ;  jquery: $.isEmptyObject(res) ; es6: Object.keys(res).length === 0
                     $scope.clusterError = "nodata";
                 } else {
                     $scope.clusterError = "";
@@ -101,6 +104,10 @@ define(["toolsApp"], function (toolsApp) {
                 }
 
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
+
+            }, function (errMsg) {
+                $scope.clusterError = "syserror";
+                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             })
         }
 
@@ -111,7 +118,7 @@ define(["toolsApp"], function (toolsApp) {
 
         //画图
         $scope.drawClusterHeatmap = function (resdata, setOption) {
-            d3.selectAll("#chartClusterpic svg g").remove();
+            d3.selectAll("#heatmap_chartClusterpic svg g").remove();
             //定义数据
             var cluster_data = resdata.leftClusterData,
                 topCluster_data = resdata.topClusterData,
@@ -186,7 +193,7 @@ define(["toolsApp"], function (toolsApp) {
                 legendTrans_y = (heatmap_height - legend_height) / 2 + margin.top + topCluster_height;
 
             //定义容器
-            var svg = d3.select("#chartClusterpic svg").attr("width", totalWidth).attr("height", totalHeight);
+            var svg = d3.select("#heatmap_chartClusterpic svg").attr("width", totalWidth).attr("height", totalHeight);
 
             var body_g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -409,7 +416,6 @@ define(["toolsApp"], function (toolsApp) {
                     });
                     $scope.setGeneList(resGeneId);
 
-
                     var high_j = d3.min([up_j, down_j]),
                         low_j = d3.max([up_j, down_j]);
                     var highHeight = high_j * single_rect_height;
@@ -443,7 +449,7 @@ define(["toolsApp"], function (toolsApp) {
                 })
             }
 
-            //获取rect横纵索引
+            //获取heatmap横纵索引
             function getIndex(x, y) {
                 var rect_i = 0, rect_j = 0;
                 var heatmapData_len = heatmap_data.length;
@@ -585,7 +591,7 @@ define(["toolsApp"], function (toolsApp) {
         /* table start */
         // 指定外部调用筛选指令的查询参数集合
         $scope.geneidCustomSearchType = "$in";
-        $scope.geneidCustomSearchOne = "AT2G31880\nAT3G55980\nAT3G57530";
+        $scope.geneidCustomSearchOne = "";
 
         // test delete columns/ add columns
         // 改变筛选条件  切换比较组 框选基因  都需要重置 基因列表
@@ -604,7 +610,7 @@ define(["toolsApp"], function (toolsApp) {
         $scope.removeGeneItem = function (key) {
             delete $scope.geneUnselectList[key];
             for (var i = 0; i < $scope.GOAnnoData.rows.length; i++) {
-                if ($scope.GOAnnoData.rows[i].GeneID === key) {
+                if ($scope.GOAnnoData.rows[i][$scope.geneid_truekey] === key) {
                     $scope.GOAnnoData.rows[i].isChecked = true;
                     $scope.computedTheadStatus();
                     break;
@@ -612,23 +618,9 @@ define(["toolsApp"], function (toolsApp) {
             }
         }
 
-        $scope.addColumns = function () {
-            $scope.GOAnnoData.rows.forEach(function (val, index) {
-                val['testAdd'] = "add" + index;
-            });
-            $scope.GOAnnoData.thead.push('testAdd');
-        }
-
-        $scope.deleteColumns = function () {
-            $scope.GOAnnoData.rows.forEach(function (val, index) {
-                delete val.testAdd;
-            });
-            $scope.GOAnnoData.thead.pop();
-        }
         // 聚类图框选传 获取genelist 重新获取表格数据 渲染筛选条件
         $scope.setGeneList = function (geneList) {
             var searchOne = '';
-
             // 重置基因列表
             $scope.geneUnselectList = '';
             // 拼接GeneID
@@ -652,9 +644,44 @@ define(["toolsApp"], function (toolsApp) {
 
         // thead change event
         $scope.theadChange = function (a) {
-            console.log('--------------------------------------------------')
-            console.log(a);
-            console.warn('调用')
+            var addThead = [];
+            var deleteArr = [];
+            $scope.add = [];
+            // 当前新增的表头
+            a.add.forEach(function (val, index) {
+                $scope.add = $scope.add.concat(val.children);
+            })
+            // 所有新加的表头
+            a.all.forEach(function (val, index) {
+                addThead = addThead.concat(val.children);
+            })
+            // 当前删除的表头
+            a.delete.forEach(function (val, index) {
+                deleteArr = deleteArr.concat(val.children);
+            });
+
+            for (var i = 0, len = deleteArr.length; i < len; i++) {
+                $scope.goAnnoFindEntity.searchContentList.forEach(function (val, index) {
+                    if (val.filterName !== 'LCID') {
+                        if (val.filterName === deleteArr[i]) {
+                            if (val.isSort) {
+                                val.isSort = false;
+                                $scope.goAnnoFindEntity.sortName = '';
+                                $scope.goAnnoFindEntity.sortnamezh = '';
+                                $scope.goAnnoFindEntity.sortType = '';
+                            }
+                            $scope.goAnnoFindEntity.searchContentList.splice(index, 1);
+                        }
+                    }
+
+
+                })
+            }
+
+            $scope.goAnnoFindEntity.addThead = addThead;
+            $scope.filterText1 = toolService.GetFilterContentText($scope.goAnnoFindEntity);
+            $scope.GetGOAnnoList();
+
         }
 
 
@@ -680,28 +707,30 @@ define(["toolsApp"], function (toolsApp) {
 
         //获取注释表数据
         $scope.GetGOAnnoList = function (pageNumber) {
-            toolService.gridFilterLoading.open("analysis-heatmap-table");
+            toolService.gridFilterLoading.open("analysis-heatmapgroup-table");
+            toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
             $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
-            $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "CompareGroup", "string", "equal", $scope.goAnnoFindEntity.CompareGroup);
 
             $scope.goAnnoFindEntity.pageNum = pageNumber;
-            $scope.exportLocationGOAnno = options.api.mrnaseq_url + "/search/GONotesDifferential";
+            $scope.exportLocationGOAnno = options.api.mrnaseq_url + "/table/GetHeatmapTableData";
             var ajaxConfig = {
                 data: $scope.goAnnoFindEntity,
                 url: $scope.exportLocationGOAnno,
             };
-
 
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (responseData) {
                 if (responseData.Error) {
                     $scope.goAnnoError = "syserror";
                 } else if (responseData.length == 0) {
-                    $scope.goAnnoFindEntity.searchContentList.length == 2 ? $scope.goAnnoError = "fjnodata" : $scope.goAnnoError = "nodata";
+                    $scope.goAnnoError = "nodata";
                 } else {
                     $scope.goAnnoError = "";
                     $scope.GOAnnoData = responseData;
                     $scope.GOAnnoData.thead = [];
+                    // 第零个就是geneid
+                    $scope.geneid = $scope.GOAnnoData.baseThead[0];
+                    $scope.geneid_truekey = $scope.GOAnnoData.baseThead[0].true_key;
 
                     for (var key in $scope.GOAnnoData.rows[0]) {
                         $scope.GOAnnoData.thead.push(key);
@@ -711,11 +740,9 @@ define(["toolsApp"], function (toolsApp) {
                     var isIn = false;
                     $scope.GOAnnoData.rows.map(function (value, index) {
                         value.isChecked = true;
-                        var arr1 = value.GOID.split(',');
-                        value.GOIDList = arr1;
                         if ($scope.geneUnselectList) {
                             for (var geneid in $scope.geneUnselectList) {
-                                if (value.GeneID === geneid) {
+                                if (value[$scope.geneid.true_key] === geneid) {
                                     value.isChecked = false;
                                     isIn = true;
                                 }
@@ -725,9 +752,11 @@ define(["toolsApp"], function (toolsApp) {
 
                     isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
                 }
-                toolService.gridFilterLoading.close("analysis-heatmap-table");
+                toolService.gridFilterLoading.close("analysis-heatmapgroup-table");
+                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             }, function (errorMesg) {
-                toolService.gridFilterLoading.close("analysis-heatmap-table");
+                toolService.gridFilterLoading.close("analysis-heatmapgroup-table");
+                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
                 $scope.goAnnoError = "syserror";
             });
         };
@@ -739,7 +768,7 @@ define(["toolsApp"], function (toolsApp) {
                 genomeVersion: genomeVersion,
                 geneID: GeneID
             };
-            // pageFactory.set(geneInfo);
+            pageFactory.set(geneInfo);
             toolService.popWindow("cyjyfx_2_pop.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
         }
 
@@ -789,14 +818,14 @@ define(["toolsApp"], function (toolsApp) {
             if ($scope.geneUnselectList === '') $scope.geneUnselectList = {};
             if ($scope.checkedAll) {
                 for (var i = 0; i < $scope.GOAnnoData.rows.length; i++) {
-                    if ($scope.geneUnselectList[$scope.GOAnnoData.rows[i].GeneID]) {
-                        delete $scope.geneUnselectList[$scope.GOAnnoData.rows[i].GeneID];
+                    if ($scope.geneUnselectList[$scope.GOAnnoData.rows[i][$scope.geneid['true_key']]]) {
+                        delete $scope.geneUnselectList[$scope.GOAnnoData.rows[i][$scope.geneid['true_key']]];
                     }
                 }
             } else {
                 // 全不选
                 for (var j = 0; j < $scope.GOAnnoData.rows.length; j++) {
-                    $scope.geneUnselectList[$scope.GOAnnoData.rows[j].GeneID] = $scope.GOAnnoData.rows[j].GeneID;
+                    $scope.geneUnselectList[$scope.GOAnnoData.rows[j][$scope.geneid['true_key']]] = $scope.GOAnnoData.rows[j][$scope.geneid['true_key']];
                 }
             }
 
@@ -809,9 +838,9 @@ define(["toolsApp"], function (toolsApp) {
             // 如果没选中
             if ($scope.geneUnselectList === '') $scope.geneUnselectList = {};
             if (!$scope.GOAnnoData.rows[index].isChecked) {
-                $scope.geneUnselectList[$scope.GOAnnoData.rows[index].GeneID] = $scope.GOAnnoData.rows[index].GeneID;
+                $scope.geneUnselectList[$scope.GOAnnoData.rows[index][$scope.geneid['true_key']]] = $scope.GOAnnoData.rows[index][$scope.geneid['true_key']];
                 // animation
-                var $targetOffset = $("#UnSelectedlist").offset();
+                var $targetOffset = $("#unselect").offset();
                 var x1 = event.pageX;
                 var y1 = event.pageY;
                 var x2 = $targetOffset.left + 110;
@@ -819,7 +848,7 @@ define(["toolsApp"], function (toolsApp) {
                 reportService.flyDiv("<span class='glyphicon glyphicon-plus mkcheck flyCheck'></span>", x1, y1, x2, y2);
             } else {
                 // 如果是选中 就从geneUnselectList里删除
-                delete $scope.geneUnselectList[$scope.GOAnnoData.rows[index].GeneID];
+                delete $scope.geneUnselectList[$scope.GOAnnoData.rows[index][$scope.geneid['true_key']]];
             }
         }
 
@@ -843,6 +872,74 @@ define(["toolsApp"], function (toolsApp) {
             }
         }
 
+        // 筛选状态改变
+
+        $scope.handlerFilterStatusChange = function (status) {
+            $scope.isBeginFilter = status;
+            if (!$scope.isBeginFilter) {
+                $scope.geneidCustomSearchOne = '';
+            }
+        }
+
+        // 重分析服务回调
+        $scope.reanalysisError = false;
+        $scope.handlerReanalysis = function (params) {
+            // var newWin = $window.open('');
+            $scope.reAnalysisEntity = angular.copy($scope.goAnnoFindEntity);
+            $scope.reAnalysisEntity.geneUnselectList = [];
+            $scope.reAnalysisEntity.allThead = [];
+            $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
+            $scope.reAnalysisEntity.chooseType = params.type;
+            $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+
+            for (var key in $scope.geneUnselectList) {
+                $scope.reAnalysisEntity.geneUnselectList.push(key);
+            }
+
+            $scope.GOAnnoData.baseThead.forEach(function (val, index) {
+                $scope.reAnalysisEntity.allThead.push(val.true_key);
+            });
+
+            var promise = ajaxService.GetDeferData({
+                data: $scope.reAnalysisEntity,
+                url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
+            })
+            promise.then(function (res) {
+                console.log(res);
+                if (res.Error) {
+                    $scope.reanalysisError = "syserror";
+                    var type = $scope.reAnalysisEntity.chartType;
+                    var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                    $window.open(url)
+                    var oA = document.createElement('a');
+                    oA.href = url;
+                    oA.target = '_blank';
+                    oA.click();
+                } else {
+                    $scope.reanalysisError = false;
+                    if (res.isAnalysis) {
+                        // 打开我的分析面板
+                        $scope.$emit('openAnalysisPop');
+                        var type = $scope.reAnalysisEntity.chartType;
+                        var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                        $window.open(url)
+                        var oA = document.createElement('a');
+                        oA.href = url;
+                        oA.target = '_blank';
+                        oA.click();
+                        // newWin.location.href = '../tools/index.html#/home/'+type+'/'+res.id;
+                        // $window.open('../tools/index.html#/home/'+type+'/'+res.id)
+                    } else {
+                        // 跳到详情页
+                        var type = $scope.reAnalysisEntity.chartType;
+                        $window.open('../tools/index.html#/home/' + type + '/' + res.id)
+                    }
+                }
+            }, function (err) {
+                console.log(err)
+            })
+        }
+
         // watch geneUnselectList 生成length
         $scope.geneUnselectListLength = 0;
         $scope.$watch('geneUnselectList', function (newVal, oldVal) {
@@ -855,5 +952,6 @@ define(["toolsApp"], function (toolsApp) {
                 }
             }
         }, true)
+
     };
 });

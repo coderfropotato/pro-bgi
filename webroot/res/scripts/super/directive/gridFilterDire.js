@@ -563,11 +563,11 @@ define("superApp.gridFilterDire",
                 tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" "
                     + " filtername=\"" + filtername + "\" "
                     + " filternamezh=\"" + filternamezh + "\" "
-                    + " filtertype=\"" + filtertype + "\" "
-                    + " searchtype=\"" + $scope.searchType + "\" ";
+                    + " filtertype=\"" + filtertype + "\" ";
 
                 if ($scope.searchOne != undefined && $scope.searchOne != null) {
-                    tempDirHtmlStr += " searchone=\"" + $scope.searchOne + "\" ";
+                    tempDirHtmlStr += " searchtype=\"" + $scope.searchType + "\" "
+                        + " searchone=\"" + $scope.searchOne + "\" ";
                 }
 
                 tempDirHtmlStr += " geneidtruekey=\"" + $scope.geneidtruekey + "\" "

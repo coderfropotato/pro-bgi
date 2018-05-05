@@ -26,7 +26,7 @@ define("superApp.tokenInterceptorFactory", ["angular"], function (angular)
                 }
                 return config;
             },
-
+            
             response: function (response)
             {
                 return response || $q.when(response);

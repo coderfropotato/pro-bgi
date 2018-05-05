@@ -48,10 +48,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行 
                 if (!this.validateWindowToken()) {
                     deferred.reject("NoAuth");
-                    window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                    // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
-                }
-                else {
+                } else {
                     //params
                     var selfAjaxConfig = {
                         method: "POST",
@@ -64,60 +63,58 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         method: "POST",
                         url: options.api.base_url + "/swap_token",
                         headers: { "Content-Type": "application/json;charset=UTF-8" }
-                    })
-                        .success(function (data, status, headers, config) {
-                            if (data == "false") {
-                                //没有授权了，返回登录窗口
-                                window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                            }
-                            else {
-                                //重新赋值授权,然后执行政策逻辑
-                                $window.sessionStorage.token = data;
-                                $http({
-                                    method: selfAjaxConfig.method,
-                                    url: selfAjaxConfig.url,
-                                    data: selfAjaxConfig.data,
-                                    headers: selfAjaxConfig.headers
+                    }).success(function (data, status, headers, config) {
+                        if (data == "false") {
+                            //没有授权了，返回登录窗口
+                            window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
+                        }
+                        else {
+                            //重新赋值授权,然后执行政策逻辑
+                            $window.sessionStorage.token = data;
+                            $http({
+                                method: selfAjaxConfig.method,
+                                url: selfAjaxConfig.url,
+                                data: selfAjaxConfig.data,
+                                headers: selfAjaxConfig.headers
+                            })
+                                .success(function (data, status, headers, config) {
+                                    deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了  
                                 })
-                                    .success(function (data, status, headers, config) {
-                                        deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了  
-                                    })
-                                    .error(function (data, status, headers, config) {
-                                        try {
-                                            if (status == "401") {
-                                                window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                                                deferred.reject("NoAuth");
-                                            }
-                                            else {
-                                                $log.error(data);
-                                                toolService.tableGridLoading.close(); //关闭浏览列表蒙版
-                                                toolService.HideLoading(); //关闭页面等待蒙版
-                                                toolService.popLoading.close(); //关闭页面等待效果2
-                                                toolService.pageLoading.close(); //关闭页面等待蒙版
-                                                window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                                            }
+                                .error(function (data, status, headers, config) {
+                                    try {
+                                        if (status == "401") {
+                                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                                            deferred.reject("NoAuth");
                                         }
-                                        catch (e) { }
-                                    });
-                            }
-                        })
-                        .error(function (data, status, headers, config) {
-                            try {
-                                $log.error(data);
-                                toolService.tableGridLoading.close(); //关闭浏览列表蒙版
-                                toolService.HideLoading(); //关闭页面等待蒙版
-                                toolService.popLoading.close(); //关闭页面等待效果2
-                                toolService.pageLoading.close(); //关闭页面等待蒙版
-                                window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                                //var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
-                                //myPromise.then(function (value)
-                                //{
-                                //    window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                                //    deferred.reject("NoAuth");
-                                //});
-                            }
-                            catch (e) { }
-                        });
+                                        else {
+                                            $log.error(data);
+                                            toolService.tableGridLoading.close(); //关闭浏览列表蒙版
+                                            toolService.HideLoading(); //关闭页面等待蒙版
+                                            toolService.popLoading.close(); //关闭页面等待效果2
+                                            toolService.pageLoading.close(); //关闭页面等待蒙版
+                                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                                        }
+                                    }
+                                    catch (e) { }
+                                });
+                        }
+                    }).error(function (data, status, headers, config) {
+                        try {
+                            $log.error(data);
+                            toolService.tableGridLoading.close(); //关闭浏览列表蒙版
+                            toolService.HideLoading(); //关闭页面等待蒙版
+                            toolService.popLoading.close(); //关闭页面等待效果2
+                            toolService.pageLoading.close(); //关闭页面等待蒙版
+                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                            //var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
+                            //myPromise.then(function (value)
+                            //{
+                            //    window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
+                            //    deferred.reject("NoAuth");
+                            //});
+                        }
+                        catch (e) { }
+                    });
 
 
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
@@ -138,16 +135,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 //params
                 var selfAjaxConfig = {
                     method: "POST",
-                    //headers: { "Content-Type": "application/json;charset=UTF-8", "X-Request-With": "null" }
                     headers: { "Content-Type": "application/json;charset=UTF-8" }
                 };
 
                 angular.extend(selfAjaxConfig, ajaxConfig);
-                //$log.debug(selfAjaxConfig);
-                //if (angular.isUndefined(ajaxConfig.headers))
-                //{
-                //    ajaxConfig.headers = { "Content-Type": "application/x-www-form-urlencoded" }
-                //}
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行 
                 $http({
                     method: selfAjaxConfig.method,
@@ -171,6 +162,71 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     });
                 return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
             };
+
+            // 不加token字段 不交换token
+            this.GetDeferDataNoToken = function (ajaxConfig) {
+                var selfAjaxConfig = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json;charset=UTF-8" }
+                };
+
+                angular.extend(selfAjaxConfig, ajaxConfig);
+                var deferred = $q.defer(); 
+                $http({
+                    method: selfAjaxConfig.method,
+                    url: selfAjaxConfig.url,
+                    data: selfAjaxConfig.data,
+                    headers: selfAjaxConfig.headers
+                })
+                    .success(function (data, status, headers, config) {
+                        deferred.resolve(data);  
+                    })
+                    .error(function (data, status, headers, config) {
+                        try {
+                            $log.error(data);
+                            toolService.tableGridLoading.close(); 
+                            toolService.HideLoading(); 
+                            toolService.popLoading.close(); 
+                            toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
+                            deferred.reject(data); 
+                        }
+                        catch (e) { }
+                    });
+                return deferred.promise;   
+            }
+
+            // 加token字段 不交换token
+            this.GetDeferDataAddToken = function (ajaxConfig) {
+                var selfAjaxConfig = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json;charset=UTF-8", "Authorization": "token " + toolService.sessionStorage.get('token') }
+                };
+
+                angular.extend(selfAjaxConfig, ajaxConfig);
+               
+                var deferred = $q.defer(); 
+                $http({
+                    method: selfAjaxConfig.method,
+                    url: selfAjaxConfig.url,
+                    data: selfAjaxConfig.data,
+                    headers: selfAjaxConfig.headers
+                })
+                    .success(function (data, status, headers, config) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status, headers, config) {
+                        try {
+                            $log.error(data);
+                            toolService.tableGridLoading.close(); 
+                            toolService.HideLoading(); 
+                            toolService.popLoading.close(); 
+                            toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
+                            deferred.reject(data);   
+                        }
+                        catch (e) { }
+                    });
+                return deferred.promise;
+            }
 
             //去后端验证有没有授权，如果有效时间范围内，重新获得授权
             this.validateToken = function () {
@@ -383,7 +439,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         this.tableGridLoading.close(); //关闭浏览列表蒙版
                         this.HideLoading(); //关闭页面等待蒙版
                         this.popLoading.close(); //关闭页面等待效果2
-                        window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                        // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                         //var myPromise = this.popMesgWindow("对不起，您没有合法的授权信息，您需要重新登录获取授权！");
                         //myPromise.then(function (value)
                         //{
@@ -566,10 +622,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                     if ($rootScope.data[i].isChecked) {
                                         switch ($rootScope.data[i].name) {
                                             case '样本差异':
-                                                type = 'group';
+                                                type = 'sample';
                                                 break;
                                             default:
-                                                type = 'sample';
+                                                type = 'group';
                                         }
                                         break;
                                     }
@@ -2208,10 +2264,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 }
             }
 
+            // 打开新窗口
+            this.openwindow = function (url) {
+                $('body').append($('<a href="' + url + '" target="_blank" id="newWin"></a>'))
+                document.getElementById("newWin").click();//点击事件  
+                $('#newWin').remove();
+            }
+
         };
-
-
-
-
-
     });

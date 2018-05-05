@@ -1,5 +1,6 @@
 define([
     "ui.router",
+    "ui.bootstrap",
     "treeControl",
     "angularjs-date-picker",
     "superApp.superDire",
@@ -27,6 +28,7 @@ define([
 ], function () {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
+        "ui.bootstrap",
         "treeControl",
         "720kb.datepicker",
         "superApp.superDire",
@@ -52,26 +54,32 @@ define([
         "superApp.reportPageSubTitleDire",
         "superApp.reAnalysisDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider","$stateProvider","$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider,$urlRouterProvider) {
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home/myAnalysis');
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {
-                url: "/home/heatmapGroup/:id/:pid",
+                url: "/home/heatmapGroup/:id",
                 templateUrl: "../tools/pages/heatmapGroup.html",
             })
             .state("heatmapSample", {
-                url: "/home/heatmapSample/:id/:pid",
+                url: "/home/heatmapSample/:id",
                 templateUrl: "../tools/pages/heatmapSample.html",
             })
             .state("venn", {
-                url: "/home/venn/:id/:pid",
+                url: "/home/venn/:id",
                 templateUrl: "../tools/pages/venn.html",
             })
             .state("myAnalysis", {
                 url: "/home/myAnalysis",
                 templateUrl: "../tools/pages/myAnalysis.html",
             })
+            .state("loading", {
+                url: "/home/loading",
+                templateUrl: "../tools/pages/loading.html",
+            })
+
+        $httpProvider.interceptors.push("tokenInterceptorFactory");
     }]);
     return toolsApp;
 })

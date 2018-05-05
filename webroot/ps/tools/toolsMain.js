@@ -3,7 +3,7 @@ require.config({
     paths: {
         "jQuery": "res/scripts/lib/jquery/1.10.2/jquery.min",
         "jQueryDatapicker": "res/scripts/lib/jquery/jquery.datepicker",
-        "bootstrapJs": "res/scripts/lib/bootstrap/3.3.2/js/bootstrap",
+        "ui.bootstrap":"res/scripts/lib/angularui-bootstrap/ui-bootstrap-tpls-2.5.0.min",
         "angular": "res/scripts/lib/angular/1.4.7/angular",
         "ngCookies": "res/scripts/lib/angular/1.4.7/angular-cookies.min",
         "angular-route": "res/scripts/lib/angular/1.4.7/angular-route.min",
@@ -55,12 +55,13 @@ require.config({
         'toolsController': 'ps/tools/toolsController',
         "heatmapGroupController": "ps/tools/pages/heatmapGroupController",
         "vennController": "ps/tools/pages/vennController",
-        "myAnalysisController":"ps/tools/pages/myAnalysisController"
+        "myAnalysisController":"ps/tools/pages/myAnalysisController",
+        "loadingController":"ps/tools/pages/loadingController"
     },
     shim: {
         "jQuery": { exports: "$" },
         "jQueryDatapicker": { deps: ["jQuery"] },
-        "bootstrapJs": { deps: ["jQuery"] },
+        // "bootstrapJs": { deps: ["jQuery"] },
         "highcharts": { deps: ["jQuery"] },
         "reportApp.reportService": { deps: ["jQuery"] },
         "highcharts3d": { deps: ["highcharts"] },
@@ -70,6 +71,7 @@ require.config({
         "angular": { exports: "angular" },
         "ngCookies": { deps: ["angular"] },
         "ui.router": { deps: ["angular"] },
+        "ui.bootstrap":{deps:["angular"]},
         "treeControl": { deps: ["angular"] },
         "d3": { exports: "d3" },
         "angularjs-date-picker":{deps:["angular"]}
@@ -79,13 +81,13 @@ require.config({
 require([
     'jQuery',
     'angular', 
-    'bootstrapJs',
     "pageFactory",
     'toolsApp',
     'toolsController',
     "heatmapGroupController",
     "vennController",
-    "myAnalysisController"
+    "myAnalysisController",
+    "loadingController"
 ], function (jquery, angular) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['toolsApp']);

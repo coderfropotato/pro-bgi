@@ -39,7 +39,7 @@
         </div>
         <div>
             <div class="table_scroll_wrap" style="overflow:visible;">
-                <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed custom-table">
                     <thead>
                         <tr>
                             <th class="text-center">项目</th>
@@ -52,11 +52,15 @@
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
                             <td class="text-center" ng-bind="item.projectName"></td>
-                            <td class="text-center" ng-bind="item.process"></td>
+                            <td class="text-center">
+                                <span ng-if="item.process==1">成功</span>
+                                <span ng-if="item.process==-1">进行中</span>
+                                <span ng-if="item.process==0">失败</span>
+                            </td>
                             <td class="text-center">
                                 <div class="links">
                                     <span>链路
-                                        <ul class="link-lists">
+                                        <ul ng-if="item.links.length" class="link-lists">
                                             <li>
                                                 <p>类型：样本表达</p>
                                                 <p>命名：xxx项目1</p>

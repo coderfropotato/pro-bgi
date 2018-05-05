@@ -78,7 +78,7 @@
     background-color: #666666;
 }
 
-.tools-body .table_grid thead th {
+.tools-body .table_grid.custom-table thead th {
     background: none;
     background-color: #FAFAFA;
     color: #BCC0CD;

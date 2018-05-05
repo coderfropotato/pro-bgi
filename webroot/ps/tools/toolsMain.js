@@ -79,6 +79,7 @@ require.config({
 require([
     'jQuery',
     'angular', 
+    'bootstrapJs',
     "pageFactory",
     'toolsApp',
     'toolsController',

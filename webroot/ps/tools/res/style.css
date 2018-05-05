@@ -73,7 +73,7 @@
     opacity: 1.0;
 }
 
-.btn-tools.btn-tools-default:hover,.btn-tools.btn-tools-default.active {
+.btn-tools.btn-tools-default:hover, .btn-tools.btn-tools-default.active {
     color: #FFFFFF;
     background-color: #666666;
 }
@@ -118,7 +118,7 @@
     top: 5px;
 }
 
-.advance-panel  {
+.advance-panel {
     position: absolute;
     top: 44px;
     right: 20px;
@@ -168,7 +168,7 @@
     transition: 0.3s all ease;
 }
 
-.advance-panel ul>li ol li:hover,.advance-panel ul ol.date li input:focus {
+.advance-panel ul>li ol li.active, .advance-panel ul>li ol li:hover, .advance-panel ul ol.date li input:focus {
     border-color: #333;
 }
 
@@ -177,11 +177,12 @@
 }
 
 .advance-panel ul ol.date li {
-    padding:1px 0;
+    padding: 1px 0;
     width: auto;
     border: none;
 }
-.advance-panel ul ol.date li input{
+
+.advance-panel ul ol.date li input {
     transition: .3s all ease;
     padding-left: 6px;
     height: 30px;
@@ -189,6 +190,7 @@
     width: 120px;
     border: 1px solid #E8E8E8;
 }
-.advance-panel button{
+
+.advance-panel button {
     line-height: 16px;
 }

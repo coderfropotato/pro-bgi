@@ -71,9 +71,26 @@ define(['toolsApp'], function (toolsApp) {
                     timeEnd: "",
                     chartType: [],
                     status: []
-                },
-                total: 0
+                }
             };
+            // 高级查询参数模板
+            $scope.advanceParams = [
+                {
+                    "类型": [
+                        { name: '聚类图', isActive: false },
+                        { name: '维恩图', isActive: false },
+                        { name: 'GO', isActive: false }
+                    ]
+                },
+                {
+                    "状态": [
+                        { name: '成功', isActive: false },
+                        { name: '失败', isActive: false },
+                        { name: '运行中', isActive: false },
+                        { name: '排队中', isActive: false }
+                    ]
+                }
+            ]
             // toolService.gridFilterLoading.open("myanalysis-table");
 
             $scope.analysisError = false;
@@ -127,17 +144,22 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 查看
-        $scope.handlerSeeClick = function (id,type) {
+        $scope.handlerSeeClick = function (id, type) {
             var id = 123;
             var type = 'heatmapGroup'
-            $window.open('../tools/index.html#/home/'+type+'/'+id+'/'+'');
+            $window.open('../tools/index.html#/home/' + type + '/' + id + '/' + '');
         }
 
         // 删除
         $scope.handlerDeleteClick = function (id) {
-
+            console.log(`删除，id：${id}`)
         }
 
+        // advance
+        $scope.handlerParamsClick = function (item) {
+            item.isActive = !item.isActive;
+            console.log($scope.analysisEntity)
+        }
         // document click close filter panel
         document.addEventListener('click', function () {
             $scope.isFilter = false;

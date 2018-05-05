@@ -16,10 +16,10 @@ define("superApp.reAnalysisDire",
                 replace: true,
                 template: "<div class='re-analysis-panel clearfix'>"
                     + "<ul class='pull-right clearfix'>"
-                    + "<li class='pull-left' data-toggle='tooltip' title='聚类重分析' ng-click=\"handlerReanalysisClick('heatmap')\">聚类</li>"
-                    + "<li class='pull-left' data-toggle='tooltip' title='韦恩图重分析' ng-click=\"handlerReanalysisClick('venn')\">维恩</li>"
-                    + "<li class='pull-left' data-toggle='tooltip' title='弦图重分析' ng-click=\"handlerReanalysisClick('circos')\">弦图</li>"
-                    +"</ul>"
+                    + "<li class='pull-left tool-tip' title='聚类重分析' ng-click=\"handlerReanalysisClick('heatmap')\">聚类</li>"
+                    + "<li class='pull-left tool-tip' title='韦恩图重分析' ng-click=\"handlerReanalysisClick('venn')\">维恩</li>"
+                    + "<li class='pull-left tool-tip' title='弦图重分析' ng-click=\"handlerReanalysisClick('circos')\">弦图</li>"
+                    + "</ul>"
                     + "</div>",
                 scope: {
                     callback: "&",
@@ -29,8 +29,8 @@ define("superApp.reAnalysisDire",
         }
 
         superApp.controller("reAnalysisCtr", reAnalysisCtr);
-        reAnalysisCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
-        function reAnalysisCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        reAnalysisCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+        function reAnalysisCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             $scope.reAnslysisError = false;
 
             $scope.handlerReanalysisClick = function (type) {

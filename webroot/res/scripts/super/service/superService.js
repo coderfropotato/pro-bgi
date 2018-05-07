@@ -2263,13 +2263,5 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     })
                 }
             }
-
-            // 打开新窗口
-            this.openwindow = function (url) {
-                $('body').append($('<a href="' + url + '" target="_blank" id="newWin"></a>'))
-                document.getElementById("newWin").click();//点击事件  
-                $('#newWin').remove();
-            }
-
         };
     });

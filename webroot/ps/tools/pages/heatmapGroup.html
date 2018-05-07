@@ -56,8 +56,8 @@
                     <li>
                         <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                         <!-- 2018年4月19日15:58:03 tablehead -->
-                        <div class="grid-filter-begin" tablehead="GOAnnoData.thead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)"
-                            parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType"></div>
+                        <div class="grid-filter-begin" tablehead="GOAnnoData.baseThead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)" geneidtruekey="geneid_truekey"
+                            parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType" filter-status-callback="handlerFilterStatusChange(status)"></div>
                     </li>
                 </ul>
                 <ul class="fRight">
@@ -220,8 +220,8 @@
                 </ul>
                 <div class="clear"></div>
             </div>
-            <!-- reanalysis content -->
-            <div class="re-analysis"></div>
+            <!-- reanalysis content-->
+            <div class="re-analysis" callback="handlerReanalysis(options)"></div>
         </div>
         <!-- table over -->
 

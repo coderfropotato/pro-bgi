@@ -625,16 +625,20 @@ define(["toolsApp"], function (toolsApp) {
             $scope.geneUnselectList = '';
             // 拼接GeneID
             geneList.forEach(function (val, index) {
-                searchOne += val + '\n';
+                if (index === geneList.length - 1) {
+                    searchOne += val;
+                } else {
+                    searchOne += val + '\n';
+                }
             });
             // 如果没有点击筛选按钮 就点击
             if (!$('.grid-filter-begin > button').hasClass('active')) {
                 $timeout(function () {
                     angular.element($('.grid-filter-begin > button')).triggerHandler('click');
-                    $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
+                    $scope.geneidCustomSearchOne = searchOne;
                 }, 0);
             } else {
-                $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
+                $scope.geneidCustomSearchOne = searchOne;
             }
             // 重置未选择列表
             $scope.geneUnselectList = {};
@@ -873,7 +877,6 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 筛选状态改变
-
         $scope.handlerFilterStatusChange = function (status) {
             $scope.isBeginFilter = status;
             if (!$scope.isBeginFilter) {

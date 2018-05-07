@@ -93,8 +93,6 @@ define(['toolsApp'], function (toolsApp) {
 
         // 查看
         $scope.handlerSeeClick = function (id, type) {
-            var id = '5aed6cf2ce06170077a4b1a8';
-            var type = 'heatmapGroup';
             $window.open('../tools/index.html#/home/' + type + '/' + id );
         }
 

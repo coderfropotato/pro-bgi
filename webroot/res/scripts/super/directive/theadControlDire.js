@@ -13,7 +13,7 @@ define("superApp.theadControlDire",
                 template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns<span ng-if=\"nodata\">（暂无数据）</span></button>"
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
-                    + "<div class=\"thead-title\">{{group.groupName}}</div>"
+                    + "<div class=\"thead-title\"  uib-tooltip=\"{{group.groupName}}\">{{group.groupName}}</div>"
                     + "<ul ng-class=\"{'showmore':group.isShowMore}\">"
                     + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item._id}}</li>"
                     + "</ul >"
@@ -72,10 +72,6 @@ define("superApp.theadControlDire",
                     $scope.data.forEach(function (val, index) {
                         val.list.forEach(function (item, idx) {
                             item.isActive = false;
-                            // var json = {};
-                            // json._id = item;
-                            // json.isActive = false;
-                            // val.list[idx] = json;
                         });
                         // 根据length 初始化私有数据
                         $scope.activeByClick.push([]);

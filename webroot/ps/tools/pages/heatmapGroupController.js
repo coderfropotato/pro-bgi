@@ -91,6 +91,13 @@ define(["toolsApp"], function (toolsApp) {
                     $scope.clusterError = "";
                     $scope.setOption.sortNames = res.heatmapData;
 
+                    //场景：res.topClusterData可能为{}
+                    if (JSON.stringify(res.topClusterData) === "{}") {
+                        $scope.isTopCluster = false;
+                    } else {
+                        $scope.isTopCluster = true;
+                    }
+
                     $scope.drawClusterHeatmap(res, $scope.setOption);
 
                     if (flag && flag === 'refresh') {
@@ -118,7 +125,7 @@ define(["toolsApp"], function (toolsApp) {
 
         //画图
         $scope.drawClusterHeatmap = function (resdata, setOption) {
-            d3.selectAll("#heatmap_chartClusterpic svg g").remove();
+            d3.selectAll("#heatmapgroup_chartClusterpic svg g").remove();
             //定义数据
             var cluster_data = resdata.leftClusterData,
                 topCluster_data = resdata.topClusterData,
@@ -164,7 +171,7 @@ define(["toolsApp"], function (toolsApp) {
             var topCluster_width = 0,
                 topCluster_height = 0;
 
-            if (setOption.isShowTopLine) {
+            if (setOption.isShowTopLine && $scope.isTopCluster) {
                 topCluster_width = heatmap_width;
                 topCluster_height = 60;
             }
@@ -193,7 +200,7 @@ define(["toolsApp"], function (toolsApp) {
                 legendTrans_y = (heatmap_height - legend_height) / 2 + margin.top + topCluster_height;
 
             //定义容器
-            var svg = d3.select("#heatmap_chartClusterpic svg").attr("width", totalWidth).attr("height", totalHeight);
+            var svg = d3.select("#heatmapgroup_chartClusterpic svg").attr("width", totalWidth).attr("height", totalHeight);
 
             var body_g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -218,7 +225,7 @@ define(["toolsApp"], function (toolsApp) {
                     toolService.popPrompt(textNode, textNode.textContent);
                 })
 
-            if (setOption.isShowTopLine) {
+            if (setOption.isShowTopLine && $scope.isTopCluster) {
                 drawTopCluster();
             }
             drawCluster();
@@ -317,13 +324,6 @@ define(["toolsApp"], function (toolsApp) {
                         .attr("width", single_rect_width)
                         .attr("height", single_rect_height)
                         .attr("fill", function (d) { return colorScale(d.y) })
-                        .on("mouseover", function (d) {
-                            var tipText = ["gene: " + d.x, "value: " + d.y]
-                            reportService.GenericTip.Show(d3.event, tipText);
-                        })
-                        .on("mouseout", function (d) {
-                            reportService.GenericTip.Hide();
-                        })
 
                     //添加x轴的名称
                     rect_g.append("text")
@@ -384,7 +384,7 @@ define(["toolsApp"], function (toolsApp) {
                         var index = getIndex(x_dis, y_dis);
                         var i = index.x_index, j = index.y_index;
                         var d = heatmap_data[i].heatmap[j];
-                        var tipText = ["gene: " + d.x, "value: " + d.y]
+                        var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "value: " + d.y];
                         reportService.GenericTip.Show(d3.event, tipText);
                     }
                     clearEventBubble(moveEvent);

@@ -6,18 +6,19 @@
                 <ul class="fLeft">
                     <li>
                         <div class="selector_area">
-                            <select class="super-select" style="width: 200px" ng-model="clusterEntity.compareGroup" ng-change="GetHeatmapData();">
-                                <option value="{{item}}" ng-repeat="item in groupList track by $index">{{item}}</option>
+                            <select class="super-select" style="width: 200px" ng-model="compareGroup" ng-change="compareGroupChang();">
+                                <option value="{{item.name}}" ng-repeat="item in CompareGroupList track by $index">{{item.name}}</option>
                             </select>
                         </div>
                     </li>
                 </ul>
                 <ul class="fRight">
-                    <li>
-                        <div class="heatmap-set" is-show="isShowSetPanel" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
+                    <li ng-hide="clusterError">
+                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh"
+                            get-set-options="getSetOption(setObj)"></div>
                     </li>
-                    <li>
-                        <div class="svg-new-export" chartid="chartClusterpic" saveimgname="聚类图"></div>
+                    <li ng-hide="clusterError">
+                        <div class="svg-new-export" chartid="heatmapgroup_chartClusterpic" saveimgname="聚类图"></div>
                     </li>
                     <li>
                         <button class="btn btn-default btn-sm btn-silver list_btn tool-tip" title="刷新" ng-click="GetHeatmapData('refresh')">
@@ -27,13 +28,14 @@
                 </ul>
             </div>
             <div class="tab-switch-chart">
-                <div class="chart_wrap">
+                <div class="chart_wrap" ng-hide="clusterError">
                     <div class="chart_graph panel_center">
                         <div id="heatmapgroup_chartClusterpic" style="text-align:center;">
                             <svg xmlns="http://www.w3.org/2000/svg"></svg>
                         </div>
                     </div>
                 </div>
+                <div class="table-nodata" error-type="clusterError"></div>
             </div>
             <div class="color-selector" is-show="isShowColorPanel" get-cur-color="colorChange(color)"></div>
         </div>

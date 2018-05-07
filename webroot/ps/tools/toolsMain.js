@@ -81,6 +81,7 @@ require.config({
 require([
     'jQuery',
     'angular', 
+    "d3",
     "pageFactory",
     'toolsApp',
     'toolsController',
@@ -88,7 +89,8 @@ require([
     "vennController",
     "myAnalysisController",
     "loadingController"
-], function (jquery, angular) {
+], function (jquery, angular, d3) {
+    window.d3 = d3;
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['toolsApp']);
     });

@@ -631,18 +631,15 @@ define(["toolsApp"], function (toolsApp) {
                     searchOne += val + '\n';
                 }
             });
-            console.log(searchOne)
             // 如果没有点击筛选按钮 就点击
             if (!$('.grid-filter-begin > button').hasClass('active')) {
                 $timeout(function () {
                     angular.element($('.grid-filter-begin > button')).triggerHandler('click');
-                    console.log(searchOne)
                     $scope.geneidCustomSearchOne = searchOne;
                 }, 0);
             } else {
                 $scope.geneidCustomSearchOne = searchOne;
             }
-            console.log($scope.geneidCustomSearchOne)
             // 重置未选择列表
             $scope.geneUnselectList = {};
             $scope.checkAll();

@@ -877,7 +877,6 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 筛选状态改变
-
         $scope.handlerFilterStatusChange = function (status) {
             $scope.isBeginFilter = status;
             if (!$scope.isBeginFilter) {

@@ -13,7 +13,7 @@ define("superApp.analysisPopDire",
             return {
                 restrict: "ACE",
                 template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
-                    + "<span ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析</span>"
+                    + "<span ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析<em>（只显示最新十条记录）</em></span>"
                     // + "<table class=\"table table-hover\">"
                     // + "<thead>"
                     // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
@@ -21,9 +21,10 @@ define("superApp.analysisPopDire",
                     + "<div ng-show=\"analysisList.length\" class=\"table-wrap\"><table class=\"table table-hover\"><thead>"
                     + "<tr><th class=\"text-center\">任务名称</th> <th class=\"text-center\">进度</th> <th class=\"text-center\">提交时间</th><th class=\"text-center\">操作</th></tr>"
                     + "</thead><tbody>"
-                    + "<tr ng-repeat=\"val in analysisList\" track by $index>"
-                    + "<td>{{val.name}}</td><td>{{val.progress}}</td><td>{{val.time | date:'yyyy-MM-dd hh:mm:ss'}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>"
-                    +"</tr>"
+                    + "<tr ng-repeat=\"val in analysisList \" track by $index>"
+                    //  | date:'yyyy-MM-dd hh:mm:ss'
+                    + "<td>{{val.projectName}}</td><td><span ng-if=\"val.process==0\">失败</span><span ng-if=\"val.process==-1\">进行中</span><span ng-if=\"val.process==1\">成功</span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>"
+                    + "</tr>"
                     + "</tbody>"
                     + "</table></div>"
                     + "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
@@ -31,7 +32,7 @@ define("superApp.analysisPopDire",
                 scope: {
                     analysisList: "=",
                     handlerAnalysisDetail: "&",
-                    isExpand:"=",
+                    isExpand: "=",
                 },
                 replace: false,
                 transclude: true,
@@ -49,7 +50,20 @@ define("superApp.analysisPopDire",
             }
             // 查看分析详情
             $scope.handlerAnalysisDetail = function (item) {
-                console.log(item);
+                if (item.process == 1) {
+                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id)
+                } else {
+                    var text = '';
+                    switch (item.process) {
+                        case '0':
+                            text = '任务失败，请重新分析';
+                            break;
+                        case '-1':
+                            text = '任务正在进行中，请稍后再试';
+                            break;
+                    }
+                    toolService.popMesgWindow(text);
+                }
             }
 
             // document.addEventListener('click', function () { 

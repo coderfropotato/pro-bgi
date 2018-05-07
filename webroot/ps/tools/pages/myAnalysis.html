@@ -80,7 +80,7 @@
                             </td>
                             <td class="text-center" ng-bind="item.time"></td>
                             <td class="text-center">
-                                <button class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
+                                <button ng-if="item.process==1" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
                                 <button class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>
 

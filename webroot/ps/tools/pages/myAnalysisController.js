@@ -35,8 +35,7 @@ define(['toolsApp'], function (toolsApp) {
                     "状态": [
                         { name: '成功', isActive: false },
                         { name: '失败', isActive: false },
-                        { name: '运行中', isActive: false },
-                        { name: '排队中', isActive: false }
+                        { name: '运行中', isActive: false }
                     ]
                 }
             ]

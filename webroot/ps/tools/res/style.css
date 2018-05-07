@@ -84,10 +84,6 @@
     color: #BCC0CD;
 }
 
-.tools-body .table_noData {
-    border-top-width: 1px;
-}
-
 .table-hover>tbody>tr:hover {
     background-color: #EBF5FD!important;
 }

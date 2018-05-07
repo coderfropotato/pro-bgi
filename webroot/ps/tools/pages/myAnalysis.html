@@ -44,8 +44,9 @@
                         <tr>
                             <th class="text-center">项目</th>
                             <th class="text-center">状态</th>
-                            <th class="text-center">链路</th>
                             <th class="text-center">提交时间</th>
+                            <th class="text-center">前置任务</th>
+                            <th class="text-center">备注</th>
                             <th class="text-center">操作</th>
                         </tr>
                     </thead>
@@ -54,12 +55,13 @@
                             <td class="text-center" ng-bind="item.projectName"></td>
                             <td class="text-center">
                                 <span ng-if="item.process==1">成功</span>
-                                <span ng-if="item.process==-1">进行中</span>
+                                <span ng-if="item.process==-1">进行中，剩余:{{item.restTime}}</span>
                                 <span ng-if="item.process==0">失败</span>
                             </td>
+                            <td class="text-center" ng-bind="item.time"></td>
                             <td class="text-center">
                                 <div class="links">
-                                    <span>链路
+                                    <span>{{item.links.length}}
                                         <ul ng-if="item.links.length" class="link-lists">
                                             <li>
                                                 <p>类型：样本表达</p>
@@ -78,10 +80,11 @@
 
                                 </div>
                             </td>
-                            <td class="text-center" ng-bind="item.time"></td>
+                            <td class="text-center">{{item.remark}}</td>
                             <td class="text-center">
-                                <button ng-if="item.process==1" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
-                                <button class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
+                                <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
+                                <span ng-if="item.process==-1" >--</span> 
+                                <button ng-if="item.process!=-1" class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>
 
                         </tr>

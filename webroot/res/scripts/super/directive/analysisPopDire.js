@@ -51,18 +51,11 @@ define("superApp.analysisPopDire",
             // 查看分析详情
             $scope.handlerAnalysisDetail = function (item) {
                 if (item.process == 1) {
-                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id)
+                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id);
+                } else if (item.process == -1) {
+                    $window.open('../../../../ps/tools/index.html#/home/myAnalysis');
                 } else {
-                    var text = '';
-                    switch (item.process) {
-                        case '0':
-                            text = '任务失败，请重新分析';
-                            break;
-                        case '-1':
-                            text = '任务正在进行中，请稍后再试';
-                            break;
-                    }
-                    toolService.popMesgWindow(text);
+                    toolService.popMesgWindow('任务失败，请重新分析');
                 }
             }
 

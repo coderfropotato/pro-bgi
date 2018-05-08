@@ -768,7 +768,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
                 },
                 Hide: function () {
-                    // $(".tipsContainer").remove();
+                    $(".tipsContainer").remove();
                 }
             }
 

@@ -884,7 +884,7 @@ define(["toolsApp"], function (toolsApp) {
             }
         }
 
-        // 重分析服务回调
+        // 重分析回调
         $scope.reanalysisError = false;
         $scope.handlerReanalysis = function (params) {
             // var newWin = $window.open('');
@@ -903,43 +903,27 @@ define(["toolsApp"], function (toolsApp) {
                 $scope.reAnalysisEntity.allThead.push(val.true_key);
             });
 
+
             var promise = ajaxService.GetDeferData({
                 data: $scope.reAnalysisEntity,
                 url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
             })
+
+            toolService.pageLoading.open('正在提交重分析申请，请稍后...');
             promise.then(function (res) {
-                console.log(res);
+                toolService.pageLoading.close();
                 if (res.Error) {
                     $scope.reanalysisError = "syserror";
-                    var type = $scope.reAnalysisEntity.chartType;
-                    var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                    $window.open(url)
-                    var oA = document.createElement('a');
-                    oA.href = url;
-                    oA.target = '_blank';
-                    oA.click();
+                   toolService.popMesgWindow(res.Error);
                 } else {
                     $scope.reanalysisError = false;
-                    if (res.isAnalysis) {
-                        // 打开我的分析面板
-                        $scope.$emit('openAnalysisPop');
-                        var type = $scope.reAnalysisEntity.chartType;
-                        var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                        $window.open(url)
-                        var oA = document.createElement('a');
-                        oA.href = url;
-                        oA.target = '_blank';
-                        oA.click();
-                        // newWin.location.href = '../tools/index.html#/home/'+type+'/'+res.id;
-                        // $window.open('../tools/index.html#/home/'+type+'/'+res.id)
-                    } else {
-                        // 跳到详情页
-                        var type = $scope.reAnalysisEntity.chartType;
-                        $window.open('../tools/index.html#/home/' + type + '/' + res.id)
-                    }
+                    $scope.$emit('openAnalysisPop');
+                    $rootScope.GetAnalysisList(1);
+                    toolService.popMesgWindow('重分析提交成功');
                 }
             }, function (err) {
-                console.log(err)
+                console.log(err);
+                toolService.popMesgWindow(err);
             })
         }
 

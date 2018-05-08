@@ -63,17 +63,9 @@
                                 <div class="links">
                                     <span>{{item.links.length}}
                                         <ul ng-if="item.links.length" class="link-lists">
-                                            <li>
-                                                <p>类型：样本表达</p>
-                                                <p>命名：xxx项目1</p>
-                                            </li>
-                                            <li>
-                                                <p>类型：样本表达</p>
-                                                <p>命名：xxx项目1</p>
-                                            </li>
-                                            <li>
-                                                <p>类型：样本表达</p>
-                                                <p>命名：xxx项目1</p>
+                                            <li ng-repeat="item in item.links">
+                                                <p>类型：{{item.chartType}}</p>
+                                                <p>项目名称：{{item.projectName}}</p>
                                             </li>
                                         </ul>
                                     </span>
@@ -82,7 +74,7 @@
                             </td>
                             <td class="text-center">{{item.remark}}</td>
                             <td class="text-center">
-                                <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.id,item.charType)">查看</button>
+                                <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.process,item.id,item.charType)">查看</button>
                                 <span ng-if="item.process==-1" >--</span> 
                                 <button ng-if="item.process!=-1" class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>

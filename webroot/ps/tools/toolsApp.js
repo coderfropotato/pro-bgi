@@ -78,6 +78,10 @@ define([
                 url: "/home/loading",
                 templateUrl: "../tools/pages/loading.html",
             })
+            .state("error", {
+                url: "/home/error/:id",
+                templateUrl: "../tools/pages/error.html",
+            })
 
         $httpProvider.interceptors.push("tokenInterceptorFactory");
     }]);

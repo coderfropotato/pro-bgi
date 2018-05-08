@@ -23,7 +23,7 @@ define("superApp.analysisPopDire",
                     + "</thead><tbody>"
                     + "<tr ng-repeat=\"val in analysisList \" track by $index>"
                     //  | date:'yyyy-MM-dd hh:mm:ss'
-                    + "<td>{{val.projectName}}</td><td><span ng-if=\"val.process==0\">失败</span><span ng-if=\"val.process==-1\">进行中</span><span ng-if=\"val.process==1\">成功</span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>"
+                    + "<td ><span uib-tooltip=\"{{val.projectName}}\" style='display:block;max-width:90px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'>{{val.projectName}}</span></td><td><span ng-if=\"val.process==0\">失败</span><span ng-if=\"val.process==-1\">进行中</span><span ng-if=\"val.process==1\">成功</span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>"
                     + "</tr>"
                     + "</tbody>"
                     + "</table></div>"
@@ -51,18 +51,16 @@ define("superApp.analysisPopDire",
             // 查看分析详情
             $scope.handlerAnalysisDetail = function (item) {
                 if (item.process == 1) {
+                    // success
                     $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id);
                 } else if (item.process == -1) {
+                    // pending
                     $window.open('../../../../ps/tools/index.html#/home/myAnalysis');
                 } else {
-                    toolService.popMesgWindow('任务失败，请重新分析');
+                    // error
+                    $window.open('../../../../ps/tools/index.html#/home/error/'+item.id);
                 }
             }
-
-            // document.addEventListener('click', function () { 
-            //     $scope.isExpand = false;
-            //     $scope.$apply();
-            // }, false);
         }
     });
 

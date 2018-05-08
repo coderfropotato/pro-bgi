@@ -57,7 +57,8 @@ require.config({
         "heatmapSampleController": "ps/tools/pages/heatmapSampleController",
         "vennController": "ps/tools/pages/vennController",
         "myAnalysisController":"ps/tools/pages/myAnalysisController",
-        "loadingController":"ps/tools/pages/loadingController"
+        "loadingController":"ps/tools/pages/loadingController",
+        "errorController":"ps/tools/pages/errorController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -90,7 +91,8 @@ require([
     "heatmapSampleController",
     "vennController",
     "myAnalysisController",
-    "loadingController"
+    "loadingController",
+    "errorController"
 ], function (jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function () {

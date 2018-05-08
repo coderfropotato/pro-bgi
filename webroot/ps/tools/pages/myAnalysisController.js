@@ -91,8 +91,14 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 查看
-        $scope.handlerSeeClick = function (id, type) {
-            $window.open('../tools/index.html#/home/' + type + '/' + id );
+        $scope.handlerSeeClick = function (process, id, type) {
+            // error
+            if (process == 0) {
+                $window.open('../tools/index.html#/home/error/' + id);
+            } else {
+            // success
+                $window.open('../tools/index.html#/home/' + type + '/' + id);
+            }
         }
 
         // 删除
@@ -121,10 +127,12 @@ define(['toolsApp'], function (toolsApp) {
             item.isActive = !item.isActive;
             console.log($scope.analysisEntity)
         }
+
         // document click close filter panel
         document.addEventListener('click', function () {
             $scope.isFilter = false;
             $scope.$apply();
         }, false);
+        
     }
 });

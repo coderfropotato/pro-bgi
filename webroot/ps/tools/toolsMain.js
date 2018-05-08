@@ -54,6 +54,7 @@ require.config({
         'toolsApp': 'ps/tools/toolsApp',
         'toolsController': 'ps/tools/toolsController',
         "heatmapGroupController": "ps/tools/pages/heatmapGroupController",
+        "heatmapSampleController": "ps/tools/pages/heatmapSampleController",
         "vennController": "ps/tools/pages/vennController",
         "myAnalysisController":"ps/tools/pages/myAnalysisController",
         "loadingController":"ps/tools/pages/loadingController"
@@ -86,6 +87,7 @@ require([
     'toolsApp',
     'toolsController',
     "heatmapGroupController",
+    "heatmapSampleController",
     "vennController",
     "myAnalysisController",
     "loadingController"

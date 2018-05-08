@@ -696,7 +696,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             this.GenericTip = {
                 Show: function (e, textArr, height, spanIndex, rows) {
                     var event = e || event;         //火狐浏览器不支持window.event,只支持event。
-                    var scrollTop =  document.body.scrollTop || document.documentElement.scrollTop;
+                    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
                     if (textArr.length === 0) { return; }
                     $(".tipsContainer").remove();
                     var tipsConDiv = $("<div class='tipsContainer'></div>");
@@ -718,17 +718,25 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     }
                     var tipWidth = $(".tipsContainer").width();
                     var tipHeight = $(".tipsContainer").height();
-                    var viewBodyWidth = $("#div_ViewBody").width();
-                    var viewBodyHeight = $("#div_ViewBody").height();
+                    var viewBodyWidth = 0;
+                    var viewBodyHeight = 0;
 
+                    if ($("#div_ViewBody").length > 0) {
+                        viewBodyWidth = $("#div_ViewBody").width();
+                        viewBodyHeight = $("#div_ViewBody").height();
+                    } else {
+                        viewBodyWidth = document.documentElement.clientWidth;
+                        viewBodyHeight = document.documentElement.clientHeight;
+                    }
+                   
                     //处理tip在可视范围的右边
                     if ((viewBodyWidth - event.clientX < tipWidth + 30) && !(viewBodyHeight - event.clientY < tipHeight)) {
                         tipsConDiv.css({
-                            "left": event.clientX - tipWidth - 15  + "px"
+                            "left": event.clientX - tipWidth - 15 + "px"
                         });
                         $(".arrow-box").css({
                             "transform": "rotateY(180deg)",
-                            "left": tipWidth + 10  + "px"
+                            "left": tipWidth + 10 + "px"
                         })
                     }
 
@@ -760,7 +768,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
                 },
                 Hide: function () {
-                    $(".tipsContainer").remove();
+                    // $(".tipsContainer").remove();
                 }
             }
 

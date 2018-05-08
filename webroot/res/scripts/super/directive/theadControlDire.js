@@ -91,6 +91,7 @@ define("superApp.theadControlDire",
             // 初始化当前点击选中项数组
             $scope.initActiveByClick = function () {
                 $scope.activeByClick.length = 0;
+                $scope.remove = false;
 
                 $scope.data.forEach(function (val, index) {
                     $scope.activeByClick.push([]);
@@ -180,7 +181,6 @@ define("superApp.theadControlDire",
 
             // 清除
             $scope.clear = function () {
-                // 重复点击清除 return
                 if ($scope.remove) return;
                 // 如果没有选择
                 if (isEmpty($scope.allActiveItems)) return;

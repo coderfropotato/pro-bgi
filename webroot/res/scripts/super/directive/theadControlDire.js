@@ -15,7 +15,7 @@ define("superApp.theadControlDire",
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<div class=\"thead-title\"  uib-tooltip=\"{{group.groupName}}\">{{group.groupName}}</div>"
                     + "<ul ng-class=\"{'showmore':group.isShowMore}\">"
-                    + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive}\" ng-click=\"handlerItemClick(item,index)\">{{item._id}}</li>"
+                    + "<li ng-repeat=\"item in group.list\" track by $index ng-class=\"{active:item.isActive,disabled:remove}\" ng-click=\"handlerItemClick(item,index)\">{{item._id}}</li>"
                     + "</ul >"
                     + "<div ng-click=\"handlerIsShowMoreClick($index)\" ng-if=\"!group.isShowMore &&group.showMore\" class=\"thead-title more\">查看更多</div>"
                     + "<div ng-click=\"handlerExpandClick($index)\" ng-if=\"group.isShowMore && group.showMore \" class=\"thead-title more\">收起</div>"
@@ -138,8 +138,8 @@ define("superApp.theadControlDire",
 
             // 所有按钮的点击事件
             $scope.handlerItemClick = function (item, index) {
+                if($scope.remove) return;
                 item.isActive = !item.isActive;
-
                 if (item.isActive) {
                     $scope.activeByClick[index].push(item);
                     $scope.allActiveItems[index].push(item);
@@ -181,7 +181,6 @@ define("superApp.theadControlDire",
 
             // 清除
             $scope.clear = function () {
-                if ($scope.remove) return;
                 // 如果没有选择
                 if (isEmpty($scope.allActiveItems)) return;
                 // 有选择项 就重置原始数据 保留历史选择记录
@@ -273,6 +272,7 @@ define("superApp.theadControlDire",
                 if (!angular.equals($scope.beforeActiveItems, $scope.allActiveItems)) {
                     // $scope.handleTheadChange && $scope.handleTheadChange(combineArr($scope.allActiveItems));
                     var items = $scope.classify($scope.allActiveItems);
+                    console.log(items);
                     $scope.handleTheadChange && $scope.handleTheadChange({ arg: items });
                     // 更新旧值为新值
                     $scope.beforeActiveItems = angular.copy($scope.allActiveItems);

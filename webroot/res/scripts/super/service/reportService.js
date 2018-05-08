@@ -696,14 +696,15 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             this.GenericTip = {
                 Show: function (e, textArr, height, spanIndex, rows) {
                     var event = e || event;         //火狐浏览器不支持window.event,只支持event。
+                    var scrollTop =  document.body.scrollTop || document.documentElement.scrollTop;
                     if (textArr.length === 0) { return; }
                     $(".tipsContainer").remove();
                     var tipsConDiv = $("<div class='tipsContainer'></div>");
                     height ? tipsConDiv.append("<div class='tipsContent' style='height:" + height + "px; overflow:hidden;text-overflow:ellipsis;'></div>") : tipsConDiv.append("<div class='tipsContent'></div>");
                     tipsConDiv.append("<div class='arrow-box'><i class='left-arrow1'></i><i class='left-arrow2'></i></div>");
                     tipsConDiv.css({
-                        left: (event.clientX + 25) + "px",
-                        top: (event.clientY - 33) + "px"
+                        "left": (event.clientX + 25) + "px",
+                        "top": (event.clientY - 33) + scrollTop + "px"
                     });
                     $("body").append(tipsConDiv);
                     if (textArr.length != 0) {
@@ -723,37 +724,37 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     //处理tip在可视范围的右边
                     if ((viewBodyWidth - event.clientX < tipWidth + 30) && !(viewBodyHeight - event.clientY < tipHeight)) {
                         tipsConDiv.css({
-                            "left": event.clientX - tipWidth - 15
+                            "left": event.clientX - tipWidth - 15  + "px"
                         });
                         $(".arrow-box").css({
                             "transform": "rotateY(180deg)",
-                            "left": tipWidth + 10
+                            "left": tipWidth + 10  + "px"
                         })
                     }
 
                     //处理tip在可视范围的下边
                     if ((viewBodyHeight - event.clientY < tipHeight) && !(viewBodyWidth - event.clientX < tipWidth + 30)) {
                         tipsConDiv.css({
-                            "top": event.clientY - tipHeight - 15,
-                            "left": event.clientX - tipWidth / 2
+                            "top": event.clientY - tipHeight - 15 + scrollTop + "px",
+                            "left": event.clientX - tipWidth / 2 + "px"
                         });
                         $(".arrow-box").css({
                             "transform": "rotate(-90deg)",
-                            "top": tipHeight + 10,
-                            "left": tipWidth / 2 - 10
+                            "top": tipHeight + 10 + "px",
+                            "left": tipWidth / 2 - 10 + "px"
                         })
                     }
 
                     //处理tip在可视范围的右边且下边
                     if ((viewBodyWidth - event.clientX < tipWidth + 30) && viewBodyHeight - event.clientY < tipHeight) {
                         tipsConDiv.css({
-                            "top": event.clientY - tipHeight - 15,
-                            "left": event.clientX - tipWidth + 20
+                            "top": event.clientY - tipHeight - 15 + scrollTop + "px",
+                            "left": event.clientX - tipWidth + 20 + "px"
                         });
                         $(".arrow-box").css({
                             "transform": "rotate(-90deg)",
-                            "top": tipHeight + 10,
-                            "left": tipWidth - 25
+                            "top": tipHeight + 10 + "px",
+                            "left": tipWidth - 25 + "px"
                         })
                     }
 

@@ -12,13 +12,13 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 接受我的面板显示事件
-        $scope.isExpand = false;
+        $rootScope.isExpand = false;
         $scope.$on('openAnalysisPop', function () {
             // 展开我的分析面板
-            $scope.isExpand = true;
+            $rootScope.isExpand = true;
         })
         // 获取我的分析页面
-        $scope.analysisEntity = {
+        $rootScope.analysisEntity = {
             LCID: toolService.sessionStorage.get('LCID'),
             pageNum: 1,
             pageSize: 10,
@@ -31,28 +31,28 @@ define(['toolsApp'], function (toolsApp) {
         };
 
         $rootScope.GetAnalysisList = function (pageNum) {
-            $scope.analysisEntity.pageNum = pageNum;
+            $rootScope.analysisEntity.pageNum = pageNum;
             //配置请求参数
             $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
             var ajaxConfig = {
-                data: $scope.analysisEntity,
+                data: $rootScope.analysisEntity,
                 url: $scope.analysisListUrl
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
                 if (res.Error) {
-                    $scope.analysisError = 'syserror';
+                    $rootScope.analysisError = 'syserror';
                     return;
                 } else if (res.rows.length == 0) {
-                    $scope.analysisError = 'nodata';
+                    $rootScope.analysisError = 'nodata';
                     $rootScope.analysis = [];
                     return;
                 } else {
                     $rootScope.analysis = res.rows;
-                    $scope.analysisError = false;
+                    $rootScope.analysisError = false;
                 }
             }, function () {
-                $scope.analysisError = 'syserror'
+                $rootScope.analysisError = 'syserror'
             })
         }
 

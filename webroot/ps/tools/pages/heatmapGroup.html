@@ -175,7 +175,7 @@
                             <thead>
                                 <tr>
                                     <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
-                                    <th ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
                                         <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                         <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
                                     </th>
@@ -226,4 +226,6 @@
         <!-- table over -->
 
     </div>
+    <!-- analysis pop  $rootScope.analysis-->
+    <div class="analysis-pop" is-expand="isExpand" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
 </div>

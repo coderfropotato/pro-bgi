@@ -63,7 +63,7 @@
                                 <div class="links">
                                     <span>{{item.links.length}}
                                         <ul ng-if="item.links.length" class="link-lists">
-                                            <li ng-repeat="item in item.links">
+                                            <li handlerSeeClick(item.process,item.id,item.chartType) ng-repeat="item in item.links">
                                                 <p>类型：{{item.chartType}}</p>
                                                 <p>项目名称：{{item.projectName}}</p>
                                             </li>

@@ -275,7 +275,6 @@ define("superApp.reportDire",
                 var hasThreeChild = false;
                 $rootScope.quickMenuList = [];
 
-                // console.log(two);
                 $rootScope.leftData.forEach(function (val, index) {
                     val.isActive = false;
 
@@ -295,7 +294,6 @@ define("superApp.reportDire",
                     reportService.IndexLoadPage(two);
                 }
 
-                console.log($rootScope.quickMenuList)
                 two.isActive = true;
             }
 
@@ -345,26 +343,32 @@ define("superApp.reportDire",
                                     //reportService.IndexLoadPage(leftListitem);
                                     //$scope.ResizeBody();
                                     leftListitem.isActive = true;
-                                    if (leftListitem.JDPID != -1) {
+                                    if (leftListitem.JDPID != -1 && leftListitem.Index == -2) {
                                         //证明当前选中的是二级菜单，则需要设置一级菜单也选中
                                         angular.forEach($scope.leftDataJson, function (listItem) {
                                             //设置对应的一级节点为选中
                                             if (listItem.GNSID == leftListitem.JDPID) {
                                                 listItem.isActive = true;
-                                                //alert(1);
+                                            }
 
-                                            }
-                                            //将当前二级菜单的平级信息放入快速跳转菜单中
-                                            if (listItem.JDPID == leftListitem.JDPID) {
-                                                $rootScope.quickMenuList.push(listItem);
-                                            }
                                         });
+                                        //将当前二级菜单的子级信息放入快速跳转菜单中 || 把自己放入快捷菜单
+                                        if (leftListitem.hasChild) {
+                                            // 吧三级菜单放入快捷菜单
+                                            angular.forEach($scope.leftDataJson,function(val){
+                                                if(val.JDPID === leftListitem.GNSID)$rootScope.quickMenuList.push(val);
+                                            })
+                                        }else{
+                                            // 如果没有三级 就当放自己
+                                            $rootScope.quickMenuList.push(leftListitem);
+                                        }
                                     }
                                 }
                                 else {
                                     leftListitem.isActive = false;
                                 }
                             });
+
                         });
                     }, 200);
                 }
@@ -681,7 +685,7 @@ define("superApp.reportDire",
                     }
                     return;
                 }
-                
+
                 var cur = $scope.menulist[$scope.menulist.length - 1]
                 var nextStartsWidth, index;
                 if (cur.Index !== '-2') {

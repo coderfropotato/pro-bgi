@@ -681,7 +681,7 @@ define("superApp.reportDire",
                     }
                     return;
                 }
-
+                
                 var cur = $scope.menulist[$scope.menulist.length - 1]
                 var nextStartsWidth, index;
                 if (cur.Index !== '-2') {

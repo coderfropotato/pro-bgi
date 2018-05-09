@@ -10,7 +10,7 @@ define("superApp.topQuickMenuDire",
         function topQuickMenuDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<dl class=\"quick_menu\" ng-show=\"quickMenuList.length > 0\" style=\"display: none; \""
+                template: "<dl class=\"quick_menu\" ng-if=\"quickMenuList.length > 1\" style=\"display: none; \""
                     + "ng-class=\"{ isShow: quickMenuList.length > 0 }\">"
                     + "<dd ng-repeat=\"quickItem in quickMenuList track by $index\""
                     + "ng-class=\"{active: quickItem.isActive,isShuoming: quickItem.type === 'sm',"

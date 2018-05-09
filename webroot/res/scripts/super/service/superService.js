@@ -85,8 +85,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         if (status == "401") {
                                             // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                                             deferred.reject("NoAuth");
-                                        }
-                                        else {
+                                        } else {
                                             $log.error(data);
                                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
                                             toolService.HideLoading(); //关闭页面等待蒙版
@@ -106,12 +105,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
                             // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                            //var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
-                            //myPromise.then(function (value)
-                            //{
-                            //    window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                            //    deferred.reject("NoAuth");
-                            //});
+                            var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
+                            myPromise.then(function (value) {
+                                window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
+                                deferred.reject("NoAuth");
+                            });
+
                         }
                         catch (e) { }
                     });
@@ -171,40 +170,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 };
 
                 angular.extend(selfAjaxConfig, ajaxConfig);
-                var deferred = $q.defer(); 
-                $http({
-                    method: selfAjaxConfig.method,
-                    url: selfAjaxConfig.url,
-                    data: selfAjaxConfig.data,
-                    headers: selfAjaxConfig.headers
-                })
-                    .success(function (data, status, headers, config) {
-                        deferred.resolve(data);  
-                    })
-                    .error(function (data, status, headers, config) {
-                        try {
-                            $log.error(data);
-                            toolService.tableGridLoading.close(); 
-                            toolService.HideLoading(); 
-                            toolService.popLoading.close(); 
-                            toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
-                            deferred.reject(data); 
-                        }
-                        catch (e) { }
-                    });
-                return deferred.promise;   
-            }
-
-            // 加token字段 不交换token
-            this.GetDeferDataAddToken = function (ajaxConfig) {
-                var selfAjaxConfig = {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json;charset=UTF-8", "Authorization": "token " + toolService.sessionStorage.get('token') }
-                };
-
-                angular.extend(selfAjaxConfig, ajaxConfig);
-               
-                var deferred = $q.defer(); 
+                var deferred = $q.defer();
                 $http({
                     method: selfAjaxConfig.method,
                     url: selfAjaxConfig.url,
@@ -217,11 +183,44 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     .error(function (data, status, headers, config) {
                         try {
                             $log.error(data);
-                            toolService.tableGridLoading.close(); 
-                            toolService.HideLoading(); 
-                            toolService.popLoading.close(); 
+                            toolService.tableGridLoading.close();
+                            toolService.HideLoading();
+                            toolService.popLoading.close();
                             toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
-                            deferred.reject(data);   
+                            deferred.reject(data);
+                        }
+                        catch (e) { }
+                    });
+                return deferred.promise;
+            }
+
+            // 加token字段 不交换token
+            this.GetDeferDataAddToken = function (ajaxConfig) {
+                var selfAjaxConfig = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json;charset=UTF-8", "Authorization": "token " + toolService.sessionStorage.get('token') }
+                };
+
+                angular.extend(selfAjaxConfig, ajaxConfig);
+
+                var deferred = $q.defer();
+                $http({
+                    method: selfAjaxConfig.method,
+                    url: selfAjaxConfig.url,
+                    data: selfAjaxConfig.data,
+                    headers: selfAjaxConfig.headers
+                })
+                    .success(function (data, status, headers, config) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status, headers, config) {
+                        try {
+                            $log.error(data);
+                            toolService.tableGridLoading.close();
+                            toolService.HideLoading();
+                            toolService.popLoading.close();
+                            toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
+                            deferred.reject(data);
                         }
                         catch (e) { }
                     });

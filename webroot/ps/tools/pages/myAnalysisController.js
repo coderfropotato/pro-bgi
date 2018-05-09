@@ -6,7 +6,8 @@ define(['toolsApp'], function (toolsApp) {
         $scope.InitPage = function () {
             $timeout(function () {
             }, 300)
-
+            // title
+            $scope.title = '我的分析';
             // 是否显示查询面板
             $scope.isFilter = false;
             // 查询参数
@@ -91,13 +92,15 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 查看
-        $scope.handlerSeeClick = function (process, id, type) {
+        $scope.handlerSeeClick = function (item) {
+            var type = item.chartType || item.charType;
+            // process, id, type
             // error
-            if (process == 0) {
-                $window.open('../tools/index.html#/home/error/' + id);
+            if (item.process == 0) {
+                $window.open('../tools/index.html#/home/error/' + item.id);
             } else {
-            // success
-                $window.open('../tools/index.html#/home/' + type + '/' + id);
+                // success
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id + '/' + item.projectName);
             }
         }
 
@@ -133,6 +136,5 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isFilter = false;
             $scope.$apply();
         }, false);
-        
     }
 });

@@ -1,5 +1,5 @@
 <div class="heatmap-page" ng-controller="heatmapGroupController" ng-init="InitPage()">
-    <div class="report-page-title" custom-title="聚类分析"></div>
+    <div class="report-page-title" custom-title="title"></div>
     <div id="div_heatmap_page">
         <div class="graph_group" id="analysis-heatmapClusterPanel" style="min-width:1000px">
             <div class="graph_header">
@@ -77,7 +77,7 @@
                     </li>
                     <li>
                         <!-- genelist panel  -->
-                        <div class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}" ng-mouseenter="handlerMouseEnter()"
+                        <div id="unselect" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}" ng-mouseenter="handlerMouseEnter()"
                             ng-mouseleave="handlerMouseLeave()">
                             <button class="btn btn-default btn-silver btn-sm">
                                 未选中GeneList
@@ -129,7 +129,8 @@
                 <div class="div_filterText" ng-show="filterText1.filterText.length">
                     <span>筛选条件：</span>
                     <div class="filter-right">
-                        <span class="filter-content" title="{{geneidCustomSearchOne}}" ng-repeat="f in filterText1.filterText track by $index">
+                        <!-- title="{{geneidCustomSearchOne}}" -->
+                        <span class="filter-content"  ng-repeat="f in filterText1.filterText track by $index">
                             <span class="filter-item" ng-bind-html="f"></span>
                             <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                         </span>

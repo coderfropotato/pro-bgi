@@ -1,5 +1,5 @@
 <div class="myAnalysis-page" ng-init="InitPage()" ng-controller="myAnalysisController">
-    <div class="report-page-title" custom-title="我的分析"></div>
+    <div class="report-page-title" custom-title="title"></div>
     <div class="tools-analysis-panel tableListPanel" id="myanalysis-table">
         <p class="title">我的分析</p>
         <div class="btns clearfix">
@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
-                            <td class="text-center" ng-bind="item.projectName"></td>
+                            <td class="text-center editProject"><span>{{item.projectName}}</span><i class="glyphicon glyphicon-pencil"></i></td>
                             <td class="text-center">
                                 <span ng-if="item.process==1">成功</span>
                                 <span ng-if="item.process==-1">进行中，剩余:{{item.restTime}}</span>
@@ -63,7 +63,7 @@
                                 <div class="links">
                                     <span>{{item.links.length}}
                                         <ul ng-if="item.links.length" class="link-lists">
-                                            <li handlerSeeClick(item.process,item.id,item.chartType) ng-repeat="item in item.links">
+                                            <li ng-click="handlerSeeClick(item)" ng-repeat="item in item.links">
                                                 <p>类型：{{item.chartType}}</p>
                                                 <p>项目名称：{{item.projectName}}</p>
                                             </li>
@@ -74,7 +74,7 @@
                             </td>
                             <td class="text-center">{{item.remark}}</td>
                             <td class="text-center">
-                                <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item.process,item.id,item.charType)">查看</button>
+                                <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item)">查看</button>
                                 <span ng-if="item.process==-1" >--</span> 
                                 <button ng-if="item.process!=-1" class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>

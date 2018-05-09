@@ -11,8 +11,12 @@ define(["toolsApp"], function (toolsApp) {
                 function () {
                     toolService.pageLoading.close();
                 }, 300);
-
+            // custom title
+            $scope.projectName = $state.params.projectName;
             $scope.id = $state.params.id;       // 重分析id
+            // 项目：' + $scope.projectName + ',
+            $scope.title = '聚类分析 ( ID：' + $scope.id + " ) ";
+
             $scope.isShowColorPanel = false; //是否显示颜色面板
             $scope.isShowSetPanel = false;  //是否显示设置面板
             $scope.isRefresh = false;  //是否点击了刷新
@@ -915,7 +919,7 @@ define(["toolsApp"], function (toolsApp) {
                 toolService.pageLoading.close();
                 if (res.Error) {
                     $scope.reanalysisError = "syserror";
-                   toolService.popMesgWindow(res.Error);
+                    toolService.popMesgWindow(res.Error);
                 } else {
                     $scope.reanalysisError = false;
                     $scope.$emit('openAnalysisPop');

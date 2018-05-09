@@ -238,6 +238,10 @@ define("superApp.gridFilterDire",
                 $scope.tempFindEntity.filtertype = $scope.filterFindEntity.filtertype;
                 $scope.tempFindEntity.isTopFilter = $scope.filterFindEntity.isTopFilter;
 
+                // reset searchone
+                // if ($scope.searchOne && $scope.filterFindEntity.filterName == $scope.geneidtruekey) {
+                //     $scope.filterFindEntity.searchOne = '';
+                // }
                 //设置对应过滤按钮图标
                 //如果输入了查询信息，则证明要进行条件查询
                 if ($scope.filterFindEntity.searchOne != "" || $scope.filterFindEntity.searchTwo != "") {

@@ -9,22 +9,24 @@ define(['toolsApp'], function (toolsApp) {
             }, 300)
 
             $scope.error = false;
-            $scope.id = $state.id;
+            $scope.title = '错误信息 ( ID : ' + $state.params.id + ')';
+            $scope.GetErrorMsg();
         }
 
         // 获取错误信息
         $scope.GetErrorMsg = function () {
             //配置请求参数
             var ajaxConfig = {
-                data: { id: $scope.id },
-                url: "http://192.168.29.203/bgfxxt/analysis/dalete/" + id
+                data: {},
+                url: "http://192.168.29.203/bgfxxt/analysis/explains/" + $state.params.id
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
+                console.log(res)
                 if (res.status != 200) {
                     $scope.error = 'syserror';
                     return;
-                } else if (res.length === 0) {
+                } else if (!res.data.explains) {
                     $scope.error = 'nodata';
                 } else {
                     $scope.error = false;

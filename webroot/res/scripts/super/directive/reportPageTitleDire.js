@@ -18,7 +18,7 @@ define("superApp.reportPageTitleDire",
                 controller: "reportPageTitleCtr",
                 scope: {
                     currentPageDirective: "@",   // 当前页面的指令
-                    customTitle: "@"             // 自定义title
+                    customTitle: "="             // 自定义title
                 }
             }
         }

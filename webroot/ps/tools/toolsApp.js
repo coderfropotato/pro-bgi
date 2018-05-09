@@ -59,11 +59,11 @@ define([
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {
-                url: "/home/heatmapGroup/:id",
+                url: "/home/heatmapGroup/:id/:projectName",
                 templateUrl: "../tools/pages/heatmapGroup.html",
             })
             .state("heatmapSample", {
-                url: "/home/heatmapSample/:id",
+                url: "/home/heatmapSample/:id/:projectName",
                 templateUrl: "../tools/pages/heatmapSample.html",
             })
             .state("venn", {

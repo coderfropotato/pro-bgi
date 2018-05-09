@@ -190,3 +190,26 @@
 .advance-panel button {
     line-height: 16px;
 }
+
+.editProject{
+    position: relative;
+}
+
+.editProject .glyphicon{
+    position: absolute;
+    right: 0;
+    top: 12px;
+    font-size: 12px;
+    margin-left: 6px;
+    visibility: hidden;
+}
+.editProject:hover .glyphicon{
+    visibility:visible ;
+}
+.editProject >span{
+    max-width:calc(100% - 18px);
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

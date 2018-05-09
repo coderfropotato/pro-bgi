@@ -15,7 +15,7 @@ define("superApp.topQuickMenuDire",
                     + "<dd ng-repeat=\"quickItem in quickMenuList track by $index\""
                     + "ng-class=\"{active: quickItem.isActive,isShuoming: quickItem.type === 'sm',"
                     + "isJiehuo: quickItem.type === 'jh',quickItem: quickItem.type !== 'sm' && quickItem.type !== 'jh'"
-                    + "} \" ng-bind=\"quickItem.JDMC\" ng-click=\"QuickMenu_OnClick(quickItem)\" title=\"{ { quickItem.JDMC } } \">"
+                    + "} \" ng-bind=\"quickItem.JDMC\" ng-click=\"QuickMenu_OnClick(quickItem)\" title=\"{{ quickItem.JDMC }} \">"
                     + "</dd></dl>",
                 replace: false,
                 transclude: true,

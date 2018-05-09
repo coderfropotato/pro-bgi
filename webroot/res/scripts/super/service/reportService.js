@@ -555,11 +555,11 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 if (item.ISREPORT) {
                     //在有在线报告的情况下
                     directiveName = item.LJLJ;
-                    if (item.GNSID.length >= 10) {
-                        directivePanelID = "div_" + item.JDPID + "_panel";
-                    } else {
-                        directivePanelID = "div_" + item.GNSID + "_panel";
-                    }
+                    // if (item.GNSID.length >= 10) {
+                    //     directivePanelID = "div_" + item.JDPID + "_panel";
+                    // } else {
+                    directivePanelID = "div_" + item.GNSID + "_panel";
+                    // }
                 } else {
                     $rootScope.quickMenuList = [];
                     //在没有在线报告情况下
@@ -728,7 +728,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         viewBodyWidth = document.documentElement.clientWidth;
                         viewBodyHeight = document.documentElement.clientHeight;
                     }
-                   
+
                     //处理tip在可视范围的右边
                     if ((viewBodyWidth - event.clientX < tipWidth + 30) && !(viewBodyHeight - event.clientY < tipHeight)) {
                         tipsConDiv.css({

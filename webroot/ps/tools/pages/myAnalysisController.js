@@ -27,16 +27,15 @@ define(['toolsApp'], function (toolsApp) {
             $scope.advanceParams = [
                 {
                     "类型": [
-                        { name: '聚类图', isActive: false },
-                        { name: '维恩图', isActive: false },
-                        { name: 'GO', isActive: false }
+                        { name: '组间聚类', value: 'heatmapGroup', isActive: false },
+                        { name: '样本聚类', value: 'heatmapSample', isActive: false }
                     ]
                 },
                 {
                     "状态": [
-                        { name: '成功', isActive: false },
-                        { name: '失败', isActive: false },
-                        { name: '运行中', isActive: false }
+                        { name: '成功', value: '1', isActive: false },
+                        { name: '失败', value: '0', isActive: false },
+                        { name: '运行中', value: '-1', isActive: false }
                     ]
                 }
             ]
@@ -51,7 +50,7 @@ define(['toolsApp'], function (toolsApp) {
             toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
-            $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
+            $scope.analysisListUrl = options.api.java_url+'/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
@@ -89,6 +88,21 @@ define(['toolsApp'], function (toolsApp) {
         // 筛选
         $scope.handlerFilterClick = function () {
             $scope.isFilter = false;
+
+            $scope.analysisEntity.searchContent.chartType = [];
+            $scope.analysisEntity.searchContent.status = [];
+            for (var name in $scope.advanceParams[0]) {
+                $scope.advanceParams[0][name].forEach(function (val, index) {
+                    if (val.isActive) $scope.analysisEntity.searchContent.chartType.push(val.value);
+                });
+            }
+            for (var name in $scope.advanceParams[1]) {
+                $scope.advanceParams[1][name].forEach(function (val, index) {
+                    if (val.isActive) $scope.analysisEntity.searchContent.status.push(val.value);
+                });
+            }
+
+            $scope.GetAnalysisList(1);
         }
 
         // 查看
@@ -109,7 +123,7 @@ define(['toolsApp'], function (toolsApp) {
             //配置请求参数
             var ajaxConfig = {
                 data: {},
-                url: "http://192.168.29.203/bgfxxt/analysis/dalete/" + id
+                url: options.api.java_url+"/analysis/dalete/" + id
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {

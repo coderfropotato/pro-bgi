@@ -63,6 +63,8 @@ define(["toolsApp"], function (toolsApp) {
             $scope.GetHeatmapData();
             // 获取表格数据
             $scope.GetGOAnnoList(1);
+            // 获取前置任务
+            $scope.GetLinks();
         };
         // 样本改变
         $scope.compareGroupChange = function () {
@@ -931,6 +933,38 @@ define(["toolsApp"], function (toolsApp) {
                 toolService.popMesgWindow(err);
             })
         }
+
+        //get links 
+        $scope.linksError = false;
+        $scope.GetLinks = function(){
+            console.log($scope.id);
+            var promise = ajaxService.GetDeferDataNoAuth({
+                data: {},
+                url: options.api.java_url+"/analysis/parent/"+$scope.id
+            })
+            promise.then(function (res) {
+                if (res.status!=200) {
+                    $scope.linksError = "syserror";
+                } else {
+                    $scope.linksError = false;
+                    $scope.links = res.data.links;
+                }
+            }, function (err) {
+                console.log(err);
+            })
+        }
+
+        // 查看links
+        $scope.handlerSeeClick = function (item) {
+            var type = item.chartType || item.charType;
+            if (item.process == 0) {
+                $window.open('../tools/index.html#/home/error/' + item.id);
+            } else {
+                // success
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id + '/' + item.projectName);
+            }
+        }
+
 
         // watch geneUnselectList 生成length
         $scope.geneUnselectListLength = 0;

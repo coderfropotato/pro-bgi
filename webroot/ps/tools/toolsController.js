@@ -33,7 +33,7 @@ define(['toolsApp'], function (toolsApp) {
         $rootScope.GetAnalysisList = function (pageNum) {
             $rootScope.analysisEntity.pageNum = pageNum;
             //配置请求参数
-            $scope.analysisListUrl = 'http://192.168.29.203/bgfxxt/analysis/GetAnalysisList'
+            $scope.analysisListUrl = options.api.java_url+'/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $rootScope.analysisEntity,
                 url: $scope.analysisListUrl

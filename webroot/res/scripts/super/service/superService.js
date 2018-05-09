@@ -26,7 +26,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         ITS_url: SUPER_CONSOLE_MESSAGE.itsApiPath,
                         rad_url: SUPER_CONSOLE_MESSAGE.radApiPath,
                         bsa_url: SUPER_CONSOLE_MESSAGE.bsaApiPath,
-                        manger_url: SUPER_CONSOLE_MESSAGE.mangerApiPath
+                        manger_url: SUPER_CONSOLE_MESSAGE.mangerApiPath,
+                        java_url:SUPER_CONSOLE_MESSAGE.javaApiPath,
                     },
                 loginUrl: SUPER_CONSOLE_MESSAGE.loginUrl,
                 pathWayPath: SUPER_CONSOLE_MESSAGE.pathWayPath,
@@ -2075,7 +2076,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     }
                 }
                 //filterType = "";
-                $log.log(filterText);
                 return { filterText: filterText, sortText: sortText }
                 // return $sce.trustAsHtml(filterText);
             };

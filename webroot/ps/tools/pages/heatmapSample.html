@@ -13,6 +13,19 @@
                     </li>
                 </ul>
                 <ul class="fRight">
+                    <li>
+                        <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
+                            <span style="color:red;">({{links.length}})</span>
+                            <div class="links btn-links" style="color:#333;">
+                                <ul ng-if="links.length" class="link-lists">
+                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
+                                        <p>类型：{{item.chartType}}</p>
+                                        <p>项目名称：{{item.projectName}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
+                    </li>
                     <li ng-hide="clusterError">
                         <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption"
                             is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
@@ -177,7 +190,8 @@
                             <thead>
                                 <tr>
                                     <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
-                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index"
+                                        style="max-width:500px;white-space:nowrap;">
                                         <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                         <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
                                     </th>

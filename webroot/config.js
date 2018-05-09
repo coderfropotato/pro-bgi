@@ -17,6 +17,7 @@
                 onLineReportLeftPath: "./../include/include_rnaseqleft.html",
                 girdFilterPath: "./../include/include_grid_filter.html",
             },
+            javaApiPath:"http://192.168.29.203/bgfxxt",
             messageUrl: "ps/login/message.html",
             loginUrl: "ps/login/login.html",
             popBDWindowPath: "./include/browser_detect_prompt.html",
@@ -34,7 +35,6 @@
             itsApiPath: base_url + "/its",
             radApiPath: base_url + "/radseq",
             bsaApiPath: base_url + "/bsa",
-            
             m_apiPath: manager_base_url,
             mangerApiPath: manager_base_url + "/load"
         };

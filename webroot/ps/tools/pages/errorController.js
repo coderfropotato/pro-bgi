@@ -18,7 +18,7 @@ define(['toolsApp'], function (toolsApp) {
             //配置请求参数
             var ajaxConfig = {
                 data: {},
-                url: "http://192.168.29.203/bgfxxt/analysis/explains/" + $state.params.id
+                url: options.api.java_url+"/analysis/explains/" + $state.params.id
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {

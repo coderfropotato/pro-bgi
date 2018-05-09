@@ -13,9 +13,21 @@
                     </li>
                 </ul>
                 <ul class="fRight">
+                    <li>
+                        <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务<span style="color:red;">({{links.length}})</span>
+                            <div class="links btn-links" style="color:#333;">
+                                <ul ng-if="links.length" class="link-lists">
+                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
+                                        <p>类型：{{item.chartType}}</p>
+                                        <p>项目名称：{{item.projectName}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
+                    </li>
                     <li ng-hide="clusterError">
-                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh"
-                            get-set-options="getSetOption(setObj)"></div>
+                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption"
+                            is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
                     </li>
                     <li ng-hide="clusterError">
                         <div class="svg-new-export" chartid="heatmapgroup_chartClusterpic" saveimgname="聚类图"></div>
@@ -56,8 +68,9 @@
                     <li>
                         <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                         <!-- 2018年4月19日15:58:03 tablehead -->
-                        <div class="grid-filter-begin" tablehead="GOAnnoData.baseThead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)" geneidtruekey="geneid_truekey"
-                            parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType" filter-status-callback="handlerFilterStatusChange(status)"></div>
+                        <div class="grid-filter-begin" tablehead="GOAnnoData.baseThead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)"
+                            geneidtruekey="geneid_truekey" parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne"
+                            search-type="geneidCustomSearchType" filter-status-callback="handlerFilterStatusChange(status)"></div>
                     </li>
                 </ul>
                 <ul class="fRight">
@@ -130,7 +143,7 @@
                     <span>筛选条件：</span>
                     <div class="filter-right">
                         <!-- title="{{geneidCustomSearchOne}}" -->
-                        <span class="filter-content"  ng-repeat="f in filterText1.filterText track by $index">
+                        <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
                             <span class="filter-item" ng-bind-html="f"></span>
                             <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                         </span>
@@ -176,7 +189,8 @@
                             <thead>
                                 <tr>
                                     <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
-                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index"
+                                        style="max-width:500px;white-space:nowrap;">
                                         <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                         <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
                                     </th>

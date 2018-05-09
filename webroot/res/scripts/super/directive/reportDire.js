@@ -51,8 +51,8 @@ define("superApp.reportDire",
             $scope.topNav_Mobile_Toggle = function () {
                 $scope.topMobile_IsOpen = !$scope.topMobile_IsOpen;
             }
-            
-            $scope.myAnalysisClick=function(){
+
+            $scope.myAnalysisClick = function () {
                 toolService.sessionStorage.set('type', 'myAnalysis');
                 $window.open('../tools/index.html');
             }
@@ -69,7 +69,7 @@ define("superApp.reportDire",
 
                     // isExpand
                     $rootScope.leftData.forEach(function (val, index) {
-                        if (val.JDPID === '-1' && val.GNSID !=='001') {
+                        if (val.JDPID === '-1' && val.GNSID !== '001') {
                             val.isExpand = false;
                         }
                         // GNSID 001 JDPID -1
@@ -270,7 +270,7 @@ define("superApp.reportDire",
 
             // 二级菜单点击事件
             $scope.handlerTwoClick = function (two) {
-                var reg = new RegExp('^'+two.JDPID);
+                var reg = new RegExp('^' + two.JDPID);
                 var threeGNSID = two.GNSID + '001';
                 var hasThreeChild = false;
                 $rootScope.quickMenuList = [];
@@ -281,10 +281,6 @@ define("superApp.reportDire",
 
                     if (val.JDPID === two.GNSID) {
                         hasThreeChild = true;
-                    }
-
-                    // 找到同级菜单
-                    if(reg.test(val.JDPID) && !val.hasChild){
                         $rootScope.quickMenuList.push(val);
                     }
 
@@ -295,10 +291,11 @@ define("superApp.reportDire",
                 });
 
                 if (!hasThreeChild) {
-                    // $rootScope.quickMenuList.push(two);
+                    $rootScope.quickMenuList.push(two);
                     reportService.IndexLoadPage(two);
                 }
 
+                console.log($rootScope.quickMenuList)
                 two.isActive = true;
             }
 
@@ -669,16 +666,19 @@ define("superApp.reportDire",
             $scope.findNextSectionMenuList = function () {
                 // 如果菜单长度是 0 ，那么是第一章菜单，循环找到第二章菜单
                 if ($scope.menulist.length == 0) {
-                    angular.forEach($rootScope.leftData, function (listItem, index, array) {
-                        // 直接无子集的二级
-                        if (listItem.Index === '-2' && /^002/.test(listItem.GNSID) && !listItem.hasChild) {
-                            $scope.nextSectionMenuList.push(listItem);
-                        }
-                        // 三级
-                        if (/^002/.test(listItem.JDPID) && listItem.GNSID.length == 9) {
-                            $scope.nextSectionMenuList.push(listItem);
-                        }
-                    });
+                    if ($rootScope.leftDataOrderById['001001001']) {
+                        $rootScope.leftData.forEach(function (val, index) {
+                            if (/^001001/.test(val.JDPID) && !val.hasChild) {
+                                $scope.nextSectionMenuList.push(val);
+                            }
+                        })
+                    } else {
+                        $rootScope.leftData.forEach(function (val, index) {
+                            if (/^001002/.test(val.GNSID) && !val.hasChild) {
+                                $scope.nextSectionMenuList.push(val);
+                            }
+                        })
+                    }
                     return;
                 }
 
@@ -734,8 +734,9 @@ define("superApp.reportDire",
                 angular.forEach($rootScope.quickMenuList, function (menuItem) {
                     menuItem.isActive = false;
                 })
-                $rootScope.quickMenuList = $scope.nextSectionMenuList;
+
                 // 获取下一章菜单，并把新章和该章菜单中的第一个子菜单设置为选中
+                $rootScope.quickMenuList = $scope.nextSectionMenuList;
                 // start 2018年3月12日10:20:41 add Expand 
                 var parentItemGNSID = $rootScope.quickMenuList[0].JDPID;
 
@@ -745,14 +746,15 @@ define("superApp.reportDire",
                 // 展开主目录
                 // 重置其他
 
-                $('.sidebar_nav_two ol').slideUp();
-
                 $rootScope.leftData.forEach(function (val, index) {
-
                     if (val.JDPID == -1 && val.GNSID === parentItemGNSID.substring(0, 3)) {
                         val.isExpand = true;
-                        $('.sidebar_nav_two ol').slideUp();
-                        $('#div_' + val.GNSID).parent().find('.sidebar_nav_two ol').slideDown();
+
+                        if (!$('#div_' + val.GNSID).parent().find('.sidebar_nav_two ol').is(':visible')) {
+                            $('.sidebar_nav_two ol').slideUp();
+                            $('#div_' + val.GNSID).parent().find('.sidebar_nav_two ol').slideDown();
+                        }
+
                     } else {
                         if (val.isExpand != 'undefined') val.isExpand = false;
                     }

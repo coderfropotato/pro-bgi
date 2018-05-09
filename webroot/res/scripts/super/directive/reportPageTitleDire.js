@@ -11,7 +11,7 @@ define("superApp.reportPageTitleDire",
             return {
                 restrict: "ACE",
                 template: "<h2 class=\"alert alert-default\">"
-                    + "<span ng-if=\"!customTitle\">{{one.JDMC}}<span ng-show=\"two\">-{{two.JDMC}}</span></span>"
+                    + "<span class='one' ng-if=\"!customTitle\">{{one.JDMC}}<span class='two' ng-show=\"two\"> - {{two.JDMC}}<span ng-show=\"three\" class='three'> - {{three.JDMC}}</span></span></span>"
                     + "<span ng-if=\"customTitle\">{{customTitle}}</span></h2>",
                 replace: false,
                 transclude: true,
@@ -31,6 +31,7 @@ define("superApp.reportPageTitleDire",
                 $scope.one = null;
                 // 二级页面
                 $scope.two = null;
+                $scope.three = null;
                 // 当前页面
                 $scope.currentPage = $rootScope.leftDataOrderByLjlj[$scope.currentPageDirective];
 
@@ -41,9 +42,11 @@ define("superApp.reportPageTitleDire",
 
                     $scope.one = $rootScope.leftDataOrderById[oneId];
                     $scope.two = $rootScope.leftDataOrderById[twoId];
+                    $scope.three = $scope.currentPage;
                 } else {
                     // 二级
                     var oneId = $scope.currentPage.JDPID;
+                    $scope.two = $scope.currentPage;
                     $scope.one = $rootScope.leftDataOrderById[oneId]
                 }
             }

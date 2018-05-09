@@ -270,15 +270,21 @@ define("superApp.reportDire",
 
             // 二级菜单点击事件
             $scope.handlerTwoClick = function (two) {
+                var reg = new RegExp('^'+two.JDPID);
                 var threeGNSID = two.GNSID + '001';
                 var hasThreeChild = false;
                 $rootScope.quickMenuList = [];
 
+                // console.log(two);
                 $rootScope.leftData.forEach(function (val, index) {
                     val.isActive = false;
 
                     if (val.JDPID === two.GNSID) {
                         hasThreeChild = true;
+                    }
+
+                    // 找到同级菜单
+                    if(reg.test(val.JDPID) && !val.hasChild){
                         $rootScope.quickMenuList.push(val);
                     }
 
@@ -289,7 +295,7 @@ define("superApp.reportDire",
                 });
 
                 if (!hasThreeChild) {
-                    $rootScope.quickMenuList.push(two);
+                    // $rootScope.quickMenuList.push(two);
                     reportService.IndexLoadPage(two);
                 }
 

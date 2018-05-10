@@ -52,7 +52,7 @@ define("superApp.analysisPopDire",
             $scope.handlerAnalysisDetail = function (item) {
                 if (item.process == 1) {
                     // success
-                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id);
+                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id+'/'+item.projectName);
                 } else if (item.process == -1) {
                     // pending
                     $window.open('../../../../ps/tools/index.html#/home/myAnalysis');

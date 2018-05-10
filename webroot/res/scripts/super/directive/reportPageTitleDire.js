@@ -11,6 +11,7 @@ define("superApp.reportPageTitleDire",
             return {
                 restrict: "ACE",
                 template: "<h2 class=\"alert alert-default\">"
+                    +"<span ng-if=\"one && !customTitle\" class='titleicon {{one.icon_class}}'></span>"
                     + "<span class='one' ng-if=\"!customTitle\">{{one.JDMC}}<span class='two' ng-show=\"two\"> - {{two.JDMC}}<span ng-show=\"three\" class='three'> - {{three.JDMC}}</span></span></span>"
                     + "<span ng-if=\"customTitle\">{{customTitle}}</span></h2>",
                 replace: false,

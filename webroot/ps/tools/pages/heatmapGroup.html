@@ -3,15 +3,6 @@
     <div id="div_heatmap_page">
         <div class="graph_group" id="analysis-heatmapClusterPanel" style="min-width:1000px">
             <div class="graph_header">
-                <ul class="fLeft">
-                    <li>
-                        <div class="selector_area">
-                            <select class="super-select" style="width: 200px" ng-model="compareGroup" ng-change="compareGroupChang();">
-                                <option value="{{item.name}}" ng-repeat="item in CompareGroupList track by $index">{{item.name}}</option>
-                            </select>
-                        </div>
-                    </li>
-                </ul>
                 <ul class="fRight">
                     <li>
                         <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务<span style="color:red;">({{links.length}})</span>

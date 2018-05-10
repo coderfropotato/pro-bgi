@@ -25,7 +25,6 @@ define(["toolsApp"], function (toolsApp) {
             $scope.clusterEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
                 "id": $scope.id,
-                "compareGroup": ""
             }
 
             //图颜色
@@ -39,8 +38,7 @@ define(["toolsApp"], function (toolsApp) {
                 "pageNum": 1,
                 "searchContentList": [],
                 "sortName": "",
-                "sortType": "",
-                "compareGroup": "",
+                "sortType": ""
             };
             $scope.accuracy = -1;  // 精度默认 全数据
 
@@ -49,15 +47,8 @@ define(["toolsApp"], function (toolsApp) {
                 isShowTopLine: true,
                 sortNames: []
             }
-            //获取比较组            
-            var CompareGroupList = toolService.sessionStorage.get("CompareGroupList");
-            $scope.CompareGroupList = JSON.parse(CompareGroupList);
             // 获取增删列dire数据
             $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
-            //设置第一个选中
-            $scope.compareGroup = $scope.CompareGroupList[0].name;
-            $scope.clusterEntity.compareGroup = $scope.compareGroup;
-            $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
             // 获取聚类图数据
             $scope.GetHeatmapData();
             // 获取表格数据
@@ -65,17 +56,6 @@ define(["toolsApp"], function (toolsApp) {
             // 获取前置任务
             $scope.GetLinks();
         };
-        // 样本改变
-        $scope.compareGroupChange = function () {
-            $scope.clusterEntity.compareGroup = $scope.compareGroup;
-            $scope.goAnnoFindEntity.compareGroup = $scope.compareGroup;
-            $scope.GetHeatmapData();
-            $scope.GetGOAnnoList(1);
-            // 重置未选中列表 改变table状态
-            $scope.geneUnselectList = {};
-            $scope.checkedAll = true;
-            $scope.checkAll();
-        }
 
         //获取聚类图数据
         $scope.GetHeatmapData = function (flag) {

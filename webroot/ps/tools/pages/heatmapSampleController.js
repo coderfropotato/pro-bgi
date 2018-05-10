@@ -699,7 +699,7 @@ define(["toolsApp"], function (toolsApp) {
         //获取注释表数据
         $scope.GetGOAnnoList = function (pageNumber) {
             toolService.gridFilterLoading.open("analysis-heatmapsample-table");
-            toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
+            // toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
             $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
             $scope.goAnnoFindEntity.pageNum = pageNumber;
@@ -744,10 +744,10 @@ define(["toolsApp"], function (toolsApp) {
                     isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
                 }
                 toolService.gridFilterLoading.close("analysis-heatmapsample-table");
-                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
+                // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             }, function (errorMesg) {
                 toolService.gridFilterLoading.close("analysis-heatmapsample-table");
-                toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
+                // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
                 $scope.goAnnoError = "syserror";
             });
         };

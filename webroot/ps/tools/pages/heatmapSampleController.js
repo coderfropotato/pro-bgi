@@ -76,6 +76,7 @@ define(["toolsApp"], function (toolsApp) {
                     $scope.clusterError = "nodata";
                 } else {
                     $scope.clusterError = "";
+                    res.heatmapData.reverse();
                     $scope.setOption.sortNames = res.heatmapData;
 
                     //场景：res.topClusterData可能为{}
@@ -235,7 +236,7 @@ define(["toolsApp"], function (toolsApp) {
                 var root = d3.hierarchy(topCluster_data);
                 topCluster(root);
 
-                var link = topCluster_g.selectAll(".topClusterlink")
+                topCluster_g.selectAll(".topClusterlink")
                     .data(root.links())
                     .enter().append("path")
                     .attr("fill", "none")
@@ -243,12 +244,6 @@ define(["toolsApp"], function (toolsApp) {
                     .attr("stroke", "#cccccc")
                     .attr("d", elbow);
 
-                var node = topCluster_g.selectAll(".topClusterNode")
-                    .data(root.descendants())
-                    .enter().append("g")
-                    .attr("transform", function (d) {
-                        return "translate(" + d.y + "," + d.x + ")";
-                    });
             }
 
             //画聚类左边折线图
@@ -264,7 +259,7 @@ define(["toolsApp"], function (toolsApp) {
                 var root = d3.hierarchy(cluster_data);
                 cluster(root);
 
-                var link = cluster_g.selectAll(".heatMaplink")
+                cluster_g.selectAll(".heatMaplink")
                     .data(root.links())
                     .enter().append("path")
                     .attr("fill", "none")
@@ -272,12 +267,6 @@ define(["toolsApp"], function (toolsApp) {
                     .attr("stroke", "#cccccc")
                     .attr("d", elbow);
 
-                var node = cluster_g.selectAll(".clusterNode")
-                    .data(root.descendants())
-                    .enter().append("g")
-                    .attr("transform", function (d) {
-                        return "translate(" + d.y + "," + d.x + ")";
-                    })
             }
 
             function elbow(d, i) {

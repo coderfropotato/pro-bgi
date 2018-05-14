@@ -106,11 +106,11 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
                             // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                            var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
-                            myPromise.then(function (value) {
-                                window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                                deferred.reject("NoAuth");
-                            });
+                            // var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
+                            // myPromise.then(function (value) {
+                            //     window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
+                            //     deferred.reject("NoAuth");
+                            // });
 
                         }
                         catch (e) { }

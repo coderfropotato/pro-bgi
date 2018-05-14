@@ -18,7 +18,7 @@ define("superApp.analysisPopDire",
                     // + "<thead>"
                     // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
                     // + "</thead></table>" 
-                    + "<div ng-show=\"analysisList.length\" class=\"table-wrap\"><table class=\"table table-hover\"><thead>"
+                    + "<div ng-show=\"!error\" class=\"table-wrap\"><table class=\"table table-hover\"><thead>"
                     + "<tr><th class=\"text-center\">任务名称</th> <th class=\"text-center\">进度</th> <th class=\"text-center\">提交时间</th><th class=\"text-center\">操作</th></tr>"
                     + "</thead><tbody>"
                     + "<tr ng-repeat=\"val in analysisList \" track by $index>"
@@ -28,11 +28,14 @@ define("superApp.analysisPopDire",
                     + "</tbody>"
                     + "</table></div>"
                     + "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i></div>"
-                    + "<p class=\"error-tips\" ng-show=\"!analysisList.length\">暂无分析信息</p></div>",
+                    + "<p class=\"error-tips\" ng-show=\"error==='nodata'\">暂无分析信息</p>"
+                    + "<p class=\"error-tips\" ng-show=\"error==='syserror'\">服务器错误</p>"
+                    +"</div>",
                 scope: {
                     analysisList: "=",
                     handlerAnalysisDetail: "&",
                     isExpand: "=",
+                    error:"="
                 },
                 replace: false,
                 transclude: true,

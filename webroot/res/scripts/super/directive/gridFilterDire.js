@@ -556,6 +556,8 @@ define("superApp.gridFilterDire",
                         var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                         $scope.compileTemplate(curPanel, 0);
                     }, 30);
+                }else{
+                    $scope.searchOne = '';
                 }
             })
 
@@ -621,6 +623,7 @@ define("superApp.gridFilterDire",
                 }
                 else {
                     $(gridPanel).find(".grid_filter_panel").each(function (index) {
+                        console.log($(this));
                         $(this).html("");
                     });
                     try {

@@ -544,8 +544,20 @@ define("superApp.gridFilterDire",
                             }, 30);
                         }
                     }
-                }, true);
+                },true);
             }
+
+            // 没有searchOne 就手动emit
+            $scope.$on('searchOneChange', function (event,listStr) {
+                // 如果liststr为空  那就不需要重新编译
+                if(listStr){
+                    $scope.searchOne = listStr;
+                    $timeout(function () {
+                        var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
+                        $scope.compileTemplate(curPanel, 0);
+                    }, 30);
+                }
+            })
 
             // 编译模板
             // Modified:2018年3月23日14:27:40

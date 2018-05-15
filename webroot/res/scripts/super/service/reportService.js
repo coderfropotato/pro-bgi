@@ -913,6 +913,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 $(".colorSelector ul li").on("click", function (ev) {
                     var color = $(this).css('background-color');
                     $(".backDiv").remove();
+                    $("#div_ViewProduct").css("overflow", "auto");
                     fn && fn(color);
 
                     var oEvent = ev || event;
@@ -922,6 +923,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 // document
                 $(document).on('click', function () {
                     $(".backDiv").remove();
+                    $("#div_ViewProduct").css("overflow", "auto");
                 })
             }
 

@@ -623,7 +623,6 @@ define("superApp.gridFilterDire",
                 }
                 else {
                     $(gridPanel).find(".grid_filter_panel").each(function (index) {
-                        console.log($(this));
                         $(this).html("");
                     });
                     try {

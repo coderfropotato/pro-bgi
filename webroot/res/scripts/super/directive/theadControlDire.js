@@ -33,7 +33,8 @@ define("superApp.theadControlDire",
                 controller: "theadControlCtr",
                 scope: {
                     data: "=",
-                    handleTheadChange: "&"
+                    handleTheadChange: "&",
+                    isReset: "="
                 },
                 link: function (scope, element, attrs) {
                     scope.data.forEach(function (val, index) {
@@ -84,9 +85,46 @@ define("superApp.theadControlDire",
                     $scope.nodata = true;
                 }
 
+                // 如果需要reset 就监听 重置完成就把isReset设为默认false
+                if ($scope.isReset != undefined && $scope.isReset != null) {
+                    $scope.$watch('isReset',function (newVal, oldVal) {
+                        if (newVal) {
+                            // 如果是reset
+                            $scope.resetAll();
+                            $timeout(function () {
+                                $scope.isReset = false;
+                            }, 0)
+                        }
+                    })
+                }
+
             }
 
+            // 初始化所有
+            $scope.resetAll = function () {
+                if ($scope.data.length) {
+                    $scope.activeByClick.length = 0;
+                    $scope.allActiveItems.length = 0;
+                    $scope.beforeActiveItems.length = 0;
+                    $scope.cancelByClick.length = 0;
+                    $scope.data.forEach(function (val, index) {
+                        val.list.forEach(function (item, idx) {
+                            item.isActive = false;
+                        });
+                        // 根据length 初始化私有数据
+                        $scope.activeByClick.push([]);
+                        $scope.cancelByClick.push([]);
+                        $scope.allActiveItems.push([]);
+                        $scope.beforeActiveItems.push([]);
+                    });
+                    $scope.nodata = false;
+                } else {
+                    $scope.nodata = true;
+                }
 
+                $scope.remove = false;
+                $scope.show = false;
+            }
 
             // 初始化当前点击选中项数组
             $scope.initActiveByClick = function () {
@@ -138,7 +176,7 @@ define("superApp.theadControlDire",
 
             // 所有按钮的点击事件
             $scope.handlerItemClick = function (item, index) {
-                if($scope.remove) return;
+                if ($scope.remove) return;
                 item.isActive = !item.isActive;
                 if (item.isActive) {
                     $scope.activeByClick[index].push(item);

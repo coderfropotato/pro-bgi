@@ -198,7 +198,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
                             toolService.HideLoading(); //关闭页面等待蒙版
                             toolService.popLoading.close(); //关闭页面等待效果2
-                            toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
+                            // toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
+                            console.error("对不起，服务器无响应，请尝试重新登录并重试！")
                             deferred.reject(data); // 声明执行失败，即服务器返回错误  
                         }
                         catch (e) { }

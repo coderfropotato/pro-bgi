@@ -36,6 +36,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 testTitle: SUPER_CONSOLE_MESSAGE.testTitle,
                 officialTitle: SUPER_CONSOLE_MESSAGE.officialTitle,
                 popBDWindowPath: SUPER_CONSOLE_MESSAGE.popBDWindowPath,
+                staticImgUrl:SUPER_CONSOLE_MESSAGE.staticImgPath
             };
 
 

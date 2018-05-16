@@ -161,7 +161,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     }
                 }
 
-                
+
             };
 
             // 合并多个Ajax的Promise，以解决依赖多个请求的问题，方法接收多个Ajax配置组成的数组
@@ -2002,15 +2002,19 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             * @description 删除表格过滤查询参数 （只适合通过可以新增删除的表头，基础表头不适用）
             * @author joke <277637411@qq.com>
             */
-            this.DeleteFilterFindEntity = function (pageFindEntity, DeleteItems) {
-                DeleteItems.forEach(function (val, index) {
-                    for (var i = 0, len = pageFindEntity.searchContentList.length; i < len; i++) {
-                        if (pageFindEntity.searchContentList[i].filternamezh === val) {
-                            pageFindEntity.searchContentList.splice(i, 1);
-                            break;
+            this.DeleteFilterFindEntity = function (pageFindEntity, text) {
+                for (var i = 0, len = pageFindEntity.searchContentList.length; i < len; i++) {
+                    if (pageFindEntity.searchContentList[i].filternamezh === text) {
+                        // 如果有排序  重置排序
+                        if (pageFindEntity.searchContentList[i].filternamezh === pageFindEntity.sortnamezh) {
+                            pageFindEntity.sortnamezh ='';
+                            pageFindEntity.sortType ='';
+                            pageFindEntity.sortName ='';
                         }
+                        pageFindEntity.searchContentList.splice(i, 1);
+                        break;
                     }
-                });
+                }
 
                 return pageFindEntity;
             };

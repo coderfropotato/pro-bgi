@@ -82,6 +82,9 @@ define("superApp.svgNewExportDire",
                 type = type ? type : "image/png";
                 var $chartDiv = $("#" + chartid);
                 var $chartObj = $chartDiv.find("svg:eq(0)");
+                $chartObj.attr('version','1.1');
+                $chartObj.attr('xmlns','http://www.w3.org/2000/svg');
+
 
                 var svgXml = $chartObj.prop("outerHTML");
 

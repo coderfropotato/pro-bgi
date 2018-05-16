@@ -27,7 +27,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         rad_url: SUPER_CONSOLE_MESSAGE.radApiPath,
                         bsa_url: SUPER_CONSOLE_MESSAGE.bsaApiPath,
                         manger_url: SUPER_CONSOLE_MESSAGE.mangerApiPath,
-                        java_url:SUPER_CONSOLE_MESSAGE.javaApiPath,
+                        java_url: SUPER_CONSOLE_MESSAGE.javaApiPath,
                     },
                 loginUrl: SUPER_CONSOLE_MESSAGE.loginUrl,
                 pathWayPath: SUPER_CONSOLE_MESSAGE.pathWayPath,
@@ -46,16 +46,17 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
         function AjaxS($log, $http, $q, $window, toolService) {
             //执行Ajax方法，执行前先验证token
             this.GetDeferData = function (ajaxConfig) {
+                var globalReToken = false;
+
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行 
                 if (!this.validateWindowToken()) {
                     deferred.reject("NoAuth");
-                    // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                    window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
                 } else {
                     //params
                     var selfAjaxConfig = {
                         method: "POST",
-                        //headers: { "Content-Type": "application/json;charset=UTF-8", "X-Request-With": "null" }
                         headers: { "Content-Type": "application/json;charset=UTF-8" }
                     };
                     angular.extend(selfAjaxConfig, ajaxConfig);
@@ -84,6 +85,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 .error(function (data, status, headers, config) {
                                     try {
                                         if (status == "401") {
+                                            reAccess();
                                             // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                                             deferred.reject("NoAuth");
                                         } else {
@@ -92,6 +94,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                             toolService.HideLoading(); //关闭页面等待蒙版
                                             toolService.popLoading.close(); //关闭页面等待效果2
                                             toolService.pageLoading.close(); //关闭页面等待蒙版
+                                            reAccess();
                                             // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                                         }
                                     }
@@ -100,25 +103,65 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         }
                     }).error(function (data, status, headers, config) {
                         try {
-                            $log.error(data);
                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
                             toolService.HideLoading(); //关闭页面等待蒙版
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
-                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                            // var myPromise = toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！！");
-                            // myPromise.then(function (value) {
-                            //     window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                            //     deferred.reject("NoAuth");
-                            // });
+                        } catch (e) { }
 
-                        }
-                        catch (e) { }
+                        reAccess();
                     });
-
 
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
                 }
+
+                // 重新授权
+                function reAccess() {
+                    if (!globalReToken) {
+                        var password = prompt("Please enter your password", "");
+                        globalReToken = true;
+                        if (password != null && password != "") {
+                            // getToken
+                            $.ajax({
+                                url: options.api.base_url + '/login',
+                                type: 'POST',
+                                data: JSON.stringify({
+                                    'LCID': toolService.sessionStorage.get('LCID'),
+                                    'Password': password
+                                }),
+                                dataType: 'json',
+                                contentType: "application/json; charset=utf-8",
+                                withCredentials: true,
+                                cache: false,
+                                success: function (responseData) {
+                                    globalReToken = false;
+                                    if (responseData.Status === 'success') {
+                                        toolService.sessionStorage.set('token', responseData.Token);
+                                        window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
+                                    } else {
+                                        if (responseData.Status == "Wrong username or password") {
+                                            var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
+                                        } else {
+                                            var myPromise = toolService.popMesgWindow(responseData.Status);
+                                        }
+                                        myPromise.then(function (value) {
+                                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                        });
+                                    }
+                                },
+                                error: function (err) {
+                                    globalReToken = false;
+                                    window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                }
+                            })
+                        } else {
+                            globalReToken = false;
+                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                        }
+                    }
+                }
+
+                
             };
 
             // 合并多个Ajax的Promise，以解决依赖多个请求的问题，方法接收多个Ajax配置组成的数组

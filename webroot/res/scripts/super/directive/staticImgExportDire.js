@@ -38,7 +38,7 @@ define("superApp.staticImgExportDire",
 
                     $dropdownMenu.append(LI_1);
                     $dropdownMenu.append(LI_2);
-                    // $dropdownMenu.append(LI_3);
+                    $dropdownMenu.append(LI_3);
                 }
             };
         };

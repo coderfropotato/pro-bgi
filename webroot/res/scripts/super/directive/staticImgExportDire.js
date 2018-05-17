@@ -35,7 +35,7 @@ define("superApp.staticImgExportDire",
 
                     $dropdownMenu.append(LI_1);
                     $dropdownMenu.append(LI_2);
-                    $dropdownMenu.append(LI_3);
+                    // $dropdownMenu.append(LI_3);
                 }
             };
         };
@@ -66,9 +66,12 @@ define("superApp.staticImgExportDire",
                 type = type ? type : "image/png";
                 var $chartDiv = $("#" + chartid);
                 var $img = $chartDiv.find("img:eq(0)");
-
+                var base64 = $img.attr('src');
                 if (type != "pdf") {
-
+                    var a = document.createElement('a');
+                    a.href= base64;
+                    a.download =  type == "image/png" ?  saveImgName + ".png" : saveImgName + ".jpg";
+                    a.click();
                 } else {
 
                 }

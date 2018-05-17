@@ -3430,7 +3430,11 @@ text-align: center;
     text-align: center;
     margin-bottom: 6px;
 }
-.dataChoose ul li:hover,.dataChoose ul li.active{
+.dataChoose ul li:hover{
+   border: 1px solid rgb(91, 177, 243);
+   color: rgb(91, 177, 243);
+}
+.dataChoose ul li.active{
     background-color: rgb(91, 177, 243);
     color:#ffffff;
 }

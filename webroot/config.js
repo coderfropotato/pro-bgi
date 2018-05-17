@@ -7,7 +7,7 @@
     // var geneInfo_url = "http://180.76.159.174:81/api";
     var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
 
-    var staticImg_url = "http://172.168.1.122:5000/static/";  //静态图片
+    var staticImg_url = "http://192.168.29.204:5000/static/";  //静态图片
 
     var SUPER_CONSOLE_MESSAGE =
         {

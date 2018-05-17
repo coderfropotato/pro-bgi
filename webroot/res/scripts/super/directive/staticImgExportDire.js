@@ -24,6 +24,9 @@ define("superApp.staticImgExportDire",
                     + "<ul class='dropdown-menu'>"
                     + "</ul>"
                     + "</div>",
+                scope: {
+                    pdfExportUrl: "="
+                },
                 controller: "staticImgExportController",
                 link: function (scope, element, attrs) {
                     var $element = $(element);
@@ -69,11 +72,28 @@ define("superApp.staticImgExportDire",
                 var base64 = $img.attr('src');
                 if (type != "pdf") {
                     var a = document.createElement('a');
-                    a.href= base64;
-                    a.download =  type == "image/png" ?  saveImgName + ".png" : saveImgName + ".jpg";
+                    a.href = base64;
+                    a.download = type == "image/png" ? saveImgName + ".png" : saveImgName + ".jpg";
                     a.click();
                 } else {
+                    // pdf
+                    var oReq = new XMLHttpRequest();
+                    var URLToPDF = $scope.pdfExportUrl;
+                    oReq.open("POST", URLToPDF, true);
+                    oReq.responseType = "blob";
 
+                    oReq.onreadystatechange = function () {
+                        if (oReq.readyState === 4) {
+                            if (oReq.status >= 200 && oReq.status < 300 || oReq.status == 304) {
+                                var file = new Blob([oReq.response], {
+                                    type: 'application/pdf'
+                                });
+                                saveAs(file, saveImgName + ".pdf");
+                            }
+                        }
+                    }
+
+                    oReq.send();
                 }
 
             };

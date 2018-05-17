@@ -65,7 +65,7 @@ define("superApp.staticImgExportDire",
             function DownLoadImage(chartid, saveImgName, type) {
                 type = type ? type : "image/png";
                 var $chartDiv = $("#" + chartid);
-                var $img = $chartDiv.find("img:eq(0)");
+                var $img = $chartDiv.find('img:visible').eq(0);
                 var base64 = $img.attr('src');
                 if (type != "pdf") {
                     var a = document.createElement('a');

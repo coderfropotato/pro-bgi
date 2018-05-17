@@ -36,9 +36,10 @@ define("superApp.staticImgExportDire",
                     var LI_2 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'jpg')\" href=\"javascript:;\">导出 JPG 格式图片</a></li>")(scope);
                     var LI_3 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'pdf')\" href=\"javascript:;\">导出 PDF 格式文件</a></li>")(scope);
 
+
                     $dropdownMenu.append(LI_1);
                     $dropdownMenu.append(LI_2);
-                    $dropdownMenu.append(LI_3);
+                    if(scope.pdfExportUrl) $dropdownMenu.append(LI_3);
                 }
             };
         };

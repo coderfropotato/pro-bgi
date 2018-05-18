@@ -36,9 +36,10 @@ define("superApp.staticImgExportDire",
                     var LI_2 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'jpg')\" href=\"javascript:;\">导出 JPG 格式图片</a></li>")(scope);
                     var LI_3 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'pdf')\" href=\"javascript:;\">导出 PDF 格式文件</a></li>")(scope);
 
+
                     $dropdownMenu.append(LI_1);
                     $dropdownMenu.append(LI_2);
-                    // $dropdownMenu.append(LI_3);
+                    if(scope.pdfExportUrl) $dropdownMenu.append(LI_3);
                 }
             };
         };
@@ -65,37 +66,69 @@ define("superApp.staticImgExportDire",
                 }
             };
 
+
+            // img 转 base64
+            function getBase64Image(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+                var dataURL = canvas.toDataURL("image/" + ext);
+                return dataURL;
+            }
+
+            //下载
             function DownLoadImage(chartid, saveImgName, type) {
                 type = type ? type : "image/png";
                 var $chartDiv = $("#" + chartid);
                 var $img = $chartDiv.find('img:visible').eq(0);
-                var base64 = $img.attr('src');
-                if (type != "pdf") {
-                    var a = document.createElement('a');
-                    a.href = base64;
-                    a.download = type == "image/png" ? saveImgName + ".png" : saveImgName + ".jpg";
-                    a.click();
+
+                var img_src = $img.attr('src');
+                var base64 = "";
+
+                if (img_src.indexOf(";base64,") != -1) {
+                    base64 = $img.attr('src');
+                    download();
                 } else {
-                    // pdf
-                    var oReq = new XMLHttpRequest();
-                    var URLToPDF = $scope.pdfExportUrl;
-                    oReq.open("POST", URLToPDF, true);
-                    oReq.responseType = "blob";
-
-                    oReq.onreadystatechange = function () {
-                        if (oReq.readyState === 4) {
-                            if (oReq.status >= 200 && oReq.status < 300 || oReq.status == 304) {
-                                var file = new Blob([oReq.response], {
-                                    type: 'application/pdf'
-                                });
-                                saveAs(file, saveImgName + ".pdf");
-                            }
-                        }
+                    var image = new Image();
+                    image.src = img_src;
+                    image.onload = function () {
+                        base64 = getBase64Image(image);
+                        download();
                     }
-
-                    oReq.send();
                 }
 
+                function download(){
+                    if (type != "pdf") {
+                        var a = document.createElement('a');
+                        a.href = base64;
+                        a.download = type == "image/png" ? saveImgName + ".png" : saveImgName + ".jpg";
+                        a.click();
+                    } else {
+                        // pdf
+                        var oReq = new XMLHttpRequest();
+                        var URLToPDF = $scope.pdfExportUrl;
+                        oReq.open("POST", URLToPDF, true);
+                        oReq.responseType = "blob";
+    
+                        oReq.onreadystatechange = function () {
+                            if (oReq.readyState === 4) {
+                                if (oReq.status >= 200 && oReq.status < 300 || oReq.status == 304) {
+                                    var file = new Blob([oReq.response], {
+                                        type: 'application/pdf'
+                                    });
+                                    saveAs(file, saveImgName + ".pdf");
+                                }
+                            }
+                        }
+    
+                        oReq.send();
+                    }
+                }
+
+                
             };
 
         }

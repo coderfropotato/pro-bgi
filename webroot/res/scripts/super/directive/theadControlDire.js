@@ -10,7 +10,7 @@ define("superApp.theadControlDire",
         function theadControlDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns<span ng-if=\"nodata\">（暂无数据）</span></button>"
+                template: "<div class=\"thead-control-wrap\" ng-if=\"data.length\"><button class=\"btn btn-default btn-silver btn-sm\" ng-click=\"toggleShow()\">AddColumns<span ng-if=\"nodata\">（暂无数据）</span></button>"
                     + "<div ng-show=\"show\"  class=\"thead-control-dire\">"
                     + "<div ng-init=\"initData()\" class=\"thead-lists\"><ol><li ng-if=\"group.list.length\" ng-repeat=\"(index,group) in data\" track by $index>"
                     + "<div class=\"thead-title\"  uib-tooltip=\"{{group.groupName}}\">{{group.groupName}}</div>"
@@ -27,7 +27,7 @@ define("superApp.theadControlDire",
                     + "<button class=\"btn btn-danger\" ng-click=\"clear()\">清除</button>"
                     + "<button class=\"btn btn-default\"  ng-click=\"confirm()\">确定</button>"
                     + "</div>"
-                    + "</div>",
+                    + "</div></div>",
                 replace: false,
                 transclude: true,
                 controller: "theadControlCtr",

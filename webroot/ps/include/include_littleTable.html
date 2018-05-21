@@ -1,0 +1,33 @@
+<div id="{{panelId}}" ng-init="InitPage()" class="tableListPanel">
+    <div class="btn_options_filelist clearfix">
+        <ul class="fLeft">
+            <li>
+                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
+            </li>
+            <li>
+                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetTableData()">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="table_scroll_wrap" ng-hide="error">
+        <div id="{{tablePanelId}}">
+            <table ng-hide="error" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">{{::row[val.true_key]}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

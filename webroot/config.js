@@ -20,6 +20,7 @@
                     onLineReportTopPath: "./../include/include_rnaseqtop.html",
                     onLineReportLeftPath: "./../include/include_rnaseqleft.html",
                     girdFilterPath: "./../include/include_grid_filter.html",
+                    addDeleteTablePath: "./../include/include_addDeleteBigTable.html",
                 },
             javaApiPath: "http://192.168.29.203/bgfxxt",
             messageUrl: "ps/login/message.html",

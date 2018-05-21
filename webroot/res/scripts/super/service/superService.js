@@ -36,7 +36,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 testTitle: SUPER_CONSOLE_MESSAGE.testTitle,
                 officialTitle: SUPER_CONSOLE_MESSAGE.officialTitle,
                 popBDWindowPath: SUPER_CONSOLE_MESSAGE.popBDWindowPath,
-                staticImgUrl:SUPER_CONSOLE_MESSAGE.staticImgPath
+                staticImgUrl: SUPER_CONSOLE_MESSAGE.staticImgPath
             };
 
 
@@ -46,16 +46,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
         AjaxS.$inject = ["$log", "$http", "$q", "$window", "toolService"];
         function AjaxS($log, $http, $q, $window, toolService) {
             //执行Ajax方法，执行前先验证token
+            var globalTokenError = false;
             this.GetDeferData = function (ajaxConfig) {
-                var globalReToken = false;
-
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行 
                 if (!this.validateWindowToken()) {
                     deferred.reject("NoAuth");
                     window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
                 } else {
-                    //params
                     var selfAjaxConfig = {
                         method: "POST",
                         headers: { "Content-Type": "application/json;charset=UTF-8" }
@@ -70,8 +68,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         if (data == "false") {
                             //没有授权了，返回登录窗口
                             window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
-                        }
-                        else {
+                        } else {
                             //重新赋值授权,然后执行政策逻辑
                             $window.sessionStorage.token = data;
                             $http({
@@ -79,37 +76,36 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 url: selfAjaxConfig.url,
                                 data: selfAjaxConfig.data,
                                 headers: selfAjaxConfig.headers
-                            })
-                                .success(function (data, status, headers, config) {
-                                    deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了  
-                                })
-                                .error(function (data, status, headers, config) {
-                                    try {
-                                        if (status == "401") {
-                                            reAccess();
-                                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                                            deferred.reject("NoAuth");
-                                        } else {
-                                            $log.error(data);
-                                            toolService.tableGridLoading.close(); //关闭浏览列表蒙版
-                                            toolService.HideLoading(); //关闭页面等待蒙版
-                                            toolService.popLoading.close(); //关闭页面等待效果2
-                                            toolService.pageLoading.close(); //关闭页面等待蒙版
-                                            reAccess();
-                                            // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
-                                        }
+                            }).success(function (data, status, headers, config) {
+                                deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了  
+                            }).error(function (data, status, headers, config) {
+                                // 内部请求error  直接跳转登陆
+                                try {
+                                    if (status == "401") {
+                                        // reAccess();
+                                        window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                                        deferred.reject("NoAuth");
+                                    } else {
+                                        $log.error(data);
+                                        toolService.tableGridLoading.close(); //关闭浏览列表蒙版
+                                        toolService.HideLoading(); //关闭页面等待蒙版
+                                        toolService.popLoading.close(); //关闭页面等待效果2
+                                        toolService.pageLoading.close(); //关闭页面等待蒙版
+                                        // reAccess();
+                                        window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                                     }
-                                    catch (e) { }
-                                });
+                                }
+                                catch (e) { }
+                            });
                         }
                     }).error(function (data, status, headers, config) {
+                        // token error
                         try {
                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
                             toolService.HideLoading(); //关闭页面等待蒙版
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
                         } catch (e) { }
-
                         reAccess();
                     });
 
@@ -118,9 +114,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
                 // 重新授权
                 function reAccess() {
-                    if (!globalReToken) {
+                    if (!globalTokenError) {
+                        globalTokenError = true;
                         var password = prompt("Please enter your password", "");
-                        globalReToken = true;
                         if (password != null && password != "") {
                             // getToken
                             $.ajax({
@@ -135,7 +131,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 withCredentials: true,
                                 cache: false,
                                 success: function (responseData) {
-                                    globalReToken = false;
                                     if (responseData.Status === 'success') {
                                         toolService.sessionStorage.set('token', responseData.Token);
                                         window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
@@ -145,18 +140,21 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         } else {
                                             var myPromise = toolService.popMesgWindow(responseData.Status);
                                         }
-                                        myPromise.then(function (value) {
+                                        myPromise.then(function () {
+                                            globalTokenError = false;
+                                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                        }, function () {
+                                            globalTokenError = false;
                                             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
                                         });
                                     }
                                 },
                                 error: function (err) {
-                                    globalReToken = false;
+                                    globalTokenError = false;
                                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
                                 }
                             })
                         } else {
-                            globalReToken = false;
                             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
                         }
                     }
@@ -2009,9 +2007,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     if (pageFindEntity.searchContentList[i].filternamezh === text) {
                         // 如果有排序  重置排序
                         if (pageFindEntity.searchContentList[i].filternamezh === pageFindEntity.sortnamezh) {
-                            pageFindEntity.sortnamezh ='';
-                            pageFindEntity.sortType ='';
-                            pageFindEntity.sortName ='';
+                            pageFindEntity.sortnamezh = '';
+                            pageFindEntity.sortType = '';
+                            pageFindEntity.sortName = '';
                         }
                         pageFindEntity.searchContentList.splice(i, 1);
                         break;

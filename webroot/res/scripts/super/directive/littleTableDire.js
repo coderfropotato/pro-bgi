@@ -26,11 +26,11 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     panelId: "=",
                     // 表格面板id
                     tablePanelId: "=",
-
+                    //是否有下拉选择
                     isHasSelectOption: "=",
                     selectOptionList: "=",
                     selectModel: "=",
-
+                    //是否选择精度
                     isHasAccuracy: "=",
                     accuracy: "="
                 },
@@ -48,7 +48,9 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                 if ($scope.isHasSelectOption) {
                     $scope.selectModel = $scope.selectOptionList[0];
                 }
-                $scope.accuracy = -1;
+                if ($scope.isHasAccuracy) {
+                    $scope.accuracy = -1;
+                }
                 $scope.GetTableData();
             }
 

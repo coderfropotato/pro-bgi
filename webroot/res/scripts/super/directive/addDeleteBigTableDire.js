@@ -232,7 +232,7 @@ define("superApp.addDeleteBigTableDire",
                 $scope.pageFindEntity = toolService.SetGridFilterFindEntity($scope.pageFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
                 $scope.pageFindEntity.pageNum = pageNumber;
-                $scope.exportLocationGOAnno = options.api.mrnaseq_url + $scope.url;
+                $scope.exportLocationGOAnno =  $scope.url;
                 var ajaxConfig = {
                     data: $scope.pageFindEntity,
                     url: $scope.exportLocationGOAnno,

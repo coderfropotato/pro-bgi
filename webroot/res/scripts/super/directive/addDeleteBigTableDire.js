@@ -34,7 +34,7 @@ define("superApp.addDeleteBigTableDire",
                 scope: {
                     // 获取数据的查询参数
                     pageEntity: "=",
-                    // 获取数据url  /GeneID/GeneExpression_FPKM
+                    // 获取数据url 
                     url: "=",
                     // 父级容器id
                     contentId: "=",

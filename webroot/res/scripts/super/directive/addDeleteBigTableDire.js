@@ -365,7 +365,7 @@ define("superApp.addDeleteBigTableDire",
                 if (!$scope.bigTableData.rows[index].isChecked) {
                     $scope.geneUnselectList[$scope.bigTableData.rows[index][$scope.geneid['true_key']]] = $scope.bigTableData.rows[index][$scope.geneid['true_key']];
                     // animation
-                    var $targetOffset = $("#unselect_gene_expression_1_1").offset();
+                    var $targetOffset = $("#"+$scope.unselectGenePanelId).offset();
                     var x1 = event.pageX;
                     var y1 = event.pageY;
                     var x2 = $targetOffset.left + 110;

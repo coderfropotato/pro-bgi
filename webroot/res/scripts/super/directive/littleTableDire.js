@@ -26,10 +26,11 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     panelId: "=",
                     // 表格面板id
                     tablePanelId: "=",
-                    //是否有下拉选择
-                    isHasSelectOption: "=",
-                    selectOptionList: "=",
-                    selectModel: "=",
+                    //下拉选择
+                    isHasSelectOption: "=", //是否有下拉选择
+                    selectList: "=", // 下拉数据list
+                    entityKey: "=", //pageEntity中的key(sample)。如：pageEntity : {sample:"sssss1"}
+                    key: "=", // selectList：[{key:"sample111"}]中的key；若selectList：["ssss","aaa"]没有key，不传
                     //是否选择精度
                     isHasAccuracy: "=",
                     accuracy: "="
@@ -46,7 +47,11 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
         function littleTableCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.InitPage = function() {
                 if ($scope.isHasSelectOption) {
-                    $scope.selectModel = $scope.selectOptionList[0];
+                    if ($scope.key) {
+                        $scope.pageEntity[entityKey] = $scope.selectList[0][$scope.key];
+                    } else {
+                        $scope.pageEntity[entityKey] = $scope.selectList[0];
+                    }
                 }
                 if ($scope.isHasAccuracy) {
                     $scope.accuracy = -1;

@@ -15,10 +15,15 @@ define("superApp.littleTableDire",
                 restrict: "ACE",
                 templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.littleTablePath,
                 scope: {
+                    // 表格数据查询参数
                     pageEntity: "=",
+                    // api url
                     url: "=",
+                    // 表格保存名称
                     tableDownloadName: "=",
+                    // 父级面板id
                     panelId: "=",
+                    // 表格面板id
                     tablePanelId: "=",
                 },
                 replace: false,

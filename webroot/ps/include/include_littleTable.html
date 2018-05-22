@@ -1,6 +1,29 @@
 <div id="{{panelId}}" ng-init="InitPage()" class="tableListPanel">
     <div class="btn_options_filelist clearfix">
         <ul class="fLeft">
+            <li ng-show="isHasSelectOption">
+                <div class="selector_area">
+                    <select class="super-select" style="width: 200px" ng-model="pageEntity[entityKey]" ng-change="GetTableData()">
+                        <option value="{{key?item[key]:item}}" ng-repeat="item in selectList track by $index">{{key?item[key]:item}}</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+        <ul class="fRight">
+            <li ng-show="isHasAccuracy">
+                <div class="selector_normal" style="width: 120px;">
+                    <select super-select ng-model="accuracy" class="form-control" is-search="false">
+                        <option value=1>精度:1位小数</option>
+                        <option value=2>精度:2位小数</option>
+                        <option value=3>精度:3位小数</option>
+                        <option value=4>精度:4位小数</option>
+                        <option value=5>精度:5位小数</option>
+                        <option value=6>精度:6位小数</option>
+                        <option value=7>精度:7位小数</option>
+                        <option value=-1>精度:全数据</option>
+                    </select>
+                </div>
+            </li>
             <li>
                 <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
             </li>
@@ -23,7 +46,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in tableData.rows track by $index">
-                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">{{::row[val.true_key]}}
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">{{(val.searchType==='string' && !isHasAccuracy)?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
                         </td>
                     </tr>
                 </tbody>

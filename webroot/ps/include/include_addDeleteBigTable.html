@@ -1,5 +1,5 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
-    <div class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
+    <div ng-if="isShowTheadControl" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
     <div class="tableListPanel" id="{{contentId}}">
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">

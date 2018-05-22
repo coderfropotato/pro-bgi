@@ -46,6 +46,8 @@ define("superApp.addDeleteBigTableDire",
                     tableDownloadName: "=",
                     // 选择的基因集
                     geneList: "=",
+                    // 是否需要增删列
+                    isShowTheadControl: "=",
                     // 基因集改变的标志
                     geneListChangeFlag: "=",
                     // 是否需要重置增删列指令的默认状态 不需要给null 需要默认false 需要重置的时候传true
@@ -74,6 +76,8 @@ define("superApp.addDeleteBigTableDire",
                 $scope.pageFindEntity = $scope.pageEntity;
                 // 精度默认 全数据
                 $scope.accuracy = -1;
+                // 是否显示增删列
+                $scope.isShowTheadControl = $scope.isShowTheadControl !== false;
                 // 获取增删列dire数据
                 $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
                 // 获取表格数据
@@ -131,7 +135,7 @@ define("superApp.addDeleteBigTableDire",
                 // 重置基因列表
                 $scope.geneUnselectList = '';
                 // 拼接GeneID
-                searchOne = geneList.split('\n');
+                searchOne = geneList.join('\n');
                 // 如果没有点击筛选按钮 就点击
                 if (!$('#' + $scope.contentId + ' .grid-filter-begin > button').hasClass('active')) {
                     $timeout(function () {
@@ -232,7 +236,7 @@ define("superApp.addDeleteBigTableDire",
                 $scope.pageFindEntity = toolService.SetGridFilterFindEntity($scope.pageFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
                 $scope.pageFindEntity.pageNum = pageNumber;
-                $scope.exportLocationGOAnno =  $scope.url;
+                $scope.exportLocationGOAnno = $scope.url;
                 var ajaxConfig = {
                     data: $scope.pageFindEntity,
                     url: $scope.exportLocationGOAnno,
@@ -365,7 +369,7 @@ define("superApp.addDeleteBigTableDire",
                 if (!$scope.bigTableData.rows[index].isChecked) {
                     $scope.geneUnselectList[$scope.bigTableData.rows[index][$scope.geneid['true_key']]] = $scope.bigTableData.rows[index][$scope.geneid['true_key']];
                     // animation
-                    var $targetOffset = $("#"+$scope.unselectGenePanelId).offset();
+                    var $targetOffset = $("#" + $scope.unselectGenePanelId).offset();
                     var x1 = event.pageX;
                     var y1 = event.pageY;
                     var x2 = $targetOffset.left + 110;
@@ -400,6 +404,7 @@ define("superApp.addDeleteBigTableDire",
             // 筛选状态改变
             $scope.handlerFilterStatusChange = function (status) {
                 $scope.isBeginFilter = status;
+                console.log(status)
                 if (!$scope.isBeginFilter) $scope.geneidCustomSearchOne = '';
             }
 

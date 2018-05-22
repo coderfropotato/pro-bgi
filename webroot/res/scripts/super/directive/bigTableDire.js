@@ -13,7 +13,7 @@ define("superApp.bigTableDire",
         function bigTableDirective($log) {
             return {
                 restrict: "ACE",
-                templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.littleTablePath,
+                templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.bigTablePath,
                 scope: {
                     // 表格数据查询参数
                     pageEntity: "=",
@@ -32,7 +32,7 @@ define("superApp.bigTableDire",
                     // 下拉框数据key {name:key,value:"23"} key=>name
                     key: "=",
                     // 下拉框model 在pagefindEntity中的key
-                    dataKey: "=",
+                    paramsKey: "=",
                     // 是否显示精度
                     showAccuracy: "="
                 },

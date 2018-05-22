@@ -94,6 +94,8 @@ define("superApp.addDeleteBigTableDire",
                                     angular.element($('#' + $scope.contentId + ' .grid-filter-begin > button')).triggerHandler('click');
                                     $timeout(function () {
                                         $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                                        // 重置状态 触发下次watch
+                                        $scope.isResetTableStatus = false;
                                     }, 30)
                                 }, 0);
                             }

@@ -144,8 +144,10 @@
                         </thead>
                         <tbody ng-hide="error">
                             <tr ng-class="{'unChecked':!row.isChecked}" ng-repeat="row in bigTableData.rows track by $index">
-                                <td class="center" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in bigTableData.baseThead track by $index" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}
-                                </td>
+                                <td class="center" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in bigTableData.baseThead track by $index" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}">
+                                        <span ng-if="row[val.true_key]">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}</span>
+                                        <span ng-if="!row[val.true_key]">-</span>
+                                    </td>
                                 <!-- <td>
                                             <a href="javascript:void(0);" ng-click="showGeneInfo(row.GeneID)">{{row.GeneID}}</a>
                                         </td>

@@ -87,7 +87,7 @@ define("superApp.theadControlDire",
 
                 // 如果需要reset 就监听 重置完成就把isReset设为默认false
                 if ($scope.isReset != undefined && $scope.isReset != null) {
-                    $scope.$watch('isReset',function (newVal, oldVal) {
+                    $scope.$watch('isReset', function (newVal, oldVal) {
                         if (newVal) {
                             // 如果是reset
                             $scope.resetAll();
@@ -456,7 +456,7 @@ define("superApp.theadControlDire",
                 }
 
                 childLengthCollection.forEach(function (val, index) {
-                    $scope.data[index].showMore = val > ($scope.width - 5)
+                    if ($scope.data[index]) $scope.data[index].showMore = val > ($scope.width - 5)
                 });
                 $scope.$apply();
             }

@@ -1,0 +1,87 @@
+<div id="{{contentId}}" ng-init="InitPage()">
+    <div class="bs-examples">
+        <div class="graph_group" id="{{panelId}}">
+            <div class="graph_header">
+                <ul class="fLeft">
+                    <li>
+                        <div class="graph-view-btn" parentid="{{panelId}}" charpanelid="{{chartId}}" is-table="true" is-table-show="isTableShow"
+                            btn-one-callback="drawchart({data:chartData})" btn-two-callback=""></div>
+                    </li>
+                    <li ng-if="showSelect && selectList.length">
+                        <div class="selector_area">
+                            <select class="super-select" style="width: 200px" ng-model="pageEntity[paramsKey]" ng-change="GetTableData()">
+                                <option value="{{key?item[key]:item}}" ng-repeat="item in selectList track by $index">{{key?item[key]:item}}</option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="fRight">
+                    <!-- 精度 -->
+                    <li ng-show="isTableShow && showAccuracy">
+                        <div class="selector_normal" style="width: 120px;">
+                            <select super-select ng-model="accuracy" class="form-control" is-search="false">
+                                <option value=1>精度:1位小数</option>
+                                <option value=2>精度:2位小数</option>
+                                <option value=3>精度:3位小数</option>
+                                <option value=4>精度:4位小数</option>
+                                <option value=5>精度:5位小数</option>
+                                <option value=6>精度:6位小数</option>
+                                <option value=7>精度:7位小数</option>
+                                <option value=-1>精度:全数据</option>
+                            </select>
+                        </div>
+                    </li>
+                    <!-- 刷新 -->
+                    <li>
+                        <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetTableData()">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                    </li>
+                    <!-- 表格导出 -->
+                    <li ng-show="isTableShow">
+                        <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
+                    </li>
+                    <!-- 图片导出 -->
+                    <li ng-show="!isTableShow">
+                        <div ng-hide="error" class="svg-new-export" chartid="{{chartId}}" saveimgname="{{chartDownloadName}}"></div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- table -->
+            <div class="tab-switch-excel" ng-show="isTableShow">
+                <!-- <div class="tableListPanel"> -->
+                <div class="table_scroll_wrap">
+                    <table ng-hide="error" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px; text-align: center;">NO.</th>
+                                <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in tableData.rows track by $index">
+                                <td class="center">{{::($index+1)}}</td>
+                                <td class="center" title="{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}"
+                                    ng-repeat="val in tableData.baseThead track by $index">{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] |
+                                    accuracyFilter: accuracy)}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-nodata" error-type="error"></div>
+                </div>
+                <!-- </div> -->
+            </div>
+            <!-- chart -->
+            <div class="tab-switch-chart" ng-hide="isTableShow">
+                <div class="chart_wrap" ng-hide="error">
+                    <div class="chart_graph" id="{{chartId}}"></div>
+                </div>
+                <div class="table-nodata" error-type="error"></div>
+            </div>
+        </div>
+    </div>
+</div>

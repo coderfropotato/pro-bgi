@@ -97,9 +97,9 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 }
             }
 
-            $(".colors_select").on("click", function(evt) {
-                clearEventBubble(evt);
-            })
+            // $(".colors_select").on("click", function(evt) {
+            //     clearEventBubble(evt);
+            // })
 
             //阻止冒泡
             function clearEventBubble(evt) {

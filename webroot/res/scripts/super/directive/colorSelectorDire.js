@@ -33,7 +33,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 restrict: "ACE",
                 replace: true,
                 template: "<div ng-show=\"isShow\" class='colors_select'>" +
-                    "<div class='colors colorInput'><input type='text' class='form-control' placeholder='请输入16进制颜色值' /><button class='btn btn-default btn-silver btn-sm'>确定</button></div>" +
+                    // "<div class='colors colorInput'><input type='text' class='form-control' placeholder='请输入16进制颜色值' /><button class='btn btn-default btn-silver btn-sm'>确定</button></div>" +
                     "<div class='colors color_list'>" +
                     "<ul>" +
                     "<li ng-repeat='color in colorList track by $index' ng-click='SetColor($event,color)' style='background-color:{{color}}'></li>" +

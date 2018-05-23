@@ -82,8 +82,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 // 内部请求error  直接跳转登陆
                                 try {
                                     if (status == "401") {
-                                        // reAccess();
-                                        window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                                        reAccess();
+                                        // window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
                                         deferred.reject("NoAuth");
                                     } else {
                                         $log.error(data);
@@ -2307,6 +2307,19 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         height: 350,
                         closeByDocument: false
                     })
+                }
+            }
+
+            /**
+             * 打开重新授权窗口
+             */
+            this.reaccessPop = {
+                open: function () {
+                    return ngDialog.openConfirm({
+                        title:"重新授权提示",
+                        closeByDocument: false,
+                        template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
+                    });
                 }
             }
         };

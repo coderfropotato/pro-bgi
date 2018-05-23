@@ -470,6 +470,25 @@ define("superApp.gridFilterDire",
         ** 调用方法：<div class="grid-filter-begin" tableid="table_cyjy" callback="GetDiffList(arg1)" callbackname="GetDiffList"></div>
         ** 参数：tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体     callbackname：回调方法名
         ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
+        **
+        **
+        **
+        **Update:2018年5月23日15:55:46
+        **
+        ** tips:如果涉及到的searchOne比较大 建议用自定义事件传参:见用法3
+        ** targetController   <div class="grid-filter-begin" tableid... event-name="eventName"></div> 
+        ** directiveController $scope.$on($scope.eventName,function(event,params){console.log(params)})
+        **
+        **用法（基础）1
+        **<div class="grid-filter-begin"  tableid="table_jybdl" callback="InitFindEntity(arg1)" parentid="panel_jybdl"></div>
+        **
+        **用法2:根据geneidtruekey(需要从指令外部触发筛选的表头true_key) 目前只改变搜索条件的searchOne searchType
+        **<div class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)" parentid="{{contentId}}" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" search-one="geneidCustomSearchOne" filter-status-callback="handlerFilterStatusChange(status)"></div>
+        ** 如果searchOne默认undefined或者null 运行逻辑跟基础用法一样
+        **
+        **用法3:在2的基础上优化searchOne过大的情况,用自定义事件来传递searchOne
+        **<div class="grid-filter-begin" event-name="eventName" tablehead="bigTableData.baseThead" tableid="gene-annotation001001-2_bigTable" callback="InitFindEntity1(arg1)" parentid="panel_gene-annotation001001-2_table" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" filter-status-callback="handlerFilterStatusChange(status)"></div>
+        ** 默认传了eventName 自定义事件的参数 用来改变指令内部searchOne的值
         */
         superApp.directive('gridFilterBegin', gridFilterBegin);
         gridFilterBegin.$inject = ["$log"];
@@ -483,6 +502,7 @@ define("superApp.gridFilterDire",
                     searchType: "=",
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
                     geneidtruekey: "=",
+                    eventName:"=",             // 手动接受改变的searchOne的自定义事件名
                     filterStatusCallback: "&"        // 是否筛选中，定义外部布局样式
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
@@ -533,7 +553,7 @@ define("superApp.gridFilterDire",
                 }, 30)
             }, true);
 
-            // watch searchOne
+            // watch searchOne default ''
             if ($scope.searchOne != undefined && $scope.searchOne != null) {
                 $scope.$watch('searchOne', function (newVal, oldVal) {
                     if (!angular.equals(newVal, oldVal)) {
@@ -544,22 +564,24 @@ define("superApp.gridFilterDire",
                             }, 30);
                         }
                     }
-                },true);
+                }, true);
             }
 
-            // 没有searchOne 就手动emit
-            $scope.$on('searchOneChange', function (event,listStr) {
-                // 如果liststr为空  那就不需要重新编译
-                if(listStr){
-                    $scope.searchOne = listStr;
-                    $timeout(function () {
-                        var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
-                        $scope.compileTemplate(curPanel, 0);
-                    }, 30);
-                }else{
-                    $scope.searchOne = '';
-                }
-            })
+            // 没有searchOne 就手动emit  eventName限制
+            if ($scope.eventName != undefined && $scope.eventName != null) {
+                $scope.$on($scope.eventName, function (event, listStr) {
+                    // 如果liststr为空  那就不需要重新编译
+                    if (listStr) {
+                        $scope.searchOne = listStr;
+                        $timeout(function () {
+                            var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
+                            $scope.compileTemplate(curPanel, 0);
+                        }, 30);
+                    } else {
+                        $scope.searchOne = '';
+                    }
+                })
+            }
 
             // 编译模板
             // Modified:2018年3月23日14:27:40

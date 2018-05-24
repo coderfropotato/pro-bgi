@@ -97,7 +97,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             function handlerResize() {
                 clearTimeout(timer);
                 timer = setTimeout(function () {
-                    $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * 0.9)
+                    if($scope.chart) $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * 0.9)
                 }, 100)
             }
         }

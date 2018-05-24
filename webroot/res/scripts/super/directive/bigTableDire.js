@@ -34,7 +34,9 @@ define("superApp.bigTableDire",
                     // 下拉框model 在pagefindEntity中的key
                     paramsKey: "=",
                     // 是否显示精度
-                    showAccuracy: "="
+                    showAccuracy: "=",
+                    // 外部更新触发 不需要外部更新null 需要默认传false
+                    outerUpdate: "="
                 },
                 replace: false,
                 transclude: true,
@@ -43,8 +45,8 @@ define("superApp.bigTableDire",
         }
 
         superApp.controller("bigTableCtr", bigTableCtr);
-        bigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window","$timeout", "ajaxService", "toolService", "reportService"];
-        function bigTableCtr($rootScope, $scope, $log, $state, $window, $timeout,ajaxService, toolService, reportService) {
+        bigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+        function bigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             $scope.InitPage = function () {
                 // 是否在筛选
                 $scope.isBeginFilter = false;
@@ -107,6 +109,19 @@ define("superApp.bigTableDire",
             // 筛选状态改变
             $scope.handlerFilterStatusChange = function (status) {
                 $scope.isBeginFilter = status;
+            }
+
+
+            // 是否外部触发更新
+            if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
+                $scope.$watch('outerUpdate', function (newVal, oldVal) {
+                    if (newVal) {
+                        $scope.GetTableData(1);
+                        $timeout(function () {
+                            $scope.outerUpdate = false;
+                        }, 30)
+                    }
+                })
             }
         }
     });

@@ -90,15 +90,15 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 });
             }
 
-            // redraw
-            var timer = null;
-            window.removeEventListener('resize', handlerResize);
-            window.addEventListener('resize', handlerResize, false)
-            function handlerResize() {
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    if($scope.chart) $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * 0.9)
-                }, 100)
-            }
+            // // redraw
+            // var timer = null;
+            // window.removeEventListener('resize', handlerResize);
+            // window.addEventListener('resize', handlerResize, false)
+            // function handlerResize() {
+            //     clearTimeout(timer);
+            //     timer = setTimeout(function () {
+            //         if($scope.chart) $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * 0.9)
+            //     }, 100)
+            // }
         }
     })

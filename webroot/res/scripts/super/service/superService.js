@@ -2360,6 +2360,18 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     return ngDialog.openConfirm({
                         title: "重新授权提示",
                         closeByDocument: false,
+                        controller: ['$scope', function ($scope) {
+                            $scope.password = '';
+
+                            $scope.handlercloseThisDialog = function () {
+                                $scope.closeThisDialog(0);
+                            }
+
+                            $scope.handlerconfirm = function () {
+                                $scope.confirm($scope.password);
+                                $scope.password = '';
+                            }
+                        }],
                         template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
                     });
                 }

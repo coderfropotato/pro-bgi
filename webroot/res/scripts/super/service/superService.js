@@ -116,9 +116,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 function reAccess() {
                     if (!globalTokenError) {
                         globalTokenError = true;
-                        var password = prompt("Please enter your password", "");
-                        if (password != null && password != "") {
-                            // getToken
+                        var dialog = toolService.reaccessPop.open();
+                        dialog.then(function (password) {
                             $.ajax({
                                 url: options.api.base_url + '/login',
                                 type: 'POST',
@@ -154,9 +153,52 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
                                 }
                             })
-                        } else {
+                        }, function (close) {
+                            globalTokenError = false;
                             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
-                        }
+                        })
+
+                        // var password = prompt("Please enter your password", "");
+                        // if (password != null && password != "") {
+                        //     // getToken
+                        //     $.ajax({
+                        //         url: options.api.base_url + '/login',
+                        //         type: 'POST',
+                        //         data: JSON.stringify({
+                        //             'LCID': toolService.sessionStorage.get('LCID'),
+                        //             'Password': password
+                        //         }),
+                        //         dataType: 'json',
+                        //         contentType: "application/json; charset=utf-8",
+                        //         withCredentials: true,
+                        //         cache: false,
+                        //         success: function (responseData) {
+                        //             if (responseData.Status === 'success') {
+                        //                 toolService.sessionStorage.set('token', responseData.Token);
+                        //                 window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
+                        //             } else {
+                        //                 if (responseData.Status == "Wrong username or password") {
+                        //                     var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
+                        //                 } else {
+                        //                     var myPromise = toolService.popMesgWindow(responseData.Status);
+                        //                 }
+                        //                 myPromise.then(function () {
+                        //                     globalTokenError = false;
+                        //                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                        //                 }, function () {
+                        //                     globalTokenError = false;
+                        //                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                        //                 });
+                        //             }
+                        //         },
+                        //         error: function (err) {
+                        //             globalTokenError = false;
+                        //             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                        //         }
+                        //     })
+                        // } else {
+                        //     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                        // }
                     }
                 }
 
@@ -2316,7 +2358,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             this.reaccessPop = {
                 open: function () {
                     return ngDialog.openConfirm({
-                        title:"重新授权提示",
+                        title: "重新授权提示",
                         closeByDocument: false,
                         template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
                     });

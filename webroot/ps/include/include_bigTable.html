@@ -20,7 +20,7 @@
                 </div>
             </li>
         </ul>
-        <ul class="fRight" ng-if="showAccuracy">
+        <ul class="fRight" ng-show="showAccuracy">
             <li>
                 <div class="selector_normal" style="width: 120px;">
                     <select super-select ng-model="accuracy" class="form-control" is-search="false">
@@ -71,9 +71,8 @@
                     </thead>
                     <tbody ng-hide="error">
                         <tr ng-repeat="row in tableData.rows track by $index">
-                            <!-- 不需要调整精度的数据 -->
                             <td class="center">{{$index+1}}</td>
-                            <td class="center" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}}"
+                            <td class="center" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}"
                                 ng-repeat="val in tableData.baseThead track by $index">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
                             </td>
                         </tr>

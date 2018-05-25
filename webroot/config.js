@@ -2,6 +2,7 @@
     // var base_url = "http://47.97.11.16:5002/api/1";  //正式
     var base_url = "http://192.168.29.198:5000/api/1"; //远程
     // var base_url = "http://192.168.0.112:5002/api/1"; //开发
+    // var base_url = "http://192.168.0.142:5002/api/1"; //开发
     //  var base_url = "http://172.168.1.115:5006/api/1";   //测试
     var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
         // var geneInfo_url = "http://180.76.159.174:81/api";
@@ -23,6 +24,8 @@
                     bigTablePath: "./../include/include_bigTable.html",
                     littleTablePath: "./../include/include_littleTable.html",
                     addDeleteTablePath: "./../include/include_addDeleteBigTable.html",
+                    tableSwitchChartPath: "./../include/include_tableSwitchChart.html",
+                    reAccessPopPath:"./../include/reaccessTemplate.html"
                 },
             javaApiPath: "http://192.168.29.203/bgfxxt",
             messageUrl: "ps/login/message.html",

@@ -9,7 +9,7 @@
                     <span class="glyphicon glyphicon-refresh"></span>
                 </button>
             </li>
-            <li>
+            <li ng-show="!error">
                 <div class="grid-filter-begin" tableid="{{tablePanelId}}" callback="InitFindEntity(arg1)" parentid="{{panelId}}" filter-status-callback="handlerFilterStatusChange(status)"></div>
             </li>
             <li ng-if="showSelect">
@@ -72,8 +72,10 @@
                     <tbody ng-hide="error">
                         <tr ng-repeat="row in tableData.rows track by $index">
                             <td class="center">{{$index+1}}</td>
-                            <td class="center" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}"
-                                ng-repeat="val in tableData.baseThead track by $index">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
+                            <td class="center nowrap" title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}"
+                                ng-repeat="val in tableData.baseThead track by $index">
+                                <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
@@ -82,7 +84,6 @@
             <!-- error box -->
             <div class="table-nodata" error-type="error"></div>
         </div>
-        {{error}}
     </div>
     <!-- table bottom -->
     <div class="table-bottom" style="position:relative;">

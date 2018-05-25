@@ -9,7 +9,7 @@
                     </li>
                     <li ng-if="showSelect && selectList.length">
                         <div class="selector_area">
-                            <select class="super-select" style="width: 200px" ng-model="pageEntity[paramsKey]" ng-change="GetTableData()">
+                            <select class="super-select" style="width: 200px" ng-model="pageEntity[paramsKey]" ng-change="handlerSelectChange()">
                                 <option value="{{key?item[key]:item}}" ng-repeat="item in selectList track by $index">{{key?item[key]:item}}</option>
                             </select>
                         </div>
@@ -56,7 +56,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 60px; text-align: center;">NO.</th>
-                                <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <th ng-style="{width:(item.name.length*10+40)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                                 </th>
                             </tr>
@@ -64,10 +64,11 @@
                         <tbody>
                             <tr ng-repeat="row in tableData.rows track by $index">
                                 <td class="center">{{::($index+1)}}</td>
-                                <td class="center" title="{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}"
-                                    ng-repeat="val in tableData.baseThead track by $index">{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] |
-                                    accuracyFilter: accuracy)}}
-                                </td>
+                                <td class="center nowrap" title="{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}"
+                                    ng-repeat="val in tableData.baseThead track by $index">
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                                    </td>
                             </tr>
                         </tbody>
                     </table>

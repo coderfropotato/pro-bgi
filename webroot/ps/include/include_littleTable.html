@@ -46,8 +46,9 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in tableData.rows track by $index">
-                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">{{(val.searchType==='string' && !isHasAccuracy)?row[val.true_key]:(row[val.true_key] | accuracyFilter:
-                            accuracy)}}
+                        <td class="center nowrap" ng-repeat="val in tableData.baseThead track by $index">
+                                <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                         </td>
                     </tr>
                 </tbody>

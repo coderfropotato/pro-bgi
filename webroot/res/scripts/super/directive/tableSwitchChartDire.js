@@ -44,7 +44,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 表格下载名称
                     tableDownloadName: "=",
                     // 图下载名称
-                    chartDownloadName: "="
+                    chartDownloadName: "=",
+                    // 下拉选择回调
+                    selectChangeCallback: "&"
                 },
                 replace: false,
                 transclude: true,
@@ -88,6 +90,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
+            }
+
+            $scope.handlerSelectChange = function () {
+                $scope.GetTableData(1);
+                $scope.selectChangeCallback && $scope.selectChangeCallback({ arg: $scope.pageEntity[$scope.paramsKey] })
             }
 
             // // redraw

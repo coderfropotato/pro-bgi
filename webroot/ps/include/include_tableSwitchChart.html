@@ -17,7 +17,7 @@
                 </ul>
                 <ul class="fRight">
                     <li ng-show="!isTableShow && isSelectChartData">
-                        <div ng-if="chart" ng-hide="error" class="chart-select" chart-obje="chart" select-change="onSelect(arg)"></div>
+                        <div ng-if="chart && !error"  class="chart-select" chart-obje="chart" select-change="onSelect(arg)"></div>
                     </li>
                     <!-- 精度 -->
                     <li ng-show="isTableShow && showAccuracy">

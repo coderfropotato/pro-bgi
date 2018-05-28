@@ -6,9 +6,8 @@
 
 */
 
-define("superApp.chartSetDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.chartSetDire", []);
 
         /*
@@ -20,6 +19,7 @@ define("superApp.chartSetDire",
         */
         superApp.directive('chartSet', chartSetDirective);
         chartSetDirective.$inject = ["$log"];
+
         function chartSetDirective($log) {
             return {
                 restrict: "ACE",
@@ -29,27 +29,28 @@ define("superApp.chartSetDire",
                     " <span class='glyphicon glyphicon-cog'></span>" +
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
-                    "<p><span>是否显示图中文字：</span></p>" +
+                    "<p><span>{{setTitle}}：</span></p>" +
                     "<div class='onoffswitch' ng-click='showHideValue()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
                     "</div>" +
                     "</div>",
                 scope: {
                     isShow: "=",
                     isShowValue: "=",
+                    setTitle: "@",
                     getSetOption: "&"
                 },
-                link: function (scope, element, attrs) {
-                },
+                link: function(scope, element, attrs) {},
                 controller: "chartSetCtr"
             }
         }
 
         superApp.controller("chartSetCtr", chartSetCtr);
         chartSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+
         function chartSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.isShow = false;
 
-            $scope.showHideValue = function () {
+            $scope.showHideValue = function() {
                 $scope.isShowValue = !$scope.isShowValue;
                 $scope.isShow = false;
                 $scope.getSetOption({ set: $scope.isShowValue })
@@ -57,4 +58,3 @@ define("superApp.chartSetDire",
 
         }
     });
-

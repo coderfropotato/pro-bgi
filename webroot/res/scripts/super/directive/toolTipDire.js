@@ -506,7 +506,7 @@ define("superApp.toolTipDire",
         }
 
 
-        
+
         // pop over
         superApp.directive('popoverTable', popoverTable);
         popoverTable.$inject = ["$log"];
@@ -518,10 +518,11 @@ define("superApp.toolTipDire",
                     theadKey: "="
                 },
                 link: function (scope, element, attrs) {
-                    if ((!scope.myTitle && scope.myTitle != 0) || typeof scope.myTitle != 'string') {
-                        return;
-                    }
-                    if (/GO|KEGG/g.test(scope.theadKey)) {
+                    if (scope.myTitle || scope.myTitle == 0) {
+                        // if ((!scope.myTitle && scope.myTitle != 0) || typeof scope.myTitle != 'string') {
+                        //     return;
+                        // }
+                        // if (/go|kegg|nr|annotation|evalue/gi.test(scope.theadKey)) {
                         var timer = null;
                         var obj = null;
 
@@ -533,10 +534,16 @@ define("superApp.toolTipDire",
                             topPos = $(element).offset().top;
 
 
-                            obj = $('<div class="tooltip ' + direc + ' poptip" style="width:200px; overflow:scroll;left:' + leftPos + 'px; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + scope.myTitle + '</div></div>');
+                            obj = $('<div class="tooltip ' + direc + ' poptip" style="width:200px;word-wrap:break-word;left:' + leftPos + 'px; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + scope.myTitle + '</div></div>');
 
                             $('body').append(obj);
 
+                            // 判断极值
+                            if(obj.width()>($(element).offset().left)){
+                                obj.removeClass('left').addClass('right');
+                                obj.css('left',$(element).offset().left+$(element).outerWidth())
+                            }
+                            
                             obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
 
@@ -549,8 +556,9 @@ define("superApp.toolTipDire",
                             if (timer) clearTimeout(timer);
                             timer = setTimeout(function () {
                                 obj.remove();
-                            }, 30)
+                            }, 50)
                         })
+                        // }
                     }
                 }
             }

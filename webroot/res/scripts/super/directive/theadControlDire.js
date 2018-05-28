@@ -34,14 +34,14 @@ define("superApp.theadControlDire",
                 scope: {
                     data: "=",
                     handleTheadChange: "&",
-                    isReset: "="
+                    isReset: "=",
+                    parentId:"@"
                 },
                 link: function (scope, element, attrs) {
                     scope.data.forEach(function (val, index) {
                         val.showMore = false;
                         val.isShowMore = false;
                     });
-
                     // 每一个标签的marginright
                     scope.mr = 12;
                 }
@@ -169,7 +169,7 @@ define("superApp.theadControlDire",
                         // 显示面板的时候计算dom
                         $timeout(function () {
                             $scope.computedDOM();
-                        }, 30)
+                        }, 50)
                     }
                 }
             }
@@ -442,8 +442,8 @@ define("superApp.theadControlDire",
             }
             // 计算dom 是否显示更多
             $scope.computedDOM = function () {
-                $scope.width = $('.thead-control-dire ul').eq(0).width();
-                var aUl = $('.thead-control-dire ul');
+                $scope.width = $('#'+$scope.parentId+' .thead-control-dire ul').eq(0).width();
+                var aUl = $('#'+$scope.parentId+' .thead-control-dire ul');
                 var childLengthCollection = [];
                 for (var i = 0, len = aUl.length; i < len; i++) {
                     var child = aUl.eq(i).children('li');
@@ -456,7 +456,9 @@ define("superApp.theadControlDire",
                 }
 
                 childLengthCollection.forEach(function (val, index) {
-                    if ($scope.data[index]) $scope.data[index].showMore = val > ($scope.width - 5)
+                    if ($scope.data[index]){
+                        $scope.data[index].showMore = val > ($scope.width - 5)
+                    }
                 });
                 $scope.$apply();
             }

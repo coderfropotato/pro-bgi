@@ -11,7 +11,7 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
         function chartSelectDirective() {
             return {
                 restrict: "ACE",
-                template: "{{selectData| json}}<div ng-hide=\"error\" ng-init=InitPage() class=\"chart-select-content\">"
+                template: "<div ng-hide=\"error\" ng-init=InitPage() class=\"chart-select-content\">"
                     + "<button ng-if=\"!single\" ng-click=\"handlerSingle()\" class=\"btn btn-sm btn-silver btn-default tool-tip\" title=\"单选\">单选</button>"
                     + "<button style=\"margin-right:12px;\" ng-if=\"single\" ng-click=\"handlerMultiple()\" class=\"btn btn-sm btn-silver btn-default tool-tip\" title=\"多选\">多选</button>"
                     + "<button ng-if=\"!single\" ng-click=\"handlerConfirm()\" class=\"btn btn-sm btn-silver btn-default tool-tip\" title=\"确定所有选择\">确定</button>"

@@ -16,6 +16,9 @@
                     </li>
                 </ul>
                 <ul class="fRight">
+                    <li ng-show="!isTableShow && isSelectChartData">
+                        <div ng-if="chart && !error"  class="chart-select" chart-obje="chart" select-change="onSelect(arg)"></div>
+                    </li>
                     <!-- 精度 -->
                     <li ng-show="isTableShow && showAccuracy">
                         <div class="selector_normal" style="width: 120px;">
@@ -79,7 +82,7 @@
             <!-- chart -->
             <div class="tab-switch-chart" ng-hide="isTableShow">
                 <div class="chart_wrap" ng-hide="error">
-                    <div class="chart_graph" id="{{chartId}}"></div>
+                    <div class="chart_graph"  id="{{chartId}}"></div>
                 </div>
                 <div class="table-nodata" error-type="error"></div>
             </div>

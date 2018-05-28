@@ -519,7 +519,6 @@ define("superApp.toolTipDire",
                 },
                 link: function (scope, element, attrs) {
                     if ((!scope.myTitle && scope.myTitle != 0) || typeof scope.myTitle != 'string') {
-                        console.log(scope.myTitle + 'return 了')
                         return;
                     }
                     if (/GO|KEGG/g.test(scope.theadKey)) {

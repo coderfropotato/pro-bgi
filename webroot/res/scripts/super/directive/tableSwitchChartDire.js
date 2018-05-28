@@ -46,7 +46,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 图下载名称
                     chartDownloadName: "=",
                     // 下拉选择回调
-                    selectChangeCallback: "&"
+                    selectChangeCallback: "&",
+                    // 是否需要选择数据
+                    isSelectChartData: "=",
+                    // 图选择数据回调
+                    chartSelectFn: "&"
                 },
                 replace: false,
                 transclude: true,
@@ -62,7 +66,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.accuracy = -1;
                 $scope.showAccuracy = !!$scope.showAccuracy;
                 $scope.error = false;
-
+                $scope.isSelectChartData = !!$scope.isSelectChartData;
                 $scope.GetTableData();
             }
 
@@ -95,6 +99,12 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             $scope.handlerSelectChange = function () {
                 $scope.GetTableData(1);
                 $scope.selectChangeCallback && $scope.selectChangeCallback({ arg: $scope.pageEntity[$scope.paramsKey] })
+            }
+
+            // 选择图数据的时候
+            $scope.onSelect = function (arg) {
+                console.log(arg);
+                $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': arg });
             }
 
             // // redraw

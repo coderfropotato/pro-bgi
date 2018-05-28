@@ -1,11 +1,14 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
-    <div ng-if="isShowTheadControl" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader"
-        handle-thead-change="theadChange(arg)"></div>
+    <div id="{{theadControlId}}">
+        <div ng-if="isShowTheadControl" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader"
+            handle-thead-change="theadChange(arg)"></div>
+    </div>
+
     <div class="tableListPanel" id="{{contentId}}">
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">
                 <li>
-                    <div ng-hide="error" class="grid-export" find-entity="pageFindEntity" export-location="exportLocationGOAnno" savefilename="基因表达量"></div>
+                    <div ng-hide="error" class="grid-export" find-entity="pageFindEntity" export-location="exportLocationGOAnno" savefilename="{{tableDownloadName}}"></div>
                 </li>
                 <li>
                     <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetBigTableData(1)">
@@ -147,7 +150,7 @@
                             <tr ng-class="{'unChecked':!row.isChecked}" ng-repeat="row in bigTableData.rows track by $index">
                                 <!-- title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}" -->
                                 <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in bigTableData.baseThead track by $index"
-                                     thead-key="val.name" my-title="row[val.true_key]">
+                                    thead-key="val.name" my-title="row[val.true_key]">
                                     <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>

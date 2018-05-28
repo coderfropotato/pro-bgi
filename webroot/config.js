@@ -27,7 +27,7 @@
                     tableSwitchChartPath: "./../include/include_tableSwitchChart.html",
                     reAccessPopPath:"./../include/reaccessTemplate.html"
                 },
-            javaApiPath: "http://192.168.29.203/bgfxxt",
+            javaApiPath: "http://192.168.29.203/reportweb",
             messageUrl: "ps/login/message.html",
             loginUrl: "ps/login/login.html",
             popBDWindowPath: "./include/browser_detect_prompt.html",

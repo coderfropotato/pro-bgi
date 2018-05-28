@@ -55,7 +55,9 @@ define("superApp.addDeleteBigTableDire",
                     // 是否需要清除表格筛选状态 不需要给null 需要默认false 需要重置的时候传true
                     isResetTableStatus: "=",
                     // 增删列表头选择改变的回调 params {Object} a => {add:[],delete:[],all:[]}
-                    handlertheadChange: "&"
+                    handlertheadChange: "&",
+                    // 增删列面板id
+                    theadControlId:"=",
                 },
                 replace: false,
                 transclude: true,

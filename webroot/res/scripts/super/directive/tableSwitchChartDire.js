@@ -50,7 +50,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 是否需要选择数据
                     isSelectChartData: "=",
                     // 图选择数据回调
-                    chartSelectFn: "&"
+                    chartSelectFn: "&",
                 },
                 replace: false,
                 transclude: true,

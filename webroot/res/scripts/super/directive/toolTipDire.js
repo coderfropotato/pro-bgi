@@ -539,8 +539,6 @@ define("superApp.toolTipDire",
                             $('body').append(obj);
 
                             // 判断极值
-                            console.log(obj.width())
-                            console.log($(element).offset().left)
                             if(obj.width()>($(element).offset().left)){
                                 obj.removeClass('left').addClass('right');
                                 obj.css('left',$(element).offset().left+$(element).outerWidth())

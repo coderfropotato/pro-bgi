@@ -5,18 +5,11 @@ define(['toolsApp'], function(toolsApp) {
     function mapIdController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
 
         $scope.InitPage = function() {
-            $scope.title = 'MapID';
             // 查询参数
             $scope.mapIdEntity = {
                 LCID: toolService.sessionStorage.get('LCID'),
                 pageNum: 1,
                 pageSize: 10,
-                searchContent: {
-                    timeStart: "",
-                    timeEnd: "",
-                    chartType: [],
-                    status: []
-                }
             };
 
             var url = window.location.href;
@@ -26,12 +19,17 @@ define(['toolsApp'], function(toolsApp) {
             }
             console.log(mapId);
 
+            $scope.title = 'MapID：' + mapId;
+
             // $scope.GetmapIdList(1);
         }
 
-        window.onload = function() {
-            var map = $(window.frames["mapIdIframe"].document).find("map");
-            console.log(map);
+        var area = $("#mapIdIframe").contents().find("map").children();
+        console.log(area);
+        if (typeof(area.attr("target_gene")) != "undefined") {
+            area.on("click", function() {
+                console.log("gene click");
+            })
         }
 
         $scope.GetmapIdList = function(pageNum) {

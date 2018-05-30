@@ -44,8 +44,12 @@ define("superApp.toolTipDire",
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
                         if ($divToolTip.length < 1) {
-                            var toolTipHTML = "<div style='z-index:10001' id=" + $this.data("toolTipID") + " class='tooltip " + $this.data("direct") + "' role='tooltip'><div class='tooltip-arrow'></div><div class='tooltip-inner'>" + $this.data("title") + "</div></div>";
-                            $("body").append(toolTipHTML);
+                            var $div = $("<div style='z-index:10001' id=" + $this.data("toolTipID") + " class='tooltip " + $this.data("direct") + "' role='tooltip'>");
+                            var inner = $("<div class='tooltip-inner'></div>");
+                            var arrow = "<div class='tooltip-arrow'></div></div>";
+                            inner.text($this.data("title"))
+                            $div.append(inner).append(arrow);
+                            $("body").append($div);
                             $divToolTip = $("#" + $this.data("toolTipID"));
                         }
 
@@ -517,34 +521,47 @@ define("superApp.toolTipDire",
                     myTitle: "=",
                     theadKey: "="
                 },
+                controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
-                    if (scope.myTitle || scope.myTitle == 0) {
-                        // if ((!scope.myTitle && scope.myTitle != 0) || typeof scope.myTitle != 'string') {
-                        //     return;
-                        // }
-                        // if (/go|kegg|nr|annotation|evalue/gi.test(scope.theadKey)) {
+                    scope.element = element;
+                }
+            }
+        }
+
+        superApp.controller("popoverTableCtr", popoverTableCtr);
+        popoverTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+        function popoverTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
+            if ($scope.myTitle || $scope.myTitle == 0) {
+                // if ((!$scope.myTitle && $scope.myTitle != 0) || typeof $scope.myTitle != 'string') {
+                //     return;
+                // }
+                // if (/go|kegg|nr|annotation|evalue/gi.test($scope.theadKey)) {
+                // 如果超出了就加上
+                $timeout(function () {
+                    if ($($scope.element).width() < $($scope.element).children(":eq(0)").outerWidth()) {
                         var timer = null;
                         var obj = null;
 
-                        $(element).on('mouseenter', function (ev) {
+                        $($scope.element).on('mouseenter', function (ev) {
                             if (obj) obj.remove();
                             var direc = 'left';
                             var leftPos = 0, topPos = 0;
-                            leftPos = $(element).offset().left - 200;
-                            topPos = $(element).offset().top;
+                            // leftPos = $($scope.element).offset().left - 200;
+                            topPos = $($scope.element).offset().top;
 
 
-                            obj = $('<div class="tooltip ' + direc + ' poptip" style="width:200px;word-wrap:break-word;left:' + leftPos + 'px; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + scope.myTitle + '</div></div>');
+                            obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
 
                             $('body').append(obj);
+                            obj.css('left',$($scope.element).offset().left- obj.outerWidth());
 
                             // 判断极值
-                            if(obj.width()>($(element).offset().left)){
+                            if (obj.width() > ($($scope.element).offset().left)) {
                                 obj.removeClass('left').addClass('right');
-                                obj.css('left',$(element).offset().left+$(element).outerWidth())
+                                obj.css('left', $($scope.element).offset().left + $($scope.element).outerWidth())
                             }
-                            
-                            obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
+
+                            obj.css('top', topPos - (obj.height() - $($scope.element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
 
                             obj.on('mouseenter', function () {
@@ -560,8 +577,10 @@ define("superApp.toolTipDire",
                         })
                         // }
                     }
-                }
+                }, 0)
+
             }
+
         }
 
 

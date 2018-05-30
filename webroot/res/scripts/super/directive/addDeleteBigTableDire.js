@@ -50,14 +50,28 @@ define("superApp.addDeleteBigTableDire",
                     isShowTheadControl: "=",
                     // 基因集改变的标志
                     geneListChangeFlag: "=",
+
                     // 是否需要重置增删列指令的默认状态 不需要给null 需要默认false 需要重置的时候传true
                     isResetTheadControl: "=",
+
                     // 是否需要清除表格筛选状态 不需要给null 需要默认false 需要重置的时候传true
                     isResetTableStatus: "=",
+
                     // 增删列表头选择改变的回调 params {Object} a => {add:[],delete:[],all:[]}
                     handlertheadChange: "&",
                     // 增删列面板id
                     theadControlId:"=",
+
+                    // 外部下拉触发表格更新 外部值在表格内部查询参数的key
+                    paramsKey:"=",
+                    // 外部下拉触发表格更新 外部值在表格内部查询参数的value
+                    paramsValue:"=",
+
+                    // 是否需要重分析  false/true
+                    isReanalysis:"=",
+
+                    // 是否清除geneUnselectList
+                    isClearGeneUnselectList:"=",
                 },
                 replace: false,
                 transclude: true,
@@ -82,6 +96,8 @@ define("superApp.addDeleteBigTableDire",
                 $scope.isShowTheadControl = $scope.isShowTheadControl !== false;
                 // 获取增删列dire数据
                 $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
+                // 是否需要重分析
+                $scope.isReanalysis = !!$scope.isReanalysis;
                 // 获取表格数据
                 $scope.GetBigTableData(1);
             };
@@ -105,6 +121,29 @@ define("superApp.addDeleteBigTableDire",
                     }
                 })
             }
+
+            // watch paramsValue  改变的时候重新加载数据
+            if($scope.paramsKey != undefined && $scope.paramsKey != null){
+                $scope.$watch('paramsValue', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        $scope.pageFindEntity[$scope.paramsKey] = newVal;
+                        $scope.GetBigTableData(1);
+                    }
+                },true)
+            }
+
+            // watch isClearGeneUnselectList 是否清空geneUnselectList
+            if($scope.isClearGeneUnselectList != undefined && $scope.isClearGeneUnselectList != null){
+                $scope.$watch('isClearGeneUnselectList', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        if(newVal){
+                            $scope.geneUnselectList = {};
+                            $scope.isClearGeneUnselectList = false;
+                        }
+                    }
+                })
+            }
+
             // 指定外部调用筛选指令的查询参数集合
             $scope.geneidCustomSearchType = "$in";
             $scope.geneidCustomSearchOne = "";
@@ -151,7 +190,9 @@ define("superApp.addDeleteBigTableDire",
                 }
                 // 重置未选择列表
                 $scope.geneUnselectList = {};
-                $scope.checkAll();
+                if($scope.bigTableData && $scope.bigTableData.rows){
+                    $scope.checkAll();
+                }
                 $scope.checkedAll = true;
             }
 
@@ -164,11 +205,16 @@ define("superApp.addDeleteBigTableDire",
             $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
                 if (newVal != oldVal) {
                     if (newVal) {
-                        $scope.handlerGeneListChangeCommon($scope.geneList);
-                        $timeout(function () {
-                            // 自动重置为初始状态 为了触发下一次change
+                        // 有数据才更新
+                        if(!$scope.error){
+                            $scope.handlerGeneListChangeCommon($scope.geneList);
+                            $timeout(function () {
+                                // 自动重置为初始状态 为了触发下一次change
+                                $scope.geneListChangeFlag = false;
+                            }, 30)
+                        }else{
                             $scope.geneListChangeFlag = false;
-                        }, 30)
+                        }
                     }
                 }
             }, true)
@@ -265,7 +311,7 @@ define("superApp.addDeleteBigTableDire",
 
                         // geneUnSelectList 是否包含回来的新数据
                         var isIn = false;
-                        $scope.bigTableData.rows.map(function (value, index) {
+                        $scope.bigTableData.rows.forEach(function (value, index) {
                             value.isChecked = true;
                             if ($scope.geneUnselectList) {
                                 for (var geneid in $scope.geneUnselectList) {
@@ -318,6 +364,57 @@ define("superApp.addDeleteBigTableDire",
                     clearBtn.triggerHandler("click");
                 }, 0)
                 // }
+            }
+
+            // 重分析服务回调
+            $scope.reanalysisError = false;
+            $scope.handlerReanalysis = function(params) {
+                $scope.reAnalysisEntity = angular.copy($scope.pageFindEntity);
+                $scope.reAnalysisEntity.geneUnselectList = [];
+                $scope.reAnalysisEntity.allThead = [];
+                // TODO chartType
+                $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
+
+                $scope.reAnalysisEntity.chooseType = params.type;
+                $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+
+                for (var key in $scope.geneUnselectList) {
+                    $scope.reAnalysisEntity.geneUnselectList.push(key);
+                }
+
+                $scope.bigTableData.baseThead.forEach(function(val, index) {
+                    $scope.reAnalysisEntity.allThead.push(val.true_key);
+                });
+
+                var promise = ajaxService.GetDeferData({
+                    data: $scope.reAnalysisEntity,
+                    url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
+                })
+
+                toolService.pageLoading.open('正在提交重分析申请，请稍后...');
+                promise.then(function(res) {
+                    toolService.pageLoading.close();
+                    if (res.Error) {
+                        $scope.reanalysisError = "syserror";
+                        toolService.popMesgWindow(res.Error);
+                    } else {
+                        $scope.reanalysisError = false;
+                        $scope.$emit('openAnalysisPop');
+                        $rootScope.GetAnalysisList(1);
+                        toolService.popMesgWindow('重分析提交成功');
+                        if (res.isAnalysis) {
+                            // 打开我的分析面板
+                            $scope.$emit('openAnalysisPop');
+                        } else {
+                            // 跳到详情页
+                            var type = $scope.reAnalysisEntity.chartType;
+                            var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                           $window.open(url);
+                        }
+                    }
+                }, function(err) {
+                    toolService.popMesgWindow(err);
+                })
             }
 
             // 清空 未选中的基因集
@@ -408,7 +505,6 @@ define("superApp.addDeleteBigTableDire",
             // 筛选状态改变
             $scope.handlerFilterStatusChange = function (status) {
                 $scope.isBeginFilter = status;
-                console.log(status)
                 if (!$scope.isBeginFilter) $scope.geneidCustomSearchOne = '';
             }
 

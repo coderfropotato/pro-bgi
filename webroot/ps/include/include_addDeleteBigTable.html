@@ -1,6 +1,6 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
     <div id="{{theadControlId}}">
-        <div ng-if="isShowTheadControl" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader"
+        <div ng-if="isShowTheadControl && !error" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader"
             handle-thead-change="theadChange(arg)"></div>
     </div>
 
@@ -18,7 +18,7 @@
                 <li>
                     <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                     <!-- 2018年4月19日15:58:03 tablehead -->
-                    <div class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)"
+                    <div ng-show="!error" class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)"
                         parentid="{{contentId}}" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" search-one="geneidCustomSearchOne"
                         filter-status-callback="handlerFilterStatusChange(status)"></div>
                 </li>
@@ -171,6 +171,7 @@
                 <div class="table-nodata" error-type="error"></div>
             </div>
         </div>
+        
         <!-- table bottom -->
         <div class="table-bottom" style="position:relative;">
             <div class="pager-grid" ng-hide="error" grid-data="bigTableData" side="left" callback="GetBigTableData(arg1)"></div>
@@ -190,4 +191,6 @@
         </div>
     </div>
     <!-- table over -->
+    <!-- reanalysis content -->
+    <div ng-if="!tableError && isReanalysis" class="re-analysis" callback="handlerReanalysis(options)"></div>
 </div>

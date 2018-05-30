@@ -3,7 +3,7 @@ require.config({
     paths: {
         "jQuery": "res/scripts/lib/jquery/1.10.2/jquery.min",
         "jQueryDatapicker": "res/scripts/lib/jquery/jquery.datepicker",
-        "ui.bootstrap":"res/scripts/lib/angularui-bootstrap/ui-bootstrap-tpls-2.5.0.min",
+        "ui.bootstrap": "res/scripts/lib/angularui-bootstrap/ui-bootstrap-tpls-2.5.0.min",
         "angular": "res/scripts/lib/angular/1.4.7/angular",
         "ngCookies": "res/scripts/lib/angular/1.4.7/angular-cookies.min",
         "angular-route": "res/scripts/lib/angular/1.4.7/angular-route.min",
@@ -18,7 +18,7 @@ require.config({
         "heatmap": "res/scripts/lib/Highcharts/4.2.1/modules/heatmap",
         "highcharts-data": "res/scripts/lib/Highcharts/4.2.1/modules/data",
         "d3": "res/scripts/lib/d3/build/d3",
-        "angularjs-date-picker":"res/scripts/lib/angularjs-datepicker/angular-datepicker.min",
+        "angularjs-date-picker": "res/scripts/lib/angularjs-datepicker/angular-datepicker.min",
 
         "super.superMessage": "config",
         "superApp.superDire": "res/scripts/super/directive/superDire",
@@ -34,16 +34,16 @@ require.config({
         "superApp.heatmapSetDire": "res/scripts/super/directive/heatmapSetDire",
         "superApp.svgNewExportDire": "res/scripts/super/directive/svgNewExportDire",
         "superApp.tableCopyDire": "res/scripts/super/directive/tableCopyDire",
-        "superApp.theadControlDire":"res/scripts/super/directive/theadControlDire",
+        "superApp.theadControlDire": "res/scripts/super/directive/theadControlDire",
         "superApp.analysisPopDire": "res/scripts/super/directive/analysisPopDire",
         "superApp.topQuickMenuDire": "res/scripts/super/directive/topQuickMenuDire",
         "superApp.reportPageTitleDire": "res/scripts/super/directive/reportPageTitleDire",
         "superApp.reportPageSubTitleDire": "res/scripts/super/directive/reportPageSubTitleDire",
         "superApp.reAnalysisDire": "res/scripts/super/directive/reAnalysisDire",
-        
+
         "superApp.superService": "res/scripts/super/service/superService",
         "superApp.reportService": "res/scripts/super/service/reportService",
-        
+
         "superApp.tokenInterceptorFactory": "res/scripts/super/factory/tokenInterceptorFactory",
         "superApp.markerFactory": "res/scripts/super/factory/markerFactory",
 
@@ -56,9 +56,9 @@ require.config({
         "heatmapGroupController": "ps/tools/pages/heatmapGroupController",
         "heatmapSampleController": "ps/tools/pages/heatmapSampleController",
         "vennController": "ps/tools/pages/vennController",
-        "myAnalysisController":"ps/tools/pages/myAnalysisController",
-        "loadingController":"ps/tools/pages/loadingController",
-        "errorController":"ps/tools/pages/errorController"
+        "myAnalysisController": "ps/tools/pages/myAnalysisController",
+        "mapIdController": "ps/tools/pages/mapIdController",
+        "errorController": "ps/tools/pages/errorController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -73,16 +73,16 @@ require.config({
         "angular": { exports: "angular" },
         "ngCookies": { deps: ["angular"] },
         "ui.router": { deps: ["angular"] },
-        "ui.bootstrap":{deps:["angular"]},
+        "ui.bootstrap": { deps: ["angular"] },
         "treeControl": { deps: ["angular"] },
         "d3": { exports: "d3" },
-        "angularjs-date-picker":{deps:["angular"]}
+        "angularjs-date-picker": { deps: ["angular"] }
     }
 });
 
 require([
     'jQuery',
-    'angular', 
+    'angular',
     "d3",
     "pageFactory",
     'toolsApp',
@@ -91,11 +91,11 @@ require([
     "heatmapSampleController",
     "vennController",
     "myAnalysisController",
-    "loadingController",
+    "mapIdController",
     "errorController"
-], function (jquery, angular, d3) {
+], function(jquery, angular, d3) {
     window.d3 = d3;
-    angular.element(document).ready(function () {
+    angular.element(document).ready(function() {
         angular.bootstrap(document, ['toolsApp']);
     });
 })

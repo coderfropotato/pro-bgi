@@ -25,7 +25,7 @@ define([
     "superApp.reportPageTitleDire",
     "superApp.reportPageSubTitleDire",
     "superApp.reAnalysisDire"
-], function () {
+], function() {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
         "ui.bootstrap",
@@ -54,7 +54,7 @@ define([
         "superApp.reportPageSubTitleDire",
         "superApp.reAnalysisDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home/myAnalysis');
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
@@ -74,9 +74,9 @@ define([
                 url: "/home/myAnalysis",
                 templateUrl: "../tools/pages/myAnalysis.html",
             })
-            .state("loading", {
-                url: "/home/loading",
-                templateUrl: "../tools/pages/loading.html",
+            .state("mapId", {
+                url: "/home/mapId",
+                templateUrl: "../tools/pages/mapId.html",
             })
             .state("error", {
                 url: "/home/error/:id",

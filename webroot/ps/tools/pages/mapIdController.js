@@ -18,6 +18,14 @@ define(['toolsApp'], function(toolsApp) {
                     status: []
                 }
             };
+
+            var url = window.location.href;
+            if (url.indexOf("?") != -1) {
+                var urlArr = url.split("?");
+                var mapId = urlArr[1];
+            }
+            console.log(mapId);
+
             // $scope.GetmapIdList(1);
         }
 

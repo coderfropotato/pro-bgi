@@ -24,13 +24,14 @@ define(['toolsApp'], function(toolsApp) {
             // $scope.GetmapIdList(1);
         }
 
-        var area = $("#mapIdIframe").contents().find("map").children();
-        console.log(area);
-        if (typeof(area.attr("target_gene")) != "undefined") {
-            area.on("click", function() {
-                console.log("gene click");
+        var oIframe = $("#mapIdIframe");
+        oIframe.on("load", function() {
+            var areas = oIframe.contents().find("map").children("area[target_gene]");
+            console.log(areas);
+            areas.on("click", function() {
+                console.log($(this).attr("target_gene"));
             })
-        }
+        })
 
         $scope.GetmapIdList = function(pageNum) {
             toolService.gridFilterLoading.open("mapId-table");

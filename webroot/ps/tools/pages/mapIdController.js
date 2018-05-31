@@ -26,10 +26,10 @@ define(['toolsApp'], function(toolsApp) {
 
         var oIframe = $("#mapIdIframe");
         oIframe.on("load", function() {
-            var areas = oIframe.contents().find("map").children("area[gene-name]");
+            var areas = oIframe.contents().find("map").children("area[target_gene]");
             console.log(areas);
             areas.on("click", function() {
-                console.log($(this).attr("gene-name"));
+                console.log($(this).attr("target_gene"));
             })
         })
 

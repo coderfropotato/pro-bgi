@@ -60,18 +60,22 @@ define("superApp.addDeleteBigTableDire",
                     // 增删列表头选择改变的回调 params {Object} a => {add:[],delete:[],all:[]}
                     handlertheadChange: "&",
                     // 增删列面板id
-                    theadControlId:"=",
+                    theadControlId: "=",
 
                     // 外部下拉触发表格更新 外部值在表格内部查询参数的key
-                    paramsKey:"=",
                     // 外部下拉触发表格更新 外部值在表格内部查询参数的value
-                    paramsValue:"=",
+                    paramsKey: "=",
+                    paramsValue: "=",
+
+                    // 外部下拉触发表格更新 外部值在表格内部查询参数的key list
+                    paramsKeyList: "=",
+                    paramsValueList: "=",
 
                     // 是否需要重分析  false/true
-                    isReanalysis:"=",
+                    isReanalysis: "=",
 
                     // 是否清除geneUnselectList
-                    isClearGeneUnselectList:"=",
+                    isClearGeneUnselectList: "=",
                 },
                 replace: false,
                 transclude: true,
@@ -122,21 +126,34 @@ define("superApp.addDeleteBigTableDire",
                 })
             }
 
+
             // watch paramsValue  改变的时候重新加载数据
-            if($scope.paramsKey != undefined && $scope.paramsKey != null){
+            if ($scope.paramsKey != undefined && $scope.paramsKey != null) {
                 $scope.$watch('paramsValue', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
                         $scope.pageFindEntity[$scope.paramsKey] = newVal;
                         $scope.GetBigTableData(1);
                     }
-                },true)
+                }, true)
+            }
+
+            // watch paramsValueList  改变的时候重新加载数据
+            if ($scope.paramsKeyList != undefined && $scope.paramsKeyList != null) {
+                $scope.$watch('paramsValueList', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        for (var i = 0; i < $scope.paramsKeyList.length; i++) {
+                            $scope.pageFindEntity[$scope.paramsKeyList[i]] = newVal[i];
+                        }
+                        $scope.GetBigTableData(1);
+                    }
+                }, true)
             }
 
             // watch isClearGeneUnselectList 是否清空geneUnselectList
-            if($scope.isClearGeneUnselectList != undefined && $scope.isClearGeneUnselectList != null){
+            if ($scope.isClearGeneUnselectList != undefined && $scope.isClearGeneUnselectList != null) {
                 $scope.$watch('isClearGeneUnselectList', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        if(newVal){
+                        if (newVal) {
                             $scope.geneUnselectList = {};
                             $scope.isClearGeneUnselectList = false;
                         }
@@ -190,7 +207,7 @@ define("superApp.addDeleteBigTableDire",
                 }
                 // 重置未选择列表
                 $scope.geneUnselectList = {};
-                if($scope.bigTableData && $scope.bigTableData.rows){
+                if ($scope.bigTableData && $scope.bigTableData.rows) {
                     $scope.checkAll();
                 }
                 $scope.checkedAll = true;
@@ -206,13 +223,13 @@ define("superApp.addDeleteBigTableDire",
                 if (newVal != oldVal) {
                     if (newVal) {
                         // 有数据才更新
-                        if(!$scope.error){
+                        if (!$scope.error) {
                             $scope.handlerGeneListChangeCommon($scope.geneList);
                             $timeout(function () {
                                 // 自动重置为初始状态 为了触发下一次change
                                 $scope.geneListChangeFlag = false;
                             }, 30)
-                        }else{
+                        } else {
                             $scope.geneListChangeFlag = false;
                         }
                     }
@@ -368,7 +385,7 @@ define("superApp.addDeleteBigTableDire",
 
             // 重分析服务回调
             $scope.reanalysisError = false;
-            $scope.handlerReanalysis = function(params) {
+            $scope.handlerReanalysis = function (params) {
                 $scope.reAnalysisEntity = angular.copy($scope.pageFindEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
                 $scope.reAnalysisEntity.allThead = [];
@@ -382,7 +399,7 @@ define("superApp.addDeleteBigTableDire",
                     $scope.reAnalysisEntity.geneUnselectList.push(key);
                 }
 
-                $scope.bigTableData.baseThead.forEach(function(val, index) {
+                $scope.bigTableData.baseThead.forEach(function (val, index) {
                     $scope.reAnalysisEntity.allThead.push(val.true_key);
                 });
 
@@ -392,7 +409,7 @@ define("superApp.addDeleteBigTableDire",
                 })
 
                 toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-                promise.then(function(res) {
+                promise.then(function (res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
                         $scope.reanalysisError = "syserror";
@@ -409,10 +426,10 @@ define("superApp.addDeleteBigTableDire",
                             // 跳到详情页
                             var type = $scope.reAnalysisEntity.chartType;
                             var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                           $window.open(url);
+                            $window.open(url);
                         }
                     }
-                }, function(err) {
+                }, function (err) {
                     toolService.popMesgWindow(err);
                 })
             }

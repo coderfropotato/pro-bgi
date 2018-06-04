@@ -21,12 +21,12 @@
     
  */
 
-define("superApp.addDeleteBigTableDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.addDeleteBigTableDire", []);
         superApp.directive('addDeleteBigTable', addDeleteBigTableDirective);
         addDeleteBigTableDirective.$inject = ["$log"];
+
         function addDeleteBigTableDirective($log) {
             return {
                 restrict: "ACE",
@@ -44,10 +44,12 @@ define("superApp.addDeleteBigTableDire",
                     unselectGenePanelId: "=",
                     // 表格下载的名称
                     tableDownloadName: "=",
-                    // 选择的基因集
-                    geneList: "=",
+
                     // 是否需要增删列
                     isShowTheadControl: "=",
+
+                    // 选择的基因集
+                    geneList: "=",
                     // 基因集改变的标志
                     geneListChangeFlag: "=",
 
@@ -85,9 +87,10 @@ define("superApp.addDeleteBigTableDire",
 
         superApp.controller("addDeletBigTableCtr", addDeletBigTableCtr);
         addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+
         function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             toolService.pageLoading.open();
-            $scope.InitPage = function () {
+            $scope.InitPage = function() {
                 // $scope.compareGroup = '';
                 $scope.isBeginFilter = false;
                 // 重置时使用
@@ -108,13 +111,13 @@ define("superApp.addDeleteBigTableDire",
 
             // watch table status 需要的时候重置表格的筛选状态
             if ($scope.isResetTableStatus != undefined && $scope.isResetTableStatus != null) {
-                $scope.$watch('isResetTableStatus', function (newVal, oldVal) {
+                $scope.$watch('isResetTableStatus', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
                         if (newVal) {
                             if ($('#' + $scope.contentId + ' .grid-filter-begin > button').hasClass('active')) {
-                                $timeout(function () {
+                                $timeout(function() {
                                     angular.element($('#' + $scope.contentId + ' .grid-filter-begin > button')).triggerHandler('click');
-                                    $timeout(function () {
+                                    $timeout(function() {
                                         $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
                                         // 重置状态 触发下次watch
                                         $scope.isResetTableStatus = false;
@@ -129,7 +132,7 @@ define("superApp.addDeleteBigTableDire",
 
             // watch paramsValue  改变的时候重新加载数据
             if ($scope.paramsKey != undefined && $scope.paramsKey != null) {
-                $scope.$watch('paramsValue', function (newVal, oldVal) {
+                $scope.$watch('paramsValue', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
                         $scope.pageFindEntity[$scope.paramsKey] = newVal;
                         $scope.GetBigTableData(1);
@@ -139,7 +142,7 @@ define("superApp.addDeleteBigTableDire",
 
             // watch paramsValueList  改变的时候重新加载数据
             if ($scope.paramsKeyList != undefined && $scope.paramsKeyList != null) {
-                $scope.$watch('paramsValueList', function (newVal, oldVal) {
+                $scope.$watch('paramsValueList', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
                         for (var i = 0; i < $scope.paramsKeyList.length; i++) {
                             $scope.pageFindEntity[$scope.paramsKeyList[i]] = newVal[i];
@@ -151,7 +154,7 @@ define("superApp.addDeleteBigTableDire",
 
             // watch isClearGeneUnselectList 是否清空geneUnselectList
             if ($scope.isClearGeneUnselectList != undefined && $scope.isClearGeneUnselectList != null) {
-                $scope.$watch('isClearGeneUnselectList', function (newVal, oldVal) {
+                $scope.$watch('isClearGeneUnselectList', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
                         if (newVal) {
                             $scope.geneUnselectList = {};
@@ -170,15 +173,15 @@ define("superApp.addDeleteBigTableDire",
             $scope.isShowGeneListPanel = false;
 
             // 基因列表 hover
-            $scope.handlerMouseEnter = function () {
+            $scope.handlerMouseEnter = function() {
                 $scope.isShowGeneListPanel = true;
             }
-            $scope.handlerMouseLeave = function () {
+            $scope.handlerMouseLeave = function() {
                 $scope.isShowGeneListPanel = false;
             }
 
             // 删除genelist某一项
-            $scope.removeGeneItem = function (key) {
+            $scope.removeGeneItem = function(key) {
                 delete $scope.geneUnselectList[key];
                 for (var i = 0; i < $scope.bigTableData.rows.length; i++) {
                     if ($scope.bigTableData.rows[i][$scope.geneid_truekey] === key) {
@@ -190,7 +193,7 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 基因集改变后的公共逻辑
-            $scope.handlerGeneListChangeCommon = function (geneList) {
+            $scope.handlerGeneListChangeCommon = function(geneList) {
                 var searchOne = '';
                 // 重置基因列表
                 $scope.geneUnselectList = '';
@@ -198,7 +201,7 @@ define("superApp.addDeleteBigTableDire",
                 searchOne = geneList.join('\n');
                 // 如果没有点击筛选按钮 就点击
                 if (!$('#' + $scope.contentId + ' .grid-filter-begin > button').hasClass('active')) {
-                    $timeout(function () {
+                    $timeout(function() {
                         angular.element($('#' + $scope.contentId + ' .grid-filter-begin > button')).triggerHandler('click');
                         $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
                     }, 0);
@@ -214,18 +217,18 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 获取genelist 重新获取表格数据 渲染筛选条件
-            $scope.setGeneList = function (geneList) {
+            $scope.setGeneList = function(geneList) {
                 $scope.handlerGeneListChangeCommon(geneList);
             }
 
             // watch genelist flag的改变
-            $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
+            $scope.$watch('geneListChangeFlag', function(newVal, oldVal) {
                 if (newVal != oldVal) {
                     if (newVal) {
                         // 有数据才更新
                         if (!$scope.error) {
                             $scope.handlerGeneListChangeCommon($scope.geneList);
-                            $timeout(function () {
+                            $timeout(function() {
                                 // 自动重置为初始状态 为了触发下一次change
                                 $scope.geneListChangeFlag = false;
                             }, 30)
@@ -237,25 +240,25 @@ define("superApp.addDeleteBigTableDire",
             }, true)
 
             // thead change event
-            $scope.theadChange = function (a) {
+            $scope.theadChange = function(a) {
                 var addThead = [];
                 var deleteArr = [];
                 $scope.add = [];
                 // 当前新增的表头
-                a.add.forEach(function (val, index) {
-                    $scope.add = $scope.add.concat(val.children);
-                })
-                // 所有新加的表头
-                a.all.forEach(function (val, index) {
-                    addThead = addThead.concat(val.children);
-                })
-                // 当前删除的表头
-                a.delete.forEach(function (val, index) {
+                a.add.forEach(function(val, index) {
+                        $scope.add = $scope.add.concat(val.children);
+                    })
+                    // 所有新加的表头
+                a.all.forEach(function(val, index) {
+                        addThead = addThead.concat(val.children);
+                    })
+                    // 当前删除的表头
+                a.delete.forEach(function(val, index) {
                     deleteArr = deleteArr.concat(val.children);
                 });
 
                 for (var i = 0, len = deleteArr.length; i < len; i++) {
-                    $scope.pageFindEntity.searchContentList.forEach(function (val, index) {
+                    $scope.pageFindEntity.searchContentList.forEach(function(val, index) {
                         if (val.filterName !== 'LCID') {
                             if (val.filterName === deleteArr[i]) {
                                 if (val.isSort) {
@@ -278,7 +281,7 @@ define("superApp.addDeleteBigTableDire",
 
 
             // 初始化页面查询参数
-            $scope.InitFindEntity1 = function (filterFindEntity) {
+            $scope.InitFindEntity1 = function(filterFindEntity) {
                 //获得页面查询实体信息
                 $scope.pageFindEntity = toolService.GetGridFilterFindEntity($scope.pageFindEntity, filterFindEntity);
                 //获得页面查询条件转译信息
@@ -290,7 +293,7 @@ define("superApp.addDeleteBigTableDire",
             };
 
             // 删除页面查询参数
-            $scope.deleteFindEntity = function () {
+            $scope.deleteFindEntity = function() {
                 var filterName = angular.element(event.target).siblings('span').find('em').text();
                 $scope.pageFindEntity = toolService.DeleteFilterFindEntity($scope.pageFindEntity, [filterName]);
                 $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
@@ -298,7 +301,7 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 获取大表数据
-            $scope.GetBigTableData = function (pageNumber) {
+            $scope.GetBigTableData = function(pageNumber) {
                 toolService.gridFilterLoading.open($scope.tableId);
                 $scope.pageFindEntity = toolService.SetGridFilterFindEntity($scope.pageFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
@@ -309,7 +312,7 @@ define("superApp.addDeleteBigTableDire",
                     url: $scope.exportLocationGOAnno,
                 };
                 var promise = ajaxService.GetDeferData(ajaxConfig);
-                promise.then(function (responseData) {
+                promise.then(function(responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
                     } else if (responseData.length == 0) {
@@ -328,7 +331,7 @@ define("superApp.addDeleteBigTableDire",
 
                         // geneUnSelectList 是否包含回来的新数据
                         var isIn = false;
-                        $scope.bigTableData.rows.forEach(function (value, index) {
+                        $scope.bigTableData.rows.forEach(function(value, index) {
                             value.isChecked = true;
                             if ($scope.geneUnselectList) {
                                 for (var geneid in $scope.geneUnselectList) {
@@ -344,14 +347,14 @@ define("superApp.addDeleteBigTableDire",
                     }
 
                     toolService.gridFilterLoading.close($scope.tableId);
-                }, function (errorMesg) {
+                }, function(errorMesg) {
                     toolService.gridFilterLoading.close($scope.tableId);
                     $scope.error = "syserror";
                 });
             };
 
             // 点击GeneID获取Gene信息
-            $scope.showGeneInfo = function (GeneID) {
+            $scope.showGeneInfo = function(GeneID) {
                 var genomeVersion = toolService.sessionStorage.get('GenomeID');
                 var geneInfo = {
                     genomeVersion: genomeVersion,
@@ -362,7 +365,7 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // delete one filter content
-            $scope.handleDelete = function (event) {
+            $scope.handleDelete = function(event) {
                 var thead = angular.element(event.target).siblings('span').find('em').text();
                 var clearBtn;
                 // var count = 0;
@@ -377,15 +380,15 @@ define("superApp.addDeleteBigTableDire",
                 //     $scope.pageFindEntity = toolService.DeleteFilterFindEntity($scope.pageFindEntity, thead);
                 //     $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
                 // } else {
-                $timeout(function () {
-                    clearBtn.triggerHandler("click");
-                }, 0)
-                // }
+                $timeout(function() {
+                        clearBtn.triggerHandler("click");
+                    }, 0)
+                    // }
             }
 
             // 重分析服务回调
             $scope.reanalysisError = false;
-            $scope.handlerReanalysis = function (params) {
+            $scope.handlerReanalysis = function(params) {
                 $scope.reAnalysisEntity = angular.copy($scope.pageFindEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
                 $scope.reAnalysisEntity.allThead = [];
@@ -399,7 +402,7 @@ define("superApp.addDeleteBigTableDire",
                     $scope.reAnalysisEntity.geneUnselectList.push(key);
                 }
 
-                $scope.bigTableData.baseThead.forEach(function (val, index) {
+                $scope.bigTableData.baseThead.forEach(function(val, index) {
                     $scope.reAnalysisEntity.allThead.push(val.true_key);
                 });
 
@@ -409,7 +412,7 @@ define("superApp.addDeleteBigTableDire",
                 })
 
                 toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-                promise.then(function (res) {
+                promise.then(function(res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
                         $scope.reanalysisError = "syserror";
@@ -429,36 +432,36 @@ define("superApp.addDeleteBigTableDire",
                             $window.open(url);
                         }
                     }
-                }, function (err) {
+                }, function(err) {
                     toolService.popMesgWindow(err);
                 })
             }
 
             // 清空 未选中的基因集
-            $scope.handlerClearUnselect = function () {
-                $scope.geneUnselectList = {};
-                $scope.bigTableData.rows.forEach(function (val, index) {
-                    val.isChecked = true;
-                });
-                $scope.checkedAll = true;
-            }
-            // table 选中事件
-            // 全选事件
-            $scope.checkAll = function () {
-                $scope.bigTableData.rows.forEach(function (val, index) {
+            $scope.handlerClearUnselect = function() {
+                    $scope.geneUnselectList = {};
+                    $scope.bigTableData.rows.forEach(function(val, index) {
+                        val.isChecked = true;
+                    });
+                    $scope.checkedAll = true;
+                }
+                // table 选中事件
+                // 全选事件
+            $scope.checkAll = function() {
+                $scope.bigTableData.rows.forEach(function(val, index) {
                     val.isChecked = true;
                 });
             }
 
             // 全不选事件
-            $scope.unCheckAll = function () {
-                angular.forEach($scope.bigTableData.rows, function (val, index) {
+            $scope.unCheckAll = function() {
+                angular.forEach($scope.bigTableData.rows, function(val, index) {
                     val.isChecked = false;
                 });
             }
 
             // 全选点击事件
-            $scope.handlerCheckedAll = function () {
+            $scope.handlerCheckedAll = function() {
                 $scope.checkedAll = !$scope.checkedAll;
                 $scope.checkedAll ? $scope.checkAll() : $scope.unCheckAll();
                 // 全选取消geneUnselectList里的项
@@ -479,7 +482,7 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 每一行点击选择
-            $scope.handlerChecked = function (index, event) {
+            $scope.handlerChecked = function(index, event) {
                 $scope.bigTableData.rows[index].isChecked = !$scope.bigTableData.rows[index].isChecked;
                 $scope.computedTheadStatus();
                 // 如果没选中
@@ -500,12 +503,12 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 判断是否全部选中或者全部没选中 联动表头
-            $scope.computedTheadStatus = function () {
+            $scope.computedTheadStatus = function() {
                 var length = $scope.bigTableData.rows.length;
                 var checkCount = 0;
                 var unCheckCount = 0;
 
-                $scope.bigTableData.rows.forEach(function (val, index) {
+                $scope.bigTableData.rows.forEach(function(val, index) {
                     val.isChecked ? checkCount++ : unCheckCount++;
                 });
 
@@ -520,14 +523,14 @@ define("superApp.addDeleteBigTableDire",
             }
 
             // 筛选状态改变
-            $scope.handlerFilterStatusChange = function (status) {
+            $scope.handlerFilterStatusChange = function(status) {
                 $scope.isBeginFilter = status;
                 if (!$scope.isBeginFilter) $scope.geneidCustomSearchOne = '';
             }
 
             // watch geneUnselectList 生成length
             $scope.geneUnselectListLength = 0;
-            $scope.$watch('geneUnselectList', function (newVal, oldVal) {
+            $scope.$watch('geneUnselectList', function(newVal, oldVal) {
                 if (newVal != oldVal) {
                     $scope.geneUnselectListLength = 0;
                     if (newVal) {
@@ -539,4 +542,3 @@ define("superApp.addDeleteBigTableDire",
             }, true)
         }
     });
-

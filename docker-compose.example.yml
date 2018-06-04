@@ -7,10 +7,7 @@ server_web_igbook:
         # 打包后下行./webroot
         - ./webroot:/www/html/
         # 修改为对应的数据路径，为防止/www/html/被覆盖，需要指定每个挂载的文件夹
-        - /data/ga/data/pathway:/www/html/pathway/
-        - /data/ga/data/motif:/www/html/motif/
-        - /data/ga/data/dag:/www/html/dag/
-        - /data/ga/data/report:/www/html/report/
+        - ${DATAPATH}:/www/html/report/
     privileged: true
     ports:
         - "86:86"

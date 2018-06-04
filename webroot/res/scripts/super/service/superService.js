@@ -157,48 +157,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             globalTokenError = false;
                             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
                         })
-
-                        // var password = prompt("Please enter your password", "");
-                        // if (password != null && password != "") {
-                        //     // getToken
-                        //     $.ajax({
-                        //         url: options.api.base_url + '/login',
-                        //         type: 'POST',
-                        //         data: JSON.stringify({
-                        //             'LCID': toolService.sessionStorage.get('LCID'),
-                        //             'Password': password
-                        //         }),
-                        //         dataType: 'json',
-                        //         contentType: "application/json; charset=utf-8",
-                        //         withCredentials: true,
-                        //         cache: false,
-                        //         success: function (responseData) {
-                        //             if (responseData.Status === 'success') {
-                        //                 toolService.sessionStorage.set('token', responseData.Token);
-                        //                 window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
-                        //             } else {
-                        //                 if (responseData.Status == "Wrong username or password") {
-                        //                     var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
-                        //                 } else {
-                        //                     var myPromise = toolService.popMesgWindow(responseData.Status);
-                        //                 }
-                        //                 myPromise.then(function () {
-                        //                     globalTokenError = false;
-                        //                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
-                        //                 }, function () {
-                        //                     globalTokenError = false;
-                        //                     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
-                        //                 });
-                        //             }
-                        //         },
-                        //         error: function (err) {
-                        //             globalTokenError = false;
-                        //             window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
-                        //         }
-                        //     })
-                        // } else {
-                        //     window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
-                        // }
                     }
                 }
 
@@ -622,7 +580,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                **          如果不传，默认为dialog-default
            */
 
-            this.popAnalysis = function (taskInfo, callback, popTitle, dialogClass, top, width, height) {
+            this.popAnalysis = function (taskInfo, callback, chartType, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -715,7 +673,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         break;
                                     }
                                 }
-                                callback && callback({ options: { 'type': type, 'check': checkedItems } });
+                                callback && callback({ options: { 'type': type, 'check': checkedItems,'chartType':chartType } });
                                 ngDialog.close();
                             }
                         };

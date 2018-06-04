@@ -52,7 +52,7 @@ define("superApp.reAnalysisDire",
                         $scope.reAnslysisError = "nodata";
                     } else {
                         $scope.reAnslysisError = false;
-                        toolService.popAnalysis(responseData, $scope.callback);
+                        toolService.popAnalysis(responseData, $scope.callback, type);
                     }
                 }, function (errorMesg) {
                     $scope.reAnslysisError = "syserror";

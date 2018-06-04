@@ -61,11 +61,11 @@ define(['toolsApp'], function (toolsApp) {
                 if (res.Error) {
                     $scope.analysisError = 'syserror';
                     return;
-                } else if (res.rows.length == 0) {
+                } else if (res.rows.data.length == 0) {
                     $scope.analysisError = 'nodata';
                     return;
                 } else {
-                    $scope.analysisList = res;
+                    $scope.analysisList = res.data;
                     $scope.analysisError = false;
                 }
             }, function () {

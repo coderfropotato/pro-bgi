@@ -519,7 +519,12 @@ define("superApp.toolTipDire",
                 restrict: "ACE",
                 scope: {
                     myTitle: "=",
-                    theadKey: "="
+                    theadKey: "=",
+                    // PathwayName的参数，后续的操作需要用到 compareGroup和method
+                    pathwayid: "=",   // []
+                    compare: "=",
+                    method: "=",
+                    //
                 },
                 controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
@@ -549,17 +554,32 @@ define("superApp.toolTipDire",
                             // leftPos = $($scope.element).offset().left - 200;
                             topPos = $($scope.element).offset().top;
 
+                            // 需要加a标签的表格
+                            if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
+                                var str = '';
+                                str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
 
-                            obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                                for (var o = 0; o < $scope.pathwayid.length; o++) {
+                                    str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
+                                }
+
+                                str += '</div></div>';
+
+                                obj = $(str);
+
+                            } else {
+                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                            }
 
                             $('body').append(obj);
-                            obj.css('left',$($scope.element).offset().left- obj.outerWidth());
+                            obj.css('left', $($scope.element).offset().left - obj.outerWidth());
 
                             // 判断极值
                             if (obj.width() > ($($scope.element).offset().left)) {
                                 obj.removeClass('left').addClass('right');
                                 obj.css('left', $($scope.element).offset().left + $($scope.element).outerWidth())
                             }
+
 
                             obj.css('top', topPos - (obj.height() - $($scope.element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
@@ -569,6 +589,16 @@ define("superApp.toolTipDire",
                             }).on('mouseleave', function () {
                                 if (obj) obj.remove();
                             })
+
+                            // 根据不同的表头做不同的逻辑处理
+                            if ($scope.theadKey === 'Pathway Name' && $scope.myTitle.indexOf('//') != -1) {
+                                obj.find('.jump-to-tools-map-id').on('click', function () {
+                                    var id = $(this).attr('title');
+                                    window.open('../../../../ps/tools/index.html#/home/mapId?map=' + id + '&compareGroup=' + $scope.compare + '&method=' + $scope.method);
+                                })
+                            }
+
+
                         }).on('mouseleave', function () {
                             if (timer) clearTimeout(timer);
                             timer = setTimeout(function () {

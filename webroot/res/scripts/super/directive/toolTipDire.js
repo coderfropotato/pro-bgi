@@ -520,10 +520,11 @@ define("superApp.toolTipDire",
                 scope: {
                     myTitle: "=",
                     theadKey: "=",
-                    // PathwayName 必传
-                    id: "=",   // []
-                    compare:"=",
-                    method:"="
+                    // PathwayName的参数，后续的操作需要用到 compareGroup和method
+                    pathwayid: "=",   // []
+                    compare: "=",
+                    method: "=",
+                    //
                 },
                 controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
@@ -554,12 +555,12 @@ define("superApp.toolTipDire",
                             topPos = $($scope.element).offset().top;
 
                             // 需要加a标签的表格
-                            if (/Pathway\sName/g.test($scope.theadKey)) {
+                            if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
                                 var str = '';
                                 str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
 
-                                for (var o = 0; o < $scope.id.length; o++) {
-                                    str += '<a class="jump-to-tools-map-id" title=' + $scope.id[o].id + '>' + $scope.id[o].text + '</a><br>';
+                                for (var o = 0; o < $scope.pathwayid.length; o++) {
+                                    str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
                                 }
 
                                 str += '</div></div>';
@@ -590,13 +591,11 @@ define("superApp.toolTipDire",
                             })
 
                             // 根据不同的表头做不同的逻辑处理
-                            switch ($scope.theadKey) {
-                                case 'Pathway Name':
-                                    obj.find('.jump-to-tools-map-id').on('click', function () {
-                                        var id = $(this).attr('title');
-                                        window.open('../../../../ps/tools/index.html#/home/mapId?map='+id+'&compareGroup='+$scope.compare+'&method='+$scope.method);
-                                    })
-                                    break;
+                            if ($scope.theadKey === 'Pathway Name' && $scope.myTitle.indexOf('//') != -1) {
+                                obj.find('.jump-to-tools-map-id').on('click', function () {
+                                    var id = $(this).attr('title');
+                                    window.open('../../../../ps/tools/index.html#/home/mapId?map=' + id + '&compareGroup=' + $scope.compare + '&method=' + $scope.method);
+                                })
                             }
 
 

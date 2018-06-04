@@ -519,7 +519,8 @@ define("superApp.toolTipDire",
                 restrict: "ACE",
                 scope: {
                     myTitle: "=",
-                    theadKey: "="
+                    theadKey: "=",
+                    id: "="
                 },
                 controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
@@ -549,8 +550,8 @@ define("superApp.toolTipDire",
                             // leftPos = $($scope.element).offset().left - 200;
                             topPos = $($scope.element).offset().top;
 
-                            // pathway id 可以点击
-                            if ($scope.theadKey === 'Pathway ID') {
+                            // 需要加a标签的表格
+                            if (/Pathway\sName/g.test($scope.theadKey)) {
                                 obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"><a class="jump-to-tools-map-id">' + $scope.myTitle + '</a></div></div>');
 
                             } else {
@@ -576,10 +577,15 @@ define("superApp.toolTipDire",
                                 if (obj) obj.remove();
                             })
 
-                            // pathway id 
-                            obj.find('.jump-to-tools-map-id').on('click',function(){
-                                window.open('../../../../ps/tools/index.html#/home/mapId?map'+$scope.myTitle);
-                            })
+                            // 根据不同的表头做不同的逻辑处理
+                            switch ($scope.theadKey) {
+                                case 'Pathway Name':
+                                    obj.find('.jump-to-tools-map-id').on('click', function () {
+                                        window.open('../../../../ps/tools/index.html#/home/mapId?map' + $scope.id);
+                                    })
+                                    break;
+                            }
+
 
                         }).on('mouseleave', function () {
                             if (timer) clearTimeout(timer);

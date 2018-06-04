@@ -1,7 +1,7 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
     <div id="{{theadControlId}}">
-        <div ng-if="isShowTheadControl && !error" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl" data="allTableHeader"
-            handle-thead-change="theadChange(arg)"></div>
+        <div ng-if="isShowTheadControl && !error" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl"
+            data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
     </div>
 
     <div class="tableListPanel" id="{{contentId}}">
@@ -151,7 +151,17 @@
                                 <!-- title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:accuracy)}}" -->
                                 <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in bigTableData.baseThead track by $index"
                                     thead-key="val.name" my-title="row[val.true_key]">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                    <!-- Pathway Name -->
+                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0) && val.name==='Pathway Name'">
+                                        <a ng-href="../tools/index.html#/home/mapId?{{row.mapId}}" target="_blank">
+                                            {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
+                                        </a>
+                                    </span>
+                                    <!-- other -->
+                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0) && val.name!=='Pathway Name'">
+                                        {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
+                                    </span>
+                                    <!-- null -->
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                                 <!-- <td>
@@ -171,7 +181,7 @@
                 <div class="table-nodata" error-type="error"></div>
             </div>
         </div>
-        
+
         <!-- table bottom -->
         <div class="table-bottom" style="position:relative;">
             <div class="pager-grid" ng-hide="error" grid-data="bigTableData" side="left" callback="GetBigTableData(arg1)"></div>

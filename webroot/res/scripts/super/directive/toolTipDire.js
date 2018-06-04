@@ -520,7 +520,10 @@ define("superApp.toolTipDire",
                 scope: {
                     myTitle: "=",
                     theadKey: "=",
-                    id: "="
+                    // PathwayName 必传
+                    id: "=",   // []
+                    compare:"=",
+                    method:"="
                 },
                 controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
@@ -552,7 +555,16 @@ define("superApp.toolTipDire",
 
                             // 需要加a标签的表格
                             if (/Pathway\sName/g.test($scope.theadKey)) {
-                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"><a class="jump-to-tools-map-id">' + $scope.myTitle + '</a></div></div>');
+                                var str = '';
+                                str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+
+                                for (var o = 0; o < $scope.id.length; o++) {
+                                    str += '<a class="jump-to-tools-map-id" title=' + $scope.id[o].id + '>' + $scope.id[o].text + '</a><br>';
+                                }
+
+                                str += '</div></div>';
+
+                                obj = $(str);
 
                             } else {
                                 obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
@@ -581,7 +593,8 @@ define("superApp.toolTipDire",
                             switch ($scope.theadKey) {
                                 case 'Pathway Name':
                                     obj.find('.jump-to-tools-map-id').on('click', function () {
-                                        window.open('../../../../ps/tools/index.html#/home/mapId?map' + $scope.id);
+                                        var id = $(this).attr('title');
+                                        window.open('../../../../ps/tools/index.html#/home/mapId?map='+id+'&compareGroup='+$scope.compare+'&method='+$scope.method);
                                     })
                                     break;
                             }

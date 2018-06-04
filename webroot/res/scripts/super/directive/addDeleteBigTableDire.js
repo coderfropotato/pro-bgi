@@ -34,6 +34,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 scope: {
                     // 获取数据的查询参数
                     pageEntity: "=",
+                    // 查询参数里的比较组对应的method
+                    method:"=",
                     // 获取数据url 
                     url: "=",
                     // 父级容器id
@@ -97,6 +99,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.initPageEntity = $scope.pageEntity;
                 // 其他逻辑请求参数
                 $scope.pageFindEntity = $scope.pageEntity;
+                // 找到默认的方法
+                $scope.method = $scope.method || null;
                 // 精度默认 全数据
                 $scope.accuracy = -1;
                 // 是否显示增删列
@@ -329,6 +333,13 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                             $scope.bigTableData.thead.push(key);
                         }
 
+                        // 找到Pathway Name对应的true_key
+                        for(var k=0;k<$scope.bigTableData.baseThead.length;k++){
+                            if($scope.bigTableData.baseThead[k].name==='Pathway Name'){
+                                $scope.clickKey = $scope.bigTableData.baseThead[k].true_key;
+                            }
+                        }
+
                         // geneUnSelectList 是否包含回来的新数据
                         var isIn = false;
                         $scope.bigTableData.rows.forEach(function (value, index) {
@@ -340,6 +351,18 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                                         isIn = true;
                                     }
                                 }
+                            }
+
+                            // 找需要点击事件的key的id
+                            // Pathway Name
+                            if(value[$scope.clickKey]){
+                                value.pathwayid = [];
+                                value[$scope.clickKey].split(';').forEach(function(val,i){
+                                    value.pathwayid.push({
+                                        text:val,
+                                        id:val.split('//')[0].substring(2)
+                                    })
+                                })
                             }
                         });
 
@@ -546,5 +569,19 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                     }
                 }
             }, true)
+
+
+
+            $scope.getMethods = function(compare){
+                var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));
+                var s = JSON.parse(oolService.sessionStorage.get('SampleDiffList'));
+                var l = g.concat(s);
+                for(var k=0;k<l.length;k++){
+                    if(l[k].name===compare){
+                        return l[k].method;
+                    }
+                }
+                return null;
+            }
         }
     });

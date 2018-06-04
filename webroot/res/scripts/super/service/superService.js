@@ -580,7 +580,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                **          如果不传，默认为dialog-default
            */
 
-            this.popAnalysis = function (taskInfo, callback, popTitle, dialogClass, top, width, height) {
+            this.popAnalysis = function (taskInfo, callback, chartType, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -673,7 +673,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         break;
                                     }
                                 }
-                                callback && callback({ options: { 'type': type, 'check': checkedItems } });
+                                callback && callback({ options: { 'type': type, 'check': checkedItems,'chartType':chartType } });
                                 ngDialog.close();
                             }
                         };

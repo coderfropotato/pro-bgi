@@ -549,17 +549,23 @@ define("superApp.toolTipDire",
                             // leftPos = $($scope.element).offset().left - 200;
                             topPos = $($scope.element).offset().top;
 
+                            // pathway id 可以点击
+                            if ($scope.theadKey === 'Pathway ID') {
+                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"><a class="jump-to-tools-map-id">' + $scope.myTitle + '</a></div></div>');
 
-                            obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                            } else {
+                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                            }
 
                             $('body').append(obj);
-                            obj.css('left',$($scope.element).offset().left- obj.outerWidth());
+                            obj.css('left', $($scope.element).offset().left - obj.outerWidth());
 
                             // 判断极值
                             if (obj.width() > ($($scope.element).offset().left)) {
                                 obj.removeClass('left').addClass('right');
                                 obj.css('left', $($scope.element).offset().left + $($scope.element).outerWidth())
                             }
+
 
                             obj.css('top', topPos - (obj.height() - $($scope.element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
@@ -569,6 +575,12 @@ define("superApp.toolTipDire",
                             }).on('mouseleave', function () {
                                 if (obj) obj.remove();
                             })
+
+                            // pathway id 
+                            obj.find('.jump-to-tools-map-id').on('click',function(){
+                                window.open('../../../../ps/tools/index.html#/home/mapId?map'+$scope.myTitle);
+                            })
+
                         }).on('mouseleave', function () {
                             if (timer) clearTimeout(timer);
                             timer = setTimeout(function () {

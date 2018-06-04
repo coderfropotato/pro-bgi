@@ -29,7 +29,7 @@
         messageUrl: "ps/login/message.html",
         loginUrl: "ps/login/login.html",
         popBDWindowPath: "./include/browser_detect_prompt.html",
-        pathWayPath: "../../pathway/",
+        pathWayPath: "../../report/",
         motifPath: "../../motif/",
 
         apiPath: base_url,

@@ -6,10 +6,12 @@ define(['toolsApp'], function(toolsApp) {
 
         $scope.InitPage = function() {
             // 查询参数
+            var LCID = toolService.sessionStorage.get('LCID');
+            var compareGroup = "";
             $scope.mapIdEntity = {
-                LCID: toolService.sessionStorage.get('LCID'),
-                pageNum: 1,
-                pageSize: 10,
+                "LCID": LCID,
+                "pageNum": 1,
+                "pageSize": 10,
             };
 
             var url = window.location.href;
@@ -20,6 +22,7 @@ define(['toolsApp'], function(toolsApp) {
             console.log(mapId);
 
             $scope.title = 'MapID：' + mapId;
+            $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + compareGroup.method + "_Method_map/" + mapId + ".html";
 
             // $scope.GetmapIdList(1);
         }

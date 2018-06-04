@@ -7,7 +7,6 @@ define(['toolsApp'], function(toolsApp) {
         $scope.InitPage = function() {
             // 查询参数
             var LCID = toolService.sessionStorage.get('LCID');
-            var compareGroup = "";
             $scope.mapIdEntity = {
                 "LCID": LCID,
                 "pageNum": 1,
@@ -17,12 +16,22 @@ define(['toolsApp'], function(toolsApp) {
             var url = window.location.href;
             if (url.indexOf("?") != -1) {
                 var urlArr = url.split("?");
-                var mapId = urlArr[1];
+                var mapPart = urlArr[1];
             }
-            console.log(mapId);
+
+            var mapList = mapPart.split("&");
+            var mapIdList = [];
+            mapList.forEach(function(val, i) {
+                var str = val.substring(val.indexOf("=") + 1, val.length);
+                mapIdList.push(str);
+            })
+
+            var mapId = "map" + mapIdList[0];
+            var compareGroup = mapIdList[1];
+            var method = mapIdList[2];
 
             $scope.title = 'MapID：' + mapId;
-            $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + compareGroup.method + "_Method_map/" + mapId + ".html";
+            $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + method + "_Method_map/" + mapId + ".html";
 
             // $scope.GetmapIdList(1);
         }

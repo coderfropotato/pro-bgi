@@ -563,6 +563,7 @@ define("superApp.toolTipDire",
                                 }
                                 str += '</div></div>';
                                 obj = $(str);
+                                // else if($scope.myTitle.indexOf('GO:') != -1){}
                             } else {
                                 // 有分号的换行
                                 if ($scope.myTitle.indexOf(';') != -1) {

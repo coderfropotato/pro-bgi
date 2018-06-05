@@ -58,7 +58,8 @@ require.config({
         "vennController": "ps/tools/pages/vennController",
         "myAnalysisController": "ps/tools/pages/myAnalysisController",
         "mapIdController": "ps/tools/pages/mapIdController",
-        "errorController": "ps/tools/pages/errorController"
+        "errorController": "ps/tools/pages/errorController",
+        "goClassController": "ps/tools/pages/goClassController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -92,7 +93,8 @@ require([
     "vennController",
     "myAnalysisController",
     "mapIdController",
-    "errorController"
+    "errorController",
+    "goClassController"
 ], function(jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function() {

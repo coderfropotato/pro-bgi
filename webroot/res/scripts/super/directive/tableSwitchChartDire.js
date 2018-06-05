@@ -103,7 +103,6 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
             // 选择图数据的时候
             $scope.onSelect = function (arg) {
-                console.log(arg);
                 $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': arg });
             }
 

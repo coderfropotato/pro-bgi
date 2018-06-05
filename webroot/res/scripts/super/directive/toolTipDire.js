@@ -558,17 +558,26 @@ define("superApp.toolTipDire",
                             if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
                                 var str = '';
                                 str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-
                                 for (var o = 0; o < $scope.pathwayid.length; o++) {
                                     str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
                                 }
-
                                 str += '</div></div>';
-
                                 obj = $(str);
-
                             } else {
-                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                                // 有分号的换行
+                                if ($scope.myTitle.indexOf(';') != -1) {
+                                    var title = $scope.myTitle.split(';');
+                                    var str = '';
+                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                    for (var k = 0; k < title.length; k++) {
+                                        str += '<span>' + title[k] + '</span><br>';
+                                    }
+                                    str += '</div></div>';
+
+                                    obj = $(str);
+                                } else {
+                                    obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                                }
                             }
 
                             $('body').append(obj);

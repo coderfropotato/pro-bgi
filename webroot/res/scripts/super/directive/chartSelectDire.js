@@ -18,7 +18,8 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                     + "</div>",
                 scope: {
                     chartObje: "=",
-                    selectChange: "&"
+                    selectChange: "&",
+                    resetChartSelect: "="
                 },
                 replace: false,
                 transclude: true,
@@ -27,9 +28,9 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
         }
 
         superApp.controller("chartSelectCtr", chartSelectCtr);
-        chartSelectCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+        chartSelectCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "ajaxService", "toolService", "reportService"];
 
-        function chartSelectCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        function chartSelectCtr($rootScope, $scope, $log, $state, $timeout, $window, ajaxService, toolService, reportService) {
             $scope.InitPage = function () {
                 $scope.error = false;
                 $scope.single = true;
@@ -37,10 +38,8 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                 if (!$scope.chartObje || !'selectOn' in $scope.chartObje) {
                     $scope.error = true;
                 } else {
-                    $scope.chartObje.selectOn("single", function (d) {
-                        $scope.selectData = d;
-                        $scope.$apply();
-                    });
+                    // 默认开启单选
+                    $scope.handlerSingle();
                 }
 
             }
@@ -73,11 +72,22 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
 
             $scope.$watch('selectData', function (newVal, oldVal) {
                 // 单选才每次回调 多选只在结束时回调
-                if(newVal!==oldVal){
+                if (newVal !== oldVal) {
                     if ($scope.single) {
                         $scope.selectChange({ arg: $scope.selectData });
                     }
                 }
             }, true)
+
+            // 重置图选择状态
+            $scope.$watch('resetChartSelect', function (newVal, oldVal) {
+                if (newVal) {
+                    $scope.handlerSingle();
+                    $timeout(function () {
+                        $scope.resetChartSelect = false;
+                    }, 0)
+                }
+            }, true)
+
         }
     })

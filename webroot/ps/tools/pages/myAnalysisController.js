@@ -57,11 +57,12 @@ define(['toolsApp'], function (toolsApp) {
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
+                console.log(res);
                 toolService.gridFilterLoading.close("myanalysis-table");
                 if (res.Error) {
                     $scope.analysisError = 'syserror';
                     return;
-                } else if (res.rows.data.length == 0) {
+                } else if (res.data.rows.length == 0) {
                     $scope.analysisError = 'nodata';
                     return;
                 } else {

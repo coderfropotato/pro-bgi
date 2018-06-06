@@ -93,7 +93,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
         function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             toolService.pageLoading.open();
             $scope.InitPage = function () {
-                // $scope.compareGroup = '';
                 $scope.isBeginFilter = false;
                 // 重置时使用
                 $scope.initPageEntity = $scope.pageEntity;
@@ -418,10 +417,13 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             $scope.reanalysisError = false;
             $scope.handlerReanalysis = function (params) {
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
-                $scope.reAnalysisEntity = angular.copy($scope.pageFindEntity);
+
+                $scope.reAnalysisEntity = { entity: '' };
+                $scope.reAnalysisEntity.entity = angular.copy($scope.pageFindEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
-                $scope.reAnalysisEntity.allThead = [];
-                // TODO chartType
+                $scope.reAnalysisEntity.url = angular.copy($scope.url).split('mrna')[1];
+                // $scope.reAnalysisEntity.allThead = [];
+
                 if (params.chartType === 'heatmap') {
                     $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
                 } else {
@@ -435,15 +437,15 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                     $scope.reAnalysisEntity.geneUnselectList.push(key);
                 }
 
-                $scope.bigTableData.baseThead.forEach(function (val, index) {
-                    $scope.reAnalysisEntity.allThead.push(val.true_key);
-                });
+                // 不要allThead 2018年6月6日10:46:06
+                // $scope.bigTableData.baseThead.forEach(function (val, index) {
+                //     $scope.reAnalysisEntity.allThead.push(val.true_key);
+                // });
 
                 var promise = ajaxService.GetDeferData({
                     data: $scope.reAnalysisEntity,
                     url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
                 })
-
                 toolService.pageLoading.open('正在提交重分析申请，请稍后...');
                 promise.then(function (res) {
                     toolService.pageLoading.close();
@@ -455,15 +457,15 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         $scope.$emit('openAnalysisPop');
                         $rootScope.GetAnalysisList(1);
                         toolService.popMesgWindow('重分析提交成功');
-                        if (res.isAnalysis) {
-                            // 打开我的分析面板
-                            $scope.$emit('openAnalysisPop');
-                        } else {
-                            // 跳到详情页
-                            var type = $scope.reAnalysisEntity.chartType;
-                            var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                            $window.open(url);
-                        }
+                        // if (res.isAnalysis) {
+                        // 打开我的分析面板
+                        $scope.$emit('openAnalysisPop');
+                        // } else {
+                        //     // 跳到详情页
+                        //     var type = $scope.reAnalysisEntity.chartType;
+                        //     var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                        //     $window.open(url);
+                        // }
                     }
                 }, function (err) {
                     toolService.popMesgWindow(err);

@@ -51,6 +51,8 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     isSelectChartData: "=",
                     // 图选择数据回调
                     chartSelectFn: "&",
+                    // 刷新点击回调
+                    handlerRefreshClick:"&"
                 },
                 replace: false,
                 transclude: true,
@@ -67,9 +69,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.showAccuracy = !!$scope.showAccuracy;
                 $scope.error = false;
                 $scope.isSelectChartData = !!$scope.isSelectChartData;
+                $scope.resetChartSelect = false;
                 $scope.GetTableData();
             }
 
+            
             $scope.GetTableData = function () {
                 toolService.gridFilterLoading.open($scope.panelId);
                 var ajaxConfig = {
@@ -97,8 +101,15 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             $scope.handlerSelectChange = function () {
-                $scope.GetTableData(1);
+                $scope.GetTableData();
                 $scope.selectChangeCallback && $scope.selectChangeCallback({ arg: $scope.pageEntity[$scope.paramsKey] })
+            }
+
+            // 刷新
+            $scope.handlerRefresh = function(){
+                $scope.resetChartSelect = true;
+                $scope.GetTableData();
+                $scope.handlerRefreshClick && $scope.handlerRefreshClick();
             }
 
             // 选择图数据的时候

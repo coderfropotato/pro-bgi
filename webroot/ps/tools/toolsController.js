@@ -43,12 +43,12 @@ define(['toolsApp'], function (toolsApp) {
                 if (res.Error) {
                     $rootScope.analysisError = 'syserror';
                     return;
-                } else if (res.rows.length == 0) {
+                } else if (res.data.rows.length == 0) {
                     $rootScope.analysisError = 'nodata';
                     $rootScope.analysis = [];
                     return;
                 } else {
-                    $rootScope.analysis = res.rows;
+                    $rootScope.analysis = res.data.rows;
                     $rootScope.analysisError = false;
                 }
             }, function () {

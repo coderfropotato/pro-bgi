@@ -612,7 +612,7 @@ define("superApp.toolTipDire",
                         }).on('mouseleave', function () {
                             if (timer) clearTimeout(timer);
                             timer = setTimeout(function () {
-                                obj.remove();
+                                if(obj) obj.remove();
                             }, 50)
                         })
                         // }

@@ -52,7 +52,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 图选择数据回调
                     chartSelectFn: "&",
                     // 刷新点击回调
-                    handlerRefreshClick:"&"
+                    handlerRefreshClick: "&"
                 },
                 replace: false,
                 transclude: true,
@@ -70,10 +70,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.error = false;
                 $scope.isSelectChartData = !!$scope.isSelectChartData;
                 $scope.resetChartSelect = false;
+                $scope.isFirst = true;
                 $scope.GetTableData();
             }
 
-            
+
             $scope.GetTableData = function () {
                 toolService.gridFilterLoading.open($scope.panelId);
                 var ajaxConfig = {
@@ -91,7 +92,14 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         $scope.error = "";
                         $scope.tableData = responseData;
                         $scope.chartData = $scope.tabletochart ? $scope.tabletochart({ res: responseData }) : angular.copy($scope.tableData);
-                        $scope.chart = $scope.drawchart({ data: $scope.chartData });
+                        if ($scope.isFirst) {
+                            $scope.chart = $scope.drawchart({ data: $scope.chartData });
+                        } else {
+                            $scope.chart.options.data = $scope.chartData;
+                            $scope.chart.redraw(800);
+                            $scope.resetChartSelect = true;
+                        }
+                        $scope.isFirst = false;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
                 }, function (errorMesg) {
@@ -106,8 +114,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             // 刷新
-            $scope.handlerRefresh = function(){
-                $scope.resetChartSelect = true;
+            $scope.handlerRefresh = function () {
                 $scope.GetTableData();
                 $scope.handlerRefreshClick && $scope.handlerRefreshClick();
             }

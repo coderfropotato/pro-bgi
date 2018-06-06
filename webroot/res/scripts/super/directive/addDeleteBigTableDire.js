@@ -169,6 +169,21 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 })
             }
 
+            // watch genelist flag的改变
+            if ($scope.geneListChangeFlag != undefined && $scope.geneListChangeFlag != null) {
+                $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
+                    if (newVal !==oldVal)
+                        if (newVal) {
+                            // 有数据才更新
+                            $scope.handlerGeneListChangeCommon($scope.geneList);
+                            $timeout(function () {
+                                // 自动重置为初始状态 为了触发下一次change
+                                $scope.geneListChangeFlag = false;
+                            }, 0)
+                        }
+                })
+            }
+
             // 指定外部调用筛选指令的查询参数集合
             $scope.geneidCustomSearchType = "$in";
             $scope.geneidCustomSearchOne = "";
@@ -226,23 +241,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.handlerGeneListChangeCommon(geneList);
             }
 
-            // watch genelist flag的改变
-            $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
-                if (newVal != oldVal) {
-                    if (newVal) {
-                        // 有数据才更新
-                        if (!$scope.error) {
-                            $scope.handlerGeneListChangeCommon($scope.geneList);
-                            $timeout(function () {
-                                // 自动重置为初始状态 为了触发下一次change
-                                $scope.geneListChangeFlag = false;
-                            }, 30)
-                        } else {
-                            $scope.geneListChangeFlag = false;
-                        }
-                    }
-                }
-            }, true)
+
 
             // thead change event
             $scope.theadChange = function (a) {

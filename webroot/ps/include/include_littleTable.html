@@ -1,5 +1,5 @@
 <div id="{{panelId}}" ng-init="InitPage()" class="tableListPanel">
-    <div class="btn_options_filelist clearfix">
+    <div ng-hide="isNoDataHide && error" class="btn_options_filelist clearfix">
         <ul class="ul_left">
             <li>
                 <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
@@ -34,7 +34,7 @@
             </li>
         </ul>
     </div>
-    <div class="table_scroll_wrap" ng-hide="error">
+    <div class="table_scroll_wrap" ng-hide="isNoDataHide && error">
         <div id="{{tablePanelId}}">
             <table ng-hide="error" class="table table-bordered table-hover table-striped table_grid table-fixed">
                 <thead>
@@ -55,4 +55,5 @@
             </table>
         </div>
     </div>
+    <div ng-if="!isNoDataHide" class="table-nodata" error-type="error"></div>
 </div>

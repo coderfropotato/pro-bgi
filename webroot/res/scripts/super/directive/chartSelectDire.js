@@ -42,6 +42,8 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                     $scope.handlerSingle();
                 }
 
+                console.log($scope.chartObje)
+
             }
 
 
@@ -77,17 +79,21 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                         $scope.selectChange({ arg: $scope.selectData });
                     }
                 }
-            }, true)
+            })
 
             // 重置图选择状态
             $scope.$watch('resetChartSelect', function (newVal, oldVal) {
-                if (newVal) {
-                    $scope.handlerSingle();
-                    $timeout(function () {
-                        $scope.resetChartSelect = false;
-                    }, 0)
+                console.log(newVal,oldVal)
+                if (newVal !== oldVal) {
+                    if (newVal) {
+                        $scope.handlerSingle();
+                        $timeout(function () {
+                            $scope.resetChartSelect = false;
+                            $scope.$apply();
+                        }, 0)
+                    }
                 }
-            }, true)
+            })
 
         }
     })

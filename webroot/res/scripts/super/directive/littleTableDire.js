@@ -33,7 +33,10 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     key: "=", // selectList：[{key:"sample111"}]中的key；若selectList：["ssss","aaa"]没有key，不传
                     //是否选择精度
                     isHasAccuracy: "=",
-                    accuracy: "="
+                    accuracy: "=",
+                    // 无数据是否需要隐藏
+                    tableTitle:"@",
+                    isNoDataHide:"=",
                 },
                 replace: false,
                 transclude: true,
@@ -56,6 +59,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                 if ($scope.isHasAccuracy) {
                     $scope.accuracy = -1;
                 }
+                $scope.isNoDataHide = !!$scope.isNoDataHide;
                 $scope.GetTableData();
             }
 

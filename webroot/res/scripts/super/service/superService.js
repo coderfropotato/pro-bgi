@@ -198,7 +198,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.HideLoading(); //关闭页面等待蒙版
                             toolService.popLoading.close(); //关闭页面等待效果2
                             // toolService.popMesgWindow("对不起，服务器无响应，请尝试重新登录并重试！");
-                            console.error("对不起，服务器无响应，请尝试重新登录并重试！")
+                            // console.error("对不起，服务器无响应，请尝试重新登录并重试！")
                             deferred.reject(data); // 声明执行失败，即服务器返回错误  
                         }
                         catch (e) { }
@@ -317,8 +317,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
         //工具类
         superApp.service("toolService", toolService);
-        toolService.$inject = ["$rootScope", "$log", "$state", "$filter", "$window", "$sce", "ngDialog", "$cookies"];
-        function toolService($rootScope, $log, $state, $filter, $window, $sce, ngDialog, $cookies) {
+        toolService.$inject = ["$rootScope", "$log", "$state", "$filter", "$window", "$sce", "ngDialog", "$cookies", "reportService"];
+        function toolService($rootScope, $log, $state, $filter, $window, $sce, ngDialog, $cookies, reportService) {
             /*
             ** 功能简介：操作成功后返回提示信息
             ** 参数说明：
@@ -673,7 +673,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         break;
                                     }
                                 }
-                                callback && callback({ options: { 'type': type, 'check': checkedItems,'chartType':chartType } });
+                                callback && callback({ options: { 'type': type, 'check': checkedItems, 'chartType': chartType } });
                                 ngDialog.close();
                             }
                         };
@@ -2334,5 +2334,31 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     });
                 }
             }
+
+
+            // gooal-chart 图改色
+            // panelid 面板的id  scale 默认宽度缩放比例1  chartObj图对象
+            this.chartChangeColor = function (panelid, scale, chartObj) {
+                var scale = scale || 1;
+                var index = '';
+                groupedbarGetItem();
+                function groupedbarGetItem() {
+                    chartObj.getLegendItem(function (d, i) {
+                        reportService.selectColor(changeColorCallback);
+                        index = i;
+                    })
+
+                    function changeColorCallback(color2) {
+                        color = color2;
+                        chartObj.changeColor(index, color2);
+                        groupedbarChangeColor(color2);
+                    }
+                }
+                function groupedbarChangeColor(color) {
+                    chartObj.redraw($("#" + panelid + " .graph_header").eq(0).width() * scale)
+                    groupedbarGetItem();
+                }
+            }
+
         };
     });

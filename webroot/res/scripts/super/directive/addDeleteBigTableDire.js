@@ -109,6 +109,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
                 // 是否需要重分析
                 $scope.isReanalysis = !!$scope.isReanalysis;
+                // 选择的基因数量
+                $scope.geneCount = 0;
                 // 获取表格数据
                 $scope.GetBigTableData(1);
             };
@@ -319,11 +321,14 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 promise.then(function (responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
+                        $scope.geneCount = 0;
                     } else if (responseData.length == 0) {
                         $scope.error = "nodata";
+                        $scope.geneCount = 0;
                     } else {
                         $scope.error = "";
                         $scope.bigTableData = responseData;
+                        $scope.geneCount = $scope.bigTableData.total - $scope.geneUnselectListLength;
                         $scope.bigTableData.thead = [];
                         // 第零个就是geneid
                         $scope.geneid = $scope.bigTableData.baseThead[0];
@@ -370,6 +375,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
 
                     toolService.gridFilterLoading.close($scope.tableId);
                 }, function (errorMesg) {
+                    $scope.geneCount = 0;
                     toolService.gridFilterLoading.close($scope.tableId);
                     $scope.error = "syserror";
                 });
@@ -411,7 +417,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // 重分析服务回调
             $scope.reanalysisError = false;
             $scope.handlerReanalysis = function (params) {
-                console.log(params)
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
                 $scope.reAnalysisEntity = angular.copy($scope.pageFindEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
@@ -566,6 +571,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                             $scope.geneUnselectListLength++;
                         }
                     }
+                    $scope.geneCount = $scope.bigTableData.total - $scope.geneUnselectListLength;
                 }
             }, true)
 

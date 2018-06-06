@@ -78,6 +78,10 @@ define([
                 url: "/home/mapId",
                 templateUrl: "../tools/pages/mapId.html",
             })
+            .state("goClass", {
+                url: "/home/goClass/:id/:projectName",
+                templateUrl: "../tools/pages/goClass.html",
+            })
             .state("error", {
                 url: "/home/error/:id",
                 templateUrl: "../tools/pages/error.html",

@@ -37,7 +37,10 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                 if (!$scope.chartObje || !'selectOn' in $scope.chartObje) {
                     $scope.error = true;
                 } else {
-                    $scope.chartObje.selectOn("single", $scope.selectData);
+                    $scope.chartObje.selectOn("single", function (d) {
+                        $scope.selectData = d;
+                        $scope.$apply();
+                    });
                 }
 
             }
@@ -46,13 +49,21 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
             // 开启单选
             $scope.handlerSingle = function () {
                 $scope.single = true;
-                $scope.chartObje.selectOn("single", $scope.selectData);
+                $scope.chartObje.selectOff()
+                $scope.chartObje.selectOn("single", function (d) {
+                    $scope.selectData = d;
+                    $scope.$apply();
+                });
             }
 
             // 开启多选
             $scope.handlerMultiple = function () {
                 $scope.single = false;
-                $scope.chartObje.selectOn("multiple", $scope.selectData);
+                $scope.chartObje.selectOff();
+                $scope.chartObje.selectOn("multiple", function (d) {
+                    $scope.selectData = d;
+                    $scope.$apply();
+                });
             }
 
             // 多选确定
@@ -60,12 +71,13 @@ define("superApp.chartSelectDire", ["angular", "super.superMessage", "select2"],
                 $scope.selectChange({ arg: $scope.selectData });
             }
 
-            // $scope.$watch('selectData', function (newVal, oldVal) {
-            //     console.log(newVal,oldVal)
-            //     // 单选才每次回调 多选只在结束时回调
-            //     if ($scope.single) {
-            //         $scope.selectChange({ arg: $scope.selectData });
-            //     }
-            // }, true)
+            $scope.$watch('selectData', function (newVal, oldVal) {
+                // 单选才每次回调 多选只在结束时回调
+                if(newVal!==oldVal){
+                    if ($scope.single) {
+                        $scope.selectChange({ arg: $scope.selectData });
+                    }
+                }
+            }, true)
         }
     })

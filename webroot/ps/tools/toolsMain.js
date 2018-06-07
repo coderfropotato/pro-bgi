@@ -53,13 +53,22 @@ require.config({
 
         'toolsApp': 'ps/tools/toolsApp',
         'toolsController': 'ps/tools/toolsController',
+
+        "errorController": "ps/tools/pages/errorController",
+
+        "mapIdController": "ps/tools/pages/mapIdController",
+
+        "myAnalysisController": "ps/tools/pages/myAnalysisController",
+
+        "vennController": "ps/tools/pages/vennController",
         "heatmapGroupController": "ps/tools/pages/heatmapGroupController",
         "heatmapSampleController": "ps/tools/pages/heatmapSampleController",
-        "vennController": "ps/tools/pages/vennController",
-        "myAnalysisController": "ps/tools/pages/myAnalysisController",
-        "mapIdController": "ps/tools/pages/mapIdController",
-        "errorController": "ps/tools/pages/errorController",
-        "goClassController": "ps/tools/pages/goClassController"
+        "goClassController": "ps/tools/pages/goClassController",
+        "goRichController": "ps/tools/pages/goRichController",
+        "pathwayClassController": "ps/tools/pages/pathwayClassController",
+        "pathwayRichController": "ps/tools/pages/pathwayRichController",
+        "netController": "ps/tools/pages/netController",
+        "lineController": "ps/tools/pages/lineController",
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -88,13 +97,19 @@ require([
     "pageFactory",
     'toolsApp',
     'toolsController',
+    "errorController",
+    "mapIdController",
+    "myAnalysisController",
+
+    "vennController",
     "heatmapGroupController",
     "heatmapSampleController",
-    "vennController",
-    "myAnalysisController",
-    "mapIdController",
-    "errorController",
-    "goClassController"
+    "goClassController",
+    "goRichController",
+    "pathwayClassController",
+    "pathwayRichController",
+    "netController",
+    "lineController"
 ], function(jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function() {

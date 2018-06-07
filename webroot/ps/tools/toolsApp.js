@@ -82,10 +82,31 @@ define([
                 url: "/home/goClass/:id/:projectName",
                 templateUrl: "../tools/pages/goClass.html",
             })
-            .state("error", {
-                url: "/home/error/:id",
-                templateUrl: "../tools/pages/error.html",
+            .state("goRich", {
+                url: "/home/goRich/:id/:projectName",
+                templateUrl: "../tools/pages/goRich.html",
             })
+            .state("pathwayClass", {
+                url: "/home/pathwayClass/:id/:projectName",
+                templateUrl: "../tools/pages/pathwayClass.html",
+            })
+            .state("pathwayRich", {
+                url: "/home/pathwayRich/:id/:projectName",
+                templateUrl: "../tools/pages/pathwayRich.html",
+            })
+            .state("line", {
+                url: "/home/line/:id/:projectName",
+                templateUrl: "../tools/pages/line.html",
+            })
+            .state("net", {
+                url: "/home/net/:id/:projectName",
+                templateUrl: "../tools/pages/net.html",
+            })
+
+        .state("error", {
+            url: "/home/error/:id",
+            templateUrl: "../tools/pages/error.html",
+        })
 
         $httpProvider.interceptors.push("tokenInterceptorFactory");
     }]);

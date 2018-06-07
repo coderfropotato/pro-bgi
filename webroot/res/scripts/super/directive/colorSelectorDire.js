@@ -9,7 +9,7 @@
 
 
 define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.colorSelectorDire", []);
 
 
@@ -44,7 +44,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                     isShow: "=",
                     getCurColor: "&"
                 },
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     $(element).parent().css("position", "relative");
                 },
                 controller: "colorSelectorCtr"
@@ -57,16 +57,10 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
         function colorSelectorCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.colorList = ["#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0", "#000000", "#FFE5E5", "#FFF9E5", "#FFFFE5", "#F4FAED", "#E5F7ED", "#E5F7FD", "#E5F0F9", "#E5E8EF", "#F0EAF5", "#EFEFEF", "#FFCCCC", "#FFF2CC", "#FFFFCC", "#E9F6DC", "#CCEFDC", "#CCEFFC", "#CCE2F2", "#CCD2DF", "#E2D6EC", "#DFDFDF", "#FF9999", "#FFE699", "#FFFF99", "#D3ECB9", "#99DF89", "#99DFF9", "#99C6E6", "#99A6BF", "#C6ACD9", "#BFBFBF", "#FF6666", "#FFD966", "#FFFF66", "#BEE396", "#66D096", "#66D0F6", "#66A9D9", "#6679A0", "#A983C6", "#A0A0A0", "#FF3333", "#FFCD33", "#FFFF33", "#A8D973", "#33C073", "#33C3F3", "#338DCD", "#334D80", "#8D59B3", "#000000"];
 
-            $(document).on("click", function() {
-                    $scope.isShow = false;
-                    try {
-                        $scope.$apply();
-                    } catch (error) {
-                        console.log(error);
-                    }
-
-                })
-                //rgb颜色转换成16进制颜色值
+            $(document).on("click", function () {
+                $scope.isShow = false;
+            })
+            //rgb颜色转换成16进制颜色值
             function RGBToHex(rgb) {
                 if (rgb.indexOf("#") != -1) {
                     return rgb.toLowerCase();
@@ -116,7 +110,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 }
             }
 
-            $scope.SetColor = function($event, color) {
+            $scope.SetColor = function ($event, color) {
                 clearEventBubble($event);
                 var curColor = RGBToHex(color);
                 $scope.isShow = false;

@@ -54,7 +54,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 刷新点击回调
                     handlerRefreshClick: "&",
                     // 图的宽度比例 scale
-                    scale:"="
+                    scale:"=",
+                    // 是否只要单选
+                    onlySingle:"="
                 },
                 replace: false,
                 transclude: true,
@@ -73,7 +75,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.isSelectChartData = !!$scope.isSelectChartData;
                 $scope.resetChartSelect = false;
                 $scope.isFirst = true;
-
+                $scope.onlySingle = !!$scope.onlySingle;
                 $scope.scale = $scope.scale || 0.8;
                 $scope.GetTableData();
             }

@@ -572,10 +572,14 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                             $scope.geneUnselectListLength++;
                         }
                     }
-                    $scope.geneCount = $scope.bigTableData.total - $scope.geneUnselectListLength;
+                    if($scope.bigTableData && $scope.bigTableData.total){
+                        var count = $scope.bigTableData.total;
+                    }else{
+                        count = 0;
+                    }
+                    $scope.geneCount = count - $scope.geneUnselectListLength;
                 }
             }, true)
-
 
 
             $scope.getMethods = function (compare) {

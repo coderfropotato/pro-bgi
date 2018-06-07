@@ -554,7 +554,7 @@ define("superApp.toolTipDire",
                             // leftPos = $($scope.element).offset().left - 200;
                             topPos = $($scope.element).offset().top;
 
-                            // 需要加a标签的表格
+                            // 如果是ko
                             if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
                                 var str = '';
                                 str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
@@ -563,9 +563,59 @@ define("superApp.toolTipDire",
                                 }
                                 str += '</div></div>';
                                 obj = $(str);
-                                // else if($scope.myTitle.indexOf('GO:') != -1){}
+
+                            } else if ($scope.myTitle.indexOf('GO:') != -1) {
+                                // 如果是带有 中括号 的GO：
+                                if (/\[[^]\]/g.test($scope.myTitle)) {
+                                    var arr = $scope.myTitle.split(';');
+                                    var str = '';
+                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                    for (var o = 0; o < arr.length; o++) {
+                                        // 有括号的 把中括号里面的拿出来
+                                        var index = arr[o].indexOf('[');
+                                        var lastIndex = arr[o].indexOf(']');
+                                        if (index != -1 && lastIndex != -1) {
+                                            if (arr[o]) {
+                                                var gotext = arr[o].substring(lastIndex + 1);
+                                                var goid = gotext.split(':')[1].split('//')[0];
+                                                var flag = arr[o].substring(index, lastIndex + 1);
+                                                str += '<span>' + flag + '</span><br>';
+                                                str += '<a class="go-jump" title=' + goid + '>' + arr[o].substring(lastIndex + 1) + '</a><br>'
+                                            }
+                                        } else {
+                                            if (arr[o]) {
+                                                str += '<a class="go-jump" title=' + arr[o].split(':')[1].split('//')[0] + '>' + arr[o] + '</a><br>';
+                                            }
+                                        }
+                                    }
+                                    str += '</div></div>';
+                                    obj = $(str);
+                                }else{
+                                    // GO:
+                                    var arr = $scope.myTitle.split(';')
+                                    var str = '';
+                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                    for(var i=0;i<arr.length;i++){
+                                        str += '<a class="go-jump" title=' + arr[i].split(':')[1].split('//')[0] + '>' + arr[i] + '</a><br>';
+                                    }
+                                    str += '</div></div>';
+                                    obj = $(str);
+                                }
+                            }else if(/\[[^]\]/g.test($scope.myTitle)){
+                                // 只有中括号 没有GO:
+                                var arr = $scope.myTitle.split(';');
+                                var str = '';
+                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                for(var k=0;k<arr.length;k++){
+                                    if(/\[[^]\]/g.test(arr[k])){
+                                        var flag = arr[k].substring(arr[k].indexOf('['),arr[k].indexOf(']') + 1);
+                                        str += '<span>' + flag + '</span><br>';
+                                    }
+                                    str += '<span class="kh-text">' + arr[k].substring(arr[k].indexOf(']') + 1) + '</span><br>'
+                                }
+                                str += '</div></div>';
+                                obj = $(str);
                             } else {
-                                // 有分号的换行
                                 if ($scope.myTitle.indexOf(';') != -1) {
                                     var title = $scope.myTitle.split(';');
                                     var str = '';
@@ -600,19 +650,29 @@ define("superApp.toolTipDire",
                                 if (obj) obj.remove();
                             })
 
+                            
                             // 根据不同的表头做不同的逻辑处理
-                            if ($scope.theadKey === 'Pathway Name' && $scope.myTitle.indexOf('//') != -1) {
-                                obj.find('.jump-to-tools-map-id').on('click', function () {
+                            // mapid
+                            var mapIdObj = obj.find('.jump-to-tools-map-id');
+                            if(mapIdObj.length){
+                                mapIdObj.on('click', function () {
                                     var id = $(this).attr('title');
                                     window.open('../../../../ps/tools/index.html#/home/mapId?map=' + id + '&compareGroup=' + $scope.compare + '&method=' + $scope.method);
                                 })
                             }
-
+                            //  go 
+                            var goObj = obj.find('.go-jump');
+                            if(goObj.length){
+                                goObj.on('click',function(){
+                                    var id = $(this).attr('title');
+                                    window.open('http://amigo.geneontology.org/amigo/medial_search?q=GO:'+id);
+                                })
+                            }
 
                         }).on('mouseleave', function () {
                             if (timer) clearTimeout(timer);
                             timer = setTimeout(function () {
-                                if(obj) obj.remove();
+                                if (obj) obj.remove();
                             }, 50)
                         })
                         // }

@@ -15,7 +15,8 @@ define("superApp.reAnalysisDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='re-analysis-panel clearfix'>"
-                    + "<ul class='pull-right clearfix'>"
+               
+                    + "<ul class='pull-right clearfix'>" 
                     + "<li class='pull-left tool-tip' title='聚类重分析' ng-click=\"handlerReanalysisClick('heatmap')\">聚类重分析</li>"
                     + "<li class='pull-left tool-tip' title='GO富集' ng-click=\"handlerReanalysisClick('goRich')\">GO富集</li>"
                     + "<li class='pull-left tool-tip' title='Pathway富集' ng-click=\"handlerReanalysisClick('pathwayRich')\">Pathway富集</li>"

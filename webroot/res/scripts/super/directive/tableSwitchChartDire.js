@@ -52,7 +52,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 图选择数据回调
                     chartSelectFn: "&",
                     // 刷新点击回调
-                    handlerRefreshClick: "&"
+                    handlerRefreshClick: "&",
+                    // 图的宽度比例 scale
+                    scale:"="
                 },
                 replace: false,
                 transclude: true,
@@ -71,6 +73,8 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.isSelectChartData = !!$scope.isSelectChartData;
                 $scope.resetChartSelect = false;
                 $scope.isFirst = true;
+
+                $scope.scale = $scope.scale || 0.8;
                 $scope.GetTableData();
             }
 
@@ -94,10 +98,13 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         $scope.chartData = $scope.tabletochart ? $scope.tabletochart({ res: responseData }) : angular.copy($scope.tableData);
                         if ($scope.isFirst) {
                             $scope.chart = $scope.drawchart({ data: $scope.chartData });
+                            $scope.applyChangeColor();
+                            if($scope.isSelectChartData) $scope.handlerSingle();
                         } else {
                             $scope.chart.options.data = $scope.chartData;
-                            $scope.chart.redraw(800);
-                            $scope.resetChartSelect = true;
+                            $scope.chart.redraw($('.graph_header').eq(0).width()*$scope.scale);
+                            $scope.applyChangeColor();
+                            if($scope.isSelectChartData) $scope.handlerSingle();
                         }
                         $scope.isFirst = false;
                     }
@@ -124,15 +131,85 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': arg });
             }
 
-            // // redraw
-            // var timer = null;
-            // window.removeEventListener('resize', handlerResize);
-            // window.addEventListener('resize', handlerResize, false)
-            // function handlerResize() {
-            //     clearTimeout(timer);
-            //     timer = setTimeout(function () {
-            //         if($scope.chart) $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * 0.9)
-            //     }, 100)
-            // }
+            // 改色
+            $scope.applyChangeColor = function(){
+                (function changeColor() {
+                    groupedbarGetItem();
+                    var index = '';
+                    function groupedbarGetItem() {
+                        $scope.chart.getLegendItem(function (d, i) {
+                            reportService.selectColor(changeColorCallback);
+                            index = i;
+                        })
+                        function changeColorCallback(color2) {
+                            color = color2;
+                            $scope.chart.changeColor(index, color2);
+                            $scope.chart.options.dataBox.normalColor[index] = [color2];
+                            groupedbarChangeColor(color2);
+                        }
+                    }
+                    function groupedbarChangeColor(color) {
+                        $scope.chart.redraw($('#' + $scope.contentId + ' .graph_header').eq(0).width() * $scope.scale);
+                        $scope.applyChangeColor();
+                        if($scope.isSelectChartData) $scope.handlerSingle();
+                        groupedbarGetItem();
+                    }
+                })()
+            }
+
+
+            // 选择图数据
+            $scope.single = true;
+            $scope.selectData = [];
+
+            // 开启单选
+            $scope.handlerSingle = function () {
+                $scope.single = true;
+                $scope.chart.selectOff()
+                $scope.chart.selectOn("single", function (d) {
+                    $scope.selectData = d;
+                    $scope.$apply();
+                });
+            }
+
+            // 开启多选
+            $scope.handlerMultiple = function () {
+                $scope.single = false;
+                $scope.chart.selectOff();
+                $scope.chart.selectOn("multiple", function (d) {
+                    $scope.selectData = d;
+                    $scope.$apply();
+                });
+            }
+
+            // 多选确定
+            $scope.handlerConfirm = function () {
+                $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
+            }
+
+            $scope.$watch('selectData', function (newVal, oldVal) {
+                // 单选才每次回调 多选只在结束时回调
+                if (newVal !== oldVal) {
+                    if ($scope.single) {
+                        $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
+                    }
+                }
+            })
+
+
+            // redraw
+            var timer = null;
+            window.removeEventListener('resize', handlerResize);
+            window.addEventListener('resize', handlerResize, false)
+            function handlerResize() {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    if($scope.chart) {
+                        $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
+                        $scope.applyChangeColor();
+                        if($scope.isSelectChartData) $scope.handlerSingle();
+                    }
+                }, 100)
+            }
         }
     })

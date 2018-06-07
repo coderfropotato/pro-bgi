@@ -17,7 +17,9 @@
                 </ul>
                 <ul class="fRight">
                     <li ng-show="!isTableShow && isSelectChartData">
-                        <div ng-if="chart && !error"  class="chart-select" chart-obje="chart" select-change="onSelect(arg)" reset-chart-select="resetChartSelect"></div>
+                        <button ng-show="!single" ng-click="handlerSingle()" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
+                        <button style="margin-right:12px;" ng-if="single" ng-click="handlerMultiple()" class="btn btn-sm btn-silver btn-default tool-tip" title="多选">多选</button>
+                        <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <!-- 精度 -->
                     <li ng-show="isTableShow && showAccuracy">

@@ -126,6 +126,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                                         $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
                                         // 重置状态 触发下次watch
                                         $scope.isResetTableStatus = false;
+                                        // 重置选择的基因集
+                                        $scope.geneidCustomSearchOne = '';
                                     }, 30)
                                 }, 0);
                             }

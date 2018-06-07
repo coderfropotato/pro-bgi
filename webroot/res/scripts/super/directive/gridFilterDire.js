@@ -502,7 +502,7 @@ define("superApp.gridFilterDire",
                     searchType: "=",
                     tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
                     geneidtruekey: "=",
-                    eventName:"=",             // 手动接受改变的searchOne的自定义事件名
+                    eventName: "=",             // 手动接受改变的searchOne的自定义事件名
                     filterStatusCallback: "&"        // 是否筛选中，定义外部布局样式
                 },
                 template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
@@ -562,7 +562,7 @@ define("superApp.gridFilterDire",
                                 var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                                 $scope.compileTemplate(curPanel, 0);
                             }, 30);
-                        }
+                        } 
                     }
                 }, true);
             }

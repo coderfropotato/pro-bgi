@@ -124,6 +124,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
             // 刷新
             $scope.handlerRefresh = function () {
+                $scope.selectData = [];
                 $scope.GetTableData();
                 $scope.handlerRefreshClick && $scope.handlerRefreshClick();
             }

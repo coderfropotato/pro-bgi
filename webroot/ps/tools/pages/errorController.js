@@ -22,7 +22,6 @@ define(['toolsApp'], function (toolsApp) {
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
-                console.log(res)
                 if (res.status != 200) {
                     $scope.error = 'syserror';
                     return;

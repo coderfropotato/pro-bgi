@@ -28,7 +28,8 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     // pdfExportUrl: "=",
                     isExportPdf: "=",
                     findEntity: "=",
-                    exportLocation: "="
+                    exportLocation: "=",
+                    isExportSvg: "="
                 },
                 controller: "staticImgExportController",
                 link: function(scope, element, attrs) {
@@ -38,10 +39,12 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     var LI_1 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'png')\" href=\"javascript:;\">导出 PNG 格式图片</a></li>")(scope);
                     var LI_2 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'jpg')\" href=\"javascript:;\">导出 JPG 格式图片</a></li>")(scope);
                     var LI_3 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'pdf')\" href=\"javascript:;\">导出 PDF 格式文件</a></li>")(scope);
+                    var LI_4 = $compile("<li><a ng-click=\"export('" + attrs.chartid + "', '" + attrs.saveimgname + "', 'svg')\" href=\"javascript:;\">导出 svg 格式文件</a></li>")(scope);
 
                     $dropdownMenu.append(LI_1);
                     $dropdownMenu.append(LI_2);
                     if (scope.isExportPdf) $dropdownMenu.append(LI_3);
+                    if (scope.isExportSvg) $dropdownMenu.append(LI_4);
                 }
             };
         };
@@ -56,13 +59,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     saveImgName = "图表";
                 }
                 if (!type) {
-                    type = "image/png";
-
-                } else if ("jpg" == type) {
-                    type = "image/jpeg";
-
-                } else if ("png" == type) {
-                    type = "image/png";
+                    type = "png";
                 }
                 if (chartid) {
                     DownLoadImage(chartid, saveImgName, type);
@@ -84,7 +81,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
 
             //下载
             function DownLoadImage(chartid, saveImgName, type) {
-                type = type ? type : "image/png";
+                type = type ? type : "png";
                 var $chartDiv = $("#" + chartid);
                 var $img = $chartDiv.find('img:visible').eq(0);
 
@@ -104,10 +101,10 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                 }
 
                 function download() {
-                    if (type != "pdf") {
+                    if (type == "jpg" || type == "png") {
                         var a = document.createElement('a');
                         a.href = base64;
-                        a.download = type == "image/png" ? saveImgName + ".png" : saveImgName + ".jpg";
+                        a.download = type == "png" ? saveImgName + ".png" : saveImgName + ".jpg";
                         a.click();
                     } else {
                         // // pdf
@@ -130,7 +127,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                         // oReq.send();
 
                         $scope.findEntity.IsExportReport = true;
-                        toolService.pageLoading.open("正在为您导出pdf，请稍候...", 200);
+                        toolService.pageLoading.open("正在为您导出，请稍候...", 200);
                         var ajaxConfig = {
                             data: $scope.findEntity,
                             url: $scope.exportLocation
@@ -143,7 +140,20 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                 } else {
                                     //正常
                                     var fileInfo = responseData;
-                                    console.log(fileInfo);
+
+                                    if (type == "svg") {
+                                        var svgXml = fileInfo.substring(fileInfo.indexOf("<svg"), fileInfo.lastIndexOf("</svg>"));
+                                        var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
+                                        var a = document.createElement('a');
+                                        document.body.appendChild(a);
+                                        a.href = href;
+                                        a.download = saveImgName + ".svg";
+                                        setTimeout(function() {
+                                            a.click();
+                                            a.remove();
+                                        }, 200);
+                                    }
+
                                 }
                                 toolService.pageLoading.close();
                             },

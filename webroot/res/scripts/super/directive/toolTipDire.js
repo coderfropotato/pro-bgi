@@ -537,9 +537,9 @@ define("superApp.toolTipDire",
         popoverTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
         function popoverTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             if ($scope.myTitle || $scope.myTitle == 0) {
-                // if ((!$scope.myTitle && $scope.myTitle != 0) || typeof $scope.myTitle != 'string') {
-                //     return;
-                // }
+                if ((!$scope.myTitle && $scope.myTitle != 0) || typeof $scope.myTitle != 'string') {
+                    return;
+                }
                 // if (/go|kegg|nr|annotation|evalue/gi.test($scope.theadKey)) {
                 // 如果超出了就加上
                 $timeout(function () {
@@ -590,25 +590,25 @@ define("superApp.toolTipDire",
                                     }
                                     str += '</div></div>';
                                     obj = $(str);
-                                }else{
+                                } else {
                                     // GO:
                                     var arr = $scope.myTitle.split(';')
                                     var str = '';
                                     str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for(var i=0;i<arr.length;i++){
+                                    for (var i = 0; i < arr.length; i++) {
                                         str += '<a class="go-jump" title=' + arr[i].split(':')[1].split('//')[0] + '>' + arr[i] + '</a><br>';
                                     }
                                     str += '</div></div>';
                                     obj = $(str);
                                 }
-                            }else if(/\[[^]\]/g.test($scope.myTitle)){
+                            } else if (/\[[^]\]/g.test($scope.myTitle)) {
                                 // 只有中括号 没有GO:
                                 var arr = $scope.myTitle.split(';');
                                 var str = '';
-                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                for(var k=0;k<arr.length;k++){
-                                    if(/\[[^]\]/g.test(arr[k])){
-                                        var flag = arr[k].substring(arr[k].indexOf('['),arr[k].indexOf(']') + 1);
+                                str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                for (var k = 0; k < arr.length; k++) {
+                                    if (/\[[^]\]/g.test(arr[k])) {
+                                        var flag = arr[k].substring(arr[k].indexOf('['), arr[k].indexOf(']') + 1);
                                         str += '<span>' + flag + '</span><br>';
                                     }
                                     str += '<span class="kh-text">' + arr[k].substring(arr[k].indexOf(']') + 1) + '</span><br>'
@@ -650,11 +650,11 @@ define("superApp.toolTipDire",
                                 if (obj) obj.remove();
                             })
 
-                            
+
                             // 根据不同的表头做不同的逻辑处理
                             // mapid
                             var mapIdObj = obj.find('.jump-to-tools-map-id');
-                            if(mapIdObj.length){
+                            if (mapIdObj.length) {
                                 mapIdObj.on('click', function () {
                                     var id = $(this).attr('title');
                                     window.open('../../../../ps/tools/index.html#/home/mapId?map=' + id + '&compareGroup=' + $scope.compare + '&method=' + $scope.method);
@@ -662,10 +662,10 @@ define("superApp.toolTipDire",
                             }
                             //  go 
                             var goObj = obj.find('.go-jump');
-                            if(goObj.length){
-                                goObj.on('click',function(){
+                            if (goObj.length) {
+                                goObj.on('click', function () {
                                     var id = $(this).attr('title');
-                                    window.open('http://amigo.geneontology.org/amigo/medial_search?q=GO:'+id);
+                                    window.open('http://amigo.geneontology.org/amigo/medial_search?q=GO:' + id);
                                 })
                             }
 

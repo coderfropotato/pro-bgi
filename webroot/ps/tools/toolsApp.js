@@ -30,7 +30,7 @@ define([
     "superApp.littleTableDire",
     "superApp.bigTableDire",
     "superApp.tableSwitchChartDire"
-], function() {
+], function () {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
         "ui.bootstrap",
@@ -64,8 +64,7 @@ define([
         "superApp.bigTableDire",
         "superApp.tableSwitchChartDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/home/myAnalysis');
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {
@@ -113,10 +112,16 @@ define([
                 templateUrl: "../tools/pages/net.html",
             })
 
-        .state("error", {
-            url: "/home/error/:id",
-            templateUrl: "../tools/pages/error.html",
-        })
+            .state("error", {
+                url: "/home/error/:id",
+                templateUrl: "../tools/pages/error.html",
+            })
+            .state('errorMessage', {
+                url: "/home/errorMessage",
+                templateUrl: "../login/message.html"
+            })
+
+        $urlRouterProvider.otherwise('/home/errorMessage');
 
         $httpProvider.interceptors.push("tokenInterceptorFactory");
     }]);

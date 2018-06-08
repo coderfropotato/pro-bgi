@@ -54,7 +54,7 @@ define("superApp.reportDire",
 
             $scope.myAnalysisClick = function () {
                 toolService.sessionStorage.set('type', 'myAnalysis');
-                $window.open('../tools/index.html');
+                $window.open('../tools/index.html#/home/myAnalysis');
             }
 
             $scope.GoHome = function () {
@@ -242,24 +242,25 @@ define("superApp.reportDire",
                 var hasThreeChild = false;
                 $rootScope.quickMenuList = [];
 
-                $rootScope.leftData.forEach(function (val, index) {
-                    val.isActive = false;
 
-                    if (val.JDPID === two.GNSID) {
-                        hasThreeChild = true;
-                        $rootScope.quickMenuList.push(val);
-                    }
-
-                    if (val.GNSID === threeGNSID) {
-                        val.isActive = true;
-                        reportService.IndexLoadPage(val);
-                    }
-                });
-
-                if (!hasThreeChild) {
+                if (two.children.length) {
+                    $rootScope.quickMenuList = $rootScope.quickMenuList.concat(two.children);
+                    reportService.IndexLoadPage(two.children[0]);
+                    hasThreeChild = true;
+                } else {
                     $rootScope.quickMenuList.push(two);
                     reportService.IndexLoadPage(two);
+                    hasThreeChild = false;
                 }
+
+                $rootScope.leftData.forEach(function (val, index) {
+                    val.isActive = false;
+                    if (hasThreeChild) {
+                        if (val.GNSID === two.children[0].GNSID) {
+                            val.isActive = true;
+                        }
+                    }
+                });
 
                 two.isActive = true;
             }
@@ -322,10 +323,10 @@ define("superApp.reportDire",
                                         //将当前二级菜单的子级信息放入快速跳转菜单中 || 把自己放入快捷菜单
                                         if (leftListitem.hasChild) {
                                             // 吧三级菜单放入快捷菜单
-                                            angular.forEach($scope.leftDataJson,function(val){
-                                                if(val.JDPID === leftListitem.GNSID)$rootScope.quickMenuList.push(val);
+                                            angular.forEach($scope.leftDataJson, function (val) {
+                                                if (val.JDPID === leftListitem.GNSID) $rootScope.quickMenuList.push(val);
                                             })
-                                        }else{
+                                        } else {
                                             // 如果没有三级 就当放自己
                                             $rootScope.quickMenuList.push(leftListitem);
                                         }

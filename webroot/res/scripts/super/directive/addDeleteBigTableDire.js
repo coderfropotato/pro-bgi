@@ -174,7 +174,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // watch genelist flag的改变
             if ($scope.geneListChangeFlag != undefined && $scope.geneListChangeFlag != null) {
                 $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
-                    if (newVal !==oldVal)
+                    if (newVal !== oldVal)
                         if (newVal) {
                             // 有数据才更新
                             $scope.handlerGeneListChangeCommon($scope.geneList);
@@ -574,9 +574,9 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                             $scope.geneUnselectListLength++;
                         }
                     }
-                    if($scope.bigTableData && $scope.bigTableData.total){
+                    if ($scope.bigTableData && $scope.bigTableData.total) {
                         var count = $scope.bigTableData.total;
-                    }else{
+                    } else {
                         count = 0;
                     }
                     $scope.geneCount = count - $scope.geneUnselectListLength;

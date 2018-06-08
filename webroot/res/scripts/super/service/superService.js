@@ -141,21 +141,22 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         }
                                         myPromise.then(function () {
                                             globalTokenError = false;
-                                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                            window.location.href = '../../../../ps/login/login.html';
                                         }, function () {
                                             globalTokenError = false;
-                                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                            window.location.href = '../../../../ps/login/login.html';
                                         });
                                     }
                                 },
                                 error: function (err) {
                                     globalTokenError = false;
-                                    window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                                    window.location.href = '../../../../ps/login/login.html';
                                 }
                             })
                         }, function (close) {
                             globalTokenError = false;
-                            window.location.href = window.location.href.replace("mrna/index.html", 'login/login.html');
+                            console.log(options)
+                            window.location.href = '../../../../ps/login/login.html';
                         })
                     }
                 }

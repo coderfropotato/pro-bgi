@@ -40,6 +40,11 @@ require.config({
         "superApp.reportPageTitleDire": "res/scripts/super/directive/reportPageTitleDire",
         "superApp.reportPageSubTitleDire": "res/scripts/super/directive/reportPageSubTitleDire",
         "superApp.reAnalysisDire": "res/scripts/super/directive/reAnalysisDire",
+        "superApp.staticImgExportDire": "res/scripts/super/directive/staticImgExportDire",
+        "superApp.addDeleteBigTableDire": "res/scripts/super/directive/addDeleteBigTableDire",
+        "superApp.littleTableDire": "res/scripts/super/directive/littleTableDire",
+        "superApp.bigTableDire": "res/scripts/super/directive/bigTableDire",
+        "superApp.tableSwitchChartDire": "res/scripts/super/directive/tableSwitchChartDire",
 
         "superApp.superService": "res/scripts/super/service/superService",
         "superApp.reportService": "res/scripts/super/service/reportService",

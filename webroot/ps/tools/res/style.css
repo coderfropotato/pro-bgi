@@ -237,3 +237,7 @@
     left: 0;
     top: 30px;
 }
+
+.page_report .alert-default span{
+    line-height: 2;
+}

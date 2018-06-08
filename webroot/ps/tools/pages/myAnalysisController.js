@@ -124,7 +124,7 @@ define(['toolsApp'], function (toolsApp) {
             //配置请求参数
             var ajaxConfig = {
                 data: {},
-                url: options.api.java_url+"/analysis/dalete/" + id
+                url: options.api.java_url+"/analysis/delete/" + id
             }
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
@@ -143,7 +143,6 @@ define(['toolsApp'], function (toolsApp) {
         // advance
         $scope.handlerParamsClick = function (item) {
             item.isActive = !item.isActive;
-            console.log($scope.analysisEntity)
         }
 
         // document click close filter panel

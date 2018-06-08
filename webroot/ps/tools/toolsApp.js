@@ -24,7 +24,12 @@ define([
     "superApp.topQuickMenuDire",
     "superApp.reportPageTitleDire",
     "superApp.reportPageSubTitleDire",
-    "superApp.reAnalysisDire"
+    "superApp.reAnalysisDire",
+    "superApp.staticImgExportDire",
+    "superApp.addDeleteBigTableDire",
+    "superApp.littleTableDire",
+    "superApp.bigTableDire",
+    "superApp.tableSwitchChartDire"
 ], function() {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
@@ -52,7 +57,12 @@ define([
         "superApp.topQuickMenuDire",
         "superApp.reportPageTitleDire",
         "superApp.reportPageSubTitleDire",
-        "superApp.reAnalysisDire"
+        "superApp.reAnalysisDire",
+        "superApp.staticImgExportDire",
+        "superApp.addDeleteBigTableDire",
+        "superApp.littleTableDire",
+        "superApp.bigTableDire",
+        "superApp.tableSwitchChartDire"
     ]);
     toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home/myAnalysis');

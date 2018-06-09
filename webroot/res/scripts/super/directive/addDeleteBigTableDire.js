@@ -225,10 +225,10 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 if (!$('#' + $scope.contentId + ' .grid-filter-begin > button').hasClass('active')) {
                     $timeout(function () {
                         angular.element($('#' + $scope.contentId + ' .grid-filter-begin > button')).triggerHandler('click');
-                        $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
+                        $scope.geneidCustomSearchOne = angular.copy(searchOne);
                     }, 0);
                 } else {
-                    $scope.geneidCustomSearchOne = searchOne.substring(0, searchOne.length - 1);
+                    $scope.geneidCustomSearchOne = angular.copy(searchOne);
                 }
                 // 重置未选择列表
                 $scope.geneUnselectList = {};
@@ -417,6 +417,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // 重分析服务回调
             $scope.reanalysisError = false;
             $scope.handlerReanalysis = function (params) {
+                console.log(params)
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
 
                 $scope.reAnalysisEntity = { entity: '' };

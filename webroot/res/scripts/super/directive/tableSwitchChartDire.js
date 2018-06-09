@@ -54,9 +54,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 刷新点击回调
                     handlerRefreshClick: "&",
                     // 图的宽度比例 scale
-                    scale:"=",
+                    scale: "=",
                     // 是否只要单选
-                    onlySingle:"="
+                    onlySingle: "="
                 },
                 replace: false,
                 transclude: true,
@@ -101,12 +101,19 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         if ($scope.isFirst) {
                             $scope.chart = $scope.drawchart({ data: $scope.chartData });
                             $scope.applyChangeColor();
-                            if($scope.isSelectChartData) $scope.handlerSingle();
+                            if ($scope.isSelectChartData) $scope.handlerSingle();
                         } else {
-                            $scope.chart.options.data = $scope.chartData;
-                            $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
-                            $scope.applyChangeColor();
-                            if($scope.isSelectChartData) $scope.handlerSingle();
+                            $scope.refreshRedraw = true;
+                            if ($scope.refreshRedraw) {
+                                $scope.chart = $scope.drawchart({ data: $scope.chartData });
+                                $scope.applyChangeColor();
+                                if ($scope.isSelectChartData) $scope.handlerSingle();
+                            } else {
+                                $scope.chart.options.data = $scope.chartData;
+                                $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
+                                $scope.applyChangeColor();
+                                if ($scope.isSelectChartData) $scope.handlerSingle();
+                            }
                         }
                         $scope.isFirst = false;
                     }
@@ -135,7 +142,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             // 改色
-            $scope.applyChangeColor = function(){
+            $scope.applyChangeColor = function () {
                 (function changeColor() {
                     groupedbarGetItem();
                     var index = '';
@@ -154,7 +161,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     function groupedbarChangeColor(color) {
                         $scope.chart.redraw($('#' + $scope.contentId + ' .graph_header').eq(0).width() * $scope.scale);
                         $scope.applyChangeColor();
-                        if($scope.isSelectChartData) $scope.handlerSingle();
+                        if ($scope.isSelectChartData) $scope.handlerSingle();
                         groupedbarGetItem();
                     }
                 })()
@@ -207,10 +214,10 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             function handlerResize() {
                 clearTimeout(timer);
                 timer = setTimeout(function () {
-                    if($scope.chart) {
+                    if ($scope.chart) {
                         $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
                         $scope.applyChangeColor();
-                        if($scope.isSelectChartData) $scope.handlerSingle();
+                        if ($scope.isSelectChartData) $scope.handlerSingle();
                     }
                 }, 100)
             }

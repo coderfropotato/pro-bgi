@@ -537,7 +537,7 @@ define("superApp.toolTipDire",
         popoverTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
         function popoverTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             if ($scope.myTitle || $scope.myTitle == 0) {
-                if ((!$scope.myTitle && $scope.myTitle != 0) || typeof $scope.myTitle != 'string') {
+                if ((!$scope.myTitle && $scope.myTitle != 0)) {
                     return;
                 }
                 // if (/go|kegg|nr|annotation|evalue/gi.test($scope.theadKey)) {
@@ -555,80 +555,86 @@ define("superApp.toolTipDire",
                             topPos = $($scope.element).offset().top;
 
                             // 如果是ko
-                            if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
-                                var str = '';
-                                str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                for (var o = 0; o < $scope.pathwayid.length; o++) {
-                                    str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
-                                }
-                                str += '</div></div>';
-                                obj = $(str);
+                            if (typeof $scope.myTitle === 'string') {
+                                if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
+                                    var str = '';
+                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                    for (var o = 0; o < $scope.pathwayid.length; o++) {
+                                        str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
+                                    }
+                                    str += '</div></div>';
+                                    obj = $(str);
 
-                            } else if ($scope.myTitle.indexOf('GO:') != -1) {
-                                // 如果是带有 中括号 的GO：
-                                if (/\[[^]\]/g.test($scope.myTitle)) {
+                                } else if ($scope.myTitle.indexOf('GO:') != -1) {
+                                    // 如果是带有 中括号 的GO：
+                                    if (/\[[^]\]/g.test($scope.myTitle)) {
+                                        var arr = $scope.myTitle.split(';');
+                                        var str = '';
+                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                        for (var o = 0; o < arr.length; o++) {
+                                            // 有括号的 把中括号里面的拿出来
+                                            var index = arr[o].indexOf('[');
+                                            var lastIndex = arr[o].indexOf(']');
+                                            if (index != -1 && lastIndex != -1) {
+                                                if (arr[o]) {
+                                                    var gotext = arr[o].substring(lastIndex + 1);
+                                                    var goid = gotext.split(':')[1].split('//')[0];
+                                                    var flag = arr[o].substring(index, lastIndex + 1);
+                                                    str += '<span>' + flag + '</span><br>';
+                                                    str += '<a class="go-jump" title=' + goid + '>' + arr[o].substring(lastIndex + 1) + '</a><br>'
+                                                }
+                                            } else {
+                                                if (arr[o]) {
+                                                    str += '<a class="go-jump" title=' + arr[o].split(':')[1].split('//')[0] + '>' + arr[o] + '</a><br>';
+                                                }
+                                            }
+                                        }
+                                        str += '</div></div>';
+                                        obj = $(str);
+                                    } else {
+                                        // GO:
+                                        var arr = $scope.myTitle.split(';')
+                                        var str = '';
+                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                        for (var i = 0; i < arr.length; i++) {
+                                            if (arr[i] != '') {
+                                                str += '<a class="go-jump" title=' + arr[i].split(':')[1].split('//')[0] + '>' + arr[i] + '</a><br>';
+                                            }
+                                        }
+                                        str += '</div></div>';
+                                        obj = $(str);
+                                    }
+                                } else if (/\[[^]\]/g.test($scope.myTitle)) {
+                                    // 只有中括号 没有GO:
                                     var arr = $scope.myTitle.split(';');
                                     var str = '';
                                     str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for (var o = 0; o < arr.length; o++) {
-                                        // 有括号的 把中括号里面的拿出来
-                                        var index = arr[o].indexOf('[');
-                                        var lastIndex = arr[o].indexOf(']');
-                                        if (index != -1 && lastIndex != -1) {
-                                            if (arr[o]) {
-                                                var gotext = arr[o].substring(lastIndex + 1);
-                                                var goid = gotext.split(':')[1].split('//')[0];
-                                                var flag = arr[o].substring(index, lastIndex + 1);
-                                                str += '<span>' + flag + '</span><br>';
-                                                str += '<a class="go-jump" title=' + goid + '>' + arr[o].substring(lastIndex + 1) + '</a><br>'
-                                            }
-                                        } else {
-                                            if (arr[o]) {
-                                                str += '<a class="go-jump" title=' + arr[o].split(':')[1].split('//')[0] + '>' + arr[o] + '</a><br>';
-                                            }
+                                    for (var k = 0; k < arr.length; k++) {
+                                        if (/\[[^]\]/g.test(arr[k])) {
+                                            var flag = arr[k].substring(arr[k].indexOf('['), arr[k].indexOf(']') + 1);
+                                            str += '<span>' + flag + '</span><br>';
                                         }
+                                        str += '<span class="kh-text">' + arr[k].substring(arr[k].indexOf(']') + 1) + '</span><br>'
                                     }
                                     str += '</div></div>';
                                     obj = $(str);
                                 } else {
-                                    // GO:
-                                    var arr = $scope.myTitle.split(';')
-                                    var str = '';
-                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for (var i = 0; i < arr.length; i++) {
-                                        str += '<a class="go-jump" title=' + arr[i].split(':')[1].split('//')[0] + '>' + arr[i] + '</a><br>';
-                                    }
-                                    str += '</div></div>';
-                                    obj = $(str);
-                                }
-                            } else if (/\[[^]\]/g.test($scope.myTitle)) {
-                                // 只有中括号 没有GO:
-                                var arr = $scope.myTitle.split(';');
-                                var str = '';
-                                str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                for (var k = 0; k < arr.length; k++) {
-                                    if (/\[[^]\]/g.test(arr[k])) {
-                                        var flag = arr[k].substring(arr[k].indexOf('['), arr[k].indexOf(']') + 1);
-                                        str += '<span>' + flag + '</span><br>';
-                                    }
-                                    str += '<span class="kh-text">' + arr[k].substring(arr[k].indexOf(']') + 1) + '</span><br>'
-                                }
-                                str += '</div></div>';
-                                obj = $(str);
-                            } else {
-                                if ($scope.myTitle.indexOf(';') != -1) {
-                                    var title = $scope.myTitle.split(';');
-                                    var str = '';
-                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for (var k = 0; k < title.length; k++) {
-                                        str += '<span>' + title[k] + '</span><br>';
-                                    }
-                                    str += '</div></div>';
+                                    if ($scope.myTitle.indexOf(';') != -1) {
+                                        var title = $scope.myTitle.split(';');
+                                        var str = '';
+                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                                        for (var k = 0; k < title.length; k++) {
+                                            str += '<span>' + title[k] + '</span><br>';
+                                        }
+                                        str += '</div></div>';
 
-                                    obj = $(str);
-                                } else {
-                                    obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                                        obj = $(str);
+                                    } else {
+                                        obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
+                                    }
                                 }
+                            } else {
+                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
                             }
 
                             $('body').append(obj);

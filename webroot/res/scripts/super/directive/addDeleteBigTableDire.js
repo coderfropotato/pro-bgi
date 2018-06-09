@@ -417,7 +417,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // 重分析服务回调
             $scope.reanalysisError = false;
             $scope.handlerReanalysis = function (params) {
-                console.log(params)
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
 
                 $scope.reAnalysisEntity = { entity: '' };

@@ -92,7 +92,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 promise.then(function (responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
-                    } else if (responseData.length == 0) {
+                    } else if (responseData.length == 0 || !responseData.rows.length) {
                         $scope.error = "nodata";
                     } else {
                         $scope.error = "";

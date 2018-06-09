@@ -44,8 +44,6 @@ define(['toolsApp'], function (toolsApp) {
                 "sortName": "",
                 "sortType": "",
             };
-            $scope.paramsKeyList = ['compareGroup'];
-            $scope.paramsValueList = [$scope.compareSample];
             $scope.url2 = options.api.mrnaseq_url + '/DiffExpGeneClassTable/PathwayRichGene';
             $scope.panelId2 = "reanalysis_pathwayClass-2_panel";
             $scope.tableId2 = "reanalysis_pathwayClass-2_geneid_table";
@@ -80,9 +78,6 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isResetTableStatus = true;
         }
 
-        $scope.selectChangeCallback = function (arg) {
-            $scope.paramsValueList = [arg];
-        }
 
         $scope.tableToChartDataFn = function (res) {
             $scope.level1Key = res.baseThead[1]['true_key'];

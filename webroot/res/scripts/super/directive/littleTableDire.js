@@ -6,7 +6,7 @@
  */
 
 define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.littleTableDire", []);
         superApp.directive('littleTable', littleTableDirective);
         littleTableDirective.$inject = ["$log"];
@@ -35,8 +35,8 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     isHasAccuracy: "=",
                     accuracy: "=",
                     // 无数据是否需要隐藏
-                    tableTitle:"@",
-                    isNoDataHide:"=",
+                    tableTitle: "@",
+                    isNoDataHide: "=",
                 },
                 replace: false,
                 transclude: true,
@@ -48,7 +48,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
         littleTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
 
         function littleTableCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            $scope.InitPage = function() {
+            $scope.InitPage = function () {
                 if ($scope.isHasSelectOption) {
                     if ($scope.key) {
                         $scope.pageEntity[entityKey] = $scope.selectList[0][$scope.key];
@@ -56,14 +56,12 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.pageEntity[entityKey] = $scope.selectList[0];
                     }
                 }
-                if ($scope.isHasAccuracy) {
-                    $scope.accuracy = -1;
-                }
+                $scope.accuracy = -1;
                 $scope.isNoDataHide = !!$scope.isNoDataHide;
                 $scope.GetTableData();
             }
 
-            $scope.GetTableData = function() {
+            $scope.GetTableData = function () {
                 toolService.gridFilterLoading.open($scope.tablePanelId);
                 var ajaxConfig = {
                     data: $scope.pageEntity,
@@ -71,7 +69,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                 };
 
                 var promise = ajaxService.GetDeferData(ajaxConfig);
-                promise.then(function(responseData) {
+                promise.then(function (responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
                     } else if (responseData.length == 0) {
@@ -81,7 +79,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.tableData = responseData;
                     }
                     toolService.gridFilterLoading.close($scope.tablePanelId);
-                }, function(errorMesg) {
+                }, function (errorMesg) {
                     toolService.gridFilterLoading.close($scope.tablePanelId);
                     $scope.error = "syserror";
                 });

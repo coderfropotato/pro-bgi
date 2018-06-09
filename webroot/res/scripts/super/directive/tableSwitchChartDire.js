@@ -104,7 +104,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                             if($scope.isSelectChartData) $scope.handlerSingle();
                         } else {
                             $scope.chart.options.data = $scope.chartData;
-                            $scope.chart.redraw($('.graph_header').eq(0).width()*$scope.scale);
+                            $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
                             $scope.applyChangeColor();
                             if($scope.isSelectChartData) $scope.handlerSingle();
                         }

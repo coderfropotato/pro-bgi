@@ -54,7 +54,7 @@ define(['toolsApp'], function(toolsApp) {
                 data: $scope.mapIdEntity,
                 url: $scope.mapIdListUrl
             }
-            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+            var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function(res) {
                 toolService.gridFilterLoading.close("mapId-table");
                 if (res.Error) {

@@ -20,7 +20,7 @@ define(['toolsApp'], function (toolsApp) {
                 data: {},
                 url: options.api.java_url+"/analysis/explains/" + $state.params.id
             }
-            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+            var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
                 if (res.status != 200) {
                     $scope.error = 'syserror';

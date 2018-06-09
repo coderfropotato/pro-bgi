@@ -1,25 +1,25 @@
-define(["toolsApp"], function (toolsApp) {
+define(["toolsApp"], function(toolsApp) {
     toolsApp.controller("heatmapSampleController", heatmapSampleController);
     heatmapSampleController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
 
     function heatmapSampleController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
-        $scope.InitPage = function () {
+        $scope.InitPage = function() {
             //定时关闭等待框
             setTimeout(
-                function () {
+                function() {
                     toolService.pageLoading.close();
                 }, 300);
             // custom title
             $scope.projectName = $state.params.projectName;
-            $scope.id = $state.params.id;       // 重分析id
+            $scope.id = $state.params.id; // 重分析id
             // 项目：' + $scope.projectName + ',
             $scope.title = '聚类分析 ( ID：' + $scope.id + " ) ";
 
             $scope.isShowColorPanel = false; //是否显示颜色面板
-            $scope.isShowSetPanel = false;  //是否显示设置面板
-            $scope.isRefresh = false;  //是否点击了刷新
+            $scope.isShowSetPanel = false; //是否显示设置面板
+            $scope.isRefresh = false; //是否点击了刷新
             $scope.compareGroup = '';
             $scope.isBeginFilter = false;
             //聚类图请求entity
@@ -41,14 +41,14 @@ define(["toolsApp"], function (toolsApp) {
                 "sortName": "",
                 "sortType": ""
             };
-            $scope.accuracy = -1;  // 精度默认 全数据
+            $scope.accuracy = -1; // 精度默认 全数据
 
             $scope.setOption = {
-                isShowName: false,
-                isShowTopLine: true,
-                sortNames: []
-            }
-            // 获取增删列dire数据
+                    isShowName: false,
+                    isShowTopLine: true,
+                    sortNames: []
+                }
+                // 获取增删列dire数据
             $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
             // 获取聚类图数据
             $scope.GetHeatmapData();
@@ -59,7 +59,7 @@ define(["toolsApp"], function (toolsApp) {
         };
 
         //获取聚类图数据
-        $scope.GetHeatmapData = function (flag) {
+        $scope.GetHeatmapData = function(flag) {
             $scope.isShowSetPanel = false;
 
             toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
@@ -69,7 +69,7 @@ define(["toolsApp"], function (toolsApp) {
                 url: options.api.mrnaseq_url + "/clusterHeatmap/GetClusterHeatmapData"
             }
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.Error) {
                     $scope.clusterError = "syserror";
                 } else if (JSON.stringify(res) === '{}') { // js: JSON.stringify(res)==='{}' ;  jquery: $.isEmptyObject(res) ; es6: Object.keys(res).length === 0
@@ -90,7 +90,7 @@ define(["toolsApp"], function (toolsApp) {
 
                     if (flag && flag === 'refresh') {
                         $scope.isRefresh = true;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.isRefresh = false;
                         }, 30)
                     }
@@ -100,19 +100,19 @@ define(["toolsApp"], function (toolsApp) {
 
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
 
-            }, function (errMsg) {
+            }, function(errMsg) {
                 $scope.clusterError = "syserror";
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             })
         }
 
         //设置面板点击确定的回调函数
-        $scope.getSetOption = function (oSet) {
+        $scope.getSetOption = function(oSet) {
             $scope.drawClusterHeatmap($scope.chartData, oSet);
         }
 
         //画图
-        $scope.drawClusterHeatmap = function (resdata, setOption) {
+        $scope.drawClusterHeatmap = function(resdata, setOption) {
             d3.selectAll("#heatmapsample_chartClusterpic svg g").remove();
             //定义数据
             var cluster_data = resdata.leftClusterData,
@@ -130,12 +130,12 @@ define(["toolsApp"], function (toolsApp) {
             var legend_space = 5;
 
             //文字最长
-            var max_x_textLength = d3.max(heatmap_data, function (d) {
+            var max_x_textLength = d3.max(heatmap_data, function(d) {
                 return d.name.length;
             })
             var max_y_textLength = 0;
             if (setOption.isShowName) {
-                max_y_textLength = d3.max(heatmap_data[0].heatmap, function (d) {
+                max_y_textLength = d3.max(heatmap_data[0].heatmap, function(d) {
                     return d.x.length;
                 })
             } else {
@@ -143,11 +143,11 @@ define(["toolsApp"], function (toolsApp) {
             }
 
             //下边文字高度、右边文字的宽度
-            var XtextHeight = max_x_textLength * 8;
+            var XtextHeight = max_x_textLength * 10;
             var YtextWidth = max_y_textLength * 8;
 
             //预留间距
-            var margin = { top: 40, bottom: 5, left: 10, right: 40 };
+            var margin = { top: 40, bottom: XtextHeight, left: 10, right: 40 };
 
             //定义热图宽高
             var heatmap_width = 600,
@@ -181,7 +181,7 @@ define(["toolsApp"], function (toolsApp) {
             var legend_yScale = d3.scaleLinear().range([0, legend_height])
                 .domain([valuemin, valuemax]).clamp(true);
 
-            var yAxis = d3.axisRight(legend_yScale).tickSizeOuter(0).ticks(5);  //设置Y轴
+            var yAxis = d3.axisRight(legend_yScale).tickSizeOuter(0).ticks(5); //设置Y轴
 
             //定义图例位置偏移
             var legendTrans_x = totalWidth - legend_width - margin.right,
@@ -196,7 +196,7 @@ define(["toolsApp"], function (toolsApp) {
             var heatmap_g = body_g.append("g").attr("class", "heatmap")
                 .attr("transform", "translate(" + (cluster_width + space) + "," + topCluster_height + ")");
 
-            var legend_g = svg.append("g").attr("class", "heatmapLegend")   //定义图例g
+            var legend_g = svg.append("g").attr("class", "heatmapLegend") //定义图例g
                 .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")");
 
             //画标题
@@ -208,7 +208,7 @@ define(["toolsApp"], function (toolsApp) {
                 .text("差异基因层次聚类图")
                 .attr("font-size", "0.8em")
                 .attr("text-anchor", "middle")
-                .on("click", function () {
+                .on("click", function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);
                 })
@@ -227,7 +227,7 @@ define(["toolsApp"], function (toolsApp) {
             function drawTopCluster() {
                 var topCluster = d3.cluster()
                     .size([topCluster_width, topCluster_height])
-                    .separation(function () { return 1; });
+                    .separation(function() { return 1; });
 
                 var topCluster_g = body_g.append("g").attr("class", "topCluster")
                     .attr("transform", "translate(700,0) rotate(90)");
@@ -250,7 +250,7 @@ define(["toolsApp"], function (toolsApp) {
             function drawCluster() {
                 var cluster = d3.cluster()
                     .size([cluster_height, cluster_width])
-                    .separation(function () { return 1; });
+                    .separation(function() { return 1; });
 
                 var cluster_g = body_g.append("g").attr("class", "cluster")
                     .attr("transform", "translate(0," + topCluster_height + ")");
@@ -270,18 +270,18 @@ define(["toolsApp"], function (toolsApp) {
             }
 
             function elbow(d, i) {
-                return "M" + d.source.y + "," + d.source.x
-                    + "V" + d.target.x + "H" + d.target.y;
+                return "M" + d.source.y + "," + d.source.x +
+                    "V" + d.target.x + "H" + d.target.y;
             }
 
             //热图交互时所需比例尺
             var xScale = d3.scaleBand()
                 .range([0, heatmap_width])
-                .domain(heatmap_data.map(function (d) { return d.name; }));
+                .domain(heatmap_data.map(function(d) { return d.name; }));
 
             var yScale = d3.scaleBand()
                 .range([0, heatmap_height])
-                .domain(heatmap_data[0].heatmap.map(function (d) { return d.x }));
+                .domain(heatmap_data[0].heatmap.map(function(d) { return d.x }));
 
             //画热图
             function drawHeatmap(colors) {
@@ -296,10 +296,10 @@ define(["toolsApp"], function (toolsApp) {
                         .enter()
                         .append("rect")
                         .attr("x", i * single_rect_width)
-                        .attr("y", function (d, j) { return j * single_rect_height })
+                        .attr("y", function(d, j) { return j * single_rect_height })
                         .attr("width", single_rect_width)
                         .attr("height", single_rect_height)
-                        .attr("fill", function (d) { return colorScale(d.y) })
+                        .attr("fill", function(d) { return colorScale(d.y) })
 
                     //添加x轴的名称
                     rect_g.append("text")
@@ -327,13 +327,14 @@ define(["toolsApp"], function (toolsApp) {
                     .attr("fill", "#f1f1f1")
                     .style("opacity", 0.4);
 
-                var select_rw = heatmap_width, select_rh = 0;
+                var select_rw = heatmap_width,
+                    select_rh = 0;
                 var trans_x = 0,
                     trans_y = 0;
                 var down_x = 0,
                     down_y = 0;
                 var isMousedown = false;
-                big_rect.on("mousedown", function (ev) {
+                big_rect.on("mousedown", function(ev) {
                     isMousedown = true;
                     var downEvent = ev || d3.event;
 
@@ -346,7 +347,7 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(downEvent);
                 })
 
-                big_rect.on("mousemove", function (ev) {
+                big_rect.on("mousemove", function(ev) {
                     var moveEvent = ev || d3.event;
                     var x_dis = moveEvent.offsetX - margin.left - cluster_width - space;
                     var y_dis = moveEvent.offsetY - margin.top - topCluster_height;
@@ -358,7 +359,8 @@ define(["toolsApp"], function (toolsApp) {
                     } else {
                         //当前move到的rect的索引
                         var index = getIndex(x_dis, y_dis);
-                        var i = index.x_index, j = index.y_index;
+                        var i = index.x_index,
+                            j = index.y_index;
                         var d = heatmap_data[i].heatmap[j];
                         var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "value: " + d.y];
                         reportService.GenericTip.Show(d3.event, tipText);
@@ -366,7 +368,7 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(moveEvent);
                 });
 
-                select_rect.on("mouseup", function (ev) {
+                select_rect.on("mouseup", function(ev) {
                     isMousedown = false;
                     var upEvent = ev || d3.event;
                     //当前up位置
@@ -387,7 +389,7 @@ define(["toolsApp"], function (toolsApp) {
                         var geneId = resdata.heatmapData[0].heatmap.slice(down_j, up_j + 1);
                     }
                     var resGeneId = [];
-                    geneId.forEach(function (val, index) {
+                    geneId.forEach(function(val, index) {
                         resGeneId.push(val.x);
                     });
                     $scope.setGeneList(resGeneId);
@@ -404,22 +406,22 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(upEvent);
                 });
 
-                big_rect.on("mouseup", function () {
+                big_rect.on("mouseup", function() {
                     clearEventBubble(d3.event);
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
 
-                big_rect.on("mouseout", function () {
+                big_rect.on("mouseout", function() {
                     reportService.GenericTip.Hide();
                 });
 
-                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mousedown", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mousedown", function() {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
 
-                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mouseup", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mouseup", function() {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
@@ -427,7 +429,8 @@ define(["toolsApp"], function (toolsApp) {
 
             //获取heatmap横纵索引
             function getIndex(x, y) {
-                var rect_i = 0, rect_j = 0;
+                var rect_i = 0,
+                    rect_j = 0;
                 var heatmapData_len = heatmap_data.length;
 
                 for (var i = 0; i < heatmapData_len; i++) {
@@ -492,10 +495,10 @@ define(["toolsApp"], function (toolsApp) {
                     .append("text")
                     .style("font-family", "Consolas, Monaco, monospace")
                     .style("font-size", "0.8em")
-                    .text(function (d) {
+                    .text(function(d) {
                         return d.x;
                     })
-                    .attr("y", function (d, i) {
+                    .attr("y", function(d, i) {
                         return i * single_rect_height + single_rect_height / 2 + 4;
                     })
             }
@@ -534,21 +537,21 @@ define(["toolsApp"], function (toolsApp) {
                 .append("rect")
                 .attr("width", legend_width)
                 .attr("height", legendClickRect_h)
-                .attr("y", function (d, i) {
+                .attr("y", function(d, i) {
                     return i * legendClickRect_h;
                 })
                 .attr("fill", "transparent")
-                .on("click", function (d, i) {
+                .on("click", function(d, i) {
                     var oEvent = d3.event || event;
                     oEvent.stopPropagation();
 
                     $scope.colorArr_i = i;
                     $scope.isShowColorPanel = true;
-                    $scope.$apply();        //保证页面isShowColorPanel实时更新为true
+                    $scope.$apply(); //保证页面isShowColorPanel实时更新为true
                 });
 
             //色盘指令回调函数
-            $scope.colorChange = function (curColor) {
+            $scope.colorChange = function(curColor) {
                 colorArr.splice($scope.colorArr_i, 1, curColor);
                 toolService.sessionStorage.set("colors", colorArr);
                 drawLegend(colorArr);
@@ -575,15 +578,15 @@ define(["toolsApp"], function (toolsApp) {
         $scope.isShowGeneListPanel = false;
 
         // 基因列表 hover
-        $scope.handlerMouseEnter = function () {
+        $scope.handlerMouseEnter = function() {
             $scope.isShowGeneListPanel = true;
         }
-        $scope.handlerMouseLeave = function () {
+        $scope.handlerMouseLeave = function() {
             $scope.isShowGeneListPanel = false;
         }
 
         // 删除genelist某一项
-        $scope.removeGeneItem = function (key) {
+        $scope.removeGeneItem = function(key) {
             delete $scope.geneUnselectList[key];
             for (var i = 0; i < $scope.GOAnnoData.rows.length; i++) {
                 if ($scope.GOAnnoData.rows[i][$scope.geneid_truekey] === key) {
@@ -595,12 +598,12 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 聚类图框选传 获取genelist 重新获取表格数据 渲染筛选条件
-        $scope.setGeneList = function (geneList) {
+        $scope.setGeneList = function(geneList) {
             var searchOne = '';
             // 重置基因列表
             $scope.geneUnselectList = '';
             // 拼接GeneID
-            geneList.forEach(function (val, index) {
+            geneList.forEach(function(val, index) {
                 if (index === geneList.length - 1) {
                     searchOne += val;
                 } else {
@@ -609,7 +612,7 @@ define(["toolsApp"], function (toolsApp) {
             });
             // 如果没有点击筛选按钮 就点击
             if (!$('.grid-filter-begin > button').hasClass('active')) {
-                $timeout(function () {
+                $timeout(function() {
                     angular.element($('.grid-filter-begin > button')).triggerHandler('click');
                     $scope.geneidCustomSearchOne = searchOne;
                 }, 0);
@@ -623,25 +626,25 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // thead change event
-        $scope.theadChange = function (a) {
+        $scope.theadChange = function(a) {
             var addThead = [];
             var deleteArr = [];
             $scope.add = [];
             // 当前新增的表头
-            a.add.forEach(function (val, index) {
-                $scope.add = $scope.add.concat(val.children);
-            })
-            // 所有新加的表头
-            a.all.forEach(function (val, index) {
-                addThead = addThead.concat(val.children);
-            })
-            // 当前删除的表头
-            a.delete.forEach(function (val, index) {
+            a.add.forEach(function(val, index) {
+                    $scope.add = $scope.add.concat(val.children);
+                })
+                // 所有新加的表头
+            a.all.forEach(function(val, index) {
+                    addThead = addThead.concat(val.children);
+                })
+                // 当前删除的表头
+            a.delete.forEach(function(val, index) {
                 deleteArr = deleteArr.concat(val.children);
             });
 
             for (var i = 0, len = deleteArr.length; i < len; i++) {
-                $scope.goAnnoFindEntity.searchContentList.forEach(function (val, index) {
+                $scope.goAnnoFindEntity.searchContentList.forEach(function(val, index) {
                     if (val.filterName !== 'LCID') {
                         if (val.filterName === deleteArr[i]) {
                             if (val.isSort) {
@@ -666,7 +669,7 @@ define(["toolsApp"], function (toolsApp) {
 
 
         //过滤GO注释表格数据  
-        $scope.InitFindEntity1 = function (filterFindEntity) {
+        $scope.InitFindEntity1 = function(filterFindEntity) {
             //获得页面查询实体信息
             $scope.goAnnoFindEntity = toolService.GetGridFilterFindEntity($scope.goAnnoFindEntity, filterFindEntity);
             //获得页面查询条件转译信息
@@ -678,7 +681,7 @@ define(["toolsApp"], function (toolsApp) {
         };
 
         // 删除页面查询参数
-        $scope.deleteFindEntity = function () {
+        $scope.deleteFindEntity = function() {
             var filterName = angular.element(event.target).siblings('span').find('em').text();
             $scope.goAnnoFindEntity = toolService.DeleteFilterFindEntity($scope.goAnnoFindEntity, [filterName]);
             $scope.filterText1 = toolService.GetFilterContentText($scope.goAnnoFindEntity);
@@ -686,7 +689,7 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         //获取注释表数据
-        $scope.GetGOAnnoList = function (pageNumber) {
+        $scope.GetGOAnnoList = function(pageNumber) {
             toolService.gridFilterLoading.open("analysis-heatmapsample-table");
             // toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
             $scope.goAnnoFindEntity = toolService.SetGridFilterFindEntity($scope.goAnnoFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
@@ -699,7 +702,7 @@ define(["toolsApp"], function (toolsApp) {
             };
 
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (responseData) {
+            promise.then(function(responseData) {
                 if (responseData.Error) {
                     $scope.goAnnoError = "syserror";
                 } else if (responseData.length == 0) {
@@ -718,7 +721,7 @@ define(["toolsApp"], function (toolsApp) {
 
                     // geneUnSelectList 是否包含回来的新数据
                     var isIn = false;
-                    $scope.GOAnnoData.rows.map(function (value, index) {
+                    $scope.GOAnnoData.rows.map(function(value, index) {
                         value.isChecked = true;
                         if ($scope.geneUnselectList) {
                             for (var geneid in $scope.geneUnselectList) {
@@ -734,7 +737,7 @@ define(["toolsApp"], function (toolsApp) {
                 }
                 toolService.gridFilterLoading.close("analysis-heatmapsample-table");
                 // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
-            }, function (errorMesg) {
+            }, function(errorMesg) {
                 toolService.gridFilterLoading.close("analysis-heatmapsample-table");
                 // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
                 $scope.goAnnoError = "syserror";
@@ -742,7 +745,7 @@ define(["toolsApp"], function (toolsApp) {
         };
 
         // 点击GeneID获取Gene信息
-        $scope.showGeneInfo = function (GeneID) {
+        $scope.showGeneInfo = function(GeneID) {
             var genomeVersion = toolService.sessionStorage.get('GenomeID');
             var geneInfo = {
                 genomeVersion: genomeVersion,
@@ -753,7 +756,7 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // delete one filter content
-        $scope.handleDelete = function (event) {
+        $scope.handleDelete = function(event) {
             var thead = angular.element(event.target).siblings('span').find('em').text();
             var clearBtn;
             for (var i = 0; i < $('table th .grid_head').length; i++) {
@@ -762,36 +765,36 @@ define(["toolsApp"], function (toolsApp) {
                     break;
                 }
             }
-            $timeout(function () {
+            $timeout(function() {
                 clearBtn.triggerHandler("click");
             }, 0)
         }
 
         // 清空 未选中的基因集
-        $scope.handlerClearUnselect = function () {
-            $scope.geneUnselectList = {};
-            $scope.GOAnnoData.rows.forEach(function (val, index) {
-                val.isChecked = true;
-            });
-            $scope.checkedAll = true;
-        }
-        // table 选中事件
-        // 全选事件
-        $scope.checkAll = function () {
-            $scope.GOAnnoData.rows.forEach(function (val, index) {
+        $scope.handlerClearUnselect = function() {
+                $scope.geneUnselectList = {};
+                $scope.GOAnnoData.rows.forEach(function(val, index) {
+                    val.isChecked = true;
+                });
+                $scope.checkedAll = true;
+            }
+            // table 选中事件
+            // 全选事件
+        $scope.checkAll = function() {
+            $scope.GOAnnoData.rows.forEach(function(val, index) {
                 val.isChecked = true;
             });
         }
 
         // 全不选事件
-        $scope.unCheckAll = function () {
-            angular.forEach($scope.GOAnnoData.rows, function (val, index) {
+        $scope.unCheckAll = function() {
+            angular.forEach($scope.GOAnnoData.rows, function(val, index) {
                 val.isChecked = false;
             });
         }
 
         // 全选点击事件
-        $scope.handlerCheckedAll = function () {
+        $scope.handlerCheckedAll = function() {
             $scope.checkedAll = !$scope.checkedAll;
             $scope.checkedAll ? $scope.checkAll() : $scope.unCheckAll();
             // 全选取消geneUnselectList里的项
@@ -812,7 +815,7 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 每一行点击选择
-        $scope.handlerChecked = function (index, event) {
+        $scope.handlerChecked = function(index, event) {
             $scope.GOAnnoData.rows[index].isChecked = !$scope.GOAnnoData.rows[index].isChecked;
             $scope.computedTheadStatus();
             // 如果没选中
@@ -833,12 +836,12 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 判断是否全部选中或者全部没选中 联动表头
-        $scope.computedTheadStatus = function () {
+        $scope.computedTheadStatus = function() {
             var length = $scope.GOAnnoData.rows.length;
             var checkCount = 0;
             var unCheckCount = 0;
 
-            $scope.GOAnnoData.rows.forEach(function (val, index) {
+            $scope.GOAnnoData.rows.forEach(function(val, index) {
                 val.isChecked ? checkCount++ : unCheckCount++;
             });
 
@@ -853,7 +856,7 @@ define(["toolsApp"], function (toolsApp) {
         }
 
         // 筛选状态改变
-        $scope.handlerFilterStatusChange = function (status) {
+        $scope.handlerFilterStatusChange = function(status) {
             $scope.isBeginFilter = status;
             if (!$scope.isBeginFilter) {
                 $scope.geneidCustomSearchOne = '';
@@ -925,7 +928,7 @@ define(["toolsApp"], function (toolsApp) {
                 url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
             })
             toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-            promise.then(function (res) {
+            promise.then(function(res) {
                 toolService.pageLoading.close();
                 if (res.Error) {
                     $scope.reanalysisError = "syserror";
@@ -953,7 +956,7 @@ define(["toolsApp"], function (toolsApp) {
 
         // watch geneUnselectList 生成length
         $scope.geneUnselectListLength = 0;
-        $scope.$watch('geneUnselectList', function (newVal, oldVal) {
+        $scope.$watch('geneUnselectList', function(newVal, oldVal) {
             if (newVal != oldVal) {
                 $scope.geneUnselectListLength = 0;
                 if (newVal) {

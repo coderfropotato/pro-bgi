@@ -17,8 +17,7 @@
                         </button>
                     </li>
                     <li ng-hide="clusterError">
-                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption"
-                            is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
+                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
                     </li>
                     <li ng-hide="clusterError">
                         <div class="svg-new-export" chartid="heatmapgroup_chartClusterpic" saveimgname="聚类图"></div>
@@ -59,9 +58,8 @@
                     <li>
                         <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                         <!-- 2018年4月19日15:58:03 tablehead -->
-                        <div class="grid-filter-begin" tablehead="GOAnnoData.baseThead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)"
-                            geneidtruekey="geneid_truekey" parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne"
-                            search-type="geneidCustomSearchType" filter-status-callback="handlerFilterStatusChange(status)"></div>
+                        <div class="grid-filter-begin" tablehead="GOAnnoData.baseThead" tableid="analysis-heatmapgroup-table" callback="InitFindEntity1(arg1)" geneidtruekey="geneid_truekey" parentid="analysis-heatmapGroup" search-one="geneidCustomSearchOne" search-type="geneidCustomSearchType"
+                            filter-status-callback="handlerFilterStatusChange(status)"></div>
                     </li>
                 </ul>
                 <ul class="fRight">
@@ -81,8 +79,7 @@
                     </li>
                     <li>
                         <!-- genelist panel  -->
-                        <div id="unselect" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}" ng-mouseenter="handlerMouseEnter()"
-                            ng-mouseleave="handlerMouseLeave()">
+                        <div id="unselect" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}" ng-mouseenter="handlerMouseEnter()" ng-mouseleave="handlerMouseLeave()">
                             <button class="btn btn-default btn-silver btn-sm">
                                 未选中GeneList
                                 <span class="red">({{geneUnselectListLength}})</span>
@@ -136,7 +133,7 @@
                         <!-- title="{{geneidCustomSearchOne}}" -->
                         <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
                             <span class="filter-item" ng-bind-html="f"></span>
-                            <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                        <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                         </span>
                     </div>
                 </div>
@@ -180,8 +177,7 @@
                             <thead>
                                 <tr>
                                     <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
-                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index"
-                                        style="max-width:500px;white-space:nowrap;">
+                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item" ng-repeat="item in GOAnnoData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
                                         <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                         <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
                                     </th>
@@ -227,7 +223,7 @@
                 <div class="clear"></div>
             </div>
             <!-- reanalysis content-->
-            <div class="re-analysis" callback="handlerReanalysis(options)"></div>
+            <div class="re-analysis" ng-hide="goAnnoError" callback="handlerReanalysis(options)" gene-count="geneCount"></div>
         </div>
         <!-- table over -->
 

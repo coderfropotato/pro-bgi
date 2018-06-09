@@ -146,7 +146,12 @@ define(["toolsApp"], function(toolsApp) {
             var YtextWidth = max_y_textLength * 8;
 
             //预留间距
-            var margin = { top: 40, bottom: XtextHeight, left: 10, right: 40 };
+            var margin = {
+                top: 40,
+                bottom: XtextHeight,
+                left: 10,
+                right: 40
+            };
 
             //定义热图宽高
             var heatmap_width = 600,
@@ -226,7 +231,9 @@ define(["toolsApp"], function(toolsApp) {
             function drawTopCluster() {
                 var topCluster = d3.cluster()
                     .size([topCluster_width, topCluster_height])
-                    .separation(function() { return 1; });
+                    .separation(function() {
+                        return 1;
+                    });
 
                 var topCluster_g = body_g.append("g").attr("class", "topCluster")
                     .attr("transform", "translate(700,0) rotate(90)");
@@ -250,7 +257,9 @@ define(["toolsApp"], function(toolsApp) {
             function drawCluster() {
                 var cluster = d3.cluster()
                     .size([cluster_height, cluster_width])
-                    .separation(function() { return 1; });
+                    .separation(function() {
+                        return 1;
+                    });
 
                 var cluster_g = body_g.append("g").attr("class", "cluster")
                     .attr("transform", "translate(0," + topCluster_height + ")");
@@ -278,11 +287,15 @@ define(["toolsApp"], function(toolsApp) {
             //热图交互时所需比例尺
             var xScale = d3.scaleBand()
                 .range([0, heatmap_width])
-                .domain(heatmap_data.map(function(d) { return d.name; }));
+                .domain(heatmap_data.map(function(d) {
+                    return d.name;
+                }));
 
             var yScale = d3.scaleBand()
                 .range([0, heatmap_height])
-                .domain(heatmap_data[0].heatmap.map(function(d) { return d.x }));
+                .domain(heatmap_data[0].heatmap.map(function(d) {
+                    return d.x
+                }));
 
             //画热图
             function drawHeatmap(colors) {
@@ -297,10 +310,14 @@ define(["toolsApp"], function(toolsApp) {
                         .enter()
                         .append("rect")
                         .attr("x", i * single_rect_width)
-                        .attr("y", function(d, j) { return j * single_rect_height })
+                        .attr("y", function(d, j) {
+                            return j * single_rect_height
+                        })
                         .attr("width", single_rect_width)
                         .attr("height", single_rect_height)
-                        .attr("fill", function(d) { return colorScale(d.y) })
+                        .attr("fill", function(d) {
+                            return colorScale(d.y)
+                        })
 
                     //添加x轴的名称
                     rect_g.append("text")
@@ -865,48 +882,66 @@ define(["toolsApp"], function(toolsApp) {
         }
 
         // 重分析回调
+        // 重分析服务回调
         $scope.reanalysisError = false;
         $scope.handlerReanalysis = function(params) {
-            // var newWin = $window.open('');
-            $scope.reAnalysisEntity = angular.copy($scope.goAnnoFindEntity);
-            $scope.reAnalysisEntity.geneUnselectList = [];
-            $scope.reAnalysisEntity.allThead = [];
-            $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
-            $scope.reAnalysisEntity.chooseType = params.type;
-            $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+                // params {'type': type, 'check': checkedItems,'chartType':chartType }
+                $scope.reAnalysisEntity = {
+                    entity: ''
+                };
+                $scope.reAnalysisEntity.entity = angular.copy($scope.goAnnoFindEntity);
+                $scope.reAnalysisEntity.geneUnselectList = [];
+                $scope.reAnalysisEntity.url = angular.copy(options.api.mrnaseq_url + "/table/GetHeatmapTableData").split('mrna')[1];
+                // $scope.reAnalysisEntity.allThead = [];
 
-            for (var key in $scope.geneUnselectList) {
-                $scope.reAnalysisEntity.geneUnselectList.push(key);
-            }
-
-            $scope.GOAnnoData.baseThead.forEach(function(val, index) {
-                $scope.reAnalysisEntity.allThead.push(val.true_key);
-            });
-
-
-            var promise = ajaxService.GetDeferData({
-                data: $scope.reAnalysisEntity,
-                url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
-            })
-
-            toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-            promise.then(function(res) {
-                toolService.pageLoading.close();
-                if (res.Error) {
-                    $scope.reanalysisError = "syserror";
-                    toolService.popMesgWindow(res.Error);
+                if (params.chartType === 'heatmap') {
+                    $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
                 } else {
-                    $scope.reanalysisError = false;
-                    $scope.$emit('openAnalysisPop');
-                    $rootScope.GetAnalysisList(1);
-                    toolService.popMesgWindow('重分析提交成功');
+                    $scope.reAnalysisEntity.chartType = params.chartType;
                 }
-            }, function(err) {
-                console.log(err);
-                toolService.popMesgWindow(err);
-            })
-        }
-        //get links 
+
+                $scope.reAnalysisEntity.chooseType = params.type;
+                $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+
+                for (var key in $scope.geneUnselectList) {
+                    $scope.reAnalysisEntity.geneUnselectList.push(key);
+                }
+
+                // 不要allThead 2018年6月6日10:46:06
+                // $scope.bigTableData.baseThead.forEach(function (val, index) {
+                //     $scope.reAnalysisEntity.allThead.push(val.true_key);
+                // });
+
+                var promise = ajaxService.GetDeferData({
+                    data: $scope.reAnalysisEntity,
+                    url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
+                })
+                toolService.pageLoading.open('正在提交重分析申请，请稍后...');
+                promise.then(function(res) {
+                    toolService.pageLoading.close();
+                    if (res.Error) {
+                        $scope.reanalysisError = "syserror";
+                        toolService.popMesgWindow(res.Error);
+                    } else {
+                        $scope.reanalysisError = false;
+                        $scope.$emit('openAnalysisPop');
+                        $rootScope.GetAnalysisList(1);
+                        toolService.popMesgWindow('重分析提交成功');
+                        // if (res.isAnalysis) {
+                        // 打开我的分析面板
+                        $scope.$emit('openAnalysisPop');
+                        // } else {
+                        //     // 跳到详情页
+                        //     var type = $scope.reAnalysisEntity.chartType;
+                        //     var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                        //     $window.open(url);
+                        // }
+                    }
+                }, function(err) {
+                    toolService.popMesgWindow(err);
+                })
+            }
+            //get links 
         $scope.linksError = false;
         $scope.GetLinks = function() {
             var promise = ajaxService.GetDeferData({

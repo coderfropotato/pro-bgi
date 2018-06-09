@@ -57,7 +57,7 @@ define(["toolsApp"], function (toolsApp) {
             // 获取前置任务
             $scope.GetLinks();
         };
-        
+
         //获取聚类图数据
         $scope.GetHeatmapData = function (flag) {
             $scope.isShowSetPanel = false;
@@ -860,59 +860,17 @@ define(["toolsApp"], function (toolsApp) {
             }
         }
 
-        // 重分析回调
-        $scope.reanalysisError = false;
-        $scope.handlerReanalysis = function (params) {
-            // var newWin = $window.open('');
-            $scope.reAnalysisEntity = angular.copy($scope.goAnnoFindEntity);
-            $scope.reAnalysisEntity.geneUnselectList = [];
-            $scope.reAnalysisEntity.allThead = [];
-            $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
-            $scope.reAnalysisEntity.chooseType = params.type;
-            $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
-
-            for (var key in $scope.geneUnselectList) {
-                $scope.reAnalysisEntity.geneUnselectList.push(key);
-            }
-
-            $scope.GOAnnoData.baseThead.forEach(function (val, index) {
-                $scope.reAnalysisEntity.allThead.push(val.true_key);
-            });
-
-
-            var promise = ajaxService.GetDeferData({
-                data: $scope.reAnalysisEntity,
-                url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
-            })
-
-            toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-            promise.then(function (res) {
-                toolService.pageLoading.close();
-                if (res.Error) {
-                    $scope.reanalysisError = "syserror";
-                    toolService.popMesgWindow(res.Error);
-                } else {
-                    $scope.reanalysisError = false;
-                    $scope.$emit('openAnalysisPop');
-                    $rootScope.GetAnalysisList(1);
-                    toolService.popMesgWindow('重分析提交成功');
-                }
-            }, function (err) {
-                console.log(err);
-                toolService.popMesgWindow(err);
-            })
-        }
 
         //get links 
         $scope.linksError = false;
-        $scope.GetLinks = function(){
+        $scope.GetLinks = function () {
             console.log($scope.id);
             var promise = ajaxService.GetDeferData({
                 data: {},
-                url: options.api.java_url+"/analysis/parent/"+$scope.id
+                url: options.api.java_url + "/analysis/parent/" + $scope.id
             })
             promise.then(function (res) {
-                if (res.status!=200) {
+                if (res.status != 200) {
                     $scope.linksError = "syserror";
                 } else {
                     $scope.linksError = false;
@@ -932,6 +890,64 @@ define(["toolsApp"], function (toolsApp) {
                 // success
                 $window.open('../tools/index.html#/home/' + type + '/' + item.id + '/' + item.projectName);
             }
+        }
+
+        // 重分析服务回调
+        $scope.reanalysisError = false;
+        $scope.handlerReanalysis = function (params) {
+            // params {'type': type, 'check': checkedItems,'chartType':chartType }
+            $scope.reAnalysisEntity = { entity: '' };
+            $scope.reAnalysisEntity.entity = angular.copy($scope.goAnnoFindEntity);
+            $scope.reAnalysisEntity.geneUnselectList = [];
+            $scope.reAnalysisEntity.url = angular.copy(options.api.mrnaseq_url + "/table/GetHeatmapTableData").split('mrna')[1];
+            // $scope.reAnalysisEntity.allThead = [];
+
+            if (params.chartType === 'heatmap') {
+                $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
+            } else {
+                $scope.reAnalysisEntity.chartType = params.chartType;
+            }
+
+            $scope.reAnalysisEntity.chooseType = params.type;
+            $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+
+            for (var key in $scope.geneUnselectList) {
+                $scope.reAnalysisEntity.geneUnselectList.push(key);
+            }
+
+            // 不要allThead 2018年6月6日10:46:06
+            // $scope.bigTableData.baseThead.forEach(function (val, index) {
+            //     $scope.reAnalysisEntity.allThead.push(val.true_key);
+            // });
+
+            var promise = ajaxService.GetDeferData({
+                data: $scope.reAnalysisEntity,
+                url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
+            })
+            toolService.pageLoading.open('正在提交重分析申请，请稍后...');
+            promise.then(function (res) {
+                toolService.pageLoading.close();
+                if (res.Error) {
+                    $scope.reanalysisError = "syserror";
+                    toolService.popMesgWindow(res.Error);
+                } else {
+                    $scope.reanalysisError = false;
+                    $scope.$emit('openAnalysisPop');
+                    $rootScope.GetAnalysisList(1);
+                    toolService.popMesgWindow('重分析提交成功');
+                    // if (res.isAnalysis) {
+                    // 打开我的分析面板
+                    $scope.$emit('openAnalysisPop');
+                    // } else {
+                    //     // 跳到详情页
+                    //     var type = $scope.reAnalysisEntity.chartType;
+                    //     var url = '../tools/index.html#/home/' + type + '/' + res.id;
+                    //     $window.open(url);
+                    // }
+                }
+            }, function (err) {
+                toolService.popMesgWindow(err);
+            })
         }
 
 

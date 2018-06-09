@@ -193,15 +193,6 @@
                                     <!-- 不需要调整精度的数据 -->
                                     <td class="center" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in GOAnnoData.baseThead track by $index">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
                                     </td>
-                                    <!-- <td>
-                                                        <a href="javascript:void(0);" ng-click="showGeneInfo(row.GeneID)">{{row.GeneID}}</a>
-                                                    </td>
-                                                    <td>
-                                                        <span ng-repeat="item in row.GOIDList track by $index">
-                                                            <a href="javascript:void(0)" ng-bind="item" ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{item}}" target="_blank"></a>
-                                                            <span ng-if="$index + 1 != row.GOIDList.length">,</span>
-                                                        </span>
-                                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -228,7 +219,7 @@
                 <div class="clear"></div>
             </div>
             <!-- reanalysis content-->
-            <div class="re-analysis" callback="handlerReanalysis(options)"></div>
+            <div class="re-analysis" ng-hide="goAnnoError" callback="handlerReanalysis(options)" gene-count="geneCount"></div>
         </div>
         <!-- table over -->
 

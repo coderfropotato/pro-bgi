@@ -903,7 +903,6 @@ define(["toolsApp"], function (toolsApp) {
                 toolService.popMesgWindow(err);
             })
         }
-
         //get links 
         $scope.linksError = false;
         $scope.GetLinks = function(){

@@ -29,7 +29,9 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     isExportPdf: "=",
                     findEntity: "=",
                     exportLocation: "=",
-                    isExportSvg: "="
+                    isExportSvg: "=",
+                    isMultipleName: "=",
+                    varFileName: "="
                 },
                 controller: "staticImgExportController",
                 link: function(scope, element, attrs) {
@@ -104,7 +106,11 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     if (type == "jpg" || type == "png") {
                         var a = document.createElement('a');
                         a.href = base64;
-                        a.download = type == "png" ? saveImgName + ".png" : saveImgName + ".jpg";
+                        if ($scope.isMultipleName) {
+                            a.download = type == "png" ? $scope.varFileName + ".png" : $scope.varFileName + ".jpg";
+                        } else {
+                            a.download = type == "png" ? saveImgName + ".png" : saveImgName + ".jpg";
+                        }
                         a.click();
                     } else {
                         // // pdf
@@ -147,7 +153,11 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                         var a = document.createElement('a');
                                         document.body.appendChild(a);
                                         a.href = href;
-                                        a.download = saveImgName + ".svg";
+                                        if ($scope.isMultipleName) {
+                                            a.download = $scope.varFileName + ".svg";
+                                        } else {
+                                            a.download = saveImgName + ".svg";
+                                        }
                                         setTimeout(function() {
                                             a.click();
                                             a.remove();
@@ -201,10 +211,14 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                         var aEle = document.createElement("a");
                                         document.body.appendChild(aEle);
                                         var file = new Blob([fileInfo], {
-                                            type: 'application/pdf'
+                                            type: 'application/pdf;charset=utf-8;'
                                         });
                                         aEle.href = URL.createObjectURL(file);
-                                        aEle.download = saveImgName + ".pdf";
+                                        if ($scope.isMultipleName) {
+                                            aEle.download = $scope.varFileName + ".pdf";
+                                        } else {
+                                            aEle.download = saveImgName + ".pdf";
+                                        }
                                         aEle.click();
                                         aEle.remove();
                                     }

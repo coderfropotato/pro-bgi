@@ -1,3 +1,241 @@
 <div class="pathwayRich-page" ng-init="InitPage()" ng-controller="pathwayRichController">
-    {{test}}
+    <div class="report-page-title" custom-title="title"></div>
+
+    <div id="div_reAnalysis_pathwayRich">
+        <!-- 富集表 start -->
+        <h6>Pathway 富集</h6>
+        <p style="color: red;" ng-show="goSelectList.length>60">最多只对qvalue较小的top60进行重新画图</p>
+        <div class="tableListPanel" id="reAnalysis_pathwayRich_go">
+            <div class="btn_options_filelist">
+                <ul class="FLeft">
+                    <li>
+                        <div class="grid-filter-begin" tableid="reAnalysis_pathwayRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_pathwayRich_go" filter-status-callback="handlerFilterStatusChange(status)"></div>
+                    </li>
+                </ul>
+                <ul class="fRight">
+                    <li>
+                        <div class="selector_normal" style="width: 120px;">
+                            <select super-select ng-model="accuracy" class="form-control" is-search="false">
+                                     <option value=1>精度:1位小数</option>
+                                     <option value=2>精度:2位小数</option>
+                                     <option value=3>精度:3位小数</option>
+                                     <option value=4>精度:4位小数</option>
+                                     <option value=5>精度:5位小数</option>
+                                     <option value=6>精度:6位小数</option>
+                                     <option value=7>精度:7位小数</option>
+                                     <option value=-1>精度:全数据</option>
+                                 </select>
+                        </div>
+                    </li>
+                    <li ng-hide="error">
+                        <div class="grid-export" find-entity="pageEntity" export-location="exportLocationTable" savefilename="Pathway 富集"></div>
+                    </li>
+                    <li>
+                        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetTableData(1)">
+                                         <span class="glyphicon glyphicon-refresh"></span>
+                                     </button>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <!-- filter content -->
+            <div class="div_filterContent" ng-init="filterText1=undefind" ng-class="{hide:(!filterText1.filterText.length && !filterText1.sortText)}">
+                <div class="div_filterText" ng-show="filterText1.filterText.length">
+                    <span>筛选条件：</span>
+                    <div class="filter-right">
+                        <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
+                                 <span class="filter-item" ng-bind-html="f"></span>
+                        <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="div_sortText" ng-show="filterText1.sortText">
+                    <span>排序条件：</span>
+                    <span class="sort-item" style="cursor:normal;" ng-bind-html="filterText1.sortText"></span>
+                </div>
+            </div>
+            <!-- table wrap -->
+            <div class="table_scroll_wrap">
+                <div id="reAnalysis_pathwayRich_go_table">
+                    <div ng-hide="error" class="table_rightside">
+                        <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                            <thead>
+                                <tr>
+                                    <th class="center" width="40" ng-click="toggleTHClick()"><span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':checkAll,'unSelectedGo':!checkAll}"></span></th>
+                                    <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                        <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
+                                        <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-hide="error">
+                                <tr ng-repeat="row in tableData.rows track by $index">
+                                    <td class="center" ng-click="toggleTDClick(row,$event)">
+                                        <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
+                                    </td>
+                                    <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" my-title="row[val.true_key]">
+                                        <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="https://www.kegg.jp/kegg-bin/show_pathway?{{row[val.true_key]}}" target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</a>
+                                        <span ng-if="val.true_key!='kegg_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- error box -->
+                    <div class="table-nodata" error-type="error"></div>
+                </div>
+            </div>
+            <!-- table bottom -->
+            <div class="table-bottom" style="position:relative;">
+                <div class="pager-grid" ng-hide="error" grid-data="tableData" side="left" callback="GetTableData(arg1)"></div>
+                <ul ng-hide="error" class="bottom-pagesize">
+                    <li>
+                        <div class="selector_normal" style="width: 110px;">
+                            <select super-select ng-model="pageEntity.pageSize" class="form-control" is-search="false" ng-change="GetTableData(1)">
+                                     <option value="10">每页 10 条</option>
+                                     <option value="20">每页 20 条</option>
+                                     <option value="50">每页 50 条</option>
+                                     <option value="100">每页 100 条</option>
+                                 </select>
+                        </div>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <!-- 气泡图 start -->
+        <div class="graph_group" style="margin-top: 50px" id="reAnalysis_pathwayRich_bubble">
+            <div class="graph_header">
+                <ul class="fLeft">
+                    <li>
+                        <div class="graph-view-btn" parentid="reAnalysis_pathwayRich_bubble" charpanelid="div_reAnalysis_pathwayRich_bubble" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                    </li>
+                    <li>
+                        <div class="selector_normal" style="width: 110px;">
+                            <select super-select ng-model="chartType" class="form-control" ng-change="reDrawChart()">
+                                                    <option value="bubble">气泡图</option>
+                                                    <option value="column">柱状图</option>
+                                                </select>
+                        </div>
+                    </li>
+                    <!-- GoList panel  -->
+                    <li>
+                        <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true" ng-mouseleave="isShowGoListPanel=false">
+                            <button class="btn btn-default btn-silver btn-sm">
+                                     选中的GO
+                                     <span class="red">({{goSelectList.length<60?goSelectList.length:60}})</span>
+                                     <span class="icon-caret-down"></span>
+                                 </button>
+                            <div class="dropdown-menu div_gn_droplist" style="left:0;right: inherit">
+                                <div style="max-height:400px; overflow-y:auto; overflow-x:hidden;">
+                                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" cellpadding="0" cellspacing="0" border="0">
+                                        <thead>
+                                            <tr>
+                                                <th width="40"></th>
+                                                <th style="width: 60px; text-align: center;">
+                                                    NO.
+                                                </th>
+                                                <th>{{GoBaseThead.name}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="goSelectList.length == 0">
+                                                <td colspan="3" style="text-align:center;">
+                                                    暂无未选中列表
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="goVal in (goSelectList  | limitTo:60 ) track by $index">
+                                                <td>
+                                                    <button ng-click="removeGoItem(goVal)" type="button" class="btn btn-default btn-silver btn_tiny" style="margin-right: 0px;">
+                                                             <span class="iconglyph icon-minus"></span>
+                                                         </button>
+                                                </td>
+                                                <td align="center" ng-bind="$index+1"></td>
+                                                <td ng-bind="goVal[goKey]"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="btnPanel" style="margin-top:10px; border-top:1px solid #ddd;" ng-show="goSelectList.length">
+                                    <button ng-click="clearGoList()" type="button" class="btn btn-default searchBtn btn-danger" style="margin-right: 0px;">清空</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+                    <button class="btn btn-default btn-silver btn-sm tool-tip" title="重画" ng-click="reDrawChart()">
+                         <span>重画</span>
+                 </button>
+                </ul>
+                <ul class="fRight">
+                    <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='bubble'">
+                        <button ng-show="!single" ng-click="handlerSingle(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
+                        <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
+                    </li>
+                    <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='column'">
+                        <button ng-show="!single" ng-click="handlerSingle(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
+                        <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
+                    </li>
+                    <li ng-hide="bubbleError || isTableShow">
+                        <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_bubble" saveimgname="气泡图"></div>
+                        <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_column" saveimgname="柱状图"></div>
+                    </li>
+                    <li ng-hide="bubbleError || !isTableShow">
+                        <div class="grid-export" find-entity="bubbleEntity" export-location="bubbleExportLocationTable" savefilename="统计"></div>
+                    </li>
+                    <li>
+                        <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetBubbleData()">
+                                 <span class="glyphicon glyphicon-refresh"></span>
+                             </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- table -->
+            <div class="table_scroll_wrap" ng-show="isTableShow">
+                <div ng-hide="bubbleError">
+                    <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px; text-align: center;">NO.</th>
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in bubbleTableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
+                                    <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in bubbleTableData.rows track by $index">
+                                <td class="center">{{$index+1}}</td>
+                                <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name" my-title="row[val.true_key]">
+                                    <span>{{row[val.true_key]}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-nodata" error-type="bubbleError"></div>
+            </div>
+
+            <!-- chart -->
+            <div class="tab-switch-chart" ng-hide="isTableShow">
+                <div class="chart_wrap" ng-hide="bubbleError">
+                    <div ng-show="chartType=='bubble'" class="chart_graph" id="div_reAnalysis_pathwayRich_bubble" style="text-align:center;min-height: 450px">
+                    </div>
+                    <div ng-show="chartType=='column'" class="chart_graph" id="div_reAnalysis_pathwayRich_column" style="text-align:center">
+                    </div>
+                </div>
+                <div class="table-nodata" error-type="bubbleError"></div>
+            </div>
+        </div>
+
+        <!-- 交互表 (geneId表) start -->
+        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" method="method" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"></div>
+
+    </div>
+
 </div>

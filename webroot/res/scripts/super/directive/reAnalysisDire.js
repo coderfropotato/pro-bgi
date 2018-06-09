@@ -67,7 +67,7 @@ define("superApp.reAnalysisDire",
                     });
                 } else {
                     // 不需要选择比较组的重分析类型  默认只返回重分析类型
-                    $scope.callback({ options: { 'type': '', 'check': [], 'chartType': type } })
+                    $scope.callback({ options: { 'type': '', 'check': [], 'chartType': type } });
                 }
 
             }

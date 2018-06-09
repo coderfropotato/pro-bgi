@@ -909,8 +909,13 @@ define(["toolsApp"], function(toolsApp) {
 
         //get links 
         $scope.linksError = false;
+<<<<<<< HEAD
         $scope.GetLinks = function() {
             var promise = ajaxService.GetDeferDataNoAuth({
+=======
+        $scope.GetLinks = function(){
+            var promise = ajaxService.GetDeferData({
+>>>>>>> 84c189c1517b7ae89bc90d2117277090e8a9d2fa
                 data: {},
                 url: options.api.java_url + "/analysis/parent/" + $scope.id
             })

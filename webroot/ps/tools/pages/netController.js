@@ -78,7 +78,7 @@ define(['toolsApp'], function(toolsApp) {
             var core_gene = "";
             //配置
             var myOptions = {
-                id: "div_reAnalysis_net_panel",
+                id: "reAnalysis_net_panel_svg",
                 width: 800,
                 height: 800,
                 isMultiChoose: false, //是否多选状态
@@ -299,7 +299,7 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             function drawNetChart(networkData, options) {
-                d3.selectAll("#" + options.id + 　" svg g").remove('');
+                $("#" + options.id).html('');
                 var height = options.height || 800,
                     width = options.width || 800
 

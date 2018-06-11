@@ -19,7 +19,7 @@ define(["toolsApp"], function(toolsApp) {
 
             $scope.expressEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
-                "sample": ""
+                "sample": "HBRR1"
             }
             $scope.getExpressTable();
 

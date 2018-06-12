@@ -12,13 +12,13 @@ define(['toolsApp'], function(toolsApp) {
             }
             console.log($scope.netEntity.LCID, $scope.netEntity.id);
             $scope.GetNetData();
-            // $scope.GetTableData();
+            $scope.GetTableData();
         }
 
         //获取net图的切换表格数据
         $scope.GetTableData = function() {
             toolService.gridFilterLoading.open("panel_reAnalysis_net");
-            $scope.exportLocationTable = options.api.mrnaseq_url + "/StructureAndVariationPie/Fusion";
+            $scope.exportLocationTable = options.api.mrnaseq_url + "/Tools/PPIGeneralTable";
             var ajaxConfig = {
                 data: $scope.netEntity,
                 url: $scope.exportLocationTable
@@ -310,13 +310,13 @@ define(['toolsApp'], function(toolsApp) {
 
                 //node连接数,决定node的大小、颜色
                 for (var i = 0; i < networkData.nodes.length; i++) {
-                    networkData.nodes[i].value = 0;
-                    for (var j = 0; j < networkData.links; j++) {
+                    var count = 0;
+                    for (var j = 0; j < networkData.links.length; j++) {
                         if (networkData.nodes[i].id === networkData.links[j].source || networkData.nodes[i].id === networkData.links[j].target) {
-                            networkData.nodes[i].value += 1;
+                            count++;
                         }
                     }
-                    console.log(networkData.nodes[i].value);
+                    networkData.nodes[i].value = count;
                 }
 
                 var colorArr = options.colorArr;

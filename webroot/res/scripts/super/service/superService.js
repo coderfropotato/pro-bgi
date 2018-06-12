@@ -589,7 +589,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>任务命名</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>类型</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div><div class='noChooseSpan' ng-hide='isChoose'>请至少选择一种数据</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>任务命名</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>类型</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div><div class='noChooseSpan' ng-hide='isChoose'>{{tips}}</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     title: popTitle,
@@ -659,7 +659,29 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             }
                             if (checkedItems.length == 0) {
                                 $rootScope.isChoose = false;
+                                if (chartType === 'heatmap') {
+                                    $rootScope.tips = '请选择1-20个样本/比较组作图';
+                                } else if (chartType === 'line') {
+                                    $rootScope.tips = '至少选择2个样本/比较组';
+                                } else {
+                                    $rootScope.tips = '请至少选择一种数据';
+                                }
+                                return;
                             } else {
+                                if (checkedItems.length == 1) {
+                                    if (chartType === 'line') {
+                                        $rootScope.isChoose = false;
+                                        $rootScope.tips = '至少选择2个样本/比较组';
+                                        return;
+                                    }
+                                } else {
+                                    // 1+
+                                    if (checkedItems.length > 20) {
+                                        $rootScope.isChoose = false;
+                                        $rootScope.tips = '请选择1-20个样本/比较组作图';
+                                        return;
+                                    }
+                                }
                                 $rootScope.isChoose = true;
                                 // 回调
                                 for (var i = 0; i < $rootScope.data.length; i++) {

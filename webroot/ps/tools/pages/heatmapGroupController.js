@@ -15,7 +15,7 @@ define(["toolsApp"], function(toolsApp) {
             $scope.id = $state.params.id; // 重分析id
             //  项目：' + $scope.projectName + ', 
             $scope.title = '聚类分析 ( ID：' + $scope.id + " ) ";
-
+            $scope.geneCount = 0;
             $scope.isShowColorPanel = false; //是否显示颜色面板
             $scope.isShowSetPanel = false; //是否显示设置面板
             $scope.isRefresh = false; //是否点击了刷新
@@ -723,11 +723,14 @@ define(["toolsApp"], function(toolsApp) {
             promise.then(function(responseData) {
                 if (responseData.Error) {
                     $scope.goAnnoError = "syserror";
+                    $scope.geneCount = 0;
                 } else if (responseData.length == 0) {
                     $scope.goAnnoError = "nodata";
+                    $scope.geneCount = 0;
                 } else {
                     $scope.goAnnoError = "";
                     $scope.GOAnnoData = responseData;
+                    $scope.geneCount = $scope.GOAnnoData.total - $scope.geneUnselectListLength;
                     $scope.GOAnnoData.thead = [];
                     // 第零个就是geneid
                     $scope.geneid = $scope.GOAnnoData.baseThead[0];
@@ -756,6 +759,7 @@ define(["toolsApp"], function(toolsApp) {
                 toolService.gridFilterLoading.close("analysis-heatmapgroup-table");
                 // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             }, function(errorMesg) {
+                $scope.geneCount = 0;
                 toolService.gridFilterLoading.close("analysis-heatmapgroup-table");
                 // toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
                 $scope.goAnnoError = "syserror";
@@ -911,7 +915,7 @@ define(["toolsApp"], function(toolsApp) {
                 // $scope.bigTableData.baseThead.forEach(function (val, index) {
                 //     $scope.reAnalysisEntity.allThead.push(val.true_key);
                 // });
-
+                var newFrame = window.open('../tools/index.html#/home/loading');
                 var promise = ajaxService.GetDeferData({
                     data: $scope.reAnalysisEntity,
                     url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
@@ -920,24 +924,23 @@ define(["toolsApp"], function(toolsApp) {
                 promise.then(function(res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
+                        newFrame.close();
                         $scope.reanalysisError = "syserror";
                         toolService.popMesgWindow(res.Error);
                     } else {
                         $scope.reanalysisError = false;
                         $scope.$emit('openAnalysisPop');
                         $rootScope.GetAnalysisList(1);
-                        toolService.popMesgWindow('重分析提交成功');
-                        // if (res.isAnalysis) {
-                        // 打开我的分析面板
-                        $scope.$emit('openAnalysisPop');
-                        // } else {
-                        //     // 跳到详情页
-                        //     var type = $scope.reAnalysisEntity.chartType;
-                        //     var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                        //     $window.open(url);
-                        // }
+                        // 如果不需要重新分析 就直接打开详情页
+                        if(params.chartType==='heatmap' || params.chartType==='goRich' || params.chartType==='pathwayRich'){
+                            newFrame.close();
+                            toolService.popMesgWindow('重分析提交成功');
+                        }else{
+                            newFrame.location.href = '../tools/index.html#/home/'+$scope.reAnalysisEntity.chartType+'/'+res.id+'/custom_projectName';
+                        }
                     }
                 }, function(err) {
+                    newFrame.close();
                     toolService.popMesgWindow(err);
                 })
             }
@@ -981,6 +984,7 @@ define(["toolsApp"], function(toolsApp) {
                         $scope.geneUnselectListLength++;
                     }
                 }
+                $scope.geneCount = $scope.GOAnnoData.total - $scope.geneUnselectListLength;
             }
         }, true)
 

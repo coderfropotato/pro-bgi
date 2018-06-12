@@ -15,20 +15,20 @@ define("superApp.reAnalysisDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='re-analysis-panel clearfix'>"
-               
-                    + "<ul class='pull-right clearfix'>" 
-                    + "<li class='pull-left tool-tip' title='聚类重分析' ng-click=\"handlerReanalysisClick('heatmap')\">聚类重分析</li>"
-                    + "<li class='pull-left tool-tip' title='GO富集' ng-click=\"handlerReanalysisClick('goRich')\">GO富集</li>"
-                    + "<li class='pull-left tool-tip' title='Pathway富集' ng-click=\"handlerReanalysisClick('pathwayRich')\">Pathway富集</li>"
-                    + "<li class='pull-left tool-tip' title='GO分类' ng-click=\"handlerReanalysisClick('goClass')\">GO分类</li>"
-                    + "<li class='pull-left tool-tip' title='Pathway分类' ng-click=\"handlerReanalysisClick('pathwayClass')\">Pathway分类</li>"
-                    + "<li class='pull-left tool-tip' title='折线图' ng-click=\"handlerReanalysisClick('line')\">折线图</li>"
-                    + "<li class='pull-left tool-tip' title='蛋白网络互作' ng-click=\"handlerReanalysisClick('net')\">蛋白网络互作</li>"
+
+                    + "<ul class='pull-right clearfix'>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'至少选择2个基因作图':'聚类'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\">聚类重分析</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':goRichError}\"uib-tooltip=\"{{goRichError?'至少选择三个基因作图':'GO富集'}}\" ng-click=\"handlerReanalysisClick(goRichError,'goRich')\">GO富集</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':pathwayRichError}\" uib-tooltip=\"{{pathwayRichError?'至少选择三个基因作图':'kegg富集'}}\" ng-click=\"handlerReanalysisClick(pathwayRichError,'pathwayRich')\">Pathway富集</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':goClassError}\" uib-tooltip=\"{{goClassError?'至少选择一个基因作图':'GO分类'}}\" ng-click=\"handlerReanalysisClick(goClassError,'goClass')\">GO分类</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':pathwayClassError}\" uib-tooltip=\"{{pathwayClassError?'至少选择一个基因作图':'kegg分类'}}\" ng-click=\"handlerReanalysisClick(pathwayClassError,'pathwayClass')\">Pathway分类</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':lineError}\" uib-tooltip=\"{{lineError?'选择1-10个基因作图':'折线图'}}\" ng-click=\"handlerReanalysisClick(lineError,'line')\">折线图</li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':netError}\" uib-tooltip=\"{{netError?'选择1-500个基因作图':'网路图'}}\" ng-click=\"handlerReanalysisClick(netError,'net')\">蛋白网络互作</li>"
                     + "</ul>"
                     + "</div>",
                 scope: {
                     callback: "&",
-                    geneCount:"="
+                    geneCount: "="
                 },
                 controller: "reAnalysisCtr"
             }
@@ -39,38 +39,123 @@ define("superApp.reAnalysisDire",
         function reAnalysisCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             $scope.reAnslysisError = false;
 
-            $scope.handlerReanalysisClick = function (type) {
-                // 只有line和聚类 需要选择比较组
-                if (type == 'line' || type == 'heatmap') {
-                    $scope.reAnalysisEntity = {
-                        "LCID": toolService.sessionStorage.get('LCID'),
-                        "chartType": type
-                    }
+            $scope.heatmapError = false;
+            $scope.goClassError = false;
+            $scope.goRichError = false;
+            $scope.pathwayClassError = false;
+            $scope.pathwayRichError = false;
+            $scope.lineError = false;
+            $scope.netError = false;
 
-                    var ajaxConfig = {
-                        data: $scope.reAnalysisEntity,
-                        url: options.api.mrnaseq_url + "/analysis/GetAnalysisPop",
-                    };
-
-                    var promise = ajaxService.GetDeferData(ajaxConfig);
-                    promise.then(function (responseData) {
-                        if (responseData.Error) {
-                            $scope.reAnslysisError = "syserror";
-                        } else if (responseData.data.length == 0) {
-                            $scope.reAnslysisError = "nodata";
-                        } else {
-                            $scope.reAnslysisError = false;
-                            toolService.popAnalysis(responseData, $scope.callback, type);
+            $scope.handlerReanalysisClick = function (error, type) {
+                if (!error) {
+                    // 只有line和聚类 需要选择比较组
+                    if (type == 'line' || type == 'heatmap') {
+                        $scope.reAnalysisEntity = {
+                            "LCID": toolService.sessionStorage.get('LCID'),
+                            "chartType": type
                         }
-                    }, function (errorMesg) {
-                        $scope.reAnslysisError = "syserror";
-                    });
-                } else {
-                    // 不需要选择比较组的重分析类型  默认只返回重分析类型
-                    $scope.callback({ options: { 'type': '', 'check': [], 'chartType': type } });
-                }
 
+                        var ajaxConfig = {
+                            data: $scope.reAnalysisEntity,
+                            url: options.api.mrnaseq_url + "/analysis/GetAnalysisPop",
+                        };
+
+                        var promise = ajaxService.GetDeferData(ajaxConfig);
+                        promise.then(function (responseData) {
+                            if (responseData.Error) {
+                                $scope.reAnslysisError = "syserror";
+                            } else if (responseData.data.length == 0) {
+                                $scope.reAnslysisError = "nodata";
+                            } else {
+                                $scope.reAnslysisError = false;
+                                toolService.popAnalysis(responseData, $scope.callback, type);
+                            }
+                        }, function (errorMesg) {
+                            $scope.reAnslysisError = "syserror";
+                        });
+                    } else {
+                        // 不需要选择比较组的重分析类型  默认只返回重分析类型
+                        $scope.callback({ options: { 'type': '', 'check': [], 'chartType': type }, status: false });
+                    }
+                }
             }
+
+            $scope.$watch('geneCount', function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    if (newVal >= 1) {
+                        if (newVal == 1) {
+                            $scope.heatmapError = true;
+                            $scope.goClassError = false;
+                            $scope.goRichError = true;
+                            $scope.pathwayClassError = false;
+                            $scope.pathwayRichError = true;
+                            $scope.lineError = false;
+                            $scope.netError = false;
+                        } else {
+                            // >1   2|| 2+
+                            if (newVal == 2) {
+                                $scope.heatmapError = false;
+                                $scope.goClassError = false;
+                                $scope.goRichError = true;
+                                $scope.pathwayClassError = false;
+                                $scope.pathwayRichError = true;
+                                $scope.lineError = false;
+                                $scope.netError = false;
+                            } else {
+                                // 2+
+                                if (newVal == 3) {
+                                    $scope.heatmapError = false;
+                                    $scope.goClassError = false;
+                                    $scope.goRichError = false;
+                                    $scope.pathwayClassError = false;
+                                    $scope.pathwayRichError = false;
+                                    $scope.lineError = false;
+                                    $scope.netError = false;
+                                } else {
+                                    // 3-10
+                                    if (newVal <= 10) {
+                                        $scope.heatmapError = false;
+                                        $scope.goClassError = false;
+                                        $scope.goRichError = false;
+                                        $scope.pathwayClassError = false;
+                                        $scope.pathwayRichError = false;
+                                        $scope.lineError = false;
+                                        $scope.netError = false;
+                                    } else {
+                                        // 10-500
+                                        $scope.lineError = true;
+                                        if (newVal > 10 && newVal < 501) {
+                                            $scope.heatmapError = false;
+                                            $scope.goClassError = false;
+                                            $scope.goRichError = false;
+                                            $scope.pathwayClassError = false;
+                                            $scope.pathwayRichError = false;
+                                            $scope.netError = false;
+                                        } else {
+                                            // 500+
+                                            $scope.heatmapError = false;
+                                            $scope.goClassError = false;
+                                            $scope.goRichError = false;
+                                            $scope.pathwayClassError = false;
+                                            $scope.pathwayRichError = false;
+                                            $scope.netError = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        $scope.heatmapError = true;
+                        $scope.goClassError = true;
+                        $scope.goRichError = true;
+                        $scope.pathwayClassError = true;
+                        $scope.pathwayRichError = true;
+                        $scope.lineError = true;
+                        $scope.netError = true;
+                    }
+                }
+            })
         }
     });
 

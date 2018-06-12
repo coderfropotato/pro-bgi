@@ -30,7 +30,7 @@ define([
     "superApp.littleTableDire",
     "superApp.bigTableDire",
     "superApp.tableSwitchChartDire"
-], function() {
+], function () {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
         "ui.bootstrap",
@@ -64,7 +64,7 @@ define([
         "superApp.bigTableDire",
         "superApp.tableSwitchChartDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {
@@ -115,8 +115,11 @@ define([
                 url: "/home/geneDetail/:id",
                 templateUrl: "../tools/pages/geneDetail.html",
             })
-
-        .state("error", {
+            .state("loading", {
+                url: "/home/loading",
+                templateUrl: '../tools/pages/loading.html'
+            })
+            .state("error", {
                 url: "/home/error/:id",
                 templateUrl: "../tools/pages/error.html",
             })

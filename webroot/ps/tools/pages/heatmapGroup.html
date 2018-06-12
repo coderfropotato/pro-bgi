@@ -223,7 +223,7 @@
                 <div class="clear"></div>
             </div>
             <!-- reanalysis content-->
-            <div class="re-analysis" ng-hide="goAnnoError" callback="handlerReanalysis(options)" gene-count="geneCount"></div>
+            <div class="re-analysis" ng-if="!goAnnoError" callback="handlerReanalysis(options)" gene-count="geneCount"></div>
         </div>
         <!-- table over -->
 

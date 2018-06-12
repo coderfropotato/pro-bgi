@@ -1,10 +1,10 @@
 <div class="heatmap-page" ng-controller="heatmapGroupController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
     <div id="div_heatmap_page">
-        <div class="graph_group" id="analysis-heatmapClusterPanel" style="min-width:1000px">
+        <div class="graph_group" id="analysis-heatmapClusterPanel" >
             <div class="graph_header">
                 <ul class="fRight">
-                    <li>
+                    <li ng-if="!linksError">
                         <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务<span style="color:red;">({{links.length}})</span>
                             <div class="links btn-links" style="color:#333;">
                                 <ul ng-if="links.length" class="link-lists">

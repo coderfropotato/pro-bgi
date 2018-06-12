@@ -70,7 +70,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
                         } else {
                             //重新赋值授权,然后执行政策逻辑
-                            $window.sessionStorage.token = data;
+                            $window.localStorage.token = data;
                             $http({
                                 method: selfAjaxConfig.method,
                                 url: selfAjaxConfig.url,
@@ -131,8 +131,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 cache: false,
                                 success: function (responseData) {
                                     if (responseData.Status === 'success') {
-                                        toolService.sessionStorage.set('token', responseData.Token);
-                                        window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
+                                        toolService.localStorage.set('token', responseData.Token);
+                                        window.location.reload();
+                                        // window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                                     } else {
                                         if (responseData.Status == "Wrong username or password") {
                                             var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
@@ -155,7 +156,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             })
                         }, function (close) {
                             globalTokenError = false;
-                            console.log(options)
                             window.location.href = '../../../../ps/login/login.html';
                         })
                     }
@@ -304,9 +304,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             //验证客户端当前授权是否已丢弃
             this.validateWindowToken = function () {
-                if ($window.sessionStorage.token == "undefined"
-                    || $window.sessionStorage.token == undefined
-                    || $window.sessionStorage.token == "") {
+                if ($window.localStorage.token == "undefined"
+                    || $window.localStorage.token == undefined
+                    || $window.localStorage.token == "") {
                     return false;
                 }
                 else {
@@ -602,6 +602,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //数据
                         $rootScope.data = taskInfo.data;
                         $rootScope.chooseList = [];
+                        $rootScope.checkedItems = [];
 
                         for (var i = 0; i < $rootScope.data.length; i++) {
                             $rootScope.data[i].isChecked = false;
@@ -638,25 +639,30 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 })
                             }
                             $rootScope.chooseList[0].isChecked = true;
-
+                            $rootScope.checkedItems = [];
+                            $rootScope.checkedItems.push($rootScope.chooseList[0].name);
                         }
 
 
                         //数据选择
                         $rootScope.chooseData = function (item) {
                             item.isChecked = !item.isChecked;
+                            if (item.isChecked) {
+                                $rootScope.checkedItems.push(item.name);
+                            } else {
+                                $rootScope.checkedItems.forEach(function (val, index) {
+                                    if (val === item.name) {
+                                        $rootScope.checkedItems.splice(index, 1);
+                                    }
+                                })
+                            }
                         }
 
                         //确定
                         $rootScope.confirm = function () {
-                            var checkedItems = [];
+                            var checkedItems = angular.copy($rootScope.checkedItems);
                             var type = "";
 
-                            for (var i = 0; i < $rootScope.chooseList.length; i++) {
-                                if ($rootScope.chooseList[i].isChecked) {
-                                    checkedItems.push($rootScope.chooseList[i].name);
-                                }
-                            }
                             if (checkedItems.length == 0) {
                                 $rootScope.isChoose = false;
                                 if (chartType === 'heatmap') {

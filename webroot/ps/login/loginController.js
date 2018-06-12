@@ -31,7 +31,8 @@ define(['loginApp'], function (loginApp) {
             $scope.pageTitle = $scope.isTest ? options.testTitle : options.officialTitle;
             toolLoginService.sessionStorage.set('isTest', $scope.isTest);
             $scope.loadingComplete = true;
-            $scope.jump()
+            $rootScope.sk = "YANGWENDIAN19930";
+            // $scope.jump()
             // $scope.GetIsTest();
             console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
         };
@@ -85,7 +86,7 @@ define(['loginApp'], function (loginApp) {
                 success: function (responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
-                        toolLoginService.sessionStorage.set('token', responseData.Token);
+                        toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', jumpLCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
                         if (responseData.LCTYPE == "radseq") { responseData.LCTYPE = "RADseq" }
@@ -162,7 +163,7 @@ define(['loginApp'], function (loginApp) {
                 success: function (responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
-                        toolLoginService.sessionStorage.set('token', responseData.Token);
+                        toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', $scope.formEntity.LCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
                         // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
@@ -202,7 +203,7 @@ define(['loginApp'], function (loginApp) {
                 cache: false,
                 success: function (res) {
                     if (res.exec == 0) {
-                        toolLoginService.sessionStorage.set('token', res.fields[0].Token);
+                        toolLoginService.localStorage.set('token', res.fields[0].Token);
                         toolLoginService.sessionStorage.set("managerMail", res.fields[0].adminMail);
                         $rootScope.isMangerSystem = true;
                         window.location.href = window.location.href.replace('login/login.html', 'mangerSystem' + '/index.html');

@@ -31,10 +31,12 @@
                 </ul>
                 <!-- btn -->
                 <button class="btn btn-success pull-right" ng-click="handlerFilterClick()">筛选</button>
+                <button class="btn btn-default pull-right" style="margin-right:12px;" ng-click="handlerResetClick($event)">重置</button>
             </div>
             <div class="filter pull-right">
-                <input placeholder="关键字筛选">
-                <i class="glyphicon glyphicon-search"></i>
+                <input placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label" ng-keyup="handlerSearch($event)">
+                <i class="glyphicon glyphicon-search search"></i>
+                <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
             </div>
         </div>
         <div>
@@ -54,7 +56,8 @@
                         <tr ng-repeat="item in analysisList.rows track by $index">
                             <td class="text-center editProject">
                                 <span ng-show="!item.isEdit">{{item.projectName}}</span>
-                                <input ng-blur="handlerBlur(item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
+                                <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
+                                <input  ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
                                 <i class="glyphicon glyphicon-pencil" ng-click="handlerEditClick(item)"></i>
                             </td>
                             <td class="text-center">

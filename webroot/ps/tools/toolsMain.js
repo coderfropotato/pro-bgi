@@ -74,7 +74,8 @@ require.config({
         "pathwayRichController": "ps/tools/pages/pathwayRichController",
         "netController": "ps/tools/pages/netController",
         "lineController": "ps/tools/pages/lineController",
-        "geneDetailController": "ps/tools/pages/geneDetailController"
+        "geneDetailController": "ps/tools/pages/geneDetailController",
+        "loadingController": "ps/tools/pages/loadingController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -116,7 +117,8 @@ require([
     "pathwayRichController",
     "netController",
     "lineController",
-    "geneDetailController"
+    "geneDetailController",
+    "loadingController",
 ], function(jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function() {

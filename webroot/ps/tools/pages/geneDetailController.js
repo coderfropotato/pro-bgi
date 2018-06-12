@@ -3,53 +3,126 @@ define(["toolsApp"], function(toolsApp) {
     geneDetailController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function geneDetailController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
-        toolService.pageLoading.open();
         $scope.InitPage = function() {
-            //定时关闭等待框
-            setTimeout(function() {
-                toolService.pageLoading.close();
-            }, 300);
 
             //gene id
             $scope.id = $state.params.id;
 
             $scope.title = $scope.id + "基因详情页";
 
-            $scope.projectType = toolService.sessionStorage.get("projectType");
-
-            $scope.expressEntity = {
+            $scope.geneEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
                 "sample": "HBRR1"
             }
-            $scope.getExpressTable();
+
+            $scope.literatureEntity = {
+                "LCID": toolService.sessionStorage.get("LCID"),
+                "id": $scope.id
+            }
+
+            // 假数据 start
+            $scope.keggData = [];
+            for (var i = 0; i < 7; i++) {
+                var keggobj = {
+                    "Entry": "K02156" + i,
+                    "Name": "AUB, PIWI" + i,
+                    "Definition": "aubergine" + i
+                }
+                $scope.keggData.push(keggobj);
+            }
+            // $scope.literature = [{
+            //     "PubMed_ID": 17823244,
+            //     "ArticleTitle": "Silencing of poly(ADP-ribose) polymerase in plants alters abiotic stress signal transduction.",
+            //     "Author": "Sandy.Vanderauwera(S),et al",
+            //     "ISOAbbreviation": "Proc. Natl. Acad. Sci. U.S.A.",
+            //     "JournalIssuem": "Vol104.38,2007 Sep 18"
+            // }, {
+            //     "PubMed_ID": 3244,
+            //     "ArticleTitle": "Silencing of poly(ADP-ribose) polymerase in plants alters abiotic stress signal transduction.",
+            //     "Author": "Sandy.Vanderauwera(S),et al",
+            //     "ISOAbbreviation": "Proc. Natl. Acad. Sci. U.S.A.",
+            //     "JournalIssuem": "Vol104.38,2007 Sep 22"
+            // }]
+
+            // end
+
+            //根据info判断是否存在此模块
+            var details = toolService.sessionStorage.get('geneDetails');
+            $scope.geneDetails = [];
+
+            if (details.indexOf(",") != -1) {
+                $scope.geneDetails = toolService.sessionStorage.get('geneDetails').split(",");
+            } else if (details != "") {
+                $scope.geneDetails.push(details);
+            } else {
+                $scope.geneDetails = [];
+            }
+
+            if ($scope.geneDetails.length) {
+                $scope.isHasKegg = $.inArray("kegg", $scope.geneDetails) != -1;
+                $scope.isHasGO = $.inArray("go", $scope.geneDetails) != -1;
+                $scope.isHasSnp = $.inArray("snp", $scope.geneDetails) != -1;
+                $scope.isHasIndel = $.inArray("indel", $scope.geneDetails) != -1;
+                $scope.isHasFusion = $.inArray("fusion", $scope.geneDetails) != -1;
+                $scope.isHasPhi = $.inArray("phi", $scope.geneDetails) != -1;
+                $scope.isHasPrg = $.inArray("prg", $scope.geneDetails) != -1;
+                $scope.isHasTf = $.inArray("tf", $scope.geneDetails) != -1;
+                $scope.isHasNr = $.inArray("nr", $scope.geneDetails) != -1;
+                $scope.isHasNt = $.inArray("nt", $scope.geneDetails) != -1;
+                $scope.isHasSwissprot = $.inArray("swissprot", $scope.geneDetails) != -1;
+                $scope.isHasPfam = $.inArray("pfam", $scope.geneDetails) != -1;
+                //序列信息
+                $scope.isHasCds = $.inArray("cds", $scope.geneDetails) != -1;
+                $scope.isHasProtein = $.inArray("protein", $scope.geneDetails) != -1;
+                $scope.isHasTranscript = $.inArray("transcript", $scope.geneDetails) != -1;
+            }
+
+            //点击按钮
+            $scope.isShowPHIText = false; //判断是否展示phi详细说明
+            $scope.isShowSequence = false; //有序列信息，判断是否展示
+
+            $scope.projectType = toolService.sessionStorage.get("projectType");
+
+            // $scope.getGeneData();
+            $scope.getLiterature();
 
         };
 
-        // 样本表达量
-        $scope.getExpressTable = function() {
-            toolService.gridFilterLoading.open("expressTable_panel");
+        // 获取gene数据
+        $scope.getGeneData = function() {
+            toolService.gridFilterLoading.open("div_geneDetail_page");
             var ajaxConfig = {
-                data: $scope.expressEntity,
+                data: $scope.geneEntity,
                 url: options.api.mrnaseq_url + "/SimpleTable/RawReadsClass"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function(resData) {
                     if (resData.Error) {
-                        //系统异常
-                        $scope.expressTableError = "syserror";
-                    } else if (resData.length == 0) {
-                        //无数据异常
-                        $scope.expressTableError = "nodata";
+                        toolService.popMesgWindow(resData.Error);
                     } else {
-                        //正常
-                        $scope.expressTableError = "";
                         $scope.tableData = resData;
+
+                        // $scope.geneInfoList = resData.gene_info;
+                        // $scope.sampleExpData = resData.sample_expression;
+                        // $scope.lineData = resData.line;
+                        // $scope.groupDiffData = resData.group_diff;
+                        // $scope.sampleDiffData = resData.sample_diff;
+                        // $scope.timeCourseList = resData.time_course;
+                        // $scope.keggList = resData.kegg;
+                        // $scope.goList = resData.go;
+                        // $scope.phiList = resData.phi;
+                        // $scope.snpData = resData.snp;
+                        // $scope.indelData = resData.indel;
+                        // $scope.fusionData = resData.fusion;
+                        // $scope.transcript = resData.transcript;
+                        // $scope.cds = resData.cds;
+                        // $scope.protein = resData.protein;
                     }
-                    toolService.gridFilterLoading.close("expressTable_panel");
+                    toolService.gridFilterLoading.close("div_geneDetail_page");
                 },
                 function(errorMesg) {
-                    $scope.expressTableError = "syserror";
-                    toolService.gridFilterLoading.close("expressTable_panel");
+                    toolService.popMesgWindow(resData.Error);
+                    toolService.gridFilterLoading.close("div_geneDetail_page");
                 });
         }
 
@@ -111,6 +184,34 @@ define(["toolsApp"], function(toolsApp) {
                     $scope.linechart.redraw($('#geneDetail_line .chart_wrap').eq(0).width() * 0.9);
                 }
             }, 100)
+        }
+
+        //获取文献
+        $scope.getLiterature = function() {
+            toolService.gridFilterLoading.open("literature_panel");
+            var ajaxConfig = {
+                data: $scope.literatureEntity,
+                url: options.api.mrnaseq_url + "/pubmed"
+            };
+            var promise = ajaxService.GetDeferData(ajaxConfig);
+            promise.then(function(resData) {
+                    if (resData.Error) {
+                        //系统异常
+                        $scope.pubmedError = "syserror";
+                    } else if (resData.rows.length == 0) {
+                        //无数据异常
+                        $scope.pubmedError = "nodata";
+                    } else {
+                        //正常
+                        $scope.pubmedError = "";
+                        $scope.literature = resData.rows;
+                    }
+                    toolService.gridFilterLoading.close("literature_panel");
+                },
+                function(errorMesg) {
+                    $scope.pubmedError = "syserror";
+                    toolService.gridFilterLoading.close("literature_panel");
+                });
         }
 
     };

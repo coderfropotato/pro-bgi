@@ -6,18 +6,21 @@
         <div ng-if="projectType == 'RNAref' || 'RNAseq'">
             <p>
                 <span>Gene ID22： </span>
-                <span>1246500-222</span>
+                <a>1246500-222</a>
             </p>
         </div>
 
         <div ng-if="projectType =='RNAdenovo'">
             <p>
                 <span>Gene ID： </span>
-                <span>1246500</span>
+                <a>1246500</a>
             </p>
         </div>
 
-        <!-- 表达量信息 表 -->
+        <h4>表达量信息</h4>
+
+        <!-- 表达量信息表 -->
+        <h5>样本表达量（FPKM）</h5>
         <div class="table_scroll_wrap" id="expressTable_panel">
             <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
                 <thead>
@@ -47,6 +50,222 @@
                 </div>
             </div>
             <div class="table-nodata" error-type="lineError"></div>
+        </div>
+
+        <h4>差异表达</h4>
+
+        <!-- 组间差异 -->
+        <h5>组间差异</h5>
+        <div class="table_scroll_wrap" id="groupDiffTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <!-- 样本间差异 -->
+        <h5>样本间差异</h5>
+        <div class="table_scroll_wrap" id="sampleDiffTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <!-- 时间序列 -->
+        <h4>时间序列</h4>
+        <p>该基因在时间序列分析方案中的成簇情况：</p>
+        <p>AAAA.10</p>
+        <p>HBRR_UHRR.10</p>
+
+        <!-- 功能注释信息 -->
+        <h4>功能注释信息</h4>
+
+        <h5>KEGG ORTHOLOGY</h5>
+        <div class="table_scroll_wrap" id="keggTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <tbody>
+                    <tr ng-repeat="row in keggData track by $index">
+                        <td style="text-align: right;width: 100px;">
+                            Entry:
+                        </td>
+                        <td>
+                            <a href="">{{row.Entry}}</a>
+                        </td>
+                        <td style="text-align: right;width: 100px;">
+                            Name:
+                        </td>
+                        <td>
+                            {{row.Name}}
+                        </td>
+                        <td style="text-align: right;width: 100px;">
+                            Definition:
+                        </td>
+                        <td>
+                            {{row.Definition}}
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <h5>GO</h5>
+        <p>Biological Process</p>
+        <p>GO: <a href="">0098609</a> intracellular membrane-bounded organelle</p>
+
+        <h5>真菌致病基因预测（PHI）</h5>
+        <p>Subject ID:XX (phi_subject_id,hover首列时显示内容从配置表中读取）)</p>
+        <div>
+            <span>详细说明</span>
+            <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="收起" ng-show="isShowPHIText" ng-click="isShowPHIText = false">收起</button>
+            <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="展开" ng-show="!isShowPHIText" ng-click="isShowPHIText = true">展开</button>
+        </div>
+        <div ng-show="isShowPHIText">
+            <p>PHI库突变体表型，释义如下：</p>
+            <p>loss of pathogenicity：该基因的缺失突变体不能致病，说明该基因决定病原菌的致病性；</p>
+            <p>reduced virulence：该基因缺失突变体的致病力减弱，说明该基因决定病原菌的致病性；</p>
+            <p>increased virulence (Hypervirulence)：该基因决定病原菌的致病性；</p>
+            <p>effector (plant avirulence determinant)：病原菌的效应子，也即无毒基因。对于感病寄主的发病，一些效应子基因是必需的。但对大部分效应子蛋白来说，它们会直接或间接地识别抗性植物的抗病蛋白，从而激发植物的防卫反应，使病原菌不能致病。所以，该基因只决定某些病原菌的致病性；</p>
+            <p>enhanced antagonism：该基因影响病原菌和植物的互作，该基因的缺失突变体会使植物发病；</p>
+            <p>unaffected pathogenicity：该基因不影响病原菌的致病性；</p>
+            <p>lethal：该基因对菌株存活是必须的；</p>
+            <p>chemistry target：resistance to chemical：该基因的突变体对某种药物有抗性；</p>
+            <p>chemistry target：sensitivity to chemical：该基因的突变体对某种药物的抗性减弱。）</p>
+        </div>
+
+        <h5>植物抗病基因预测（PRG）</h5>
+        <p>Subject ID:XX (phi_subject_id,hover首列时显示内容从配置表中读取）)</p>
+
+        <h5>转录因子预测（TF）</h5>
+        <p>Family：<a href="">zf-C2H2</a></p>
+        <p>Include Domain: zf-CCCH</p>
+
+        <h5>NR</h5>
+        <p>Subject ID:XX(nr_subject_id:XX)</p>
+
+        <h5>NT</h5>
+        <p>Subject ID:XX(nr_subject_id:XX)</p>
+
+        <h5>Swissprot</h5>
+        <p>Subject ID:XX(nr_subject_id:XX)</p>
+
+        <h5>Pfam</h5>
+        <p>Subject ID:XX(nr_subject_id:XX)</p>
+
+        <!-- 变异信息 -->
+        <h4>变异信息</h4>
+
+        <h5>SNP</h5>
+        <div class="table_scroll_wrap" id="snpTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <h5>Indel</h5>
+        <div class="table_scroll_wrap" id="indelTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <h4>融合基因</h4>
+        <div class="table_scroll_wrap" id="fusionTable_panel">
+            <table ng-hide="expressTableError" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in tableData.rows track by $index">
+                        <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-nodata" error-type="expressTableError" style="border-top: 1px solid #ddd"></div>
+        </div>
+
+        <h4>序列信息</h4>
+        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="获取序列" ng-click="isShowSequence = true">获取序列</button>
+        <div ng-show="isShowSequence">
+            <p>.>trpt001|gene2 .TGGTGACTCATATGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGGTTGAAGCGACATTTTTTTGTGGAATATGGTTTTTGCAAAATATTTTTGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGG .>trpt002 .TGGTGACTCATATGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGGTTGAAGCGACATTTTTTTGTGGAATATGGTTTTTGCAAAATATTTT
+            </p>
+        </div>
+
+        <div id="literature_panel" ng-hide="pubmedError">
+            <h4>文献信息</h4>
+            <div ng-repeat="item in literature track by $index">
+                <p>
+                    <span>{{$index+1}}</span>. <a ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{item.PubMed_ID}}" target="_blank">{{item.ArticleTitle}}</a>
+                </p>
+                <p>{{item.Author}}&nbsp;{{item.ISOAbbreviation}}&nbsp;{{item.JournalIssuem}}&nbsp;PMID&nbsp;{{item.PubMed_ID}}</p>
+            </div>
         </div>
 
     </div>

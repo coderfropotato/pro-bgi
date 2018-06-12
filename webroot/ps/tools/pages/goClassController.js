@@ -23,6 +23,7 @@ define(["toolsApp"], function (toolsApp) {
             $scope.showSelect = true;
             $scope.tableDownloadName = "GO 分类";
             $scope.chartDownloadName = "GO 分类";
+            $scope.isShowBeforeTask = true;
 
             $scope.isSelectChartData = true;
             $scope.pageEntity = {

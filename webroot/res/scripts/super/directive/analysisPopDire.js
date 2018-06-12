@@ -54,8 +54,8 @@ define("superApp.analysisPopDire",
             // 查看分析详情
             $scope.handlerAnalysisDetail = function (item) {
                 if (item.process == 1) {
-                    // success
-                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id + '/' + item.projectName);
+                    // success + '/' + item.projectName
+                    $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id);
                 } else if (item.process == -1) {
                     // pending
                     $window.open('../../../../ps/tools/index.html#/home/myAnalysis');

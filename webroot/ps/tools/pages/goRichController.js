@@ -1,4 +1,4 @@
-define(['toolsApp'], function(toolsApp) {
+define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('goRichController', goRichController);
     goRichController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
@@ -6,10 +6,10 @@ define(['toolsApp'], function(toolsApp) {
 
 
         toolService.pageLoading.open();
-        $scope.InitPage = function() {
+        $scope.InitPage = function () {
             //定时关闭等待框
             setTimeout(
-                function() {
+                function () {
                     toolService.pageLoading.close();
                 }, 300);
 
@@ -79,13 +79,16 @@ define(['toolsApp'], function(toolsApp) {
             $scope.theadControlId = 'reAnalysis_goRich_theadcontrol';
             // Geneid table end
 
+            // 获取前置任务
+            $scope.GetLinks();
+
         };
 
         // 默认单选
         $scope.single = true;
 
         //过滤查询参数 
-        $scope.InitFindEntity = function(filterFindEntity) {
+        $scope.InitFindEntity = function (filterFindEntity) {
             $scope.pageEntity = toolService.GetGridFilterFindEntity($scope.pageEntity, filterFindEntity);
             $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
             $scope.GetTableData(1);
@@ -96,7 +99,7 @@ define(['toolsApp'], function(toolsApp) {
         };
 
         //获取GO富集表格数据
-        $scope.GetTableData = function(pageNumber) {
+        $scope.GetTableData = function (pageNumber) {
             toolService.gridFilterLoading.open("reAnalysis_goRich_go");
 
             $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
@@ -108,51 +111,51 @@ define(['toolsApp'], function(toolsApp) {
                 url: $scope.exportLocationTable
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(resData) {
-                    if (resData.Error) {
-                        //系统异常
-                        $scope.error = "syserror";
-                    } else if (resData.length == 0) {
-                        //无数据异常
-                        $scope.error = "nodata";
-                    } else {
-                        //正常
-                        $scope.error = "";
-                        $scope.checkAll = false;
-                        $scope.GoBaseThead = resData.baseThead[0];
-                        $scope.goKey = $scope.GoBaseThead.true_key;
+            promise.then(function (resData) {
+                if (resData.Error) {
+                    //系统异常
+                    $scope.error = "syserror";
+                } else if (resData.length == 0) {
+                    //无数据异常
+                    $scope.error = "nodata";
+                } else {
+                    //正常
+                    $scope.error = "";
+                    $scope.checkAll = false;
+                    $scope.GoBaseThead = resData.baseThead[0];
+                    $scope.goKey = $scope.GoBaseThead.true_key;
 
-                        $scope.tableData = resData;
-                        var count = 0;
-                        $scope.tableData.rows.forEach(function(val, i) {
-                            val.isChecked = false;
-                            if ($scope.goSelectList.length) {
-                                $scope.goSelectList.forEach(function(goVal, j) {
-                                    if (goVal[$scope.goKey] === val[$scope.goKey]) {
-                                        val.isChecked = true;
-                                        count++;
-                                    }
-                                })
-                            }
-                        })
-
-                        //是否全选
-                        if (count === $scope.pageEntity.pageSize) {
-                            $scope.checkAll = true;
-                        } else {
-                            $scope.checkAll = false;
+                    $scope.tableData = resData;
+                    var count = 0;
+                    $scope.tableData.rows.forEach(function (val, i) {
+                        val.isChecked = false;
+                        if ($scope.goSelectList.length) {
+                            $scope.goSelectList.forEach(function (goVal, j) {
+                                if (goVal[$scope.goKey] === val[$scope.goKey]) {
+                                    val.isChecked = true;
+                                    count++;
+                                }
+                            })
                         }
+                    })
+
+                    //是否全选
+                    if (count === $scope.pageEntity.pageSize) {
+                        $scope.checkAll = true;
+                    } else {
+                        $scope.checkAll = false;
                     }
-                    toolService.gridFilterLoading.close("reAnalysis_goRich_go");
-                },
-                function(errorMesg) {
+                }
+                toolService.gridFilterLoading.close("reAnalysis_goRich_go");
+            },
+                function (errorMesg) {
                     $scope.error = "syserror";
                     toolService.gridFilterLoading.close("reAnalysis_goRich_go");
                 });
         }
 
         // 点击删除筛选条件
-        $scope.handleDelete = function(event) {
+        $scope.handleDelete = function (event) {
             var thead = angular.element(event.target).siblings('span').find('em').text();
             var clearBtn;
             for (var i = 0; i < $('#reAnalysis_goRich_go table th .grid_head').length; i++) {
@@ -161,13 +164,13 @@ define(['toolsApp'], function(toolsApp) {
                     break;
                 }
             }
-            $timeout(function() {
+            $timeout(function () {
                 clearBtn.triggerHandler("click");
             }, 0)
         }
 
         // 筛选状态改变
-        $scope.handlerFilterStatusChange = function(status) {
+        $scope.handlerFilterStatusChange = function (status) {
             $scope.isBeginFilter = status;
         }
 
@@ -209,14 +212,14 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         //点击表头 table th （全选或全不选）
-        $scope.toggleTHClick = function() {
+        $scope.toggleTHClick = function () {
             $scope.checkAll = !$scope.checkAll;
             $scope.checkAll ? checkedAll() : unCheckedAll();
             sortArr('go_qvalue', $scope.goSelectList);
         }
 
         //点击表格行 table td
-        $scope.toggleTDClick = function(item, event) {
+        $scope.toggleTDClick = function (item, event) {
             item.isChecked = !item.isChecked;
             var isCheckedAll = true;
 
@@ -257,13 +260,13 @@ define(['toolsApp'], function(toolsApp) {
 
         //排序
         function sortArr(key, arr) {
-            arr.sort(function(a, b) {
+            arr.sort(function (a, b) {
                 return a[key] - b[key];
             })
         }
 
         //GoList panel删除
-        $scope.removeGoItem = function(item) {
+        $scope.removeGoItem = function (item) {
             for (var i = 0; i < $scope.goSelectList.length; i++) {
                 if (item[$scope.goKey] === $scope.goSelectList[i][$scope.goKey]) {
                     $scope.goSelectList.splice(i, 1);
@@ -280,7 +283,7 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         //GoList panel清空
-        $scope.clearGoList = function() {
+        $scope.clearGoList = function () {
             for (var i = 0; i < $scope.tableData.rows.length; i++) {
                 $scope.tableData.rows[i].isChecked = false;
             }
@@ -291,7 +294,7 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         //重画
-        $scope.reDrawChart = function() {
+        $scope.reDrawChart = function () {
             var golist = [];
             if ($scope.goSelectList.length < 60) {
                 for (var i = 0; i < $scope.goSelectList.length; i++) {
@@ -309,7 +312,7 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         //获取气泡图表格数据
-        $scope.GetBubbleData = function() {
+        $scope.GetBubbleData = function () {
             toolService.gridFilterLoading.open("reAnalysis_goRich_bubble");
             $scope.bubbleExportLocationTable = options.api.mrnaseq_url + "/DiffExpGeneBubble/GoRichTerm";
             var ajaxConfig = {
@@ -317,33 +320,33 @@ define(['toolsApp'], function(toolsApp) {
                 url: $scope.bubbleExportLocationTable
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(responseData) {
-                    if (responseData.Error) {
-                        //系统异常
-                        $scope.bubbleError = "syserror";
-                    } else if (responseData.length == 0) {
-                        //无数据异常
-                        $scope.bubbleError = "nodata";
+            promise.then(function (responseData) {
+                if (responseData.Error) {
+                    //系统异常
+                    $scope.bubbleError = "syserror";
+                } else if (responseData.length == 0) {
+                    //无数据异常
+                    $scope.bubbleError = "nodata";
+                } else {
+                    //正常
+                    $scope.bubbleError = "";
+                    $scope.bubbleTableData = responseData;
+                    if ($scope.chartType == "bubble") {
+                        $scope.drawBubble($scope.bubbleTableData);
                     } else {
-                        //正常
-                        $scope.bubbleError = "";
-                        $scope.bubbleTableData = responseData;
-                        if ($scope.chartType == "bubble") {
-                            $scope.drawBubble($scope.bubbleTableData);
-                        } else {
-                            $scope.drawColumn($scope.bubbleTableData);
-                        }
+                        $scope.drawColumn($scope.bubbleTableData);
                     }
-                    toolService.gridFilterLoading.close("reAnalysis_goRich_bubble"); //Loading
-                },
-                function(errorMesg) {
+                }
+                toolService.gridFilterLoading.close("reAnalysis_goRich_bubble"); //Loading
+            },
+                function (errorMesg) {
                     $scope.bubbleError = "syserror";
                     toolService.gridFilterLoading.close("reAnalysis_goRich_bubble"); //Loading
                 });
         };
 
         //点击图获取基因集
-        $scope.GetGeneList = function(list) {
+        $scope.GetGeneList = function (list) {
             var ajaxConfig = {
                 data: {
                     "LCID": toolService.sessionStorage.get("LCID"),
@@ -354,23 +357,23 @@ define(['toolsApp'], function(toolsApp) {
                 url: options.api.mrnaseq_url + "/DiffExpGeneID/GetGeneByTerm",
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(responseData) {
+            promise.then(function (responseData) {
                 $scope.geneList = responseData;
                 if (responseData.length) {
                     $scope.changeFlag = true;
                 }
-            }, function(errorMesg) {
+            }, function (errorMesg) {
                 console.log(errorMesg);
             });
         }
 
         // 改色
-        $scope.changeColor = function(chart, contentid, scale) {
+        $scope.changeColor = function (chart, contentid, scale) {
             groupedbarGetItem();
             var index = '';
 
             function groupedbarGetItem() {
-                chart.getLegendItem(function(d, i) {
+                chart.getLegendItem(function (d, i) {
                     reportService.selectColor(changeColorCallback);
                     index = i;
                 })
@@ -392,10 +395,10 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         // 开启单选
-        $scope.handlerSingle = function(chart) {
+        $scope.handlerSingle = function (chart) {
             $scope.single = true;
             chart.selectOff()
-            chart.selectOn("single", function(d) {
+            chart.selectOn("single", function (d) {
                 var list = [];
                 for (var i = 0; i < d.length; i++) {
                     list.push(d[i].term_id);
@@ -405,10 +408,10 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         // 开启多选
-        $scope.handlerMultiple = function(chart) {
+        $scope.handlerMultiple = function (chart) {
             $scope.single = false;
             chart.selectOff();
-            chart.selectOn("multiple", function(d) {
+            chart.selectOn("multiple", function (d) {
                 $scope.multiplelist = [];
                 for (var i = 0; i < d.length; i++) {
                     $scope.multiplelist.push(d[i].term_id);
@@ -418,7 +421,7 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         // 多选确定
-        $scope.handlerConfirm = function() {
+        $scope.handlerConfirm = function () {
             $scope.GetGeneList($scope.multiplelist);
         }
 
@@ -429,7 +432,7 @@ define(['toolsApp'], function(toolsApp) {
 
         function handlerResize() {
             clearTimeout(timer);
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 if ($scope.curChart) {
                     $scope.curChart.redraw(($('#reAnalysis_goRich_bubble .graph_header').eq(0).width()) * 0.8);
                     if ($scope.chartType != "column") {
@@ -466,7 +469,7 @@ define(['toolsApp'], function(toolsApp) {
                 "normalColor": ["#87CEFA", "#00008B"],
             }
         }
-        $scope.drawBubble = function(resData) {
+        $scope.drawBubble = function (resData) {
             var data = resData.rows;
             var bubbleData = [];
             for (i = 0; i < data.length; i++) {
@@ -517,7 +520,7 @@ define(['toolsApp'], function(toolsApp) {
                 "normalColor": angular.copy($rootScope.colorArr),
             }
         }
-        $scope.drawColumn = function(resData) {
+        $scope.drawColumn = function (resData) {
             var data = resData.rows;
             $("#div_reAnalysis_goRich_column").html("");
             var width = $("#reAnalysis_goRich_bubble .graph_header").eq(0).width();
@@ -554,6 +557,37 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.curChart = $scope.barchart;
 
+        }
+
+
+        //get links 
+        $scope.linksError = false;
+        $scope.GetLinks = function () {
+            var promise = ajaxService.GetDeferData({
+                data: {},
+                url: options.api.java_url + "/analysis/parent/" + $scope.id
+            })
+            promise.then(function (res) {
+                if (res.status != 200) {
+                    $scope.linksError = "syserror";
+                } else {
+                    $scope.linksError = false;
+                    $scope.links = res.data.links;
+                }
+            }, function (err) {
+                console.log(err);
+            })
+        }
+
+        // 查看links
+        $scope.handlerSeeClick = function (item) {
+            var type = item.chartType || item.charType;
+            if (item.process == 0) {
+                $window.open('../tools/index.html#/home/error/' + item.id);
+            } else {
+                // success
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id);
+            }
         }
 
     }

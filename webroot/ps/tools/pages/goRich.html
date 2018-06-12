@@ -9,22 +9,36 @@
             <div class="btn_options_filelist">
                 <ul class="FLeft">
                     <li>
-                        <div class="grid-filter-begin" tableid="reAnalysis_goRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_goRich_go" filter-status-callback="handlerFilterStatusChange(status)"></div>
+                        <div class="grid-filter-begin" tableid="reAnalysis_goRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_goRich_go"
+                            filter-status-callback="handlerFilterStatusChange(status)"></div>
                     </li>
                 </ul>
                 <ul class="fRight">
+                    <li ng-if="!linksError">
+                        <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
+                            <span style="color:red;">({{links.length}})</span>
+                            <div class="links btn-links" style="color:#333;">
+                                <ul ng-if="links.length" class="link-lists">
+                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
+                                        <p>类型：{{item.chartType}}</p>
+                                        <p>项目名称：{{item.projectName}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
+                    </li>
                     <li>
                         <div class="selector_normal" style="width: 120px;">
                             <select super-select ng-model="accuracy" class="form-control" is-search="false">
-                                                <option value=1>精度:1位小数</option>
-                                                <option value=2>精度:2位小数</option>
-                                                <option value=3>精度:3位小数</option>
-                                                <option value=4>精度:4位小数</option>
-                                                <option value=5>精度:5位小数</option>
-                                                <option value=6>精度:6位小数</option>
-                                                <option value=7>精度:7位小数</option>
-                                                <option value=-1>精度:全数据</option>
-                                            </select>
+                                <option value=1>精度:1位小数</option>
+                                <option value=2>精度:2位小数</option>
+                                <option value=3>精度:3位小数</option>
+                                <option value=4>精度:4位小数</option>
+                                <option value=5>精度:5位小数</option>
+                                <option value=6>精度:6位小数</option>
+                                <option value=7>精度:7位小数</option>
+                                <option value=-1>精度:全数据</option>
+                            </select>
                         </div>
                     </li>
                     <li ng-hide="error">
@@ -32,8 +46,8 @@
                     </li>
                     <li>
                         <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetTableData(1)">
-                                                    <span class="glyphicon glyphicon-refresh"></span>
-                                                </button>
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
                     </li>
                 </ul>
                 <div class="clear"></div>
@@ -44,8 +58,8 @@
                     <span>筛选条件：</span>
                     <div class="filter-right">
                         <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
-                                            <span class="filter-item" ng-bind-html="f"></span>
-                        <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                            <span class="filter-item" ng-bind-html="f"></span>
+                            <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                         </span>
                     </div>
                 </div>
@@ -61,7 +75,9 @@
                         <table class="table table-bordered table-hover table-striped table_grid table-fixed">
                             <thead>
                                 <tr>
-                                    <th class="center" width="40" ng-click="toggleTHClick()"><span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':checkAll,'unSelectedGo':!checkAll}"></span></th>
+                                    <th class="center" width="40" ng-click="toggleTHClick()">
+                                        <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':checkAll,'unSelectedGo':!checkAll}"></span>
+                                    </th>
                                     <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
                                         <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                         <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
@@ -74,8 +90,13 @@
                                         <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
                                     </td>
                                     <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" my-title="row[val.true_key]">
-                                        <a ng-if="val.true_key=='go_term_id'" ng-click="$event.stopPropagation()" ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{row[val.true_key]}}" target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</a>
-                                        <span ng-if="val.true_key!='go_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                                        <a ng-if="val.true_key=='go_term_id'" ng-click="$event.stopPropagation()" ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{row[val.true_key]}}"
+                                            target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
+                                            accuracy)}}
+                                        </a>
+                                        <span ng-if="val.true_key!='go_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
+                                            accuracy)}}
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -92,11 +113,11 @@
                     <li>
                         <div class="selector_normal" style="width: 110px;">
                             <select super-select ng-model="pageEntity.pageSize" class="form-control" is-search="false" ng-change="GetTableData(1)">
-                                                <option value="10">每页 10 条</option>
-                                                <option value="20">每页 20 条</option>
-                                                <option value="50">每页 50 条</option>
-                                                <option value="100">每页 100 条</option>
-                                            </select>
+                                <option value="10">每页 10 条</option>
+                                <option value="20">每页 20 条</option>
+                                <option value="50">每页 50 条</option>
+                                <option value="100">每页 100 条</option>
+                            </select>
                         </div>
                     </li>
                 </ul>
@@ -109,24 +130,27 @@
             <div class="graph_header">
                 <ul class="fLeft">
                     <li>
-                        <div class="graph-view-btn" parentid="reAnalysis_goRich_bubble" charpanelid="div_reAnalysis_goRich_bubble" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                        <div class="graph-view-btn" parentid="reAnalysis_goRich_bubble" charpanelid="div_reAnalysis_goRich_bubble" is-table="true"
+                            is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
                     </li>
                     <li>
                         <div class="selector_normal" style="width: 110px;">
                             <select super-select ng-model="chartType" class="form-control" ng-change="reDrawChart()">
-                                                    <option value="bubble">气泡图</option>
-                                                    <option value="column">柱状图</option>
-                                                </select>
+                                <option value="bubble">气泡图</option>
+                                <option value="column">柱状图</option>
+                            </select>
                         </div>
                     </li>
                     <!-- GoList panel  -->
                     <li>
-                        <div id="selectGoPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true" ng-mouseleave="isShowGoListPanel=false">
+                        <div id="selectGoPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true"
+                            ng-mouseleave="isShowGoListPanel=false">
                             <button class="btn btn-default btn-silver btn-sm">
-                                                选中的GO
-                                                <span class="red">({{goSelectList.length<60?goSelectList.length:60}})</span>
-                                                <span class="icon-caret-down"></span>
-                                            </button>
+                                选中的GO
+                                <span class="red">({{goSelectList.length
+                                    <60?goSelectList.length:60}})</span>
+                                        <span class="icon-caret-down"></span>
+                            </button>
                             <div class="dropdown-menu div_gn_droplist" style="left:0;right: inherit">
                                 <div style="max-height:400px; overflow-y:auto; overflow-x:hidden;">
                                     <table class="table table-bordered table-hover table-striped table_grid table-fixed" cellpadding="0" cellspacing="0" border="0">
@@ -148,8 +172,8 @@
                                             <tr ng-repeat="goVal in (goSelectList  | limitTo:60 ) track by $index">
                                                 <td>
                                                     <button ng-click="removeGoItem(goVal)" type="button" class="btn btn-default btn-silver btn_tiny" style="margin-right: 0px;">
-                                                                        <span class="iconglyph icon-minus"></span>
-                                                                    </button>
+                                                        <span class="iconglyph icon-minus"></span>
+                                                    </button>
                                                 </td>
                                                 <td align="center" ng-bind="$index+1"></td>
                                                 <td ng-bind="goVal[goKey]"></td>
@@ -165,18 +189,20 @@
                         </div>
                     </li>
                     <button class="btn btn-default btn-silver btn-sm tool-tip" title="重画" ng-click="reDrawChart()">
-                                    <span>重画</span>
-                            </button>
+                        <span>重画</span>
+                    </button>
                 </ul>
                 <ul class="fRight">
                     <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='bubble'">
                         <button ng-show="!single" ng-click="handlerSingle(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button ng-show="single" ng-click="handlerMultiple(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选"
+                            style="margin-right:12px;">多选</button>
                         <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='column'">
                         <button ng-show="!single" ng-click="handlerSingle(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button ng-show="single" ng-click="handlerMultiple(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选"
+                            style="margin-right:12px;">多选</button>
                         <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
 
@@ -189,8 +215,8 @@
                     </li>
                     <li>
                         <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetBubbleData()">
-                                            <span class="glyphicon glyphicon-refresh"></span>
-                                        </button>
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -211,7 +237,8 @@
                         <tbody>
                             <tr ng-repeat="row in bubbleTableData.rows track by $index">
                                 <td class="center">{{$index+1}}</td>
-                                <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name" my-title="row[val.true_key]">
+                                <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name"
+                                    my-title="row[val.true_key]">
                                     <span>{{row[val.true_key]}}</span>
                                 </td>
                             </tr>
@@ -234,8 +261,10 @@
         </div>
 
         <!-- 交互表 (geneId表) start -->
-        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"></div>
+        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
+            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
+            params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"></div>
 
     </div>
 </div>

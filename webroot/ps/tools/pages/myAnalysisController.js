@@ -50,7 +50,7 @@ define(['toolsApp'], function (toolsApp) {
             toolService.gridFilterLoading.open("myanalysis-table");
             $scope.analysisEntity.pageNum = pageNum;
             //配置请求参数
-            $scope.analysisListUrl = options.api.java_url+'/analysis/GetAnalysisList'
+            $scope.analysisListUrl = options.api.java_url + '/analysis/GetAnalysisList'
             var ajaxConfig = {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
@@ -123,7 +123,7 @@ define(['toolsApp'], function (toolsApp) {
             //配置请求参数
             var ajaxConfig = {
                 data: {},
-                url: options.api.java_url+"/analysis/delete/" + id
+                url: options.api.java_url + "/analysis/delete/" + id
             }
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
@@ -137,6 +137,48 @@ define(['toolsApp'], function (toolsApp) {
             }, function () {
                 $scope.analysisError = 'syserror'
             })
+        }
+
+        // rename
+        $scope.handlerEditClick = function (item) {
+            $scope.analysisList.rows.forEach(function (val, index) {
+                val.isEdit = false;
+            })
+            item.isEdit = true;
+        }
+
+        $scope.handlerBlur = function (item, value) {
+            // 去掉空白字符
+            if (/\s/g.test(value)) {
+                item.projectName = value.replace(/\s/g, '');
+                item.isEdit = false;
+            } else {
+                toolService.gridFilterLoading.open("myanalysis-table");
+                $scope.analysisEntity.pageNum = pageNum;
+                //配置请求参数
+                $scope.analysisListUrl = options.api.java_url + '/analysis/GetAnalysisList'
+                var ajaxConfig = {
+                    data: $scope.analysisEntity,
+                    url: $scope.analysisListUrl
+                }
+                var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+                promise.then(function (res) {
+                    toolService.gridFilterLoading.close("myanalysis-table");
+                    if (res.Error) {
+                        $scope.analysisError = 'syserror';
+                        return;
+                    } else if (res.data.rows.length == 0) {
+                        $scope.analysisError = 'nodata';
+                        return;
+                    } else {
+                        $scope.analysisList = res.data;
+                        $scope.analysisError = false;
+                    }
+                }, function () {
+                    $scope.analysisError = 'syserror'
+                    toolService.gridFilterLoading.close("myanalysis-table");
+                })
+            }
         }
 
         // advance

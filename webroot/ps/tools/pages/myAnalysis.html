@@ -52,7 +52,11 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
-                            <td class="text-center editProject"><span>{{item.projectName}}</span><i class="glyphicon glyphicon-pencil"></i></td>
+                            <td class="text-center editProject">
+                                <span ng-show="!item.isEdit">{{item.projectName}}</span>
+                                <input ng-blur="handlerBlur(item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
+                                <i class="glyphicon glyphicon-pencil" ng-click="handlerEditClick(item)"></i>
+                            </td>
                             <td class="text-center">
                                 <span ng-if="item.process==1">成功</span>
                                 <span ng-if="item.process==-1">进行中，剩余:{{item.restTime}}</span>
@@ -75,7 +79,7 @@
                             <td class="text-center">{{item.remark}}</td>
                             <td class="text-center">
                                 <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item)">查看</button>
-                                <span ng-if="item.process==-1" >--</span> 
+                                <span ng-if="item.process==-1">--</span>
                                 <button ng-if="item.process!=-1" class="btn-tools btn-tools-warning" ng-click="handlerDeleteClick(item.id)">删除</button>
                             </td>
 

@@ -16,9 +16,23 @@
                     </li>
                 </ul>
                 <ul class="fRight">
-                    <li ng-show="!isTableShow && isSelectChartData && !onlySingle">
+                    <li ng-if="!linksError && isShowBeforeTask">
+                        <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
+                            <span style="color:red;">({{links.length}})</span>
+                            <div class="links btn-links" style="color:#333;">
+                                <ul ng-if="links.length" class="link-lists">
+                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
+                                        <p>类型：{{item.chartType}}</p>
+                                        <p>项目名称：{{item.projectName}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
+                    </li>
+                    <li ng-show="!isTableShow && isSelectChartData && !onlySingle && !error">
                         <button ng-show="!single" ng-click="handlerSingle()" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button style="margin-right:12px;" ng-if="single" ng-click="handlerMultiple()" class="btn btn-sm btn-silver btn-default tool-tip" title="多选">多选</button>
+                        <button style="margin-right:12px;" ng-if="single" ng-click="handlerMultiple()" class="btn btn-sm btn-silver btn-default tool-tip"
+                            title="多选">多选</button>
                         <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <!-- 精度 -->
@@ -73,7 +87,7 @@
                                     ng-repeat="val in tableData.baseThead track by $index">
                                     <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                    </td>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -84,7 +98,7 @@
             <!-- chart -->
             <div class="tab-switch-chart" ng-hide="isTableShow">
                 <div class="chart_wrap" ng-hide="error">
-                    <div class="chart_graph"  id="{{chartId}}"></div>
+                    <div class="chart_graph" id="{{chartId}}"></div>
                 </div>
                 <div class="table-nodata" error-type="error"></div>
             </div>

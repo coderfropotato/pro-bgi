@@ -8,7 +8,7 @@
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">
                 <li>
-                    <div ng-hide="error" class="grid-export" find-entity="pageFindEntity" export-location="exportLocationGOAnno" savefilename="{{tableDownloadName}}"></div>
+                    <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="exportLocationGOAnno" savefilename="{{tableDownloadName}}"></div>
                 </li>
                 <li>
                     <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="刷新" ng-click="GetBigTableData(1)">
@@ -157,7 +157,7 @@
                                 <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.name==='Pathway Name'" ng-repeat="val in bigTableData.baseThead track by $index"
                                     thead-key="val.true_key" reanalysis-id="reanalysisId" my-title="row[val.true_key]" compare-group="compareGroup" method="method">
                                     <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
-                                        <a ng-repeat="item in row track by $index" ng-href="../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageFindEntity.compareGroup}}&method={{method}}"
+                                        <a ng-repeat="item in row track by $index" ng-href="../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageEntity.compareGroup}}&method={{method}}"
                                             target="_blank">
                                             {{row[val.true_key]}}
                                         </a>
@@ -202,7 +202,7 @@
             <ul ng-hide="error" class="bottom-pagesize">
                 <li>
                     <div class="selector_normal" style="width: 110px;">
-                        <select super-select ng-model="pageFindEntity.pageSize" class="form-control" is-search="false" ng-change="GetBigTableData(1)">
+                        <select super-select ng-model="pageEntity.pageSize" class="form-control" is-search="false" ng-change="GetBigTableData(1)">
                             <option value="10">每页 10 条</option>
                             <option value="20">每页 20 条</option>
                             <option value="50">每页 50 条</option>

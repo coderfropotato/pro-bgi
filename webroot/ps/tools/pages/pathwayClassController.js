@@ -24,6 +24,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.showSelect = true;
             $scope.tableDownloadName = "Pathway 分类";
             $scope.chartDownloadName = "Pathway 分类";
+            $scope.isShowBeforeTask = true;
 
             $scope.pageEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),

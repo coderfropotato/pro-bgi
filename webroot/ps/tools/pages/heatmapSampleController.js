@@ -870,7 +870,6 @@ define(["toolsApp"], function(toolsApp) {
         //get links 
         $scope.linksError = false;
         $scope.GetLinks = function () {
-            console.log($scope.id);
             var promise = ajaxService.GetDeferData({
                 data: {},
                 url: options.api.java_url + "/analysis/parent/" + $scope.id

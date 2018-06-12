@@ -56,7 +56,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // 图的宽度比例 scale
                     scale: "=",
                     // 是否只要单选
-                    onlySingle: "="
+                    onlySingle: "=",
+                    // add 2018年6月12日10:32:01
+                    // 是否显示前置任务
+                    isShowBeforeTask: "=",
+                    taskId: "="
                 },
                 replace: false,
                 transclude: true,
@@ -77,9 +81,40 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 $scope.isFirst = true;
                 $scope.onlySingle = !!$scope.onlySingle;
                 $scope.scale = $scope.scale || 0.8;
+                if ($scope.isShowBeforeTask) $scope.GetLinks();
                 $scope.GetTableData();
             }
 
+
+            //get links 
+            $scope.linksError = false;
+            $scope.GetLinks = function () {
+                var promise = ajaxService.GetDeferData({
+                    data: {},
+                    url: options.api.java_url + "/analysis/parent/" + $scope.taskId
+                })
+                promise.then(function (res) {
+                    if (res.status != 200) {
+                        $scope.linksError = "syserror";
+                    } else {
+                        $scope.linksError = false;
+                        $scope.links = res.data.links;
+                    }
+                }, function (err) {
+                    console.log(err);
+                })
+            }
+
+            // 查看links
+            $scope.handlerSeeClick = function (item) {
+                var type = item.chartType || item.charType;
+                if (item.process == 0) {
+                    $window.open('../../../../ps/tools/index.html#/home/error/' + item.id);
+                } else {
+                    // success
+                    $window.open('../../../../ps/tools/index.html#/home/' + type + '/' + item.id);
+                }
+            }
 
             $scope.GetTableData = function () {
                 toolService.gridFilterLoading.open($scope.panelId);

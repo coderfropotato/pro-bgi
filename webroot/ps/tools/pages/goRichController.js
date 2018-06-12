@@ -19,8 +19,6 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.isBeginFilter = false;
 
-            // custom title
-            $scope.projectName = $state.params.projectName;
             // 重分析id
             $scope.id = $state.params.id;
             $scope.title = 'GO 富集 ( ID：' + $scope.id + " ) ";

@@ -12,9 +12,7 @@ define(["toolsApp"], function(toolsApp) {
                     toolService.pageLoading.close();
                 }, 300);
             // custom title
-            $scope.projectName = $state.params.projectName;
             $scope.id = $state.params.id; // 重分析id
-            // 项目：' + $scope.projectName + ',
             $scope.title = '聚类分析 ( ID：' + $scope.id + " ) ";
 
             $scope.geneCount = 0;
@@ -896,7 +894,7 @@ define(["toolsApp"], function(toolsApp) {
                 $window.open('../tools/index.html#/home/error/' + item.id);
             } else {
                 // success
-                $window.open('../tools/index.html#/home/' + type + '/' + item.id + '/' + item.projectName);
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id );
             }
         }
 
@@ -948,7 +946,7 @@ define(["toolsApp"], function(toolsApp) {
                         newFrame.close();
                         toolService.popMesgWindow('重分析提交成功');
                     }else{
-                        newFrame.location.href = '../tools/index.html#/home/'+$scope.reAnalysisEntity.chartType+'/'+res.id+'/custom_projectName';
+                        newFrame.location.href = '../tools/index.html#/home/'+$scope.reAnalysisEntity.chartType+'/'+res.id
                     }
                 }
             }, function (err) {

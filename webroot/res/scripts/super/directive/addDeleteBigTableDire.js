@@ -5,7 +5,7 @@
  * 
  * 
  * <div class="add-delete-big-table" 
-            page-entity="pageFindEntity" 
+            page-entity="pageEntity" 
             url="url"
             content-id="panelId"
             table-id="tableId"
@@ -77,6 +77,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
 
                     // 是否需要重分析  false/true
                     isReanalysis: "=",
+                    // 重分析的id tooltip要用
+                    reanalysisId: "=",
 
                     // 是否清除geneUnselectList
                     isClearGeneUnselectList: "=",
@@ -96,8 +98,11 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.isBeginFilter = false;
                 // 重置时使用
                 $scope.initPageEntity = $scope.pageEntity;
-                // 其他逻辑请求参数
-                $scope.pageFindEntity = $scope.pageEntity;
+                // 找出compareGrtoup method
+                $scope.compareGroup = $scope.pageEntity.compareGroup;
+                if ($scope.compareGroup) {
+                    $scope.method = $scope.getMethods($scope.compareGroup);
+                }
                 // 找到默认的方法
                 $scope.method = $scope.method || null;
                 // 精度默认 全数据
@@ -123,7 +128,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                                 $timeout(function () {
                                     angular.element($('#' + $scope.contentId + ' .grid-filter-begin > button')).triggerHandler('click');
                                     $timeout(function () {
-                                        $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                                        $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                                         // 重置状态 触发下次watch
                                         $scope.isResetTableStatus = false;
                                         // 重置选择的基因集
@@ -141,7 +146,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             if ($scope.paramsKey != undefined && $scope.paramsKey != null) {
                 $scope.$watch('paramsValue', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        $scope.pageFindEntity[$scope.paramsKey] = newVal;
+                        $scope.pageEntity[$scope.paramsKey] = newVal;
                         $scope.GetBigTableData(1);
                     }
                 }, true)
@@ -152,7 +157,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.$watch('paramsValueList', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
                         for (var i = 0; i < $scope.paramsKeyList.length; i++) {
-                            $scope.pageFindEntity[$scope.paramsKeyList[i]] = newVal[i];
+                            $scope.pageEntity[$scope.paramsKeyList[i]] = newVal[i];
                         }
                         $scope.GetBigTableData(1);
                     }
@@ -264,23 +269,23 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 });
 
                 for (var i = 0, len = deleteArr.length; i < len; i++) {
-                    $scope.pageFindEntity.searchContentList.forEach(function (val, index) {
+                    $scope.pageEntity.searchContentList.forEach(function (val, index) {
                         if (val.filterName !== 'LCID') {
                             if (val.filterName === deleteArr[i]) {
                                 if (val.isSort) {
                                     val.isSort = false;
-                                    $scope.pageFindEntity.sortName = '';
-                                    $scope.pageFindEntity.sortnamezh = '';
-                                    $scope.pageFindEntity.sortType = '';
+                                    $scope.pageEntity.sortName = '';
+                                    $scope.pageEntity.sortnamezh = '';
+                                    $scope.pageEntity.sortType = '';
                                 }
-                                $scope.pageFindEntity.searchContentList.splice(index, 1);
+                                $scope.pageEntity.searchContentList.splice(index, 1);
                             }
                         }
                     })
                 }
 
-                $scope.pageFindEntity.addThead = addThead;
-                $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                $scope.pageEntity.addThead = addThead;
+                $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 $scope.GetBigTableData();
                 $scope.handlertheadChange && $scope.handlertheadChange(a);
             }
@@ -289,9 +294,9 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // 初始化页面查询参数
             $scope.InitFindEntity1 = function (filterFindEntity) {
                 //获得页面查询实体信息
-                $scope.pageFindEntity = toolService.GetGridFilterFindEntity($scope.pageFindEntity, filterFindEntity);
+                $scope.pageEntity = toolService.GetGridFilterFindEntity($scope.pageEntity, filterFindEntity);
                 //获得页面查询条件转译信息
-                $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 // 重置未选择的GENE
                 $scope.geneUnselectList = '';
                 //获取基因表达量表
@@ -301,20 +306,20 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             // 删除页面查询参数
             $scope.deleteFindEntity = function () {
                 var filterName = angular.element(event.target).siblings('span').find('em').text();
-                $scope.pageFindEntity = toolService.DeleteFilterFindEntity($scope.pageFindEntity, [filterName]);
-                $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                $scope.pageEntity = toolService.DeleteFilterFindEntity($scope.pageEntity, [filterName]);
+                $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 $scope.GetBigTableData(1);
             }
 
             // 获取大表数据
             $scope.GetBigTableData = function (pageNumber) {
                 toolService.gridFilterLoading.open($scope.tableId);
-                $scope.pageFindEntity = toolService.SetGridFilterFindEntity($scope.pageFindEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
+                $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
-                $scope.pageFindEntity.pageNum = pageNumber;
+                $scope.pageEntity.pageNum = pageNumber;
                 $scope.exportLocationGOAnno = $scope.url;
                 var ajaxConfig = {
-                    data: $scope.pageFindEntity,
+                    data: $scope.pageEntity,
                     url: $scope.exportLocationGOAnno,
                 };
                 var promise = ajaxService.GetDeferData(ajaxConfig);
@@ -357,17 +362,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                                     }
                                 }
                             }
-
-                            // 需要点击打开小工具页面的Pathway Name 
-                            if (value[$scope.pathwayKey] && value[$scope.pathwayKey].indexOf('//') != -1) {
-                                value.pathwayid = [];
-                                value[$scope.pathwayKey].split(';').forEach(function (val, i) {
-                                    value.pathwayid.push({
-                                        text: val,
-                                        id: val.split('//')[0].substring(2)
-                                    })
-                                })
-                            }
                         });
 
                         isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
@@ -405,8 +399,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 }
                 // if (count > 1) {
                 //     // 服务删除多个搜索条件
-                //     $scope.pageFindEntity = toolService.DeleteFilterFindEntity($scope.pageFindEntity, thead);
-                //     $scope.filterText1 = toolService.GetFilterContentText($scope.pageFindEntity);
+                //     $scope.pageEntity = toolService.DeleteFilterFindEntity($scope.pageEntity, thead);
+                //     $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 // } else {
                 $timeout(function () {
                     clearBtn.triggerHandler("click");
@@ -420,7 +414,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
 
                 $scope.reAnalysisEntity = { entity: '' };
-                $scope.reAnalysisEntity.entity = angular.copy($scope.pageFindEntity);
+                $scope.reAnalysisEntity.entity = angular.copy($scope.pageEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
                 $scope.reAnalysisEntity.url = angular.copy($scope.url).split('mrna')[1];
                 // $scope.reAnalysisEntity.allThead = [];
@@ -442,7 +436,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 // $scope.bigTableData.baseThead.forEach(function (val, index) {
                 //     $scope.reAnalysisEntity.allThead.push(val.true_key);
                 // });
-
+                var newFrame = window.open('../../../../ps/tools/index.html#/home/loading')
                 var promise = ajaxService.GetDeferData({
                     data: $scope.reAnalysisEntity,
                     url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
@@ -451,24 +445,23 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 promise.then(function (res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
+                        newFrame.close();
                         $scope.reanalysisError = "syserror";
                         toolService.popMesgWindow(res.Error);
                     } else {
                         $scope.reanalysisError = false;
                         $scope.$emit('openAnalysisPop');
                         $rootScope.GetAnalysisList(1);
-                        toolService.popMesgWindow('重分析提交成功');
-                        // if (res.isAnalysis) {
-                        // 打开我的分析面板
-                        $scope.$emit('openAnalysisPop');
-                        // } else {
-                        //     // 跳到详情页
-                        //     var type = $scope.reAnalysisEntity.chartType;
-                        //     var url = '../tools/index.html#/home/' + type + '/' + res.id;
-                        //     $window.open(url);
-                        // }
+                        // 如果不需要重新分析 就直接打开详情页
+                        if(params.chartType==='heatmap' || params.chartType==='goRich' || params.chartType==='pathwayRich'){
+                            newFrame.close();
+                            toolService.popMesgWindow('重分析提交成功');
+                        }else{
+                            newFrame.location.href = '../../../../ps/tools/index.html#/home/'+$scope.reAnalysisEntity.chartType+'/'+res.id
+                        }
                     }
                 }, function (err) {
+                    newFrame.close();
                     toolService.popMesgWindow(err);
                 })
             }
@@ -584,9 +577,16 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             }, true)
 
 
+            $scope.$watch('pageEntity.compareGroup', function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    $scope.compareGroup = newVal;
+                    $scope.method = $scope.getMethods($scope.compareGroup);
+                }
+            })
+
             $scope.getMethods = function (compare) {
                 var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));
-                var s = JSON.parse(oolService.sessionStorage.get('SampleDiffList'));
+                var s = JSON.parse(toolService.sessionStorage.get('SampleDiffList'));
                 var l = g.concat(s);
                 for (var k = 0; k < l.length; k++) {
                     if (l[k].name === compare) {

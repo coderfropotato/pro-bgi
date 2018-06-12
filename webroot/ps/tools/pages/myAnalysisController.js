@@ -114,7 +114,7 @@ define(['toolsApp'], function (toolsApp) {
                 $window.open('../tools/index.html#/home/error/' + item.id);
             } else {
                 // success
-                $window.open('../tools/index.html#/home/' + type + '/' + item.id + '/' + item.projectName);
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id);
             }
         }
 

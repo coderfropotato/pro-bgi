@@ -520,15 +520,215 @@ define("superApp.toolTipDire",
                 scope: {
                     myTitle: "=",
                     theadKey: "=",
-                    // PathwayName的参数，后续的操作需要用到 compareGroup和method
-                    pathwayid: "=",   // []
-                    compare: "=",
-                    method: "=",
-                    //
+                    // PathwayName的参数，后续的操作需要用到 compareGroup和method(method根据compareGroup找)
+                    compareGroup: "=",
+                    method:"=",
+                    // 小工具 用id跳mapid
+                    reanalysisId: "="
                 },
-                controller: "popoverTableCtr",
+                // controller: "popoverTableCtr",
                 link: function (scope, element, attrs) {
                     scope.element = element;
+                    $(element).css('position', 'relative');
+                    var obj, timer;
+                    var direc = 'left';
+                    var leftPos = 0, topPos = 0;
+
+                    // 根据比较组找到method
+                    if (scope.compareGroup) {
+                        var g = JSON.parse(window.sessionStorage.getItem('CompareGroupList'));
+                        var s = JSON.parse(window.sessionStorage.getItem('SampleDiffList'));
+                        var l = g.concat(s);
+                        l.forEach(function (val, index) {
+                            if (val.name === scope.compareGroup) {
+                                scope.method = val.method;
+                            }
+                        })
+                    }
+
+
+                    $(element).on('mouseenter', function () {
+                        if (obj) obj.remove();
+                        topPos = $(element).offset().top;
+                        var text = $(element).find('span').text();
+                        // 溢出才显示
+                        var str = '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visible:hidden " role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                        if ($(element).width() <= $(element).children(":eq(0)").outerWidth()) {
+                            // 根据不同的头字段做处理
+                            if (scope.theadKey == 'kegg_subject_annotation' || scope.theadKey == 'desc_kegg' || scope.theadKey==='kegg_desc') {
+                                // 用； 切出大段
+                                var list = text.split(';');
+                                list.forEach(function (d, i) {
+                                    if (d.length && d) {
+                                        if (/\+/g.test(d)) {
+                                            // 有小段
+                                            var index = 0;
+                                            var l = d.split('+');
+                                            l.forEach(function (m, z) {
+                                                if (/K\d+/g.test(m)) {
+                                                    if (index) {
+                                                        str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
+                                                    } else {
+                                                        str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
+                                                    }
+                                                    index++;
+                                                } else {
+                                                    // 没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
+                                                    str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + m.split('//')[0] + '">' + m + '</a><br>'
+                                                }
+                                            })
+                                        } else {
+                                            // 没有小段  有K     只有:  K09100//single-minded; 
+                                            if (/^K/.test($.trim(d))) {
+                                                str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a><br>';
+                                            } else {
+                                                // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
+                                                str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
+                                            }
+                                        }
+                                    }
+                                })
+                                /*
+                                    else if (scope.theadKey === 'desc_kegg') {
+                                    // 找出K号 找出ko 用;切 有+的 把[]单独放一行
+                                    var list = text.split(';');
+                                    // [
+                                    //    K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]+ko00310//Lysine degradation,
+                                    //    K09228//KRAB domain-containing zinc finger protein
+                                    // ]
+                                    list.forEach(function (val, index) {
+                                        if (val.length && $.trim(val)) {
+                                            // k号下有ko
+                                            if (/\+/g.test(val)) {
+                                                // +切
+                                                var k = val.split('+');
+                                                // ['K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]','ko00310//Lysine degradation']
+                                                k.forEach(function (d, i) {
+                                                    if (/^K/.test($.trim(d))) {
+                                                        // K号
+                                                        // 当前K号下有没有[]
+                                                        if (/\[([\s\S]*)\]/g.test(d)) {
+                                                            // [EC:2.1.1.43]
+                                                            var flag = d.match(/\[([\s\S]*)\]/g)[0];
+                                                            var s = d.split(flag);
+                                                            str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + s[0] + '</a><br>';
+                                                            str += '<span>' + flag + '</span><br>';
+                                                        } else {
+                                                            // k号下没有[]  直接//切
+                                                            str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + d + '</a><br>';
+                                                        }
+                                                    } else {
+                                                        // 没有K号  只有ko13115
+                                                        str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d[0].split('//')[0] + '">' + d + '</a><br>';
+                                                    }
+                                                })
+                                            } else {
+                                                // k号下没有ko
+                                                str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + val.split('//')[0] + '">' + d + '</a><br>';
+                                            }
+                                        }
+                                    })
+                                } 
+                                */
+                            } else if (scope.theadKey === 'kegg_term_mix') {
+                                // 根据LCID、ko、比较组、软件信息，跳转报告自带html
+                                // ko03022//Basal transcription factors;ko05016//Huntington's disease;ko05168//Herpes simplex infection;ko04550//Signaling pathways regulating pluripotency of stem cells
+                                var list = scope.myTitle.split(';');
+                                list.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        // ../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageFindEntity.compareGroup}}&method={{method}}
+                                        str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&comparegroup=' + scope.compareGroup + '&method=' + scope.method + '" >' + val + '</a><br>';
+                                    }
+                                })
+                            } else if (scope.theadKey === 'kegg_term_mix_tools') {
+                                // 跳转官网固定链接  
+                                var list = scope.myTitle.split(';');
+                                list.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + val.split('//')[0] + '">' + val + '</a><br>';
+                                    }
+                                })
+
+                            } else if (scope.theadKey === 'kegg_term_id') {
+                                // ko03022  跳map
+                                // 报告根据比较组和method  小工具根据重分析id
+                                if (scope.reanalysisId) {
+                                    // 有重分析id就用id
+                                    str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + scope.reanalysisId + '" >' + val + '</a><br>';
+                                } else {
+                                    // 没有就是报告内部跳转mapid
+                                    str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&comparegroup=' + scope.compareGroup + '&method=' + scope.method + '" >' + val + '</a><br>';
+                                }
+                            } else if (/^kegg_term_mix_/.test()) {
+                                // kegg_term_mix_dsaq131s5a4fq1
+                                // 根据LCID、ko、任务ID，跳转重分析生成的html
+                                var list = scope.myTitle.split(';');
+                                list.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + scope.reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">' + val + '</a><br>';
+                                    }
+                                })
+                            } else if (scope.theadKey === 'go_term') {
+                                // 直接跳官网
+                                // go_term(GO:123)
+                                str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/medial_search?q=' + val + '">' + val + '</a><br>';
+                            } else if (/^go_term_mix/.test(scope.theadKey)) {
+                                //官网 [] 换行
+                                // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
+                                var list = scope.myTitle.split(';');
+                                var index = 0;
+                                list.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        // 有 []
+                                        if (/\[([\s\S]*)\]/g.test(val)) {
+                                            var flag = val.match(/\[([\s\S]*)\]/g);
+                                            var s = val.split(flag);
+                                            if (index == 0) {
+                                                str += '<span>' + flag + '</span><br>';
+                                                index++;
+                                            } else {
+                                                str += '<br><span>' + flag + '</span><br>';
+                                            }
+                                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + s[s.length - 1] + '</a><br>';
+                                        } else {
+                                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
+                                        }
+                                    }
+                                })
+                            } else {
+                                // 不需要特殊处理的
+                                str += text + '</div></div>';
+                            }
+
+                            obj = $(str);
+
+                            $('body').append(obj);
+                            obj.css('left', $(element).offset().left - obj.outerWidth());
+
+                            // 判断极值
+                            if (obj.width() > ($(element).offset().left)) {
+                                obj.removeClass('left').addClass('right');
+                                obj.css('left', $(element).offset().left + $(element).outerWidth())
+                            }
+
+                            obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
+                            obj.css('visibility', 'visible');
+
+                            obj.on('mouseenter', function () {
+                                if (timer) clearTimeout(timer);
+                            }).on('mouseleave', function () {
+                                obj.remove();
+                            })
+                        } else {
+                            return;
+                        }
+
+                    }).on('mouseleave', function () {
+                        if (timer) clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            if (obj) obj.remove();
+                        }, 80)
+                    })
                 }
             }
         }

@@ -155,7 +155,7 @@
                             <tr ng-class="{'unChecked':!row.isChecked}" ng-repeat="row in bigTableData.rows track by $index">
                                 <!-- Pathway Name -->
                                 <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.name==='Pathway Name'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" reanalysis-id="reanalysisId" my-title="row[val.true_key]" compare-group="pageFindEntity.compareGroup">
+                                    thead-key="val.true_key" reanalysis-id="reanalysisId" my-title="row[val.true_key]" compare-group="compareGroup" method="method">
                                     <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
                                         <a ng-repeat="item in row track by $index" ng-href="../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageFindEntity.compareGroup}}&method={{method}}"
                                             target="_blank">
@@ -216,5 +216,5 @@
     </div>
     <!-- table over -->
     <!-- reanalysis content -->
-    <div ng-if="!tableError && isReanalysis" class="re-analysis" gene-count="geneCount" callback="handlerReanalysis(options)"></div>
+    <div ng-if="!error && isReanalysis" class="re-analysis" gene-count="geneCount" callback="handlerReanalysis(options)"></div>
 </div>

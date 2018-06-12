@@ -9,8 +9,6 @@ define(["toolsApp"], function (toolsApp) {
                 toolService.pageLoading.close();
             }, 300);
 
-            // custom title
-            $scope.projectName = $state.params.projectName;
             // 重分析id
             $scope.id = $state.params.id;
             $scope.title = 'GO分类 ( ID：' + $scope.id + " ) ";

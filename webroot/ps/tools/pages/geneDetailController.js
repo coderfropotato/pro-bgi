@@ -53,5 +53,65 @@ define(["toolsApp"], function(toolsApp) {
                 });
         }
 
+        //表达量折线图
+        $scope.drawLine = function(resData) {
+            $('#' + options.id).html('');
+            var width = $('#geneDetail_line .chart_wrap').eq(0).width();
+            var rows = resData.rows;
+            var data = [];
+            for (var i = 0; i < rows.length; i++) {
+                data.push({
+                    key: rows[i].key,
+                    value: rows[i].value
+                });
+            }
+
+            var options = {
+                "id": "geneDetail_line_chart",
+                "type": "linechart",
+                "data": data,
+                "width": width * 0.9,
+                "titleBox": {
+                    "show": true,
+                    "position": "top",
+                    "title": "FPKM value of gene in samples",
+                    "editable": true
+                },
+                "axisBox": {
+                    "xAxis": {
+                        "title": "Sample name"
+                    },
+                    "yAxis": {
+                        "title": "log10(FPKM+1)"
+                    }
+                },
+                "legendBox": {
+                    "show": false,
+                },
+            }
+
+            $scope.linechart = new gooal.lineInit("#" + options.id, options);
+
+            var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
+
+            function linetooltipConfig(d) {
+                linecharttooltip.html("Sample:" + d.key + "</br>" + "FPKM: " + d.value)
+            }
+        }
+
+        //resize redraw
+        var timer = null;
+        window.removeEventListener('resize', handlerResize);
+        window.addEventListener('resize', handlerResize, false)
+
+        function handlerResize() {
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                if ($scope.linechart) {
+                    $scope.linechart.redraw($('#geneDetail_line .chart_wrap').eq(0).width() * 0.9);
+                }
+            }, 100)
+        }
+
     };
 });

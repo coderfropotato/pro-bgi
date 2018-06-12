@@ -70,7 +70,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
                         } else {
                             //重新赋值授权,然后执行政策逻辑
-                            $window.sessionStorage.token = data;
+                            $window.localStorage.token = data;
                             $http({
                                 method: selfAjaxConfig.method,
                                 url: selfAjaxConfig.url,
@@ -131,8 +131,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 cache: false,
                                 success: function (responseData) {
                                     if (responseData.Status === 'success') {
-                                        toolService.sessionStorage.set('token', responseData.Token);
-                                        window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
+                                        toolService.localStorage.set('token', responseData.Token);
+                                        window.location.reload();
+                                        // window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                                     } else {
                                         if (responseData.Status == "Wrong username or password") {
                                             var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
@@ -155,7 +156,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             })
                         }, function (close) {
                             globalTokenError = false;
-                            console.log(options)
                             window.location.href = '../../../../ps/login/login.html';
                         })
                     }
@@ -304,9 +304,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             //验证客户端当前授权是否已丢弃
             this.validateWindowToken = function () {
-                if ($window.sessionStorage.token == "undefined"
-                    || $window.sessionStorage.token == undefined
-                    || $window.sessionStorage.token == "") {
+                if ($window.localStorage.token == "undefined"
+                    || $window.localStorage.token == undefined
+                    || $window.localStorage.token == "") {
                     return false;
                 }
                 else {

@@ -18,9 +18,9 @@ define("superApp.tokenInterceptorFactory", ["angular"], function (angular)
                 config.headers = config.headers || {};
                 //$log.debug("$window.sessionStorage.token=" + $window.sessionStorage.token);
                 //alert($window.localStorage.token);
-                if ($window.sessionStorage.token)
+                if ($window.localStorage.token)
                 {
-                    config.headers.Authorization = "token " + $window.sessionStorage.token;
+                    config.headers.Authorization = "token " + $window.localStorage.token;
                     //$log.log("config.headers.Authorization = " + config.headers.Authorization);
                     // config.headers.Authorization.Parameter = "123";
                 }

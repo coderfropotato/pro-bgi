@@ -602,6 +602,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //数据
                         $rootScope.data = taskInfo.data;
                         $rootScope.chooseList = [];
+                        $rootScope.checkedItems = [];
 
                         for (var i = 0; i < $rootScope.data.length; i++) {
                             $rootScope.data[i].isChecked = false;
@@ -638,25 +639,30 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 })
                             }
                             $rootScope.chooseList[0].isChecked = true;
-
+                            $rootScope.checkedItems = [];
+                            $rootScope.checkedItems.push($rootScope.chooseList[0].name);
                         }
 
 
                         //数据选择
                         $rootScope.chooseData = function (item) {
                             item.isChecked = !item.isChecked;
+                            if (item.isChecked) {
+                                $rootScope.checkedItems.push(item.name);
+                            } else {
+                                $rootScope.checkedItems.forEach(function (val, index) {
+                                    if (val === item.name) {
+                                        $rootScope.checkedItems.splice(index, 1);
+                                    }
+                                })
+                            }
                         }
 
                         //确定
                         $rootScope.confirm = function () {
-                            var checkedItems = [];
+                            var checkedItems = angular.copy($rootScope.checkedItems);
                             var type = "";
 
-                            for (var i = 0; i < $rootScope.chooseList.length; i++) {
-                                if ($rootScope.chooseList[i].isChecked) {
-                                    checkedItems.push($rootScope.chooseList[i].name);
-                                }
-                            }
                             if (checkedItems.length == 0) {
                                 $rootScope.isChoose = false;
                                 if (chartType === 'heatmap') {

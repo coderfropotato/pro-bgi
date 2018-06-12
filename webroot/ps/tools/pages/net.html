@@ -1,3 +1,68 @@
 <div class="net-page" ng-init="InitPage()" ng-controller="netController">
-    {{test}}
+    <h6>蛋白网络互作</h6>
+    <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
+        <div class="graph_header">
+            <ul class="fLeft">
+                <li>
+                    <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                </li>
+            </ul>
+            <ul class="fRight">
+                <!-- <li ng-hide="isTableShow || error">
+                    <div class="chart-set" set-title="是否显示基因名" is-show="isShowSetPanel" is-show-value="isShowValue" get-set-option="getSetOption(set)"></div>
+                </li> -->
+                <li ng-hide="error || isTableShow">
+                    <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
+                </li>
+                <li ng-hide="tableError || !isTableShow">
+                    <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
+                </li>
+                <li ng-hide="isTableShow">
+                    <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetNetData()">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                </li>
+                <li ng-show="isTableShow">
+                    <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetTableData()">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- table -->
+        <!-- <div class="table_scroll_wrap" ng-show="isTableShow">
+            <div ng-hide="tableError">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                    <thead>
+                        <tr>
+                            <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
+                                <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in tableData.rows track by $index">
+                            <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                                {{row[val.true_key]}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-nodata" error-type="tableError"></div>
+        </div> -->
+
+        <!-- chart -->
+        <div class="tab-switch-chart" ng-hide="isTableShow">
+            <div class="chart_wrap" ng-hide="error">
+                <div class="chart_graph" id="div_reAnalysis_net_panel" style="text-align:center">
+                    <svg id="reAnalysis_net_panel_svg"></svg>
+                </div>
+            </div>
+            <div class="table-nodata" error-type="error"></div>
+        </div>
+
+    </div>
 </div>

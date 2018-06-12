@@ -1,3 +1,5 @@
+
+
 define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('myAnalysisController', myAnalysisController);
     myAnalysisController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
@@ -17,6 +19,7 @@ define(['toolsApp'], function (toolsApp) {
                 pageNum: 1,
                 pageSize: 10,
                 searchContent: {
+                    label: "",
                     timeStart: "",
                     timeEnd: "",
                     chartType: [],
@@ -39,6 +42,8 @@ define(['toolsApp'], function (toolsApp) {
                     ]
                 }
             ]
+            $scope.beforeAdvanceParams = angular.copy($scope.advanceParams);
+
             toolService.gridFilterLoading.open("myanalysis-table");
 
             $scope.analysisError = false;
@@ -55,7 +60,7 @@ define(['toolsApp'], function (toolsApp) {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
             }
-            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+            var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
                 toolService.gridFilterLoading.close("myanalysis-table");
                 if (res.Error) {
@@ -66,6 +71,7 @@ define(['toolsApp'], function (toolsApp) {
                     return;
                 } else {
                     $scope.analysisList = res.data;
+                    $scope.beforeList = angular.copy(res.data);
                     $scope.analysisError = false;
                 }
             }, function () {
@@ -103,6 +109,55 @@ define(['toolsApp'], function (toolsApp) {
             }
 
             $scope.GetAnalysisList(1);
+        }
+
+        $scope.handlerRemoveShow = function () {
+            $('.tools-analysis-panel .filter .remove').show();
+        }
+        var timer = null;
+        $scope.handlerRemoveHide = function () {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(function () {
+                $('.tools-analysis-panel .filter .remove').hide();
+            }, 120)
+        }
+
+        $scope.handlerRemoveIconShow = function () {
+            clearTimeout(timer);
+        }
+
+        $scope.handlerClearSearch = function () {
+            $scope.analysisEntity.searchContent.label = '';
+            $scope.handlerFilterClick();
+        }
+
+        // 搜索
+        var searchTimer = null;
+        $scope.handlerSearch = function (event) {
+            console.log(event)
+            if (event.keyCode === 13) {
+                // 回车立马搜索
+                $scope.handlerFilterClick();
+                if (searchTimer) clearTimeout(searchTimer);
+            } else {
+                // 不是回车就开定时器
+                if (searchTimer) clearTimeout(searchTimer);
+                searchTimer = setTimeout(function () {
+                    $scope.handlerFilterClick();
+                }, 1200);
+
+            }
+        }
+
+        // 重置筛选条件
+        $scope.handlerResetClick = function (event) {
+            // 重置时间
+            $scope.analysisEntity.searchContent.timeStart = '';
+            $scope.analysisEntity.searchContent.timeEnd = '';
+
+            // 重置筛选条件
+            $scope.advanceParams = angular.copy($scope.beforeAdvanceParams);
+            event.stopPropagation();
         }
 
         // 查看
@@ -147,39 +202,47 @@ define(['toolsApp'], function (toolsApp) {
             item.isEdit = true;
         }
 
-        $scope.handlerBlur = function (item, value) {
+        // keyup
+        // $scope.handlerKeyUp = function (event,index,item,value) {
+        //     if (event.keyCode === 13) {
+        //         $scope.handlerBlur(index,item,value);
+        //     }
+        // }
+
+        $scope.handlerBlur = function (index, item, value) {
             // 去掉空白字符
             if (/\s/g.test(value)) {
-                item.projectName = value.replace(/\s/g, '');
-                item.isEdit = false;
-            } else {
-                toolService.gridFilterLoading.open("myanalysis-table");
-                $scope.analysisEntity.pageNum = pageNum;
+                value = value.replace(/\s/g, '');
+            }
+            // 相比之前修改了
+            if (!angular.equals(value, $scope.beforeList.rows[index].projectName)) {
                 //配置请求参数
-                $scope.analysisListUrl = options.api.java_url + '/analysis/GetAnalysisList'
                 var ajaxConfig = {
-                    data: $scope.analysisEntity,
-                    url: $scope.analysisListUrl
+                    data: {
+                        id: item.id,
+                        nickName: value
+                    },
+                    url: options.api.java_url + '/reanalysis/nickname'
                 }
-                var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
+                var promise = ajaxService.GetDeferData(ajaxConfig);
                 promise.then(function (res) {
-                    toolService.gridFilterLoading.close("myanalysis-table");
-                    if (res.Error) {
-                        $scope.analysisError = 'syserror';
-                        return;
-                    } else if (res.data.rows.length == 0) {
-                        $scope.analysisError = 'nodata';
-                        return;
+                    if (res.status != 200) {
+                        item.projectName = $scope.beforeList.rows[index].projectName;
                     } else {
-                        $scope.analysisList = res.data;
-                        $scope.analysisError = false;
+                        // 更新之前的状态到最新的值
+                        $scope.beforeList.rows[index].projectName = value;
+                        item.isEdit = false;
                     }
-                }, function () {
-                    $scope.analysisError = 'syserror'
-                    toolService.gridFilterLoading.close("myanalysis-table");
+                }, function (err) {
+                    console.log(err);
                 })
+            } else {
+                // 没有修改
+                item.projectName = value;
+                item.isEdit = false;
             }
         }
+
 
         // advance
         $scope.handlerParamsClick = function (item) {

@@ -8463,6 +8463,18 @@ div.tipsContainer {
     margin-right: 20px;
 }
 
+.setInput {
+    display: inline-block;
+}
+
+.setInput input {
+    width: 100px;
+}
+
+.setInput button {
+    margin-left: 10px;
+}
+
 
 /* 重分析弹窗样式 */
 

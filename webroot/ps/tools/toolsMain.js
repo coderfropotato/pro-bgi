@@ -45,6 +45,7 @@ require.config({
         "superApp.littleTableDire": "res/scripts/super/directive/littleTableDire",
         "superApp.bigTableDire": "res/scripts/super/directive/bigTableDire",
         "superApp.tableSwitchChartDire": "res/scripts/super/directive/tableSwitchChartDire",
+        "superApp.chartSetDire": "res/scripts/super/directive/chartSetDire",
 
         "superApp.superService": "res/scripts/super/service/superService",
         "superApp.reportService": "res/scripts/super/service/reportService",

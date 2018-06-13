@@ -9,38 +9,17 @@ define(['toolsApp'], function (toolsApp) {
                 toolService.pageLoading.close();
             }, 300)
             $scope.id = $state.params.id;
+
+            $scope.isShowSetPanel = false;
+
+            // 默认force
+            $scope.forceValue = 100;
+
             $scope.netEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),
-                "id": $scope.id
+                "id": $scope.id,
+                "score": 500
             }
-            console.log($scope.netEntity.LCID, $scope.netEntity.id);
-
-            // Geneid table start
-            $scope.geneIdTableEntity = {
-                "LCID": toolService.sessionStorage.get("LCID"),
-                "pageSize": 10,
-                "pageNum": 1,
-                "searchContentList": [],
-                "sortName": "",
-                "sortType": "",
-                "id": $scope.id
-            };
-
-            // $scope.paramsKeyList = []
-            // $scope.paramsValueList = [];
-            // $scope.url = options.api.mrnaseq_url + '/DiffExpGeneIDTable/GoRichGene';
-            // $scope.panelId = "div_reAnalysis_net_geneid";
-            // $scope.tableId = "reAnalysis_net_geneid_table";
-            // $scope.unselectId = "reAnalysis_net_unselectid";
-            // $scope.filename = "网络图表数据";
-            // $scope.geneList = '';
-            // $scope.changeFlag = false;
-            // $scope.isResetTheadControl = null;
-            // $scope.isResetTableStatus = null;
-            // $scope.isShowTheadControl = true;
-            // $scope.isReanalysis = true;
-            // $scope.theadControlId = 'reAnalysis_net_theadcontrol';
-            // Geneid table end
 
             $scope.GetNetData();
             $scope.GetTableData();
@@ -84,28 +63,38 @@ define(['toolsApp'], function (toolsApp) {
                 url: options.api.mrnaseq_url + "/net/GetNetData"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (responseData) {
-                if (responseData.Error) {
-                    //系统异常
-                    $scope.error = "syserror";
-                } else if (responseData.length == 0) {
-                    //无数据异常
-                    $scope.error = "nodata";
-                } else {
-                    //正常
-                    $scope.error = "";
-                    $scope.drawNet(responseData);
-                }
-                toolService.gridFilterLoading.close("panel_reAnalysis_net");
-            },
-                function (errorMesg) {
+            promise.then(function(responseData) {
+                    if (responseData.Error) {
+                        //系统异常
+                        $scope.error = "syserror";
+                    } else if (responseData.length == 0) {
+                        //无数据异常
+                        $scope.error = "nodata";
+                    } else {
+                        //正常
+                        $scope.error = "";
+                        $scope.drawNet(responseData, $scope.forceValue);
+                        $scope.netData = responseData;
+                    }
+                    toolService.gridFilterLoading.close("panel_reAnalysis_net");
+                },
+                function(errorMesg) {
                     $scope.error = "syserror";
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 });
         }
 
+        //设置回调
+        $scope.getSetOption = function(val) {
+            $scope.drawNet($scope.netData, val);
+        }
+
         // 画net图
+<<<<<<< HEAD
         $scope.drawNet = function (data) {
+=======
+        $scope.drawNet = function(data, setforce) {
+>>>>>>> 3a6784198c78dd9a3885c91912a90bfe0f3b7528
             var core_gene = "";
             //配置
             var myOptions = {
@@ -118,7 +107,7 @@ define(['toolsApp'], function (toolsApp) {
                 node_r_max: 20,
                 link_width_min: 1,
                 link_width_max: 5,
-                force: 20,
+                force: setforce,
             }
 
             drawNetChart(data, myOptions)
@@ -358,9 +347,9 @@ define(['toolsApp'], function (toolsApp) {
                 //定义比例尺
                 //node
                 var colorScale = d3.scaleLinear().domain([0, maxValue]).range(colorArr).interpolate(d3.interpolateRgb),
-                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([2, 6]).clamp(true);
+                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([5, 20]).clamp(true);
                 //link
-                var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range([1, 5]).clamp(true);
+                var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range(["#cccccc", "#000000"]).clamp(true);
 
                 //生成力导图模型
                 var simulation = d3.forceSimulation()
@@ -396,10 +385,14 @@ define(['toolsApp'], function (toolsApp) {
                     .attr('r', function (d) {
                         return nodeRScale(d.value);
                     })
+<<<<<<< HEAD
                     // .attr('class', function(d) {
                     //     return "node" + " " + d.type || "nodeType"
                     // })
                     .attr('fill', function (d) {
+=======
+                    .attr('fill', function(d) {
+>>>>>>> 3a6784198c78dd9a3885c91912a90bfe0f3b7528
                         return colorScale(d.value);
                     })
                     .attr('stroke', "#000")

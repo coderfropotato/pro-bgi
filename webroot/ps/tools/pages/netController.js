@@ -160,7 +160,7 @@ define(['toolsApp'], function(toolsApp) {
                 })
                 if (!options.isMultiChoose) {
                     releaseMultiChoose()
-                    noMultiChooseZoom()
+                    noMultiChooseZoom()                   
                 } else {
                     releaseZoom()
                     isMultiChoosePick()
@@ -320,7 +320,6 @@ define(['toolsApp'], function(toolsApp) {
                 }
                 //解绑多选时状态事件
                 function releaseMultiChoose() {
-                    alert(options.id)
                     d3.select("#" + options.id).on("mousedown", null);
                     d3.select("#" + options.id).on("mousemove", null);
                     d3.select("#" + options.id).on("mouseup", null);
@@ -415,7 +414,6 @@ define(['toolsApp'], function(toolsApp) {
                     .attr('stroke', "#000")
                     .attr('stroke-width', 0)
                     .on("click", function(d) {
-                        alert(1)
                         d.isNodeSelected = true;
                         //遍历links 获取相邻ID的数组
                         var tempNodeArray = [];

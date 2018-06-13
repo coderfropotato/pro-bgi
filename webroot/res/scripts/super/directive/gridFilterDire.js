@@ -558,7 +558,6 @@ define("superApp.gridFilterDire",
                 $scope.$watch('searchOne', function (newVal, oldVal) {
                     if (!angular.equals(newVal, oldVal)) {
                         if (newVal) {
-                            console.log(newVal);
                             $timeout(function () {
                                 var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                                 $scope.compileTemplate(curPanel, 0);

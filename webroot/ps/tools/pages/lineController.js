@@ -37,6 +37,30 @@ define(['toolsApp'], function (toolsApp) {
 
             $scope.GetLineChartData();
             $scope.GetLinks();
+
+            // Geneid table params start
+            $scope.pageFindEntity = {
+                "id": $scope.id,
+                "LCID": toolService.sessionStorage.get("LCID"),
+                "pageSize": 10,
+                "pageNum": 1,
+                "searchContentList": [],
+                "sortName": "",
+                "sortType": ""
+            };
+            $scope.url = options.api.mrnaseq_url + '/table/GetLineTableData';
+            $scope.panelId = "reanalysis_line_panel";
+            $scope.tableId = "reanalysis_line_geneid_table";
+            $scope.unselectId = "reanalysis_line_unselectid";
+            $scope.filename = "基因表达量表格数据";
+            $scope.geneList = '';
+            $scope.changeFlag = false;
+            $scope.isResetTheadControl = null;
+            $scope.isResetTableStatus = null;
+            $scope.isShowTheadControl = true;
+            $scope.isReanalysis = true;
+            $scope.theadControlId = 'reanalysis_line_theadcontrol';
+            // Geneid table params end
         }
 
         $scope.GetLineChartData = function (flag) {
@@ -58,15 +82,17 @@ define(['toolsApp'], function (toolsApp) {
                     $scope.lineError = false;
                     var x = res.baseThead[0].x;
                     $scope.chartData = [];
-                    // $scope.chartData.length = res.baseThead.length - 1;
                     $scope.mapTheadJson = {};
+                    var order = [];
                     res.baseThead.forEach(function (val, index) {
                         if (index != 0) {
                             for (var key in val) {
                                 $scope.mapTheadJson[val[key]] = key;
+                                order.push(key);
                             }
                         }
                     })
+
                     res.rows.forEach(function (val, index) {
                         // $scope.chartData[index] = [];
                         for (var name in val) {
@@ -91,7 +117,12 @@ define(['toolsApp'], function (toolsApp) {
                         }
                     })
 
-                    $scope.drawLineChart($scope.chartData);
+                    if(!$scope.chartData.length){
+                        $scope.lineError = 'nodata';
+                    }else{
+                        $scope.chartData = $scope.sortArr(order,angular.copy($scope.chartData));
+                        $scope.drawLineChart($scope.chartData);
+                    }
                 }
                 toolService.gridFilterLoading.close("analysis-linePanel");
 
@@ -199,6 +230,20 @@ define(['toolsApp'], function (toolsApp) {
                 // success
                 $window.open('../tools/index.html#/home/' + type + '/' + item.id);
             }
+        }
+
+        $scope.sortArr = function(orderArr,arr){
+            var res = [];
+            for(var i=0;i<orderArr.length;i++){
+                for(var k=0;k<arr.length;k++){
+                    if(orderArr[i]===arr[k].key){
+                        res.push(arr[k]);
+                        arr.splice(k,1);
+                        k--;
+                    }
+                }
+            }
+            return res;
         }
     }
 });

@@ -9,7 +9,7 @@ define(['toolsApp'], function (toolsApp) {
                 toolService.pageLoading.close();
             }, 300)
             $scope.id = $state.params.id;
-
+            $scope.title = '蛋白网络互作 ( ID：' + $scope.id + " ) ";
             $scope.isShowSetPanel = false;
 
             // 默认force
@@ -34,6 +34,32 @@ define(['toolsApp'], function (toolsApp) {
                 "id": $scope.id,
                 "score": 500
             }
+
+
+            // Geneid table start
+            $scope.geneIdTableEntity = {
+                "LCID": toolService.sessionStorage.get("LCID"),
+                "pageSize": 10,
+                "pageNum": 1,
+                "searchContentList": [],
+                "sortName": "",
+                "sortType": "",
+                "id": $scope.id
+            };
+
+            $scope.url = options.api.mrnaseq_url + '/Tools/PPIGeneIDTable';
+            $scope.panelId = "div_reAnalysis_net_geneid";
+            $scope.tableId = "reAnalysis_net_geneid_table";
+            $scope.unselectId = "reAnalysis_net_unselectid";
+            $scope.filename = "蛋白网络互作表";
+            $scope.geneList = '';
+            $scope.geneListChangeFlag = false;
+            $scope.isResetTheadControl = null;
+            $scope.isResetTableStatus = null;
+            $scope.theadControlId = 'reAnalysis_net_theadcontrol';
+            $scope.isShowTheadControl = true;
+            $scope.isReanalysis = true;
+            // Geneid table end
 
             $scope.GetNetData();
             $scope.GetTableData();
@@ -119,7 +145,8 @@ define(['toolsApp'], function (toolsApp) {
                         tempArray.push(networkData.nodes[i].id)
                     }
                 }
-                console.log(tempArray)
+                $scope.geneList =angular.copy(tempArray);
+                $scope.geneListChangeFlag = true;
             }
 
             $scope.changeFlag = function(options) {

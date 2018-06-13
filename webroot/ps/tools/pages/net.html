@@ -1,4 +1,5 @@
 <div class="net-page" ng-init="InitPage()" ng-controller="netController">
+    <div class="report-page-title" custom-title="title"></div>
     <h6>蛋白网络互作</h6>
     <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
         <div class="graph_header">
@@ -71,8 +72,11 @@
 
     </div>
 
-    <!-- <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
-            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
+            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="geneListChangeFlag"
             is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
-            params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"></div> -->
+            params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"></div>
+
+            <!-- analysis pop -->
+    <div class="analysis-pop" is-expand="isExpand" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
 </div>

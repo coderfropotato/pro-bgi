@@ -153,79 +153,30 @@
                         </thead>
                         <tbody ng-hide="error">
                             <tr ng-class="{'unChecked':!row.isChecked}" ng-repeat="row in bigTableData.rows track by $index">
-                                <!-- kegg_subject_annotation desc_kegg kegg_desc -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && (val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc')" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- kegg_term_mix  区分报告和小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key==='kegg_term_mix'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId" compare-group="compareGroup" method="method">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- kegg_term_mix_tools  小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key==='kegg_term_mix_tools'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- kegg_term_id  区分报告和小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key==='kegg_term_id'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId" compare-group="compareGroup" method="method">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- kegg_term_mix_id(qwodlzmqan01291me2p)  小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key.indexOf('kegg_term_mix_')!=-1" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- desc_go go_desc go_subject_annotation 不区分报告和小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && (val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation')" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- go_term_mix 不区分报告和小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key==='go_term_mix'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- go_term_id 不区分报告和小工具 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key==='go_term_id'" ng-repeat="val in bigTableData.baseThead track by $index"
-                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
-                                </td>
-                                <!-- 其他 -->
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key && val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_id'"
-                                    ng-repeat="val in bigTableData.baseThead track by $index" thead-key="val.true_key" data-title="{{row[val.true_key]}}">
-                                    {{val.true_key}}
-                                    <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
-                                        {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
+                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key"
+                                    ng-repeat="val in bigTableData.baseThead track by $index" thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId" compare-group="compareGroup" method="method">
+                                    <!-- 其他 -->
+                                    <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_id'">
+                                        <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
+                                            {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
+                                        </span>
+                                        <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                     </span>
-                                    <!-- null -->
-                                    <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                                    <!-- kegg_subject_annotation
+                                         desc_kegg 
+                                         kegg_desc 
+                                         kegg_term_mix 
+                                         kegg_term_mix_tools 
+                                         kegg_term_id kegg_term_mix_id(123516Bcaplpslwq) 
+                                         desc_go 
+                                         go_desc 
+                                         go_subject_annotation 
+                                         go_term_mix 
+                                         go_term_id-->
+                                    <span ng-if="val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc' || val.true_key==='kegg_term_mix' || val.true_key==='kegg_term_mix_tools' || val.true_key==='kegg_term_id' || val.true_key.indexOf('kegg_term_mix_')!=-1 || val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation' || val.true_key==='go_term_mix' || val.true_key==='go_term_id'">
+                                        <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
+                                        <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>

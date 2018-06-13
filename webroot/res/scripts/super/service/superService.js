@@ -67,7 +67,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     }).success(function (data, status, headers, config) {
                         if (data == "false") {
                             //没有授权了，返回登录窗口
-                            window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
+                            window.location.href = '../../../../ps/login/login.html';
                         } else {
                             //重新赋值授权,然后执行政策逻辑
                             $window.localStorage.token = data;
@@ -92,7 +92,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         toolService.popLoading.close(); //关闭页面等待效果2
                                         toolService.pageLoading.close(); //关闭页面等待蒙版
                                         // reAccess();
-                                        window.location.href = window.location.href.replace(/ps\/.*/, options.messageUrl);
+                                        window.location.href = '../../../../ps/login/login.html';
                                     }
                                 }
                                 catch (e) { }
@@ -106,7 +106,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
                         } catch (e) { }
-                        reAccess();
+                        // reAccess();
+                        window.location.href = '../../../../ps/login/login.html';
                     });
 
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  
@@ -619,6 +620,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             })
                         }
                         $rootScope.chooseList[0].isChecked = true;
+                        $rootScope.checkedItems = [];
+                        $rootScope.checkedItems.push($rootScope.chooseList[0].name);
 
                         // 类型选择
                         $rootScope.chooseType = function (item) {
@@ -662,7 +665,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $rootScope.confirm = function () {
                             var checkedItems = angular.copy($rootScope.checkedItems);
                             var type = "";
-
                             if (checkedItems.length == 0) {
                                 $rootScope.isChoose = false;
                                 if (chartType === 'heatmap') {

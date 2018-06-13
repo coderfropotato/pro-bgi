@@ -90,11 +90,7 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 画net图
-<<<<<<< HEAD
-        $scope.drawNet = function (data) {
-=======
         $scope.drawNet = function(data, setforce) {
->>>>>>> 3a6784198c78dd9a3885c91912a90bfe0f3b7528
             var core_gene = "";
             //配置
             var myOptions = {
@@ -385,14 +381,7 @@ define(['toolsApp'], function (toolsApp) {
                     .attr('r', function (d) {
                         return nodeRScale(d.value);
                     })
-<<<<<<< HEAD
-                    // .attr('class', function(d) {
-                    //     return "node" + " " + d.type || "nodeType"
-                    // })
-                    .attr('fill', function (d) {
-=======
                     .attr('fill', function(d) {
->>>>>>> 3a6784198c78dd9a3885c91912a90bfe0f3b7528
                         return colorScale(d.value);
                     })
                     .attr('stroke', "#000")

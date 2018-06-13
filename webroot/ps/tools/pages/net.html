@@ -6,10 +6,15 @@
                 <li>
                     <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
                 </li>
+                <li ng-hide="error || isTableShow">
+                    <button ng-show="myOptions.isMultiChoose" ng-click="changeFlag(myOptions)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
+                    <button ng-show="!myOptions.isMultiChoose" ng-click="changeFlag(myOptions)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
+                    <button ng-show="myOptions.isMultiChoose" ng-click="getChooseGeneList(netData)" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
+                </li>
             </ul>
             <ul class="fRight">
                 <li ng-hide="isTableShow || error">
-                    <div class="chart-set" set-title="力度值" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
+                    <div class="chart-set" set-title="斥力" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
                 </li>
                 <li ng-hide="error || isTableShow">
                     <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>

@@ -15,6 +15,20 @@ define(['toolsApp'], function (toolsApp) {
             // 默认force
             $scope.forceValue = 100;
 
+            //net图配置
+            $scope.myOptions = {
+                id: "reAnalysis_net_panel_svg",
+                width: 800,
+                height: 800,
+                isMultiChoose: false, //是否多选状态
+                colorArr: ["#ff0000", "#0000ff"],
+                node_r_mim: 2,
+                node_r_max: 20,
+                link_width_min: 1,
+                link_width_max: 5,
+                force: $scope.forceValue,
+            }
+
             $scope.netEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),
                 "id": $scope.id,
@@ -92,24 +106,13 @@ define(['toolsApp'], function (toolsApp) {
         // 画net图
         $scope.drawNet = function(data, setforce) {
             var core_gene = "";
-            //配置
-            var myOptions = {
-                id: "reAnalysis_net_panel_svg",
-                width: 800,
-                height: 800,
-                isMultiChoose: false, //是否多选状态
-                colorArr: ["#ff0000", "#0000ff"],
-                node_r_mim: 2,
-                node_r_max: 20,
-                link_width_min: 1,
-                link_width_max: 5,
-                force: setforce,
-            }
 
-            drawNetChart(data, myOptions)
+            $scope.myOptions.force = setforce;
+
+            drawNetChart(data, $scope.myOptions)
 
             //获取当前选中基因列表
-            function getChooseGeneList(networkData) {
+            $scope.getChooseGeneList = function(networkData) {
                 var tempArray = [];
                 for (var i = 0; i < networkData.nodes.length; i++) {
                     if (networkData.nodes[i].isNodeSelected) {
@@ -119,7 +122,7 @@ define(['toolsApp'], function (toolsApp) {
                 console.log(tempArray)
             }
 
-            function changeFlag(options) {
+            $scope.changeFlag = function(options) {
                 options.isMultiChoose = !options.isMultiChoose;
                 core_gene = "";
                 d3.select("#" + options.id).selectAll(".node").each(function (d) {
@@ -150,9 +153,8 @@ define(['toolsApp'], function (toolsApp) {
                 }
 
 
-                //multiChoose
+                //多选
                 function isMultiChoosePick() {
-                    //多选
                     var isMouseDown = "false";
                     var isMouseMove = "false";
                     var startLoc = [];
@@ -295,9 +297,14 @@ define(['toolsApp'], function (toolsApp) {
                     d3.select("#" + options.id).on("mousemove", null);
                     d3.select("#" + options.id).on("mouseup", null);
                     d3.select("#" + options.id).on("mouseleave", null);
+<<<<<<< HEAD
                     d3.select("#" + options.id).on("click", function () {
                         console.log("单选取消")
                         d3.select("#" + options.id).selectAll(".node").each(function (d) {
+=======
+                    d3.select("#" + options.id).on("click", function() {
+                        d3.select("#" + options.id).selectAll(".node").each(function(d) {
+>>>>>>> 7fd67ccc6d3c5fcaafe1681dc42d310361ca72d5
                             d.isNodeSelected = false;
                             d3.select(this)
                                 .attr('stroke-width', function (d) {
@@ -309,11 +316,9 @@ define(['toolsApp'], function (toolsApp) {
                         })
                     })
                 }
-
-
-
             }
 
+            //画图
             function drawNetChart(networkData, options) {
                 $("#" + options.id).html('');
                 var height = options.height || 800,
@@ -417,7 +422,7 @@ define(['toolsApp'], function (toolsApp) {
                                         return 0
                                     })
                             })
-                            getChooseGeneList(networkData);
+                            $scope.getChooseGeneList(networkData);
                         } else {
                             //遍历node，但是不清除其余目标node，
                             d3.select("#" + options.id).selectAll(".node").each(function (d) {

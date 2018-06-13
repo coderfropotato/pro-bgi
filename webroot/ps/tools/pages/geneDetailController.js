@@ -12,26 +12,13 @@ define(["toolsApp"], function(toolsApp) {
 
             $scope.geneEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
-                "sample": "HBRR1"
+                "id": $scope.id
             }
 
             $scope.literatureEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
                 "id": $scope.id
             }
-
-            // 假数据 start
-            $scope.keggData = [];
-            for (var i = 0; i < 7; i++) {
-                var keggobj = {
-                    "Entry": "K02156" + i,
-                    "Name": "AUB, PIWI" + i,
-                    "Definition": "aubergine" + i
-                }
-                $scope.keggData.push(keggobj);
-            }
-
-            // end
 
             //根据info判断是否存在此模块
             var details = toolService.sessionStorage.get('geneDetails');
@@ -70,7 +57,7 @@ define(["toolsApp"], function(toolsApp) {
 
             $scope.projectType = toolService.sessionStorage.get("projectType");
 
-            // $scope.getGeneData();
+            $scope.getGeneData();
             $scope.getLiterature();
 
         };
@@ -80,30 +67,28 @@ define(["toolsApp"], function(toolsApp) {
             toolService.gridFilterLoading.open("div_geneDetail_page");
             var ajaxConfig = {
                 data: $scope.geneEntity,
-                url: options.api.mrnaseq_url + "/SimpleTable/RawReadsClass"
+                url: options.api.mrnaseq_url + "/GeneDetail"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function(resData) {
                     if (resData.Error) {
                         toolService.popMesgWindow(resData.Error);
                     } else {
-                        $scope.tableData = resData;
-
-                        // $scope.geneInfoList = resData.gene_info;
-                        // $scope.sampleExpData = resData.sample_expression;
-                        // $scope.lineData = resData.line;
-                        // $scope.groupDiffData = resData.group_diff;
-                        // $scope.sampleDiffData = resData.sample_diff;
-                        // $scope.timeCourseList = resData.time_course;
-                        // $scope.keggList = resData.kegg;
-                        // $scope.goList = resData.go;
-                        // $scope.phiList = resData.phi;
-                        // $scope.snpData = resData.snp;
-                        // $scope.indelData = resData.indel;
-                        // $scope.fusionData = resData.fusion;
-                        // $scope.transcript = resData.transcript;
-                        // $scope.cds = resData.cds;
-                        // $scope.protein = resData.protein;
+                        $scope.geneInfoList = resData.gene_info;
+                        $scope.sampleExpData = resData.sample_expression;
+                        $scope.lineData = resData.line;
+                        $scope.groupDiffData = resData.group_diff;
+                        $scope.sampleDiffData = resData.sample_diff;
+                        $scope.timeCourseList = resData.time_course;
+                        $scope.keggList = resData.kegg;
+                        $scope.goList = resData.go;
+                        $scope.phiList = resData.phi;
+                        $scope.snpData = resData.snp;
+                        $scope.indelData = resData.indel;
+                        $scope.fusionData = resData.fusion;
+                        $scope.transcript = resData.transcript;
+                        $scope.cds = resData.cds;
+                        $scope.protein = resData.protein;
                     }
                     toolService.gridFilterLoading.close("div_geneDetail_page");
                 },

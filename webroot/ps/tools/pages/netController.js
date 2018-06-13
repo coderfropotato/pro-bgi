@@ -13,17 +13,17 @@ define(['toolsApp'], function(toolsApp) {
             $scope.isShowSetPanel = false;
 
             // 默认force
-            $scope.forceValue = 100;
+            $scope.forceValue = 30;
 
             //net图配置
             $scope.myOptions = {
                 id: "reAnalysis_net_panel_svg",
-                width: 800,
-                height: 800,
+                width: 1000,
+                height: 600,
                 isMultiChoose: false, //是否多选状态
-                colorArr: ["#ff0000", "#0000ff"],
-                node_r_mim: 2,
-                node_r_max: 20,
+                colorArr: ["#0000ff","#ff0000"],
+                node_r_min: 3,
+                node_r_max: 10,
                 link_width_min: 1,
                 link_width_max: 5,
                 force: $scope.forceValue,
@@ -113,8 +113,10 @@ define(['toolsApp'], function(toolsApp) {
                     } else {
                         //正常
                         $scope.error = "";
-                        $scope.drawNet(responseData, $scope.forceValue);
                         $scope.netData = responseData;
+                        $scope.netDataInit = angular.copy(responseData)
+                        $scope.drawNet(responseData, $scope.forceValue);
+                        
                     }
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 },
@@ -126,6 +128,7 @@ define(['toolsApp'], function(toolsApp) {
 
         //设置回调
         $scope.getSetOption = function(val) {
+            $scope.netData = angular.copy($scope.netDataInit)
             $scope.drawNet($scope.netData, val);
         }
 
@@ -370,7 +373,7 @@ define(['toolsApp'], function(toolsApp) {
                 //定义比例尺
                 //node
                 var colorScale = d3.scaleLinear().domain([0, maxValue]).range(colorArr).interpolate(d3.interpolateRgb),
-                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([5, 20]).clamp(true);
+                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([options.node_r_min,options.node_r_max ]).clamp(true);
                 //link
                 var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range(["#cccccc", "#000000"]).clamp(true);
 

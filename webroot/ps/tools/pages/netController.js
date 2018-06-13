@@ -297,14 +297,8 @@ define(['toolsApp'], function (toolsApp) {
                     d3.select("#" + options.id).on("mousemove", null);
                     d3.select("#" + options.id).on("mouseup", null);
                     d3.select("#" + options.id).on("mouseleave", null);
-<<<<<<< HEAD
-                    d3.select("#" + options.id).on("click", function () {
-                        console.log("单选取消")
-                        d3.select("#" + options.id).selectAll(".node").each(function (d) {
-=======
                     d3.select("#" + options.id).on("click", function() {
                         d3.select("#" + options.id).selectAll(".node").each(function(d) {
->>>>>>> 7fd67ccc6d3c5fcaafe1681dc42d310361ca72d5
                             d.isNodeSelected = false;
                             d3.select(this)
                                 .attr('stroke-width', function (d) {

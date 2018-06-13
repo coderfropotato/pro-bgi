@@ -518,11 +518,10 @@ define("superApp.toolTipDire",
             return {
                 restrict: "ACE",
                 scope: {
-                    myTitle: "=",
                     theadKey: "=",
                     // PathwayName的参数，后续的操作需要用到 compareGroup和method(method根据compareGroup找)
                     compareGroup: "=",
-                    method:"=",
+                    method: "=",
                     // 小工具 用id跳mapid
                     reanalysisId: "="
                 },
@@ -534,32 +533,19 @@ define("superApp.toolTipDire",
                     var direc = 'left';
                     var leftPos = 0, topPos = 0;
 
-                    // 根据比较组找到method
-                    if (scope.compareGroup) {
-                        var g = JSON.parse(window.sessionStorage.getItem('CompareGroupList'));
-                        var s = JSON.parse(window.sessionStorage.getItem('SampleDiffList'));
-                        var l = g.concat(s);
-                        l.forEach(function (val, index) {
-                            if (val.name === scope.compareGroup) {
-                                scope.method = val.method;
-                            }
-                        })
-                    }
-
-
                     $(element).on('mouseenter', function () {
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
-                        var text = $(element).find('span').text();
+                        var text = $(element).attr('data-title');
                         // 溢出才显示
                         var str = '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visible:hidden " role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
                         if ($(element).width() <= $(element).children(":eq(0)").outerWidth()) {
                             // 根据不同的头字段做处理
-                            if (scope.theadKey == 'kegg_subject_annotation' || scope.theadKey == 'desc_kegg' || scope.theadKey==='kegg_desc') {
+                            if (scope.theadKey == 'kegg_subject_annotation' || scope.theadKey == 'desc_kegg' || scope.theadKey === 'kegg_desc') {
                                 // 用； 切出大段
                                 var list = text.split(';');
                                 list.forEach(function (d, i) {
-                                    if (d.length && d) {
+                                    if (d.length && d ) {
                                         if (/\+/g.test(d)) {
                                             // 有小段
                                             var index = 0;
@@ -581,7 +567,7 @@ define("superApp.toolTipDire",
                                             // 没有小段  有K     只有:  K09100//single-minded; 
                                             if (/^K/.test($.trim(d))) {
                                                 str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a><br>';
-                                            } else {
+                                            } else if(/ko/g.test($.trim(d))) {
                                                 // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
                                                 str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
                                             }
@@ -633,7 +619,7 @@ define("superApp.toolTipDire",
                             } else if (scope.theadKey === 'kegg_term_mix') {
                                 // 根据LCID、ko、比较组、软件信息，跳转报告自带html
                                 // ko03022//Basal transcription factors;ko05016//Huntington's disease;ko05168//Herpes simplex infection;ko04550//Signaling pathways regulating pluripotency of stem cells
-                                var list = scope.myTitle.split(';');
+                                var list = text.split(';');
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
                                         // ../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageFindEntity.compareGroup}}&method={{method}}
@@ -642,7 +628,7 @@ define("superApp.toolTipDire",
                                 })
                             } else if (scope.theadKey === 'kegg_term_mix_tools') {
                                 // 跳转官网固定链接  
-                                var list = scope.myTitle.split(';');
+                                var list = text.split(';');
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
                                         str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + val.split('//')[0] + '">' + val + '</a><br>';
@@ -662,20 +648,29 @@ define("superApp.toolTipDire",
                             } else if (/^kegg_term_mix_/.test()) {
                                 // kegg_term_mix_dsaq131s5a4fq1
                                 // 根据LCID、ko、任务ID，跳转重分析生成的html
-                                var list = scope.myTitle.split(';');
+                                var list = text.split(';');
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
                                         str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + scope.reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">' + val + '</a><br>';
                                     }
                                 })
-                            } else if (scope.theadKey === 'go_term') {
+                            } else if (scope.theadKey === 'go_term_id') {
                                 // 直接跳官网
                                 // go_term(GO:123)
                                 str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/medial_search?q=' + val + '">' + val + '</a><br>';
-                            } else if (/^go_term_mix/.test(scope.theadKey)) {
+                            } else if (scope.theadKey === 'desc_go' || scope.theadKey === 'go_desc' || scope.theadKey === 'go_subject_annotation') {
+                                // 没有 []
+                                var list = text.split(';');
+                                var index = 0;
+                                list.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
+                                    }
+                                })
+                            } else if (scope.theadKey === 'go_term_mix') {
                                 //官网 [] 换行
                                 // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
-                                var list = scope.myTitle.split(';');
+                                var list = text.split(';');
                                 var index = 0;
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
@@ -697,7 +692,13 @@ define("superApp.toolTipDire",
                                 })
                             } else {
                                 // 不需要特殊处理的
-                                str += text + '</div></div>';
+                                // 有；按；切  没有默认
+                                var l = text.split(';');
+                                l.forEach(function (val, index) {
+                                    if (val.length && $.trim(val)) {
+                                        str += '<span>' + val + ';</span><br>';
+                                    }
+                                })
                             }
 
                             obj = $(str);
@@ -732,163 +733,5 @@ define("superApp.toolTipDire",
                 }
             }
         }
-
-        superApp.controller("popoverTableCtr", popoverTableCtr);
-        popoverTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
-        function popoverTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
-            if ($scope.myTitle || $scope.myTitle == 0) {
-                if ((!$scope.myTitle && $scope.myTitle != 0)) {
-                    return;
-                }
-                // if (/go|kegg|nr|annotation|evalue/gi.test($scope.theadKey)) {
-                // 如果超出了就加上
-                $timeout(function () {
-                    if ($($scope.element).width() < $($scope.element).children(":eq(0)").outerWidth()) {
-                        var timer = null;
-                        var obj = null;
-
-                        $($scope.element).on('mouseenter', function (ev) {
-                            if (obj) obj.remove();
-                            var direc = 'left';
-                            var leftPos = 0, topPos = 0;
-                            // leftPos = $($scope.element).offset().left - 200;
-                            topPos = $($scope.element).offset().top;
-
-                            // 如果是ko
-                            if (typeof $scope.myTitle === 'string') {
-                                if (/Pathway\sName/g.test($scope.theadKey) && $scope.myTitle.indexOf('//') != -1) {
-                                    var str = '';
-                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for (var o = 0; o < $scope.pathwayid.length; o++) {
-                                        str += '<a class="jump-to-tools-map-id" title=' + $scope.pathwayid[o].id + '>' + $scope.pathwayid[o].text + '</a><br>';
-                                    }
-                                    str += '</div></div>';
-                                    obj = $(str);
-
-                                } else if ($scope.myTitle.indexOf('GO:') != -1) {
-                                    // 如果是带有 中括号 的GO：
-                                    if (/\[[^]\]/g.test($scope.myTitle)) {
-                                        var arr = $scope.myTitle.split(';');
-                                        var str = '';
-                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                        for (var o = 0; o < arr.length; o++) {
-                                            // 有括号的 把中括号里面的拿出来
-                                            var index = arr[o].indexOf('[');
-                                            var lastIndex = arr[o].indexOf(']');
-                                            if (index != -1 && lastIndex != -1) {
-                                                if (arr[o]) {
-                                                    var gotext = arr[o].substring(lastIndex + 1);
-                                                    var goid = gotext.split(':')[1].split('//')[0];
-                                                    var flag = arr[o].substring(index, lastIndex + 1);
-                                                    str += '<span>' + flag + '</span><br>';
-                                                    str += '<a class="go-jump" title=' + goid + '>' + arr[o].substring(lastIndex + 1) + '</a><br>'
-                                                }
-                                            } else {
-                                                if (arr[o]) {
-                                                    str += '<a class="go-jump" title=' + arr[o].split(':')[1].split('//')[0] + '>' + arr[o] + '</a><br>';
-                                                }
-                                            }
-                                        }
-                                        str += '</div></div>';
-                                        obj = $(str);
-                                    } else {
-                                        // GO:
-                                        var arr = $scope.myTitle.split(';')
-                                        var str = '';
-                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                        for (var i = 0; i < arr.length; i++) {
-                                            if (arr[i] != '') {
-                                                str += '<a class="go-jump" title=' + arr[i].split(':')[1].split('//')[0] + '>' + arr[i] + '</a><br>';
-                                            }
-                                        }
-                                        str += '</div></div>';
-                                        obj = $(str);
-                                    }
-                                } else if (/\[[^]\]/g.test($scope.myTitle)) {
-                                    // 只有中括号 没有GO:
-                                    var arr = $scope.myTitle.split(';');
-                                    var str = '';
-                                    str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                    for (var k = 0; k < arr.length; k++) {
-                                        if (/\[[^]\]/g.test(arr[k])) {
-                                            var flag = arr[k].substring(arr[k].indexOf('['), arr[k].indexOf(']') + 1);
-                                            str += '<span>' + flag + '</span><br>';
-                                        }
-                                        str += '<span class="kh-text">' + arr[k].substring(arr[k].indexOf(']') + 1) + '</span><br>'
-                                    }
-                                    str += '</div></div>';
-                                    obj = $(str);
-                                } else {
-                                    if ($scope.myTitle.indexOf(';') != -1) {
-                                        var title = $scope.myTitle.split(';');
-                                        var str = '';
-                                        str += '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
-                                        for (var k = 0; k < title.length; k++) {
-                                            str += '<span>' + title[k] + '</span><br>';
-                                        }
-                                        str += '</div></div>';
-
-                                        obj = $(str);
-                                    } else {
-                                        obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
-                                    }
-                                }
-                            } else {
-                                obj = $('<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visibility:hidden;" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + $scope.myTitle + '</div></div>');
-                            }
-
-                            $('body').append(obj);
-                            obj.css('left', $($scope.element).offset().left - obj.outerWidth());
-
-                            // 判断极值
-                            if (obj.width() > ($($scope.element).offset().left)) {
-                                obj.removeClass('left').addClass('right');
-                                obj.css('left', $($scope.element).offset().left + $($scope.element).outerWidth())
-                            }
-
-
-                            obj.css('top', topPos - (obj.height() - $($scope.element).outerHeight()) / 2);
-                            obj.css('visibility', 'visible');
-
-                            obj.on('mouseenter', function () {
-                                if (timer) clearTimeout(timer);
-                            }).on('mouseleave', function () {
-                                if (obj) obj.remove();
-                            })
-
-
-                            // 根据不同的表头做不同的逻辑处理
-                            // mapid
-                            var mapIdObj = obj.find('.jump-to-tools-map-id');
-                            if (mapIdObj.length) {
-                                mapIdObj.on('click', function () {
-                                    var id = $(this).attr('title');
-                                    window.open('../../../../ps/tools/index.html#/home/mapId?map=' + id + '&compareGroup=' + $scope.compare + '&method=' + $scope.method);
-                                })
-                            }
-                            //  go 
-                            var goObj = obj.find('.go-jump');
-                            if (goObj.length) {
-                                goObj.on('click', function () {
-                                    var id = $(this).attr('title');
-                                    window.open('http://amigo.geneontology.org/amigo/medial_search?q=GO:' + id);
-                                })
-                            }
-
-                        }).on('mouseleave', function () {
-                            if (timer) clearTimeout(timer);
-                            timer = setTimeout(function () {
-                                if (obj) obj.remove();
-                            }, 50)
-                        })
-                        // }
-                    }
-                }, 0)
-
-            }
-
-        }
-
-
     });
 

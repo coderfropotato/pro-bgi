@@ -1,22 +1,53 @@
-define(['toolsApp'], function(toolsApp) {
+define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('netController', netController);
     netController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function netController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
-
-        $scope.InitPage = function() {
+        toolService.pageLoading.open();
+        $scope.InitPage = function () {
+            $timeout(function () {
+                toolService.pageLoading.close();
+            }, 300)
             $scope.id = $state.params.id;
             $scope.netEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),
                 "id": $scope.id
             }
             console.log($scope.netEntity.LCID, $scope.netEntity.id);
+
+            // Geneid table start
+            $scope.geneIdTableEntity = {
+                "LCID": toolService.sessionStorage.get("LCID"),
+                "pageSize": 10,
+                "pageNum": 1,
+                "searchContentList": [],
+                "sortName": "",
+                "sortType": "",
+                "id": $scope.id
+            };
+
+            // $scope.paramsKeyList = []
+            // $scope.paramsValueList = [];
+            // $scope.url = options.api.mrnaseq_url + '/DiffExpGeneIDTable/GoRichGene';
+            // $scope.panelId = "div_reAnalysis_net_geneid";
+            // $scope.tableId = "reAnalysis_net_geneid_table";
+            // $scope.unselectId = "reAnalysis_net_unselectid";
+            // $scope.filename = "网络图表数据";
+            // $scope.geneList = '';
+            // $scope.changeFlag = false;
+            // $scope.isResetTheadControl = null;
+            // $scope.isResetTableStatus = null;
+            // $scope.isShowTheadControl = true;
+            // $scope.isReanalysis = true;
+            // $scope.theadControlId = 'reAnalysis_net_theadcontrol';
+            // Geneid table end
+
             $scope.GetNetData();
             $scope.GetTableData();
         }
 
         //获取net图的切换表格数据
-        $scope.GetTableData = function() {
+        $scope.GetTableData = function () {
             toolService.gridFilterLoading.open("panel_reAnalysis_net");
             $scope.exportLocationTable = options.api.mrnaseq_url + "/Tools/PPIGeneralTable";
             var ajaxConfig = {
@@ -24,57 +55,57 @@ define(['toolsApp'], function(toolsApp) {
                 url: $scope.exportLocationTable
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(responseData) {
-                    if (responseData.Error) {
-                        //系统异常
-                        $scope.tableError = "syserror";
-                    } else if (responseData.length == 0) {
-                        //无数据异常
-                        $scope.tableError = "nodata";
-                        $scope.imgError = "nodata";
-                    } else {
-                        //正常
-                        $scope.tableError = "";
-                        $scope.tableData = responseData;
-                    }
-                    toolService.gridFilterLoading.close("panel_reAnalysis_net");
-                },
-                function(errorMesg) {
+            promise.then(function (responseData) {
+                if (responseData.Error) {
+                    //系统异常
+                    $scope.tableError = "syserror";
+                } else if (responseData.length == 0) {
+                    //无数据异常
+                    $scope.tableError = "nodata";
+                    $scope.imgError = "nodata";
+                } else {
+                    //正常
+                    $scope.tableError = "";
+                    $scope.tableData = responseData;
+                }
+                toolService.gridFilterLoading.close("panel_reAnalysis_net");
+            },
+                function (errorMesg) {
                     $scope.tableError = "syserror";
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 });
         }
 
         //获取net图数据
-        $scope.GetNetData = function() {
+        $scope.GetNetData = function () {
             toolService.gridFilterLoading.open("panel_reAnalysis_net");
             var ajaxConfig = {
                 data: $scope.netEntity,
                 url: options.api.mrnaseq_url + "/net/GetNetData"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(responseData) {
-                    if (responseData.Error) {
-                        //系统异常
-                        $scope.error = "syserror";
-                    } else if (responseData.length == 0) {
-                        //无数据异常
-                        $scope.error = "nodata";
-                    } else {
-                        //正常
-                        $scope.error = "";
-                        $scope.drawNet(responseData);
-                    }
-                    toolService.gridFilterLoading.close("panel_reAnalysis_net");
-                },
-                function(errorMesg) {
+            promise.then(function (responseData) {
+                if (responseData.Error) {
+                    //系统异常
+                    $scope.error = "syserror";
+                } else if (responseData.length == 0) {
+                    //无数据异常
+                    $scope.error = "nodata";
+                } else {
+                    //正常
+                    $scope.error = "";
+                    $scope.drawNet(responseData);
+                }
+                toolService.gridFilterLoading.close("panel_reAnalysis_net");
+            },
+                function (errorMesg) {
                     $scope.error = "syserror";
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 });
         }
 
         // 画net图
-        $scope.drawNet = function(data) {
+        $scope.drawNet = function (data) {
             var core_gene = "";
             //配置
             var myOptions = {
@@ -106,7 +137,7 @@ define(['toolsApp'], function(toolsApp) {
             function changeFlag(options) {
                 options.isMultiChoose = !options.isMultiChoose;
                 core_gene = "";
-                d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                d3.select("#" + options.id).selectAll(".node").each(function (d) {
                     d.isNodeSelected = false;
                     d3.select(this)
                         .attr('stroke-width', 0)
@@ -123,7 +154,7 @@ define(['toolsApp'], function(toolsApp) {
                 function noMultiChooseZoom() {
                     var transform = d3.zoomIdentity;;
                     d3.select("#" + options.id).call(
-                            d3.zoom()
+                        d3.zoom()
                             .scaleExtent([0.1, 8])
                             .on("zoom", zoomed))
                         .on("dblclick.zoom", null);
@@ -143,14 +174,14 @@ define(['toolsApp'], function(toolsApp) {
                     var endLoc = [];
 
 
-                    d3.select("#" + options.id).on("mousedown", function() {
+                    d3.select("#" + options.id).on("mousedown", function () {
                         isMouseDown = "true";
 
                         d3.select('#squareSelect').attr("transform", "translate(" + d3.event.offsetX + "," + d3.event.offsetY + ")");
                         startLoc = [d3.event.offsetX, d3.event.offsetY];
                     });
 
-                    d3.select("#" + options.id).on("mousemove", function() {
+                    d3.select("#" + options.id).on("mousemove", function () {
                         if (isMouseDown == "true") {
                             isMouseMove = "true";
 
@@ -170,7 +201,7 @@ define(['toolsApp'], function(toolsApp) {
 
                     })
 
-                    d3.select("#" + options.id).on("mouseup", function() {
+                    d3.select("#" + options.id).on("mouseup", function () {
 
                         if (isMouseDown == "true" && isMouseMove == "true") {
                             isMouseDown = "false";
@@ -199,7 +230,7 @@ define(['toolsApp'], function(toolsApp) {
                             var currentTransJson = getTranslation(d3.select(".main_group").attr("transform"))
 
 
-                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
                                 var tempX = d.x * currentTransJson.scale + currentTransJson.transX;
                                 var tempY = d.y * currentTransJson.scale + currentTransJson.transY;
                                 if (tempX < rightBottom[0] && tempX > leftTop[0] && tempY > leftTop[1] && tempY < rightBottom[1]) {
@@ -207,7 +238,7 @@ define(['toolsApp'], function(toolsApp) {
                                 }
 
                                 d3.select(this)
-                                    .attr('stroke-width', function(d) {
+                                    .attr('stroke-width', function (d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -221,10 +252,10 @@ define(['toolsApp'], function(toolsApp) {
                         } else {
                             isMouseDown = "false";
                             isMouseMove = "false";
-                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
                                 d.isNodeSelected = false;
                                 d3.select(this)
-                                    .attr('stroke-width', function(d) {
+                                    .attr('stroke-width', function (d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -256,7 +287,7 @@ define(['toolsApp'], function(toolsApp) {
 
                     })
 
-                    d3.select("#" + options.id).on("mouseleave", function() {
+                    d3.select("#" + options.id).on("mouseleave", function () {
                         isMouseDown = "false";
                         isMouseMove = "false";
                         d3.select('#squareSelect').attr("width", 0).attr("height", 0);
@@ -279,12 +310,12 @@ define(['toolsApp'], function(toolsApp) {
                     d3.select("#" + options.id).on("mousemove", null);
                     d3.select("#" + options.id).on("mouseup", null);
                     d3.select("#" + options.id).on("mouseleave", null);
-                    d3.select("#" + options.id).on("click", function() {
+                    d3.select("#" + options.id).on("click", function () {
                         console.log("单选取消")
-                        d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                        d3.select("#" + options.id).selectAll(".node").each(function (d) {
                             d.isNodeSelected = false;
                             d3.select(this)
-                                .attr('stroke-width', function(d) {
+                                .attr('stroke-width', function (d) {
                                     if (d.isNodeSelected == true) {
                                         return 1
                                     }
@@ -320,7 +351,7 @@ define(['toolsApp'], function(toolsApp) {
                 }
 
                 var colorArr = options.colorArr;
-                var maxValue = d3.max(networkData.nodes, function(d) {
+                var maxValue = d3.max(networkData.nodes, function (d) {
                     return d.value;
                 })
 
@@ -333,7 +364,7 @@ define(['toolsApp'], function(toolsApp) {
 
                 //生成力导图模型
                 var simulation = d3.forceSimulation()
-                    .force("link", d3.forceLink().iterations(4).id(function(d) {
+                    .force("link", d3.forceLink().iterations(4).id(function (d) {
                         return d.id;
                     }))
                     .force("charge", d3.forceManyBody().strength(-options.force || -20))
@@ -348,10 +379,10 @@ define(['toolsApp'], function(toolsApp) {
                     .data(networkData.links)
                     .enter()
                     .append('line')
-                    .attr('stroke-width', function(d) {
+                    .attr('stroke-width', function (d) {
                         return linkWidthScale(d.score);
                     })
-                    .attr('stroke', function(d) {
+                    .attr('stroke', function (d) {
                         return '#a9a9a9'
                     })
 
@@ -362,18 +393,18 @@ define(['toolsApp'], function(toolsApp) {
                     .data(networkData.nodes)
                     .enter()
                     .append('circle')
-                    .attr('r', function(d) {
+                    .attr('r', function (d) {
                         return nodeRScale(d.value);
                     })
                     // .attr('class', function(d) {
                     //     return "node" + " " + d.type || "nodeType"
                     // })
-                    .attr('fill', function(d) {
+                    .attr('fill', function (d) {
                         return colorScale(d.value);
                     })
                     .attr('stroke', "#000")
                     .attr('stroke-width', 0)
-                    .on("click", function(d) {
+                    .on("click", function (d) {
                         d.isNodeSelected = true;
                         //遍历links 获取相邻ID的数组
                         var tempNodeArray = [];
@@ -390,14 +421,14 @@ define(['toolsApp'], function(toolsApp) {
                         if (!options.isMultiChoose) {
                             core_gene = d.id;
                             //遍历node，清除其余目标node，
-                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
                                 if (tempNodeArray.indexOf(d.id) != -1) {
                                     d.isNodeSelected = true;
                                 } else {
                                     d.isNodeSelected = false;
                                 }
                                 d3.select(this)
-                                    .attr('stroke-width', function(d) {
+                                    .attr('stroke-width', function (d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -407,12 +438,12 @@ define(['toolsApp'], function(toolsApp) {
                             getChooseGeneList(networkData);
                         } else {
                             //遍历node，但是不清除其余目标node，
-                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
                                 if (tempNodeArray.indexOf(d.id) > 0) {
                                     d.isNodeSelected = true;
                                 }
                                 d3.select(this)
-                                    .attr('stroke-width', function(d) {
+                                    .attr('stroke-width', function (d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -437,23 +468,23 @@ define(['toolsApp'], function(toolsApp) {
 
                 function ticked() {
                     node
-                        .attr("cx", function(d) {
+                        .attr("cx", function (d) {
                             return d.x;
                         })
-                        .attr("cy", function(d) {
+                        .attr("cy", function (d) {
                             return d.y;
                         });
                     link
-                        .attr("x1", function(d) {
+                        .attr("x1", function (d) {
                             return d.source.x;
                         })
-                        .attr("y1", function(d) {
+                        .attr("y1", function (d) {
                             return d.source.y;
                         })
-                        .attr("x2", function(d) {
+                        .attr("x2", function (d) {
                             return d.target.x;
                         })
-                        .attr("y2", function(d) {
+                        .attr("y2", function (d) {
                             return d.target.y;
                         });
                 }
@@ -490,7 +521,7 @@ define(['toolsApp'], function(toolsApp) {
                 function noMultiChooseZoom() {
                     var transform = d3.zoomIdentity;;
                     d3.select("#" + options.id).call(
-                            d3.zoom()
+                        d3.zoom()
                             .scaleExtent([0.1, 8])
                             .on("zoom", zoomed))
                         .on("dblclick.zoom", null);

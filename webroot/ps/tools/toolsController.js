@@ -40,16 +40,14 @@ define(['toolsApp'], function (toolsApp) {
             }
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
-                if (res.Error) {
-                    $rootScope.analysisError = 'syserror';
-                    return;
+                if (res.status!=200) {
+                    $scope.analysisError = 'syserror';
                 } else if (res.data.rows.length == 0) {
-                    $rootScope.analysisError = 'nodata';
+                    $scope.analysisError = 'nodata';
                     $rootScope.analysis = [];
-                    return;
                 } else {
                     $rootScope.analysis = res.data.rows;
-                    $rootScope.analysisError = false;
+                    $scope.analysisError = false;
                 }
             }, function () {
                 $rootScope.analysisError = 'syserror'

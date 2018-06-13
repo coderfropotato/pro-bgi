@@ -63,12 +63,10 @@ define(['toolsApp'], function (toolsApp) {
             var promise = ajaxService.GetDeferData(ajaxConfig);
             promise.then(function (res) {
                 toolService.gridFilterLoading.close("myanalysis-table");
-                if (res.Error) {
+                if (res.status!=200) {
                     $scope.analysisError = 'syserror';
-                    return;
                 } else if (res.data.rows.length == 0) {
                     $scope.analysisError = 'nodata';
-                    return;
                 } else {
                     $scope.analysisList = res.data;
                     $scope.beforeList = angular.copy(res.data);

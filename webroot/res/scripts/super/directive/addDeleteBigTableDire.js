@@ -453,11 +453,11 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         $scope.$emit('openAnalysisPop');
                         $rootScope.GetAnalysisList(1);
                         // 如果不需要重新分析 就直接打开详情页
-                        if(params.chartType==='heatmap' || params.chartType==='goRich' || params.chartType==='pathwayRich'){
+                        if (params.chartType === 'heatmap' || params.chartType === 'goRich' || params.chartType === 'pathwayRich') {
                             newFrame.close();
                             toolService.popMesgWindow('重分析提交成功');
-                        }else{
-                            newFrame.location.href = '../../../../ps/tools/index.html#/home/'+$scope.reAnalysisEntity.chartType+'/'+res.id
+                        } else {
+                            newFrame.location.href = '../../../../ps/tools/index.html#/home/' + $scope.reAnalysisEntity.chartType + '/' + res.id
                         }
                     }
                 }, function (err) {

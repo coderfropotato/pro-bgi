@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in tableData.rows track by $index">
-                        <td class="center nowrap popover-table" my-title="row[val.true_key]" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name">
+                        <td class="center nowrap popover-table" data-title="{{row[val.true_key]}}" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                         </td>

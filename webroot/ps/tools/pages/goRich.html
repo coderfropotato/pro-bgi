@@ -89,7 +89,7 @@
                                     <td class="center" ng-click="toggleTDClick(row,$event)">
                                         <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
                                     </td>
-                                    <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" my-title="row[val.true_key]">
+                                    <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                         <a ng-if="val.true_key=='go_term_id'" ng-click="$event.stopPropagation()" ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{row[val.true_key]}}"
                                             target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
                                             accuracy)}}
@@ -238,7 +238,7 @@
                             <tr ng-repeat="row in bubbleTableData.rows track by $index">
                                 <td class="center">{{$index+1}}</td>
                                 <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name"
-                                    my-title="row[val.true_key]">
+                                    data-title="{{row[val.true_key]}}">
                                     <span>{{row[val.true_key]}}</span>
                                 </td>
                             </tr>

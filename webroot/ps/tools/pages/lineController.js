@@ -3,6 +3,7 @@ define(['toolsApp'], function (toolsApp) {
     lineController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function lineController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+        toolService.pageLoading.close();
         toolService.pageLoading.open();
         $scope.InitPage = function () {
             $timeout(function () {

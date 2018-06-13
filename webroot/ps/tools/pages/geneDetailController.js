@@ -30,19 +30,6 @@ define(["toolsApp"], function(toolsApp) {
                 }
                 $scope.keggData.push(keggobj);
             }
-            // $scope.literature = [{
-            //     "PubMed_ID": 17823244,
-            //     "ArticleTitle": "Silencing of poly(ADP-ribose) polymerase in plants alters abiotic stress signal transduction.",
-            //     "Author": "Sandy.Vanderauwera(S),et al",
-            //     "ISOAbbreviation": "Proc. Natl. Acad. Sci. U.S.A.",
-            //     "JournalIssuem": "Vol104.38,2007 Sep 18"
-            // }, {
-            //     "PubMed_ID": 3244,
-            //     "ArticleTitle": "Silencing of poly(ADP-ribose) polymerase in plants alters abiotic stress signal transduction.",
-            //     "Author": "Sandy.Vanderauwera(S),et al",
-            //     "ISOAbbreviation": "Proc. Natl. Acad. Sci. U.S.A.",
-            //     "JournalIssuem": "Vol104.38,2007 Sep 22"
-            // }]
 
             // end
 

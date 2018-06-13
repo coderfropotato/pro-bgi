@@ -6,11 +6,18 @@ define(['toolsApp'], function(toolsApp) {
 
         $scope.InitPage = function() {
             $scope.id = $state.params.id;
+
+            $scope.isShowSetPanel = false;
+
+            // 默认force
+            $scope.forceValue = 100;
+
             $scope.netEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),
-                "id": $scope.id
+                "id": $scope.id,
+                "score": 500
             }
-            console.log($scope.netEntity.LCID, $scope.netEntity.id);
+
             $scope.GetNetData();
             $scope.GetTableData();
         }
@@ -63,7 +70,8 @@ define(['toolsApp'], function(toolsApp) {
                     } else {
                         //正常
                         $scope.error = "";
-                        $scope.drawNet(responseData);
+                        $scope.drawNet(responseData, $scope.forceValue);
+                        $scope.netData = responseData;
                     }
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 },
@@ -73,8 +81,13 @@ define(['toolsApp'], function(toolsApp) {
                 });
         }
 
+        //设置回调
+        $scope.getSetOption = function(val) {
+            $scope.drawNet($scope.netData, val);
+        }
+
         // 画net图
-        $scope.drawNet = function(data) {
+        $scope.drawNet = function(data, setforce) {
             var core_gene = "";
             //配置
             var myOptions = {
@@ -87,7 +100,7 @@ define(['toolsApp'], function(toolsApp) {
                 node_r_max: 20,
                 link_width_min: 1,
                 link_width_max: 5,
-                force: 20,
+                force: setforce,
             }
 
             drawNetChart(data, myOptions)
@@ -327,9 +340,9 @@ define(['toolsApp'], function(toolsApp) {
                 //定义比例尺
                 //node
                 var colorScale = d3.scaleLinear().domain([0, maxValue]).range(colorArr).interpolate(d3.interpolateRgb),
-                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([2, 6]).clamp(true);
+                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([5, 20]).clamp(true);
                 //link
-                var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range([1, 5]).clamp(true);
+                var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range(["#cccccc", "#000000"]).clamp(true);
 
                 //生成力导图模型
                 var simulation = d3.forceSimulation()
@@ -365,9 +378,6 @@ define(['toolsApp'], function(toolsApp) {
                     .attr('r', function(d) {
                         return nodeRScale(d.value);
                     })
-                    // .attr('class', function(d) {
-                    //     return "node" + " " + d.type || "nodeType"
-                    // })
                     .attr('fill', function(d) {
                         return colorScale(d.value);
                     })

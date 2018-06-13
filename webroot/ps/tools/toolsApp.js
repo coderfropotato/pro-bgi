@@ -29,8 +29,9 @@ define([
     "superApp.addDeleteBigTableDire",
     "superApp.littleTableDire",
     "superApp.bigTableDire",
-    "superApp.tableSwitchChartDire"
-], function () {
+    "superApp.tableSwitchChartDire",
+    "superApp.chartSetDire"
+], function() {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
         "ui.bootstrap",
@@ -62,9 +63,10 @@ define([
         "superApp.addDeleteBigTableDire",
         "superApp.littleTableDire",
         "superApp.bigTableDire",
-        "superApp.tableSwitchChartDire"
+        "superApp.tableSwitchChartDire",
+        "superApp.chartSetDire"
     ]);
-    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+    toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("home", { url: "/home", templateUrl: "./index.html" })
             .state("heatmapGroup", {

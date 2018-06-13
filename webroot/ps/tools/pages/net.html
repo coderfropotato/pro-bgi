@@ -8,9 +8,9 @@
                 </li>
             </ul>
             <ul class="fRight">
-                <!-- <li ng-hide="isTableShow || error">
-                    <div class="chart-set" set-title="是否显示基因名" is-show="isShowSetPanel" is-show-value="isShowValue" get-set-option="getSetOption(set)"></div>
-                </li> -->
+                <li ng-hide="isTableShow || error">
+                    <div class="chart-set" set-title="力度值" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
+                </li>
                 <li ng-hide="error || isTableShow">
                     <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
                 </li>

@@ -30,14 +30,17 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>{{setTitle}}：</span></p>" +
-                    "<div class='onoffswitch' ng-click='showHideValue()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
+                    "<div ng-hide='isInput' class='onoffswitch' ng-click='showHideValue()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
+                    "<div ng-show='isInput' class='setInput'><input id='setValueInput' type='number' ng-value='setValue' class='form-control' /><button class='btn btn-default btn-sm list_btn btn-silver' ng-click='getSetValue()'>确定</button></div>" +
                     "</div>" +
                     "</div>",
                 scope: {
                     isShow: "=",
                     isShowValue: "=",
                     setTitle: "@",
-                    getSetOption: "&"
+                    getSetOption: "&",
+                    isInput: "=",
+                    setValue: "="
                 },
                 link: function(scope, element, attrs) {},
                 controller: "chartSetCtr"
@@ -54,6 +57,12 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                 $scope.isShowValue = !$scope.isShowValue;
                 $scope.isShow = false;
                 $scope.getSetOption({ set: $scope.isShowValue })
+            }
+
+            $scope.getSetValue = function() {
+                $scope.setValue = Number($("#setValueInput").val());
+                $scope.isShow = false;
+                $scope.getSetOption({ value: $scope.setValue })
             }
 
         }

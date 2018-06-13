@@ -5,6 +5,12 @@ define(["toolsApp"], function(toolsApp) {
     function geneDetailController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         $scope.InitPage = function() {
 
+            toolService.pageLoading.open();
+            //定时关闭等待框
+            setTimeout(function() {
+                toolService.pageLoading.close();
+            }, 300);
+
             //gene id
             $scope.id = $state.params.id;
 
@@ -32,7 +38,27 @@ define(["toolsApp"], function(toolsApp) {
                 $scope.geneDetails = [];
             }
 
+            var sampleDiff = toolService.sessionStorage.get('sampleDiff'),
+                groupDiff = toolService.sessionStorage.get('GroupDiff');
+            var timeCourse = toolService.sessionStorage.get('timeCourse');
+            if (sampleDiff) {
+                $scope.isHasSampleDiff = true;
+            } else {
+                $scope.isHasSampleDiff = false;
+            }
+            if (groupDiff) {
+                $scope.isHasGroupDiff = true;
+            } else {
+                $scope.isHasGroupDiff = false;
+            }
+            if (timeCourse) {
+                $scope.isHasTimeCourse = true;
+            } else {
+                $scope.isHasTimeCourse = false;
+            }
+
             if ($scope.geneDetails.length) {
+                console.log($scope.geneDetails);
                 $scope.isHasKegg = $.inArray("kegg", $scope.geneDetails) != -1;
                 $scope.isHasGO = $.inArray("go", $scope.geneDetails) != -1;
                 $scope.isHasSnp = $.inArray("snp", $scope.geneDetails) != -1;
@@ -55,8 +81,6 @@ define(["toolsApp"], function(toolsApp) {
             $scope.isShowPHIText = false; //判断是否展示phi详细说明
             $scope.isShowSequence = false; //有序列信息，判断是否展示
 
-            $scope.projectType = toolService.sessionStorage.get("projectType");
-
             $scope.getGeneData();
             $scope.getLiterature();
 
@@ -75,20 +99,57 @@ define(["toolsApp"], function(toolsApp) {
                         toolService.popMesgWindow(resData.Error);
                     } else {
                         $scope.geneInfoList = resData.gene_info;
+                        for (var i = 0; i < $scope.geneInfoList.length; i++) {
+                            if ($scope.geneInfoList[i].name == 'Gene ID' && $scope.geneInfoList[i].value != 'NA' && $scope.geneInfoList[i].gene_url) {
+                                $scope.isgeneLink = true;
+                            } else {
+                                $scope.isgeneLink = false;
+                            }
+                        }
+
                         $scope.sampleExpData = resData.sample_expression;
+
                         $scope.lineData = resData.line;
+                        if ($scope.lineData.baseThead.length > 1) {
+                            $scope.isHasLine = true;
+                        } else {
+                            $scope.isHasLine = false;
+                        }
+
                         $scope.groupDiffData = resData.group_diff;
                         $scope.sampleDiffData = resData.sample_diff;
+
                         $scope.timeCourseList = resData.time_course;
+
                         $scope.keggList = resData.kegg;
                         $scope.goList = resData.go;
+
                         $scope.phiList = resData.phi;
+                        $scope.prgList = resData.prg;
+
+                        $scope.tfList = resData.tf;
+                        for (var i = 0; i < $scope.tfList.length; i++) {
+                            if ($scope.tfList[i].name == 'Family' && $scope.tfList[i].value != 'NA' && $scope.tfList[i].tf_db_link) {
+                                $scope.istfLink = true;
+                            } else {
+                                $scope.istfLink = false;
+                            }
+                        }
+
+                        $scope.nrList = resData.nr;
+                        $scope.ntList = resData.nt;
+                        $scope.swissprotList = resData.swissprot;
+                        $scope.pfamList = resData.pfam;
+
                         $scope.snpData = resData.snp;
                         $scope.indelData = resData.indel;
                         $scope.fusionData = resData.fusion;
+
                         $scope.transcript = resData.transcript;
                         $scope.cds = resData.cds;
                         $scope.protein = resData.protein;
+
+                        $scope.drawLine($scope.lineData);
                     }
                     toolService.gridFilterLoading.close("div_geneDetail_page");
                 },
@@ -100,17 +161,22 @@ define(["toolsApp"], function(toolsApp) {
 
         //表达量折线图
         $scope.drawLine = function(resData) {
-            $('#' + options.id).html('');
-            var width = $('#geneDetail_line .chart_wrap').eq(0).width();
+            $('#geneDetail_line_chart').html('');
+            var width = $('#geneDetail_line_chart').width();
             var rows = resData.rows;
+            var baseThead = resData.baseThead;
             var data = [];
-            for (var i = 0; i < rows.length; i++) {
-                data.push({
-                    key: rows[i].key,
-                    value: rows[i].value
-                });
-            }
 
+            for (var i = 0; i < baseThead.length; i++) {
+                for (var key in baseThead[i]) {
+                    data.push({
+                        key: key,
+                        value: Math.log10(rows[0][baseThead[i][key]] + 1),
+                        hoverValue: rows[0][baseThead[i][key]]
+                    })
+                }
+
+            }
             var options = {
                 "id": "geneDetail_line_chart",
                 "type": "linechart",
@@ -124,7 +190,8 @@ define(["toolsApp"], function(toolsApp) {
                 },
                 "axisBox": {
                     "xAxis": {
-                        "title": "Sample name"
+                        "title": "Sample name",
+                        "type": "discrete"
                     },
                     "yAxis": {
                         "title": "log10(FPKM+1)"
@@ -140,7 +207,7 @@ define(["toolsApp"], function(toolsApp) {
             var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 
             function linetooltipConfig(d) {
-                linecharttooltip.html("Sample:" + d.key + "</br>" + "FPKM: " + d.value)
+                linecharttooltip.html("Sample:" + d.key + "</br>" + "FPKM: " + d.hoverValue)
             }
         }
 
@@ -153,14 +220,13 @@ define(["toolsApp"], function(toolsApp) {
             clearTimeout(timer);
             timer = setTimeout(function() {
                 if ($scope.linechart) {
-                    $scope.linechart.redraw($('#geneDetail_line .chart_wrap').eq(0).width() * 0.9);
+                    $scope.linechart.redraw($('#geneDetail_line_chart').width() * 0.9);
                 }
             }, 100)
         }
 
         //获取文献
         $scope.getLiterature = function() {
-            toolService.gridFilterLoading.open("literature_panel");
             var ajaxConfig = {
                 data: $scope.literatureEntity,
                 url: options.api.mrnaseq_url + "/pubmed"
@@ -178,11 +244,9 @@ define(["toolsApp"], function(toolsApp) {
                         $scope.pubmedError = "";
                         $scope.literature = resData.rows;
                     }
-                    toolService.gridFilterLoading.close("literature_panel");
                 },
                 function(errorMesg) {
                     $scope.pubmedError = "syserror";
-                    toolService.gridFilterLoading.close("literature_panel");
                 });
         }
 

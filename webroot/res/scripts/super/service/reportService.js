@@ -698,7 +698,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     var event = e || event; //火狐浏览器不支持window.event,只支持event。
                     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
                     if (textArr.length === 0) { return; }
-                    // $(".tipsContainer").remove();
+                    $(".tipsContainer").remove();
                     var tipsConDiv = $("<div class='tipsContainer'></div>");
                     height ? tipsConDiv.append("<div class='tipsContent' style='height:" + height + "px; overflow:hidden;text-overflow:ellipsis;'></div>") : tipsConDiv.append("<div class='tipsContent'></div>");
                     tipsConDiv.append("<div class='arrow-box'><i class='left-arrow1'></i><i class='left-arrow2'></i></div>");

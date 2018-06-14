@@ -21,20 +21,32 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             var mapList = mapPart.split("&");
-            var mapIdList = [];
+            var mapId = "",
+                compareGroup = "",
+                method = "",
+                taskId = "";
+            var koNum = "";
             mapList.forEach(function(val, i) {
-                var str = val.substring(val.indexOf("=") + 1, val.length);
-                mapIdList.push(str);
+                if (val.indexOf("map") != -1) {
+                    var str1 = val.substring(val.indexOf("=") + 1, val.length);
+                    mapId = "map" + str1;
+                    koNum = "ko" + str1;
+                }
+                if (val.indexOf("comparegroup") != -1) {
+                    compareGroup = val.substring(val.indexOf("=") + 1, val.length);
+                }
+                if (val.indexOf("method") != -1) {
+                    method = val.substring(val.indexOf("=") + 1, val.length);
+                }
+                if (val.indexOf("taskId") != -1) {
+                    taskId = val.substring(val.indexOf("=") + 1, val.length);
+                }
             })
-
-            var mapId = "map" + mapIdList[0];
-            var compareGroup = mapIdList[1];
-            var method = mapIdList[2];
 
             $scope.title = 'MapID：' + mapId;
             $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + method + "_Method_map/" + mapId + ".html";
+
             // Geneid table params start
-            var koNum = "ko" + mapIdList[0];
             $scope.mapIdEntity = {
                 "LCID": LCID,
                 "compareGroup": compareGroup,
@@ -45,6 +57,9 @@ define(['toolsApp'], function(toolsApp) {
                 "sortName": "",
                 "sortType": "",
             };
+            if (taskId) {
+                $scope.mapIdEntity.id = taskId;
+            }
             $scope.url = options.api.mrnaseq_url + '/PathwayTable';
             $scope.panelId = "div_mapid_panel";
             $scope.tableId = "mapid_geneid_table";

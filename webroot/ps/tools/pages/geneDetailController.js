@@ -98,6 +98,7 @@ define(["toolsApp"], function(toolsApp) {
                     if (resData.Error) {
                         toolService.popMesgWindow(resData.Error);
                     } else {
+                        //gene info
                         $scope.geneInfoList = resData.gene_info;
                         for (var i = 0; i < $scope.geneInfoList.length; i++) {
                             if ($scope.geneInfoList[i].name == 'Gene ID' && $scope.geneInfoList[i].value != 'NA' && $scope.geneInfoList[i].gene_url) {
@@ -106,9 +107,21 @@ define(["toolsApp"], function(toolsApp) {
                                 $scope.isgeneLink = false;
                             }
                         }
+                        if ($scope.geneInfoList.length) {
+                            $scope.geneInfoError = "";
+                        } else {
+                            $scope.geneInfoError = "nodata";
+                        }
 
+                        //sample expression
                         $scope.sampleExpData = resData.sample_expression;
+                        if (JSON.stringify($scope.sampleExpData) == "{}") {
+                            $scope.sampleExpError = "nodata";
+                        } else {
+                            $scope.sampleExpError = "";
+                        }
 
+                        //line
                         $scope.lineData = resData.line;
                         if ($scope.lineData.baseThead.length > 1) {
                             $scope.isHasLine = true;
@@ -116,17 +129,69 @@ define(["toolsApp"], function(toolsApp) {
                             $scope.isHasLine = false;
                         }
 
+                        if (JSON.stringify($scope.lineData) == "{}") {
+                            $scope.lineError = "nodata";
+                        } else {
+                            $scope.lineError = "";
+                        }
+
+                        //group differences
                         $scope.groupDiffData = resData.group_diff;
+                        if (JSON.stringify($scope.groupDiffData) == "{}") {
+                            $scope.groupDiffError = "nodata";
+                        } else {
+                            $scope.groupDiffError = "";
+                        }
+
+                        //sample differences
                         $scope.sampleDiffData = resData.sample_diff;
+                        if (JSON.stringify($scope.sampleDiffData) == "{}") {
+                            $scope.sampleDiffError = "nodata";
+                        } else {
+                            $scope.sampleDiffError = "";
+                        }
 
+                        // time course
                         $scope.timeCourseList = resData.time_course;
+                        if ($scope.timeCourseList.length) {
+                            $scope.timeCourseError = "";
+                        } else {
+                            $scope.timeCourseError = "nodata";
+                        }
 
+                        //kegg
                         $scope.keggList = resData.kegg;
+                        if ($scope.keggList.length) {
+                            $scope.keggError = "";
+                        } else {
+                            $scope.keggError = "nodata";
+                        }
+
+                        //go
                         $scope.goList = resData.go;
+                        if ($scope.goList.length) {
+                            $scope.goError = "";
+                        } else {
+                            $scope.goError = "nodata";
+                        }
 
+                        //phi
                         $scope.phiList = resData.phi;
-                        $scope.prgList = resData.prg;
+                        if ($scope.phiList.length) {
+                            $scope.phiError = "";
+                        } else {
+                            $scope.phiError = "nodata";
+                        }
 
+                        //prg
+                        $scope.prgList = resData.prg;
+                        if ($scope.prgList.length) {
+                            $scope.prgError = "";
+                        } else {
+                            $scope.prgError = "nodata";
+                        }
+
+                        //tf
                         $scope.tfList = resData.tf;
                         for (var i = 0; i < $scope.tfList.length; i++) {
                             if ($scope.tfList[i].name == 'Family' && $scope.tfList[i].value != 'NA' && $scope.tfList[i].tf_db_link) {
@@ -136,19 +201,101 @@ define(["toolsApp"], function(toolsApp) {
                             }
                         }
 
+                        if ($scope.tfList.length) {
+                            $scope.tfError = "";
+                        } else {
+                            $scope.tfError = "nodata";
+                        }
+
+                        //nr
                         $scope.nrList = resData.nr;
+                        if ($scope.nrList.length) {
+                            $scope.nrError = "";
+                        } else {
+                            $scope.nrError = "nodata";
+                        }
+
+                        //nt
                         $scope.ntList = resData.nt;
+                        if ($scope.ntList.length) {
+                            $scope.ntError = "";
+                        } else {
+                            $scope.ntError = "nodata";
+                        }
+
+                        //swissprot
                         $scope.swissprotList = resData.swissprot;
+                        if ($scope.swissprotList.length) {
+                            $scope.swissprotError = "";
+                        } else {
+                            $scope.swissprotError = "nodata";
+                        }
+
+                        //pfam
                         $scope.pfamList = resData.pfam;
+                        if ($scope.pfamList.length) {
+                            $scope.pfamError = "";
+                        } else {
+                            $scope.pfamError = "nodata";
+                        }
 
+                        //snp
                         $scope.snpData = resData.snp;
-                        $scope.indelData = resData.indel;
-                        $scope.fusionData = resData.fusion;
+                        if (JSON.stringify($scope.snpData) == "{}") {
+                            $scope.snpError = "nodata";
+                        } else {
+                            $scope.snpError = "";
+                        }
 
+                        //indel
+                        $scope.indelData = resData.indel;
+                        if (JSON.stringify($scope.indelData) == "{}") {
+                            $scope.indelError = "nodata";
+                        } else {
+                            $scope.indelError = "";
+                        }
+
+                        //fusion
+                        $scope.fusionData = resData.fusion;
+                        if (JSON.stringify($scope.fusionData) == "{}") {
+                            $scope.fusionError = "nodata";
+                        } else {
+                            $scope.fusionError = "";
+                        }
+
+                        //序列信息
                         $scope.transcript = resData.transcript;
                         $scope.cds = resData.cds;
                         $scope.protein = resData.protein;
 
+                        if (!$scope.transcript && !$scope.cds && !$scope.protein) {
+                            $scope.sequenceError = "nodata";
+                        } else {
+                            $scope.sequenceError = "";
+                        }
+
+                        $scope.transcriptList = [];
+                        $scope.cdsList = [];
+                        $scope.proteinList = [];
+                        if ($scope.transcript.indexOf("\n") != -1) {
+                            $scope.transcriptList = resData.transcript.split("\n");
+                        } else if ($scope.transcript) {
+                            $scope.transcriptList.push($scope.transcript);
+                        }
+
+                        if ($scope.cds.indexOf("\n") != -1) {
+                            $scope.cdsList = resData.cds.split("\n");
+                        } else if ($scope.cds) {
+                            $scope.cdsList.push($scope.cds);
+                        }
+
+                        if ($scope.protein.indexOf("\n") != -1) {
+                            $scope.proteinList = resData.protein.split("\n");
+                        } else if ($scope.protein) {
+                            $scope.proteinList.push($scope.protein);
+                        }
+
+                        //画折线图
                         $scope.drawLine($scope.lineData);
                     }
                     toolService.gridFilterLoading.close("div_geneDetail_page");
@@ -161,8 +308,7 @@ define(["toolsApp"], function(toolsApp) {
 
         //表达量折线图
         $scope.drawLine = function(resData) {
-            $('#geneDetail_line_chart').html('');
-            var width = $('#geneDetail_line_chart').width();
+            var width = 600;
             var rows = resData.rows;
             var baseThead = resData.baseThead;
             var data = [];
@@ -177,11 +323,12 @@ define(["toolsApp"], function(toolsApp) {
                 }
 
             }
+            $('#geneDetail_line_chart').html('');
             var options = {
                 "id": "geneDetail_line_chart",
                 "type": "linechart",
                 "data": data,
-                "width": width * 0.9,
+                "width": width,
                 "titleBox": {
                     "show": true,
                     "position": "top",
@@ -217,10 +364,11 @@ define(["toolsApp"], function(toolsApp) {
         window.addEventListener('resize', handlerResize, false)
 
         function handlerResize() {
+            var resizeWidth = 600;
             clearTimeout(timer);
             timer = setTimeout(function() {
                 if ($scope.linechart) {
-                    $scope.linechart.redraw($('#geneDetail_line_chart').width() * 0.9);
+                    $scope.linechart.redraw(resizeWidth);
                 }
             }, 100)
         }

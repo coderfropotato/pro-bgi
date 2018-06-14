@@ -106,8 +106,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             toolService.popLoading.close(); //关闭页面等待效果2
                             toolService.pageLoading.close(); //关闭页面等待蒙版
                         } catch (e) { }
-                        // reAccess();
-                        window.location.href = '../../../../ps/login/login.html';
+                        reAccess();
+                        // window.location.href = '../../../../ps/login/login.html';
                     });
 
                     return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API  

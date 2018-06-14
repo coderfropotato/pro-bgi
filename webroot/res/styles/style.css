@@ -8100,8 +8100,8 @@ ul.select2-results>li.select2-result {
 
 /*悬浮框样式*/
 
-div.tipsContainer, 
-.gooaltooltip{
+div.tipsContainer,
+.gooaltooltip {
     position: absolute;
     /*top: 20px;
     left: 100px;*/
@@ -8543,4 +8543,9 @@ div.tipsContainer,
 .dataChoose,
 .resources {
     margin: 10px;
+}
+
+.sequenceInfo p {
+    font-family: Consolas, Monaco, monospace;
+    white-space: nowrap;
 }

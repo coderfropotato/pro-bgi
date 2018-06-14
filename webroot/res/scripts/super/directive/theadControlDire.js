@@ -18,7 +18,7 @@ define("superApp.theadControlDire",
                     data: "=",
                     handleTheadChange: "&",
                     isReset: "=",
-                    parentId:"@"
+                    parentId: "@"
                 },
                 link: function (scope, element, attrs) {
                     scope.data.forEach(function (val, index) {
@@ -34,7 +34,6 @@ define("superApp.theadControlDire",
         superApp.controller("theadControlCtr", theadControlCtr);
         theadControlCtr.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
         function theadControlCtr($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
-
             // 初始化数据
             $scope.initData = function () {
                 // 是否清除
@@ -50,6 +49,8 @@ define("superApp.theadControlDire",
                 $scope.allActiveItems = [];
                 // 记住之前传入回掉的激活项
                 $scope.beforeActiveItems = [];
+                // 当前的tab
+                $scope.currentIndex = 0;
                 // 无数据
                 $scope.nodata = false;
                 if ($scope.data.length) {
@@ -105,8 +106,8 @@ define("superApp.theadControlDire",
                     $scope.nodata = true;
                 }
 
-                $scope.remove = false;
-                $scope.show = false;
+                // $scope.remove = false;
+                // $scope.show = false;
             }
 
             // 初始化当前点击选中项数组
@@ -180,6 +181,7 @@ define("superApp.theadControlDire",
                     });
 
                     $scope.cancelByClick[index].push(item);
+                    $scope.computedWrapWidth();
                 }
             }
 
@@ -193,25 +195,30 @@ define("superApp.theadControlDire",
                 $scope.initActiveByClick();
                 // 默认重置取消选择的项
                 $scope.initCancelByClick();
-                // 收起面板
-                $scope.show = false;
 
                 // 回调 值改变了才回调
                 $scope.callback();
             }
 
+            // // 清除
+            // $scope.clear = function () {
+            //     // 如果没有选择
+            //     if (isEmpty($scope.allActiveItems)) return;
+            //     // 有选择项 就重置原始数据 保留历史选择记录
+            //     $scope.reset();
+            //     // 根据当前选择 删除历史记录
+            //     $scope.deleteBycurrentActiveItems();
+            //     // 重置当前选择
+            //     $scope.initActiveByClick();
+            //     // 添加remove标记
+            //     $scope.remove = true;
+            // }
+
             // 清除
             $scope.clear = function () {
-                // 如果没有选择
-                if (isEmpty($scope.allActiveItems)) return;
-                // 有选择项 就重置原始数据 保留历史选择记录
-                $scope.reset();
-                // 根据当前选择 删除历史记录
-                $scope.deleteBycurrentActiveItems();
-                // 重置当前选择
-                $scope.initActiveByClick();
-                // 添加remove标记
-                $scope.remove = true;
+                $scope.resetAll();
+                //重新计算ul宽度
+                $scope.computedWrapWidth();
             }
 
             // 应用
@@ -240,43 +247,75 @@ define("superApp.theadControlDire",
                 $scope.callback();
             }
 
+            // // 取消
+            // $scope.cancel = function () {
+            //     // 收起面板
+            //     $scope.show = false;
+
+            //     if ($scope.remove) {
+            //         $scope.remove = false;
+            //         // 根据历史选择记录 选中大数据
+            //         $scope.applyHistory();
+            //     } else {
+            //         if (isEmpty($scope.activeByClick) && isEmpty($scope.cancelByClick)) return;
+            //         if (isEmpty($scope.activeByClick)) {
+            //             // 把取消选中的项状态应用到原始数据
+            //             $scope.cancelBycurrentActiveItems($scope.cancelByClick, $scope.data, true);
+
+            //         } else {
+            //             // 删除历史记录
+            //             $scope.activeByClick.forEach(function (val, index) {
+            //                 if (val.length) {
+            //                     val.forEach(function (d, l) {
+            //                         for (var i = 0; i < $scope.allActiveItems[index].length; i++) {
+            //                             if (d._id === $scope.allActiveItems[index][i]._id) {
+            //                                 $scope.allActiveItems[index].splice(i, 1);
+            //                                 break;
+            //                             }
+            //                         }
+            //                     })
+            //                 }
+            //             })
+            //             // 根据当前选择重置大数据
+            //             $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data, false);
+            //         }
+            //     }
+            //     // 重置当前选择
+            //     $scope.initActiveByClick();
+            //     // 默认重置取消选择的项
+            //     $scope.initCancelByClick();
+            // }
+
             // 取消
             $scope.cancel = function () {
-                // 收起面板
-                $scope.show = false;
+                if (isEmpty($scope.activeByClick) && isEmpty($scope.cancelByClick)) return;
+                if (isEmpty($scope.activeByClick)) {
+                    // 把取消选中的项状态应用到原始数据
+                    $scope.cancelBycurrentActiveItems($scope.cancelByClick, $scope.data, true);
 
-                if ($scope.remove) {
-                    $scope.remove = false;
-                    // 根据历史选择记录 选中大数据
-                    $scope.applyHistory();
                 } else {
-                    if (isEmpty($scope.activeByClick) && isEmpty($scope.cancelByClick)) return;
-                    if (isEmpty($scope.activeByClick)) {
-                        // 把取消选中的项状态应用到原始数据
-                        $scope.cancelBycurrentActiveItems($scope.cancelByClick, $scope.data, true);
-
-                    } else {
-                        // 删除历史记录
-                        $scope.activeByClick.forEach(function (val, index) {
-                            if (val.length) {
-                                val.forEach(function (d, l) {
-                                    for (var i = 0; i < $scope.allActiveItems[index].length; i++) {
-                                        if (d._id === $scope.allActiveItems[index][i]._id) {
-                                            $scope.allActiveItems[index].splice(i, 1);
-                                            break;
-                                        }
+                    // 删除历史记录
+                    $scope.activeByClick.forEach(function (val, index) {
+                        if (val.length) {
+                            val.forEach(function (d, l) {
+                                for (var i = 0; i < $scope.allActiveItems[index].length; i++) {
+                                    if (d._id === $scope.allActiveItems[index][i]._id) {
+                                        $scope.allActiveItems[index].splice(i, 1);
+                                        break;
                                     }
-                                })
-                            }
-                        })
-                        // 根据当前选择重置大数据
-                        $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data, false);
-                    }
+                                }
+                            })
+                        }
+                    })
+                    // 根据当前选择重置大数据
+                    $scope.cancelBycurrentActiveItems($scope.activeByClick, $scope.data, false);
                 }
                 // 重置当前选择
                 $scope.initActiveByClick();
                 // 默认重置取消选择的项
                 $scope.initCancelByClick();
+                //重新计算ul宽度
+                $scope.computedWrapWidth();
             }
 
             // 重置所有状态
@@ -293,6 +332,7 @@ define("superApp.theadControlDire",
                 if (!angular.equals($scope.beforeActiveItems, $scope.allActiveItems)) {
                     // $scope.handleTheadChange && $scope.handleTheadChange(combineArr($scope.allActiveItems));
                     var items = $scope.classify($scope.allActiveItems);
+                    console.log(items);
                     $scope.handleTheadChange && $scope.handleTheadChange({ arg: items });
                     // 更新旧值为新值
                     $scope.beforeActiveItems = angular.copy($scope.allActiveItems);
@@ -425,25 +465,60 @@ define("superApp.theadControlDire",
             }
             // 计算dom 是否显示更多
             $scope.computedDOM = function () {
-                $scope.width = $('#'+$scope.parentId+' .thead-control-dire ul').eq(0).width();
-                var aUl = $('#'+$scope.parentId+' .thead-control-dire ul');
-                var childLengthCollection = [];
-                for (var i = 0, len = aUl.length; i < len; i++) {
-                    var child = aUl.eq(i).children('li');
-                    var childLen = child.length;
-                    var sum = 0;
-                    for (var j = 0; j < childLen; j++) {
-                        sum += child.eq(j).outerWidth() + $scope.mr;
-                    }
-                    childLengthCollection.push(sum);
-                }
+                // $scope.width = $('#'+$scope.parentId+' .thead-control-dire ul').eq(0).width();
+                // var aUl = $('#'+$scope.parentId+' .thead-control-dire ul');
+                // var childLengthCollection = [];
+                // for (var i = 0, len = aUl.length; i < len; i++) {
+                //     var child = aUl.eq(i).children('li');
+                //     var childLen = child.length;
+                //     var sum = 0;
+                //     for (var j = 0; j < childLen; j++) {
+                //         sum += child.eq(j).outerWidth() + $scope.mr;
+                //     }
+                //     childLengthCollection.push(sum);
+                // }
 
-                childLengthCollection.forEach(function (val, index) {
-                    if ($scope.data[index]){
-                        $scope.data[index].showMore = val > ($scope.width - 5)
+                // childLengthCollection.forEach(function (val, index) {
+                //     if ($scope.data[index]){
+                //         $scope.data[index].showMore = val > ($scope.width - 5)
+                //     }
+                // });
+                // $scope.$apply();
+            }
+
+            $scope.allActive = [];
+            $scope.$watch('allActiveItems', function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    var res = [];
+                    newVal.forEach(function (val, index) {
+                        if (val.length) {
+                            val.forEach(function (d, i) {
+                                d.index = index;
+                            })
+                            res = res.concat(val);
+                        }
+                    })
+
+                    $scope.allActive = res;
+                    // $scope.computedWrapWidth();
+                }
+            }, true
+            )
+
+            $scope.computedWrapWidth = function () {
+                $timeout(function () {
+                    var oUl = $('.thead-control-wrap .item-wrap>ul');
+                    var totalWidth = 0;
+                    for (var i = 0; i < oUl.children('li').length; i++) {
+                        totalWidth +=$('.thead-control-wrap .item-wrap>ul').children('li').eq(i).outerWidth(true)+1;
                     }
-                });
-                $scope.$apply();
+                    $('.thead-control-wrap .item-wrap>ul').css('width', totalWidth + 'px')
+                }, 30)
+            }
+
+
+            $scope.handlerTabClick = function (index) {
+                $scope.currentIndex = index;
             }
 
             // document resize 

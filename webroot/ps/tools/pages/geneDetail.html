@@ -3,11 +3,12 @@
     <div id="div_geneDetail_page">
         <h5>基因信息</h5>
         <div>
-            <p ng-repeat="gene in geneInfoList track by $index">
+            <p ng-repeat="gene in geneInfoList track by $index" ng-hide="geneInfoError">
                 <span uib-tooltip="{{gene.hover}}">{{gene.name}}： </span>
                 <a ng-show="isgeneLink">{{gene.value}}</a>
                 <span ng-show="!isgeneLink">{{gene.value}}</span>
             </p>
+            <div class="table-nodata" error-type="geneInfoError" style="border: 0"></div>
         </div>
 
         <h4>表达量信息</h4>
@@ -15,7 +16,7 @@
         <!-- 表达量信息表 -->
         <h5>样本表达量（FPKM）</h5>
         <div class="table_scroll_wrap" id="expressTable_panel">
-            <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+            <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="sampleExpError">
                 <thead>
                     <tr>
                         <th ng-repeat="item in sampleExpData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -25,13 +26,14 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in sampleExpData.rows track by $index">
-                        <td class="center" ng-repeat="val in sampleExpData.baseThead track by $index">
+                        <td class="center nowrap popover-table" ng-repeat="val in sampleExpData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                             <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                             <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div class="table-nodata" error-type="sampleExpError" style="border: 0"></div>
         </div>
 
         <!-- 表达量折线图 -->
@@ -39,10 +41,10 @@
             <h5>表达量折线图</h5>
             <div class="tab-switch-chart">
                 <div class="chart_wrap" ng-hide="lineError">
-                    <div class="chart_graph" id="geneDetail_line_chart" style="text-align:center">
+                    <div class="chart_graph" id="geneDetail_line_chart" style="text-align:center;width: 100%;">
                     </div>
                 </div>
-                <div class="table-nodata" error-type="lineError"></div>
+                <div class="table-nodata" error-type="lineError" style="border: 0"></div>
             </div>
         </div>
 
@@ -50,7 +52,7 @@
         <div ng-show="isHasGroupDiff">
             <h5>组间差异</h5>
             <div class="table_scroll_wrap" id="groupDiffTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="groupDiffError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in groupDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -60,14 +62,14 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in groupDiffData.rows track by $index">
-                            <td class="center" ng-repeat="val in groupDiffData.baseThead track by $index">
+                            <td class="center nowrap popover-table" ng-repeat="val in groupDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- <div class="table-nodata" error-type="error" style="border-top: 1px solid #ddd"></div> -->
+                <div class="table-nodata" error-type="groupDiffError" style="border: 0"></div>
             </div>
         </div>
 
@@ -75,7 +77,7 @@
         <div ng-show="isHasSampleDiff">
             <h5>样本间差异</h5>
             <div class="table_scroll_wrap" id="sampleDiffTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="sampleDiffError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in sampleDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -85,21 +87,25 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in sampleDiffData.rows track by $index">
-                            <td class="center" ng-repeat="val in sampleDiffData.baseThead track by $index">
+                            <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="table-nodata" error-type="sampleDiffError" style="border: 0"></div>
             </div>
         </div>
 
         <!-- 时间序列 -->
         <div ng-show="isHasTimeCourse">
             <h4>时间序列</h4>
-            <p>该基因在时间序列分析方案中的成簇情况：</p>
-            <p ng-repeat="time in timeCourseList track by $index">{{time}}</p>
+            <div ng-hide="timeCourseError">
+                <p>该基因在时间序列分析方案中的成簇情况：</p>
+                <p ng-repeat="time in timeCourseList track by $index">{{time}}</p>
+            </div>
+            <div class="table-nodata" error-type="timeCourseError" style="border: 0"></div>
         </div>
 
         <!-- 功能注释信息 -->
@@ -108,7 +114,7 @@
         <div ng-show="isHasKegg">
             <h5>KEGG ORTHOLOGY</h5>
             <div class="table_scroll_wrap" id="keggTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="keggError">
                     <tbody>
                         <tr ng-repeat="row in keggList track by $index">
                             <td style="text-align: right;width: 100px;">
@@ -133,99 +139,121 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="table-nodata" error-type="keggError" style="border: 0"></div>
             </div>
         </div>
 
         <div ng-show="isHasGO">
             <h5>GO</h5>
-            <div ng-repeat="go in goList track by $index">
+            <div ng-repeat="go in goList track by $index" ng-hide="goError">
                 <p>{{go.go_level1}}</p>
                 <div ng-repeat="item in go.go_term_list track by $index">
                     <a href="http://amigo.geneontology.org/amigo/search/ontology?q=http://amigo.geneontology.org/amigo/search/ontology?q= + {{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
                 </div>
             </div>
-
+            <div class="table-nodata" error-type="goError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasPhi">
             <h5>真菌致病基因预测（PHI）</h5>
-            <p ng-repeat="phi in phiList track by $index">
-                <span uib-tooltip="{{phi.hover}}">{{phi.name}}</span> :
-                <span ng-if="phi.value">{{phi.value}}</span>
-                <span ng-if="!phi.value">--</span>
-            </p>
-            <div>
-                <span>详细说明</span>
-                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="收起" ng-show="isShowPHIText" ng-click="isShowPHIText = false">收起</button>
-                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="展开" ng-show="!isShowPHIText" ng-click="isShowPHIText = true">展开</button>
+            <div ng-hide="phiError">
+                <p ng-repeat="phi in phiList track by $index">
+                    <span uib-tooltip="{{phi.hover}}">{{phi.name}}</span> :
+                    <span ng-if="phi.value">{{phi.value}}</span>
+                    <span ng-if="!phi.value">--</span>
+                </p>
+                <div>
+                    <span>详细说明</span>
+                    <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="收起" ng-show="isShowPHIText" ng-click="isShowPHIText = false">收起</button>
+                    <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="展开" ng-show="!isShowPHIText" ng-click="isShowPHIText = true">展开</button>
+                </div>
+                <div ng-show="isShowPHIText">
+                    <p>PHI库突变体表型，释义如下：</p>
+                    <p>loss of pathogenicity：该基因的缺失突变体不能致病，说明该基因决定病原菌的致病性；</p>
+                    <p>reduced virulence：该基因缺失突变体的致病力减弱，说明该基因决定病原菌的致病性；</p>
+                    <p>increased virulence (Hypervirulence)：该基因决定病原菌的致病性；</p>
+                    <p>effector (plant avirulence determinant)：病原菌的效应子，也即无毒基因。对于感病寄主的发病，一些效应子基因是必需的。但对大部分效应子蛋白来说，它们会直接或间接地识别抗性植物的抗病蛋白，从而激发植物的防卫反应，使病原菌不能致病。所以，该基因只决定某些病原菌的致病性；</p>
+                    <p>enhanced antagonism：该基因影响病原菌和植物的互作，该基因的缺失突变体会使植物发病；</p>
+                    <p>unaffected pathogenicity：该基因不影响病原菌的致病性；</p>
+                    <p>lethal：该基因对菌株存活是必须的；</p>
+                    <p>chemistry target：resistance to chemical：该基因的突变体对某种药物有抗性；</p>
+                    <p>chemistry target：sensitivity to chemical：该基因的突变体对某种药物的抗性减弱。）</p>
+                </div>
             </div>
-            <div ng-show="isShowPHIText">
-                <p>PHI库突变体表型，释义如下：</p>
-                <p>loss of pathogenicity：该基因的缺失突变体不能致病，说明该基因决定病原菌的致病性；</p>
-                <p>reduced virulence：该基因缺失突变体的致病力减弱，说明该基因决定病原菌的致病性；</p>
-                <p>increased virulence (Hypervirulence)：该基因决定病原菌的致病性；</p>
-                <p>effector (plant avirulence determinant)：病原菌的效应子，也即无毒基因。对于感病寄主的发病，一些效应子基因是必需的。但对大部分效应子蛋白来说，它们会直接或间接地识别抗性植物的抗病蛋白，从而激发植物的防卫反应，使病原菌不能致病。所以，该基因只决定某些病原菌的致病性；</p>
-                <p>enhanced antagonism：该基因影响病原菌和植物的互作，该基因的缺失突变体会使植物发病；</p>
-                <p>unaffected pathogenicity：该基因不影响病原菌的致病性；</p>
-                <p>lethal：该基因对菌株存活是必须的；</p>
-                <p>chemistry target：resistance to chemical：该基因的突变体对某种药物有抗性；</p>
-                <p>chemistry target：sensitivity to chemical：该基因的突变体对某种药物的抗性减弱。）</p>
-            </div>
+            <div class="table-nodata" error-type="phiError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasPrg">
             <h5>植物抗病基因预测（PRG）</h5>
-            <p ng-repeat="prg in prgList track by $index">
-                <span uib-tooltip="{{prg.hover}}">{{prg.name}}</span>:
-                <span ng-if="prg.value">{{prg.value}}</span>
-                <span ng-if="!prg.value">--</span>
-            </p>
+            <div ng-hide="prgError">
+                <p ng-repeat="prg in prgList track by $index">
+                    <span uib-tooltip="{{prg.hover}}">{{prg.name}}</span>:
+                    <span ng-if="prg.value">{{prg.value}}</span>
+                    <span ng-if="!prg.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="prgError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasTf">
             <h5>转录因子预测（TF）</h5>
-            <p ng-repeat="tf in tfList track by $index">
-                <span uib-tooltip="{{tf.hover}}">{{tf.name}}</span>：
-                <a href="" target="_blank" ng-show="istfLink">{{tf.value}}</a>
-                <span ng-show="!istfLink && tf.value">{{tf.value}}</span>
-                <span ng-show="!istfLink && !tf.value">--</span>
-            </p>
+            <div ng-hide="tfError">
+                <p ng-repeat="tf in tfList track by $index">
+                    <span uib-tooltip="{{tf.hover}}">{{tf.name}}</span>：
+                    <a href="" target="_blank" ng-show="istfLink">{{tf.value}}</a>
+                    <span ng-show="!istfLink && tf.value">{{tf.value}}</span>
+                    <span ng-show="!istfLink && !tf.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="tfError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasNr">
             <h5>NR</h5>
-            <p ng-repeat="nr in nrList track by $index">
-                <span uib-tooltip="{{nr.hover}}">{{nr.name}}</span>:
-                <span ng-if="nr.value">{{nr.value}}</span>
-                <span ng-if="!nr.value">--</span>
-            </p>
+            <div ng-hide="nrError">
+                <p ng-repeat="nr in nrList track by $index">
+                    <span uib-tooltip="{{nr.hover}}">{{nr.name}}</span>:
+                    <span ng-if="nr.value">{{nr.value}}</span>
+                    <span ng-if="!nr.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="nrError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasNt">
             <h5>NT</h5>
-            <p ng-repeat="nt in ntList track by $index">
-                <span uib-tooltip="{{nt.hover}}">{{nt.name}}</span>:
-                <span ng-if="nt.value">{{nt.value}}</span>
-                <span ng-if="!nt.value">--</span>
-            </p>
+            <div ng-hide="ntError">
+                <p ng-repeat="nt in ntList track by $index">
+                    <span uib-tooltip="{{nt.hover}}">{{nt.name}}</span>:
+                    <span ng-if="nt.value">{{nt.value}}</span>
+                    <span ng-if="!nt.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="nrError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasSwissprot">
             <h5>Swissprot</h5>
-            <p ng-repeat="swissprot in swissprotList track by $index">
-                <span uib-tooltip="{{swissprot.hover}}">{{swissprot.name}}</span>:
-                <span ng-if="swissprot.value">{{swissprot.value}}</span>
-                <span ng-if="!swissprot.value">--</span>
-            </p>
+            <div ng-hide="swissprotError">
+                <p ng-repeat="swissprot in swissprotList track by $index">
+                    <span uib-tooltip="{{swissprot.hover}}">{{swissprot.name}}</span>:
+                    <span ng-if="swissprot.value">{{swissprot.value}}</span>
+                    <span ng-if="!swissprot.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="swissprotError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasPfam">
             <h5>Pfam</h5>
-            <p ng-repeat="pfam in pfamList track by $index">
-                <span uib-tooltip="{{pfam.hover}}">{{pfam.name}}</span>:
-                <span ng-if="pfam.value">{{pfam.value}}</span>
-                <span ng-if="!pfam.value">--</span>
-            </p>
+            <div ng-hide="pfamError">
+                <p ng-repeat="pfam in pfamList track by $index">
+                    <span uib-tooltip="{{pfam.hover}}">{{pfam.name}}</span>:
+                    <span ng-if="pfam.value">{{pfam.value}}</span>
+                    <span ng-if="!pfam.value">--</span>
+                </p>
+            </div>
+            <div class="table-nodata" error-type="pfamError" style="border: 0"></div>
         </div>
 
         <!-- 变异信息 -->
@@ -234,7 +262,7 @@
         <div ng-show="isHasSnp">
             <h5>SNP</h5>
             <div class="table_scroll_wrap" id="snpTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="snpError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in snpData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -244,20 +272,21 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in snpData.rows track by $index">
-                            <td class="center" ng-repeat="val in snpData.baseThead track by $index">
+                            <td class="center nowrap popover-table" ng-repeat="val in snpData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="table-nodata" error-type="snpError" style="border: 0"></div>
             </div>
         </div>
 
         <div ng-show="isHasIndel">
             <h5>Indel</h5>
             <div class="table_scroll_wrap" id="indelTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="indelError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in indelData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -267,20 +296,21 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in indelData.rows track by $index">
-                            <td class="center" ng-repeat="val in indelData.baseThead track by $index">
+                            <td class="center nowrap popover-table" ng-repeat="val in indelData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="table-nodata" error-type="indelError" style="border: 0"></div>
             </div>
         </div>
 
         <div ng-show="isHasFusion">
             <h4>融合基因</h4>
             <div class="table_scroll_wrap" id="fusionTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="fusionError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in fusionData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -290,24 +320,28 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in fusionData.rows track by $index">
-                            <td class="center" ng-repeat="val in fusionData.baseThead track by $index">
+                            <td class="center nowrap popover-table" ng-repeat="val in fusionData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="table-nodata" error-type="fusionError" style="border: 0"></div>
             </div>
         </div>
 
         <div ng-show="isHasCds || isHasProtein || isHasTranscript">
             <h4>序列信息</h4>
-            <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="获取序列" ng-click="isShowSequence = true">获取序列</button>
-            <div ng-show="isShowSequence" class="sequenceInfo">
-                <p ng-show="transcript">{{transcript}}</p>
-                <p ng-show="cds">{{cds}}</p>
-                <p ng-show="protein">{{protein}}</p>
+            <div ng-hide="sequenceError">
+                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="获取序列" ng-click="isShowSequence = true">获取序列</button>
+                <div ng-show="isShowSequence" class="sequenceInfo">
+                    <p ng-show="transcript" ng-repeat="transcript in transcriptList track by $index">{{transcript}}</p>
+                    <p ng-show="cds" ng-repeat="cds in cdsList track by $index">{{cds}}</p>
+                    <p ng-show="protein" ng-repeat="protein in proteinList track by $index">{{protein}}</p>
+                </div>
             </div>
+            <div class="table-nodata" error-type="sequenceError" style="border: 0"></div>
         </div>
 
         <div id="literature_panel" ng-hide="pubmedError">

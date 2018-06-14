@@ -21,7 +21,7 @@ define(['toolsApp'], function(toolsApp) {
                 width: 1000,
                 height: 600,
                 isMultiChoose: false, //是否多选状态
-                colorArr: ["#0000ff","#ff0000"],
+                colorArr: ["#0000ff", "#ff0000"],
                 node_r_min: 3,
                 node_r_max: 10,
                 link_width_min: 1,
@@ -116,7 +116,7 @@ define(['toolsApp'], function(toolsApp) {
                         $scope.netData = responseData;
                         $scope.netDataInit = angular.copy(responseData)
                         $scope.drawNet(responseData, $scope.forceValue);
-                        
+
                     }
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 },
@@ -163,7 +163,7 @@ define(['toolsApp'], function(toolsApp) {
                 })
                 if (!options.isMultiChoose) {
                     releaseMultiChoose()
-                    noMultiChooseZoom()                   
+                    noMultiChooseZoom()
                 } else {
                     releaseZoom()
                     isMultiChoosePick()
@@ -373,7 +373,7 @@ define(['toolsApp'], function(toolsApp) {
                 //定义比例尺
                 //node
                 var colorScale = d3.scaleLinear().domain([0, maxValue]).range(colorArr).interpolate(d3.interpolateRgb),
-                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([options.node_r_min,options.node_r_max ]).clamp(true);
+                    nodeRScale = d3.scaleLinear().domain([0, maxValue]).range([options.node_r_min, options.node_r_max]).clamp(true);
                 //link
                 var linkWidthScale = d3.scaleLinear().domain([150, 1000]).range(["#cccccc", "#000000"]).clamp(true);
 
@@ -416,6 +416,18 @@ define(['toolsApp'], function(toolsApp) {
                     })
                     .attr('stroke', "#000")
                     .attr('stroke-width', 0)
+                    .on("mouseover", function(d) {
+                        var tipText = [];
+                        if (d.gene_symbol) {
+                            tipText = ["Gene ID：" + d.gene_id, "Symbol/Other Gene ID：" + d.gene_symbol, "PPI Protein ID：" + d.ppi_protein_cluster1];
+                        } else {
+                            tipText = ["Gene ID：" + d.gene_id, "PPI Protein ID：" + d.ppi_protein_cluster1];
+                        }
+                        reportService.GenericTip.Show(d3.event, tipText);
+                    })
+                    .on("mouseout", function() {
+                        reportService.GenericTip.Hide();
+                    })
                     .on("click", function(d) {
                         d.isNodeSelected = true;
                         //遍历links 获取相邻ID的数组

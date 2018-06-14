@@ -59,6 +59,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.isResetTableStatus = null;
             $scope.isShowTheadControl = true;
             $scope.isReanalysis = true;
+            $scope.reanalysisId = $scope.id;
             $scope.theadControlId = 'reanalysis_line_theadcontrol';
             // Geneid table params end
         }

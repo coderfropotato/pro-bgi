@@ -23,7 +23,8 @@
             littleTablePath: "./../include/include_littleTable.html",
             addDeleteTablePath: "./../include/include_addDeleteBigTable.html",
             tableSwitchChartPath: "./../include/include_tableSwitchChart.html",
-            reAccessPopPath: "./../include/reaccessTemplate.html"
+            reAccessPopPath: "./../include/reaccessTemplate.html",
+            theadControlPath: "./../include/include_theadControl.html"
         },
         javaApiPath: "http://192.168.29.203/reportweb",
         messageUrl: "ps/login/message.html",

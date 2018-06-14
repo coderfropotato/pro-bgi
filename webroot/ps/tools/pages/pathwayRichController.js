@@ -77,6 +77,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.theadControlId = 'reAnalysis_pathwayRich_theadcontrol';
             $scope.isShowTheadControl = true;
             $scope.isReanalysis = true;
+            $scope.reanalysisId = $scope.id;
             // Geneid table end
 
             $scope.GetLinks();

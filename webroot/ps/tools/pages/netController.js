@@ -58,6 +58,7 @@ define(['toolsApp'], function(toolsApp) {
             $scope.isResetTableStatus = null;
             $scope.theadControlId = 'reAnalysis_net_theadcontrol';
             $scope.isShowTheadControl = true;
+            $scope.reanalysisId = $scope.id;
             $scope.isReanalysis = true;
             // Geneid table end
 
@@ -150,8 +151,8 @@ define(['toolsApp'], function(toolsApp) {
                         tempArray.push(networkData.nodes[i].id)
                     }
                 }
-                $scope.geneList = angular.copy(tempArray);
-                console.log(tempArray);
+                
+                $scope.geneList =angular.copy(tempArray);
                 $scope.geneListChangeFlag = true;
             }
 

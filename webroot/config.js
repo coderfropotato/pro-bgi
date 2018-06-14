@@ -1,13 +1,13 @@
 ﻿define([], function() {
     // var base_url = "http://47.97.11.16:5002/api/1";  //正式
-    var base_url = "http://192.168.29.198:5000/api/1"; //远程
+    // var base_url = "http://192.168.29.198:5000/api/1"; //远程
     // var base_url = "http://192.168.0.112:5002/api/1"; //开发
-    // var base_url = "http://192.168.0.142:5002/api/1"; //开发
+    var base_url = "http://192.168.0.142:5002/api/1"; //开发
     //  var base_url = "http://172.168.1.115:5006/api/1";   //测试
     var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
         // var geneInfo_url = "http://180.76.159.174:81/api";
     var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
-
+    var java_url = "http://192.168.29.203/reportweb";
     var staticImg_url = "http://192.168.29.204:5000/static/"; //静态图片
 
     var SUPER_CONSOLE_MESSAGE = {
@@ -26,7 +26,7 @@
             reAccessPopPath: "./../include/reaccessTemplate.html",
             theadControlPath: "./../include/include_theadControl.html"
         },
-        javaApiPath: "http://192.168.29.203/reportweb",
+        
         messageUrl: "ps/login/message.html",
         loginUrl: "ps/login/login.html",
         popBDWindowPath: "./include/browser_detect_prompt.html",
@@ -46,7 +46,8 @@
         bsaApiPath: base_url + "/bsa",
         m_apiPath: manager_base_url,
         mangerApiPath: manager_base_url + "/load",
-        staticImgPath: staticImg_url
+        staticImgPath: staticImg_url,
+        javaApiPath: java_url,
     };
     return SUPER_CONSOLE_MESSAGE;
 });

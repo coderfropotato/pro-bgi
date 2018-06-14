@@ -16,7 +16,8 @@ define("superApp.loginService", ["super.superMessage", "ngDialog", "ngCookies"],
                 api:
                     {
                         base_url: SUPER_CONSOLE_MESSAGE.apiPath,
-                        manager_base_url: SUPER_CONSOLE_MESSAGE.m_apiPath
+                        manager_base_url: SUPER_CONSOLE_MESSAGE.m_apiPath,
+                        java_url:SUPER_CONSOLE_MESSAGE.javaApiPath
                     },
                 loginUrl: SUPER_CONSOLE_MESSAGE.loginUrl,
                 messageUrl: SUPER_CONSOLE_MESSAGE.messageUrl,

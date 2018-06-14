@@ -5,7 +5,9 @@ define(['loginApp'], function (loginApp) {
     function loginController($rootScope, $scope, $log, $window, toolLoginService) {
         $scope.formEntity = {
             'LCID': null,
-            'Password': null
+            'Password': null,
+            'UUID': null,
+            'code': null
         };
 
         $scope.mangerLoginEntity = {
@@ -24,6 +26,7 @@ define(['loginApp'], function (loginApp) {
             $rootScope.isMangerSystem = false;
             $scope.lcLoginText = '登录并查看在线报告';
             $scope.mangerLoginText = '管理控制台登录';
+            $scope.UUIDurl = options.api.java_url;
             $window.sessionStorage.clear();
             $scope.validateBrowser();
             //古奥基因 0   理工大 -1    其他 1
@@ -32,10 +35,38 @@ define(['loginApp'], function (loginApp) {
             toolLoginService.sessionStorage.set('isTest', $scope.isTest);
             $scope.loadingComplete = true;
             $rootScope.sk = "YANGWENDIAN19930";
+            $scope.code();
             // $scope.jump()
             // $scope.GetIsTest();
             console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
         };
+
+
+        function getUUID(){
+            var s = [];  
+            var hexDigits = "0123456789abcdef";  
+            for (var i = 0; i < 36; i++) {  
+                   s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);  
+               }  
+               s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010  
+                  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01  
+               s[8] = s[13] = s[18] = s[23] = "-";  
+                var uuid = s.join("");
+            return uuid;
+       }
+       
+        $scope.code= function(){
+                $scope.uuid=getUUID();
+                $scope.formEntity.UUID = $scope.uuid;
+        }
+        
+        $scope.renovate = function () {
+            var uuid = getUUID();
+            var img = document.getElementById("imgcode");
+            img.src = options.api.java_url + "/checkImg?uuid" + uuid;
+        }
+
+
 
         $scope.jump = function(){
             //校验是否存在查询条件
@@ -172,7 +203,7 @@ define(['loginApp'], function (loginApp) {
                         if (responseData.Status == "Wrong username or password") {
                             var myPromise = toolLoginService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
                         } else {
-                            var myPromise = toolLoginService.popMesgWindow(responseData.Status);
+                            var myPromise = toolLoginService.popMesgWindow(responseData.Error);
                         }
                         myPromise.then(function (value) {
                             $scope.isLCSubmit = false;

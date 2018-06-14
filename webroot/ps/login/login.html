@@ -103,6 +103,16 @@
                                             <input type="password" name="lcpwd" ng-keyup="tbx_password_OnKeyUp($event,'lc')" class="form-control input_pass" super-validate="请输入流程密码"
                                                 ng-model="formEntity.Password" required placeholder="流程密码" />
                                         </li>
+                                        <li>
+                                            <input type="text" name="code" class="form-control input_pass" super-validate="请输入验证码" ng-model="formEntity.code" required 
+                                            	placeholder="验证码" />
+                                        </li>
+                                        <li>
+                                        	<img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码" id="imgcode"/>
+                                        </li>
+										<li>
+                                        	<input type="text" name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
+                                        </li>
                                     </ul>
                                     <!--<div class="others">
                                         <span class="forget">

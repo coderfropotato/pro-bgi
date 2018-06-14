@@ -63,6 +63,8 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.GetNetData();
             $scope.GetTableData();
+
+            $scope.GetLinks();
         }
 
         //获取net图的切换表格数据
@@ -556,6 +558,37 @@ define(['toolsApp'], function(toolsApp) {
                     }
                 }
 
+            }
+        }
+
+        //get links 
+        $scope.linksError = false;
+        $scope.GetLinks = function() {
+            var promise = ajaxService.GetDeferData({
+                data: {},
+                url: options.api.java_url + "/analysis/parent/" + $scope.id
+            })
+            promise.then(function(res) {
+                if (res.status != 200) {
+                    $scope.linksError = "syserror";
+                } else {
+                    $scope.linksError = false;
+                    $scope.links = res.data.links;
+                    console.log($scope.links);
+                }
+            }, function(err) {
+                console.log(err);
+            })
+        }
+
+        // 查看links
+        $scope.handlerSeeClick = function(item) {
+            var type = item.chartType || item.charType;
+            if (item.process == 0) {
+                $window.open('../tools/index.html#/home/error/' + item.id);
+            } else {
+                // success
+                $window.open('../tools/index.html#/home/' + type + '/' + item.id);
             }
         }
 

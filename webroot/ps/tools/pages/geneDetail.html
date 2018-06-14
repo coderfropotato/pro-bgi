@@ -138,8 +138,13 @@
 
         <div ng-show="isHasGO">
             <h5>GO</h5>
-            <p>Biological Process</p>
-            <p>GO: <a href="" target="_blank">0098609</a> intracellular membrane-bounded organelle</p>
+            <div ng-repeat="go in goList track by $index">
+                <p>{{go.go_level1}}</p>
+                <div ng-repeat="item in go.go_term_list track by $index">
+                    <a href="http://amigo.geneontology.org/amigo/search/ontology?q=http://amigo.geneontology.org/amigo/search/ontology?q= + {{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
+                </div>
+            </div>
+
         </div>
 
         <div ng-show="isHasPhi">
@@ -298,9 +303,10 @@
         <div ng-show="isHasCds || isHasProtein || isHasTranscript">
             <h4>序列信息</h4>
             <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="获取序列" ng-click="isShowSequence = true">获取序列</button>
-            <div ng-show="isShowSequence">
-                <p>.>trpt001|gene2 .TGGTGACTCATATGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGGTTGAAGCGACATTTTTTTGTGGAATATGGTTTTTGCAAAATATTTTTGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGG .>trpt002 .TGGTGACTCATATGGTTTGATTGGAGTTTGTTTCTGGGTTTTATGGTTTTGGTTGAAGCGACATTTTTTTGTGGAATATGGTTTTTGCAAAATATTTT
-                </p>
+            <div ng-show="isShowSequence" class="sequenceInfo">
+                <p ng-show="transcript">{{transcript}}</p>
+                <p ng-show="cds">{{cds}}</p>
+                <p ng-show="protein">{{protein}}</p>
             </div>
         </div>
 

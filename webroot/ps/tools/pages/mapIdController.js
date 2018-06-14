@@ -5,13 +5,14 @@ define(['toolsApp'], function(toolsApp) {
     function mapIdController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
 
         $scope.InitPage = function() {
+            toolService.pageLoading.open();
+            //定时关闭等待框
+            setTimeout(function() {
+                toolService.pageLoading.close();
+            }, 300);
+
             // 查询参数
             var LCID = toolService.sessionStorage.get('LCID');
-            $scope.mapIdEntity = {
-                "LCID": LCID,
-                "pageNum": 1,
-                "pageSize": 10,
-            };
 
             var url = window.location.href;
             if (url.indexOf("?") != -1) {
@@ -32,47 +33,50 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.title = 'MapID：' + mapId;
             $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + method + "_Method_map/" + mapId + ".html";
-
-            // $scope.GetmapIdList(1);
+            // Geneid table params start
+            var koNum = "ko" + mapIdList[0];
+            $scope.mapIdEntity = {
+                "LCID": LCID,
+                "compareGroup": compareGroup,
+                "term_id": koNum,
+                "pageSize": 10,
+                "pageNum": 1,
+                "searchContentList": [],
+                "sortName": "",
+                "sortType": "",
+            };
+            $scope.url = options.api.mrnaseq_url + '/PathwayTable';
+            $scope.panelId = "div_mapid_panel";
+            $scope.tableId = "mapid_geneid_table";
+            $scope.unselectId = "gene_mapid_unselectid";
+            $scope.filename = "基因详情表";
+            $scope.geneList = '';
+            $scope.changeFlag = false;
+            $scope.isResetTheadControl = null;
+            $scope.isResetTableStatus = false;
+            $scope.isShowTheadControl = true;
+            $scope.isReanalysis = true;
+            $scope.theadControlId = 'gene_mapid_theadcontrol';
+            // Geneid table params end
         }
 
         var oIframe = $("#mapIdIframe");
         oIframe.on("load", function() {
             var areas = oIframe.contents().find("map").children("area[target_gene]");
-            console.log(areas);
             areas.on("click", function() {
-                console.log($(this).attr("target_gene"));
+                var selectList = [];
+                var select = $(this).attr("target_gene");
+                if (select.indexOf(",") != -1) {
+                    selectList = select.split(",");
+                } else if (!select) {
+                    selectList = [];
+                } else {
+                    selectList.push(select);
+                }
+                $scope.changeFlag = true;
+                $scope.geneList = selectList;
             })
         })
-
-        $scope.GetmapIdList = function(pageNum) {
-            toolService.gridFilterLoading.open("mapId-table");
-            $scope.mapIdEntity.pageNum = pageNum;
-            //配置请求参数
-            $scope.mapIdListUrl = options.api.java_url + '/mapId/GetmapIdList'
-            var ajaxConfig = {
-                data: $scope.mapIdEntity,
-                url: $scope.mapIdListUrl
-            }
-            var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(res) {
-                toolService.gridFilterLoading.close("mapId-table");
-                if (res.Error) {
-                    $scope.mapIdError = 'syserror';
-                    return;
-                } else if (res.rows.length == 0) {
-                    $scope.mapIdError = 'nodata';
-                    return;
-                } else {
-                    $scope.mapIdError = "";
-                    $scope.mapIdList = res;
-                    $scope.mapIdError = false;
-                }
-            }, function() {
-                $scope.mapIdError = 'syserror'
-                toolService.gridFilterLoading.close("mapId-table");
-            })
-        }
 
     }
 });

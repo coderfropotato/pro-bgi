@@ -14,6 +14,19 @@
                 </li>
             </ul>
             <ul class="fRight">
+                <li ng-if="!error">
+                    <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
+                                <span style="color:red;">({{links.length}})</span>
+                                <div class="links btn-links" style="color:#333;">
+                                    <ul ng-if="links.length" class="link-lists">
+                                        <li ng-click="handlerSeeClick(item)" ng-repeat="item in links track by $index">
+                                            <p>类型：{{item.chartType}}</p>
+                                            <p>项目名称：{{item.projectName}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </button>
+                </li>
                 <li ng-hide="isTableShow || error">
                     <div class="chart-set" set-title="斥力" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
                 </li>

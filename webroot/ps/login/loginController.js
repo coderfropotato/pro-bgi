@@ -200,11 +200,7 @@ define(['loginApp'], function (loginApp) {
                         // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
                         window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                     } else {
-                        if (responseData.Status == "Wrong username or password") {
-                            var myPromise = toolLoginService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
-                        } else {
-                            var myPromise = toolLoginService.popMesgWindow(responseData.Error);
-                        }
+                        var myPromise = toolLoginService.popMesgWindow(responseData.Error);
                         myPromise.then(function (value) {
                             $scope.isLCSubmit = false;
                             $scope.lcLoginText = '登录并查看在线报告';

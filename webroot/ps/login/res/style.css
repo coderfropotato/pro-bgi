@@ -1,0 +1,668 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    min-width: 1366px;
+    height: 100%;
+    font-family: Microsoft YaHei;
+    font-size: 14px;
+}
+
+    .main input {
+        outline: none;
+    }
+
+.main_ul {
+    position: relative;
+}
+
+    .main_ul .content {
+        position: relative;
+        overflow: hidden;
+    }
+
+.bgi_top {
+    width: 1680px;
+    margin: 0 auto;
+    height: 40px;
+    margin-top: 42px;
+    overflow: hidden;
+}
+
+.logo_ul {
+    overflow: hidden;
+    width: 250px;
+    float: left;
+}
+
+.setUp {
+    width: 360px;
+    overflow: hidden;
+    float: right;
+}
+
+.logo_ul li {
+    float: left;
+    height: 40px;
+}
+
+.setUp li {
+    float: left;
+    height: 40px;
+    margin-left: 60px;
+    line-height: 40px;
+    color: #ffffff;
+    cursor:pointer;
+}
+
+.index {
+    position: relative;
+    top: 2px;
+}
+
+.drTom {
+    position: relative;
+    top: 13px;
+}
+
+.xian {
+    width: 1px;
+    height: 26px;
+    background: #DFE3F2;
+    margin: 0 24px;
+    display: block;
+    position: relative;
+    top: 7px;
+}
+
+.loginBtn {
+    color: #5378F8;
+    width: 96px;
+    height: 40px;
+    border-radius: 100px;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.setUp .loginBtn:hover {
+    opacity: 0.9;
+}
+
+.bgi_conter1_p3 .loginBtn:hover {
+    opacity: 0.9;
+}
+
+.signIn button:hover {
+    opacity: 0.9;
+}
+
+.content1 {
+    background: url(images/bg1.png)no-repeat right top;
+    background-size: contain;
+}
+
+.bgi_conter {
+    width: 1680px;
+    height: 504px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    margin-top: -300px;
+    padding: 0;
+}
+
+.bgi_conter1_p1 {
+    font-size: 40px;
+    color: #333333;
+    padding-bottom: 32px;
+}
+
+.bgi_conter1_p2 {
+    font-size: 24px;
+    color: #999999;
+    padding-bottom: 60px;
+}
+
+.bgi_conter1_p3 .bgi_conter1_btn {
+    width: 180px;
+    height: 56px;
+    color: #fff;
+    border-radius: 100px;
+    background: #5378F8;
+    border: none;
+    font-size: 18px;
+    box-shadow: 0px 2px 10px #7D9AFF;
+    outline: none;
+    cursor: pointer;
+}
+
+.bgi_conter_ul {
+    overflow: hidden;
+    width: 100%;
+}
+
+    .bgi_conter_ul .bgi_conter_li {
+        float: left;
+        width: 50%;
+    }
+
+.macbook {
+    width: 800px;
+}
+
+.bgi_conter_li {
+    display: flex;
+    align-items: center;
+    height: 504px;
+}
+
+.bgi_conter1_flex {
+    height: 231px;
+    margin-top: -80px;
+}
+
+.bgi_conter_left {
+    color: #ffffff;
+}
+
+.bgi_conter_right {
+    color: #333333;
+    position: absolute;
+    right: 0;
+}
+
+.bgi_conter_left .bgi_conter_div {
+    border-left: 8px solid #ffffff;
+    padding-left: 40px;
+}
+
+.bgi_conter_right .bgi_conter_div {
+    border-left: 8px solid #333333;
+    padding-left: 40px;
+}
+
+.bgi_conter_tit1 {
+    font-size: 72px;
+}
+
+.bgi_conter_tit2 {
+    font-size: 36px;
+    padding-top: 36px;
+}
+
+.bgi_conter_tit3 {
+    font-size: 36px;
+    padding-top: 8px;
+}
+
+.bgi_conter_div2 {
+    font-size: 18px;
+    padding-top: 78px;
+}
+
+    .bgi_conter_div2 li {
+        padding-bottom: 14px;
+        display: flex;
+    }
+
+.banner_teb {
+    position: absolute;
+}
+
+.dian {
+    width: 6px;
+    height: 6px;
+    display: block;
+    position: relative;
+    top: 9px;
+    border-radius: 100%;
+    margin: 0 10px 0 40px;
+}
+
+.bgi_conter_left .dian {
+    background: #ffffff;
+}
+
+.bgi_conter_right .dian {
+    background: #333333;
+}
+/*幻灯片*/
+#productContent {
+    overflow: hidden;
+    width: 100%;
+    height:100%;
+}
+
+    #productContent .smask {
+        z-index: -1;
+    }
+
+#productNav {
+    display: block;
+    overflow: hidden;
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    z-index: 5;
+}
+
+    #productNav li {
+        width: 14px;
+        height: 14px;
+        display: block;
+        float: left;
+        cursor: pointer;
+        text-align: center;
+        margin-left: 10px;
+        background: #ccc;
+        color: #fff;
+        margin-right: 5px;
+        border-radius: 100%;
+    }
+
+    #productNav .nbg {
+        background: #666;
+    }
+
+    #productNav .current {
+        background: #5378f8;
+    }
+
+.contactUs_ul, .friendshipLink_ul {
+    overflow: hidden;
+    width: 1020px;
+    margin: 0 auto;
+    box-shadow: 0 6px 12px 0 rgba(183,199,255,0.3);
+}
+
+    .contactUs_ul li {
+        float: left;
+        width: 340px;
+        text-align: center;
+        padding: 55px 0;
+    }
+
+        .contactUs_ul li img {
+        }
+
+        .contactUs_ul li p {
+            padding-top: 20px;
+        }
+
+    .friendshipLink_ul li {
+        float: left;
+        width: 340px;
+        text-align: center;
+        padding: 58.5px 0;
+    }
+
+.index_yuanq {
+    color: #5378F8;
+    font-size: 20px;
+    padding-right: 16px;
+}
+
+.contactUs {
+    margin-top: 80px;
+}
+
+.friendshipLink {
+    margin-top: 80px;
+}
+
+.contactUs_tit, .friendshipLink_tit {
+    font-size: 24px;
+    padding-bottom: 40px;
+}
+
+.QRCode {
+    text-align: center;
+}
+
+.QRCode_img {
+    width: 92px;
+    height: 92px;
+    padding-top: 40px;
+}
+
+.QRCode_con {
+    color: #999999;
+}
+
+.ftCon {
+    color: #333333;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 40px;
+}
+
+/*登录*/
+.login {
+    width: 388px;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    top: 50%;
+    margin-left: -210px;
+    padding: 20px 16px;
+    border-radius: 20px;
+    z-index: 999;
+    margin-top: -232px;
+    display: none;
+}
+
+.login_close {
+    text-align: right;
+}
+
+#closeBtn {
+    cursor: pointer;
+}
+
+.login_logo {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.login_main {
+    padding: 0 24px;
+}
+
+.login_sum {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.password_img, .userName_img, .verificationCode {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    z-index:10000;
+}
+
+.login_userName, .login_password, .verificationCodeInput {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #E8E8E8;
+    border-radius: 2px;
+    text-indent: 50px;
+}
+
+.verificationCode_img {
+    width: 98px;
+    height: 48px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.signIn {
+    padding: 30px 0 50px 0;
+}
+
+    .signIn button {
+        background: #5378F8;
+        border-radius: 4px;
+        width: 100%;
+        border: none;
+        height: 48px;
+        font-size: 16px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+.mengc {
+    position: fixed;
+    z-index: 888;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.2;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.login_footer {
+    width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.content_two_a {
+    background: url(images/bg2.png)no-repeat 100% ;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.content_two_b {
+    background: url(images/bg4.png)no-repeat 100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.yzm {
+    width: 100%;
+    height: 100%;
+}
+/*设备屏幕大于1600px，小于1680px*/
+@media screen and (min-width:1600px) and (max-width:1680px) {
+    .bgi_top, .bgi_conter {
+        width: 1440px;
+    }
+
+    .bgi_conter1_p1 {
+        font-size: 38px;
+    }
+
+    .bgi_conter1_p2 {
+        font-size: 22px;
+        color: #999999;
+        padding-bottom: 60px;
+    }
+
+    .macbook {
+        width: 720px;
+    }
+
+    .macbook2 {
+        width: 660px;
+        height: auto !important;
+    }
+
+    .macbook3 {
+        width: 640px;
+        height: auto !important;
+    }
+
+    .bgi_conter_tit1 {
+        font-size: 48px;
+    }
+
+    .bgi_conter_tit2, .bgi_conter_tit3 {
+        font-size: 34px;
+    }
+}
+
+/*设备屏幕大于1500px，小于1600px*/
+@media screen and (min-width:1500px) and (max-width:1600px) {
+    .bgi_top, .bgi_conter {
+        width: 1360px;
+    }
+
+    .bgi_conter1_p1 {
+        font-size: 34px;
+    }
+
+    .bgi_conter1_p2 {
+        font-size: 20px;
+        color: #999999;
+        padding-bottom: 60px;
+    }
+
+    .macbook {
+        width: 680px;
+    }
+
+    .macbook2 {
+        width: 640px;
+        height: auto !important;
+    }
+
+    .macbook3 {
+        width: 620px;
+        height: auto !important;
+    }
+
+    .bgi_conter_tit1 {
+        font-size: 46px;
+    }
+
+    .bgi_conter_tit2, .bgi_conter_tit3 {
+        font-size: 32px;
+    }
+}
+
+/*设备屏幕大于1440px，小于1500px*/
+@media screen and (min-width:1440px) and (max-width:1500px) {
+    .bgi_top, .bgi_conter {
+        width: 1260px;
+    }
+
+    .bgi_conter1_p1 {
+        font-size: 30px;
+    }
+
+    .bgi_conter1_p2 {
+        font-size: 20px;
+        color: #999999;
+        padding-bottom: 60px;
+    }
+
+    .macbook {
+        width: 620px;
+    }
+
+    .macbook2 {
+        width: 620px;
+        height: auto !important;
+    }
+
+    .macbook3 {
+        width: 600px;
+        height: auto !important;
+    }
+
+    .bgi_conter_tit1 {
+        font-size: 44px;
+    }
+
+    .bgi_conter_tit2, .bgi_conter_tit3 {
+        font-size: 30px;
+    }
+}
+
+@media screen and (min-width:1366px) and (max-width:1440px) {
+    .bgi_top, .bgi_conter {
+        width: 1200px;
+    }
+
+    .bgi_conter1_p1 {
+        font-size: 28px;
+    }
+
+    .bgi_conter1_p2 {
+        font-size: 18px;
+        color: #999999;
+        padding-bottom: 60px;
+    }
+
+    .macbook {
+        width: 600px;
+    }
+
+    .bgi_conter_tit1 {
+        font-size: 42px;
+    }
+
+    .macbook2 {
+        width: 600px;
+        height: auto !important;
+    }
+
+    .macbook3 {
+        width: 580px;
+        height: auto !important;
+    }
+
+    .contactUs, .friendshipLink {
+        margin-top: 60px;
+    }
+
+    .bgi_conter_tit2, .bgi_conter_tit3 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .bgi_top, .bgi_conter {
+        width: 1126px;
+    }
+
+    .bgi_conter1_p1 {
+        font-size: 26px;
+    }
+
+    .bgi_conter1_p2 {
+        font-size: 16px;
+        color: #999999;
+        padding-bottom: 60px;
+    }
+
+    .macbook {
+        width: 560px;
+    }
+
+    .bgi_conter_tit1 {
+        font-size: 40px;
+    }
+
+    .macbook2 {
+        width: 580px;
+        height: auto !important;
+    }
+
+    .macbook3 {
+        width: 560px;
+        height: auto !important;
+    }
+
+    .contactUs, .friendshipLink {
+        margin-top: 60px;
+    }
+
+    .bgi_conter_tit2, .bgi_conter_tit3 {
+        font-size: 26px;
+    }
+}

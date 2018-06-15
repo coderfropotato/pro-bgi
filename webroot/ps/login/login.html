@@ -29,6 +29,7 @@
 
 
 </head>
+
 <body>
     <div class="main">
         <ul class="main_ul">
@@ -184,7 +185,7 @@
         </ul>
 
         <div class="mengc"></div>
-        
+
         <div class="login" id="login">
             <div class="login_close">
                 <img src="./res/images/login_close.png" id="closeBtn" />
@@ -200,21 +201,19 @@
                     </div>
                     <div class="login_sum">
                         <img src="./res/images/password.png" class="password_img" />
-                        <input type="password" name="lcpwd" ng-keyup="tbx_password_OnKeyUp($event,'lc')"  class="login_password input_pass" super-validate="请输入流程密码"
-                        ng-model="formEntity.Password" required  placeholder="请输入密码" />
+                        <input type="password" name="lcpwd" ng-keyup="tbx_password_OnKeyUp($event,'lc')" class="login_password input_pass" super-validate="请输入流程密码" ng-model="formEntity.Password" required placeholder="请输入密码" />
                     </div>
 
                     <div class="login_sum">
                         <img src="./res/images/verificationCode.png" class="verificationCode" />
-                        <input type="text" name="code"  placeholder="请输入验证码" super-validate="请输入验证码" ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
+                        <input type="text" name="code" placeholder="请输入验证码" super-validate="请输入验证码" ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
                         <div class="verificationCode_img">
-                            <img  ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码" id="imgcode" class="yzm" />
+                            <img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码" id="imgcode" class="yzm" />
                             <input type="text" name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
                         </div>
                     </div>
                     <div class="signIn">
-                        <button id="btn_memberLogin" type="button" ng-click="btn_lcLogin_OnClick()" class="btn btn-info btn-block btn_submit" ng-disabled="myForm1.lcid.$error.required || myForm1.lcpwd.$error.required || myForm1.code.$error.required"
-                            ng-bind="lcLoginText">
+                        <button id="btn_memberLogin" type="button" ng-click="btn_lcLogin_OnClick()" class="btn btn-info btn-block btn_submit" ng-disabled="myForm1.lcid.$error.required || myForm1.lcpwd.$error.required || myForm1.code.$error.required" ng-bind="lcLoginText">
                             请稍后，正在加载...
                         </button>
                     </div>

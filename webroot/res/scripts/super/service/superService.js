@@ -1398,7 +1398,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             panelW = $graphGroup.outerWidth();
                             panelPaddingTop = (panelH - 80) / 2;
                         }
-                        console.log(panelW)
 
                         if (icnPaddingTop) {
                             panelPaddingTop = icnPaddingTop;

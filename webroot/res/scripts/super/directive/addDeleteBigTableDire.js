@@ -313,7 +313,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
 
             // 获取大表数据
             $scope.GetBigTableData = function (pageNumber) {
-                toolService.gridFilterLoading.open($scope.tableId);
+                toolService.gridFilterLoading.open($scope.contentId);
                 $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
                 $scope.pageEntity.pageNum = pageNumber;
@@ -367,10 +367,10 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
                     }
 
-                    toolService.gridFilterLoading.close($scope.tableId);
+                    toolService.gridFilterLoading.close($scope.contentId);
                 }, function (errorMesg) {
                     $scope.geneCount = 0;
-                    toolService.gridFilterLoading.close($scope.tableId);
+                    toolService.gridFilterLoading.close($scope.contentId);
                     $scope.error = "syserror";
                 });
             };

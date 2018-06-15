@@ -58,13 +58,13 @@ define(['loginApp'], function (loginApp) {
 
         $scope.code = function () {
             $scope.uuid = getUUID();
-            $scope.formEntity.UUID = $scope.uuid;
         }
 
         $scope.renovate = function () {
             var uuid = getUUID();
             var img = document.getElementById("imgcode");
             img.src = options.api.java_url + "/checkImg?uuid" + uuid;
+            $scope.formEntity.UUID = $scope.uuid;
         }
 
 

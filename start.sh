@@ -1,1 +1,1 @@
-DATAPATH=/data/gooalgene/ga/report/ docker-compose up
+DATAPATH=/data/gooalgene/ga/report/ docker-compose up -d

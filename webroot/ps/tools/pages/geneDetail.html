@@ -122,19 +122,19 @@
                             <td style="text-align: right;width: 100px;">
                                 Entry:
                             </td>
-                            <td>
+                            <td style="text-align: left;">
                                 <a href="https://www.kegg.jp/dbget-bin/www_bget?ko:{{row.Entry}}" target="_blank">{{row.Entry}}</a>
                             </td>
                             <td style="text-align: right;width: 100px;">
                                 Name:
                             </td>
-                            <td>
+                            <td style="text-align: left;">
                                 {{row.Name}}
                             </td>
                             <td style="text-align: right;width: 100px;">
                                 Definition:
                             </td>
-                            <td>
+                            <td style="text-align: left;">
                                 {{row.Definition}}
                             </td>
 
@@ -147,15 +147,15 @@
 
         <div ng-show="isHasGO">
             <h5>GO</h5>
-            <div class="divContent">
-                <div ng-repeat="go in goList track by $index" ng-hide="goError">
+            <div class="divContent" ng-hide="goError">
+                <div ng-repeat="go in goList track by $index">
                     <p>{{go.go_level1}}</p>
                     <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
                         <a href="http://amigo.geneontology.org/amigo/search/ontology?q=http://amigo.geneontology.org/amigo/search/ontology?q= + {{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
                     </div>
                 </div>
-                <div class="table-nodata" error-type="goError" style="border: 0"></div>
             </div>
+            <div class="table-nodata" error-type="goError" style="border: 0"></div>
         </div>
 
         <div ng-show="isHasPhi">

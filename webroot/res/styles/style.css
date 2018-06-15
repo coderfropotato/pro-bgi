@@ -8545,11 +8545,6 @@ div.tipsContainer,
     margin: 10px;
 }
 
-.sequenceInfo p {
-    font-family: Consolas, Monaco, monospace;
-    white-space: nowrap;
-}
-
 .bgi_static_pic {
-    text-align:center;
+    text-align: center;
 }

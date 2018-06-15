@@ -9,8 +9,7 @@
             <div class="btn_options_filelist">
                 <ul class="FLeft">
                     <li>
-                        <div class="grid-filter-begin" tableid="reAnalysis_pathwayRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_pathwayRich_go"
-                            filter-status-callback="handlerFilterStatusChange(status)"></div>
+                        <div class="grid-filter-begin" tableid="reAnalysis_pathwayRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_pathwayRich_go" filter-status-callback="handlerFilterStatusChange(status)"></div>
                     </li>
                 </ul>
                 <ul class="fRight">
@@ -59,7 +58,7 @@
                     <div class="filter-right">
                         <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
                             <span class="filter-item" ng-bind-html="f"></span>
-                            <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                        <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                         </span>
                     </div>
                 </div>
@@ -90,8 +89,7 @@
                                         <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
                                     </td>
                                     <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                        <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="https://www.kegg.jp/kegg-bin/show_pathway?{{row[val.true_key]}}"
-                                            target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
+                                        <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="../../ps/tools/index.html#/home/mapId?map={{row[val.true_key].substring(2,row[val.true_key].length)}}&taskId={{id}}" target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
                                             accuracy)}}</a>
                                         <span ng-if="val.true_key!='kegg_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
                                             accuracy)}}</span>
@@ -128,8 +126,7 @@
             <div class="graph_header">
                 <ul class="fLeft">
                     <li>
-                        <div class="graph-view-btn" parentid="reAnalysis_pathwayRich_bubble" charpanelid="div_reAnalysis_pathwayRich_bubble" is-table="true"
-                            is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                        <div class="graph-view-btn" parentid="reAnalysis_pathwayRich_bubble" charpanelid="div_reAnalysis_pathwayRich_bubble" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
                     </li>
                     <li>
                         <div class="selector_normal" style="width: 110px;">
@@ -141,8 +138,7 @@
                     </li>
                     <!-- GoList panel  -->
                     <li>
-                        <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true"
-                            ng-mouseleave="isShowGoListPanel=false">
+                        <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true" ng-mouseleave="isShowGoListPanel=false">
                             <button class="btn btn-default btn-silver btn-sm">
                                 选中的GO
                                 <span class="red">({{goSelectList.length
@@ -193,14 +189,12 @@
                 <ul class="fRight">
                     <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='bubble'">
                         <button ng-show="!single" ng-click="handlerSingle(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button ng-show="single" ng-click="handlerMultiple(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选"
-                            style="margin-right:12px;">多选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(bubble)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
                         <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='column'">
                         <button ng-show="!single" ng-click="handlerSingle(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button ng-show="single" ng-click="handlerMultiple(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选"
-                            style="margin-right:12px;">多选</button>
+                        <button ng-show="single" ng-click="handlerMultiple(barchart)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
                         <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <li ng-hide="bubbleError || isTableShow">
@@ -234,8 +228,7 @@
                         <tbody>
                             <tr ng-repeat="row in bubbleTableData.rows track by $index">
                                 <td class="center">{{$index+1}}</td>
-                                <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name"
-                                    data-title="{{row[val.true_key]}}">
+                                <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                     <span>{{row[val.true_key]}}</span>
                                 </td>
                             </tr>
@@ -258,10 +251,9 @@
         </div>
 
         <!-- 交互表 (geneId表) start -->
-        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
-            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
-            params-value-list="paramsValueList" method="method" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis" reanalysis-id="reanalysisId"></div>
+        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" method="method" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
+            reanalysis-id="reanalysisId"></div>
 
     </div>
 

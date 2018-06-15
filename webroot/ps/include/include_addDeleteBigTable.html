@@ -1,10 +1,11 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
     <div id="{{theadControlId}}">
         <div ng-if="isShowTheadControl && !error" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl"
-            data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
+        data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
     </div>
-
+    
     <div class="tableListPanel" id="{{contentId}}">
+            <h6>基因表达量</h6>
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">
                 <li>
@@ -129,7 +130,7 @@
                                 <td style="width:40px; text-align:center;">
                                     <i ng-click="handlerChecked($index,$event)" class="icon choose-icon" ng-class="{'icon-eye-slash':!val.isChecked,'icon-eye':val.isChecked,}"></i>
                                 </td>
-                                <td class="center nowrap popover-table" >
+                                <td class="center nowrap" >
                                     <!-- gene_id || xxx_query_id -->
                                     <span ng-if="val.true_key==='gene_id' || val.true_key.indexOf('query_id')!=-1">
                                         <a href="../tools/index.html#/home/geneDetail/{{val[geneid.true_key]}}" target="_blank">{{val[geneid.true_key]}}</a>
@@ -205,8 +206,8 @@
             </ul>
             <div class="clear"></div>
         </div>
+        <!-- reanalysis content -->
+        <div ng-if="!error && isReanalysis" class="re-analysis" gene-count="geneCount" callback="handlerReanalysis(options)"></div>
     </div>
     <!-- table over -->
-    <!-- reanalysis content -->
-    <div ng-if="!error && isReanalysis" class="re-analysis" gene-count="geneCount" callback="handlerReanalysis(options)"></div>
 </div>

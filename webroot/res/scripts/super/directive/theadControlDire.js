@@ -57,6 +57,7 @@ define("superApp.theadControlDire",
                     $scope.data.forEach(function (val, index) {
                         val.list.forEach(function (item, idx) {
                             item.isActive = false;
+                            item.index = index;
                         });
                         // 根据length 初始化私有数据
                         $scope.activeByClick.push([]);
@@ -300,7 +301,16 @@ define("superApp.theadControlDire",
                 if (isEmpty($scope.activeByClick)) {
                     // 把取消选中的项状态应用到原始数据
                     $scope.cancelBycurrentActiveItems($scope.cancelByClick, $scope.data, true);
-
+                    
+                    // 把取消的数据放到all里面
+                    $scope.cancelByClick.forEach(function(val,index){
+                        if(val.length){
+                            for(var i=0;i<val.length;i++){
+                                $scope.allActiveItems[index].push(val[i]);
+                            }
+                        }
+                        
+                    })
                 } else {
                     // 删除历史记录
                     $scope.activeByClick.forEach(function (val, index) {

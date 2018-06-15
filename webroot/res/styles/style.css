@@ -8549,3 +8549,7 @@ div.tipsContainer,
     font-family: Consolas, Monaco, monospace;
     white-space: nowrap;
 }
+
+.bgi_static_pic {
+    text-align:center;
+}

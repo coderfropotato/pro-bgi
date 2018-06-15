@@ -62,9 +62,10 @@ define(['loginApp'], function (loginApp) {
         }
 
         $scope.renovate = function () {
-            var uuid = getUUID();
+            $scope.uuid = getUUID();
             var img = document.getElementById("imgcode");
-            img.src = options.api.java_url + "/checkImg?uuid" + uuid;
+            img.src = options.api.java_url + "/checkImg?uuid" +  $scope.uuid;
+            $scope.formEntity.UUID = $scope.uuid
         }
 
 

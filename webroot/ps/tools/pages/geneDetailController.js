@@ -347,6 +347,10 @@ define(["toolsApp"], function(toolsApp) {
                 "legendBox": {
                     "show": false,
                 },
+                "dataBox": {
+                    "showLabel": false,
+                    "normalColor": ["#5378F8"]
+                }
             }
 
             $scope.linechart = new gooal.lineInit("#" + options.id, options);

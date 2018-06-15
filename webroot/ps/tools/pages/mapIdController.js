@@ -44,21 +44,35 @@ define(['toolsApp'], function(toolsApp) {
             })
 
             $scope.title = 'MapID：' + mapId;
-            $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + method + "_Method_map/" + mapId + ".html";
 
             // Geneid table params start
-            $scope.mapIdEntity = {
-                "LCID": LCID,
-                "compareGroup": compareGroup,
-                "term_id": koNum,
-                "pageSize": 10,
-                "pageNum": 1,
-                "searchContentList": [],
-                "sortName": "",
-                "sortType": "",
-            };
+
             if (taskId) {
-                $scope.mapIdEntity.id = taskId;
+                $scope.mapIdEntity = {
+                    "LCID": LCID,
+                    "id": taskId,
+                    "term_id": koNum,
+                    "pageSize": 10,
+                    "pageNum": 1,
+                    "searchContentList": [],
+                    "sortName": "",
+                    "sortType": "",
+                };
+
+                $scope.pathWayIframeUrl = options.pathWayPath + "report/report_" + LCID + "/re_" + taskId + "/" + LCID + "_" + taskId + "/Pathway_map/" + mapId + ".html";
+            } else {
+                $scope.mapIdEntity = {
+                    "LCID": LCID,
+                    "compareGroup": compareGroup,
+                    "term_id": koNum,
+                    "pageSize": 10,
+                    "pageNum": 1,
+                    "searchContentList": [],
+                    "sortName": "",
+                    "sortType": "",
+                };
+
+                $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/" + LCID + "_xreport/Differentially_expressed_gene/Pathway_analysis/Pathway_enrichment/" + compareGroup + "/" + compareGroup + "." + method + "_Method_map/" + mapId + ".html";
             }
             $scope.url = options.api.mrnaseq_url + '/PathwayTable';
             $scope.panelId = "div_mapid_panel";

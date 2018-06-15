@@ -1,4 +1,4 @@
-<div id="{{panelId}}" ng-init="InitPage()" class="tableListPanel">
+<div id="{{panelId}}" ng-hide="isNoDataHide" ng-init="InitPage()" class="tableListPanel">
     <div ng-hide="isNoDataHide && error" class="btn_options_filelist clearfix">
         <ul class="ul_left">
             <li>
@@ -34,7 +34,7 @@
             </li>
         </ul>
     </div>
-    <div class="table_scroll_wrap" ng-hide="isNoDataHide && error">
+    <div class="table_scroll_wrap" ng-hide="error">
         <div id="{{tablePanelId}}">
             <table ng-hide="error" class="table table-bordered table-hover table-striped table_grid table-fixed">
                 <thead>

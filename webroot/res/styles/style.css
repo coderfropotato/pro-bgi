@@ -325,7 +325,7 @@ a:hover .glyphicon-trash {
 .view_topbar {
     position: fixed;
     width: 100%;
-    height: 50px;
+    height: 64px;
     background: #386CCA/*#4397D9*/
     ;
     z-index: 101;
@@ -426,15 +426,20 @@ a:hover .glyphicon-trash {
 
 .topbar_logo {
     display: block;
-    width: 179px;
+    width: 78px;
     background: url(../images/topbar_logo_icn.png) no-repeat 14px 12px;
     color: #FFF;
     text-align: left;
     line-height: 50px;
     height: 50px;
-    margin-left: 0;
+    margin-left: 6px;
     padding-left: 47px;
     font-size: 19px;
+    margin-right: 14px;
+}
+.logo2{
+    width: 140px;
+    background: url(../images/logo2.png) no-repeat 14px 22px;
 }
 
 .super-frame-top a {

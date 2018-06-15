@@ -22,11 +22,11 @@
                             </li>
                         </ul>
                         <!-- icons -->
-                        <span ng-show="!isViewFull" style="float:left;" class="menuicon {{leftList.icon_class}}"></span>
+                        <span ng-show="!isViewFull" style="float:left;" class="menuicon {{leftList.icon_class}}" ng-class="{active:leftList.isExpand}"></span>
 
                         <!-- <span style="margin-left:5px;float:left">{{leftList.TBTEXT}}</span> -->
                         <span ng-show="isViewFull" class="sidebar-title-text">
-                            <span class="menuicon {{leftList.icon_class}}"></span>
+                            <span class="menuicon {{leftList.icon_class}}" ng-class="{active:leftList.isExpand}"></span>
                             <span style="float:left">{{leftList.JDMC}}</span>
                             <span style="float:left;position: absolute;right:3px;top:-27px;z-index:1" ng-if="!leftList.ISREPORT">
                                 <span class="timer"></span>

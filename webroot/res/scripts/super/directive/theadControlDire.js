@@ -216,7 +216,15 @@ define("superApp.theadControlDire",
 
             // 清除
             $scope.clear = function () {
-                $scope.resetAll();
+                $scope.initAllActiveItems();
+                $scope.initActiveByClick();
+                $scope.initCancelByClick();
+                $scope.data.forEach(function (val, index) {
+                    val.list.forEach(function (item, idx) {
+                        item.isActive = false;
+                    });
+                })
+                $scope.callback();
                 //重新计算ul宽度
                 $scope.computedWrapWidth();
             }
@@ -332,7 +340,6 @@ define("superApp.theadControlDire",
                 if (!angular.equals($scope.beforeActiveItems, $scope.allActiveItems)) {
                     // $scope.handleTheadChange && $scope.handleTheadChange(combineArr($scope.allActiveItems));
                     var items = $scope.classify($scope.allActiveItems);
-                    console.log(items);
                     $scope.handleTheadChange && $scope.handleTheadChange({ arg: items });
                     // 更新旧值为新值
                     $scope.beforeActiveItems = angular.copy($scope.allActiveItems);
@@ -510,7 +517,7 @@ define("superApp.theadControlDire",
                     var oUl = $('.thead-control-wrap .item-wrap>ul');
                     var totalWidth = 0;
                     for (var i = 0; i < oUl.children('li').length; i++) {
-                        totalWidth +=$('.thead-control-wrap .item-wrap>ul').children('li').eq(i).outerWidth(true)+1;
+                        totalWidth += $('.thead-control-wrap .item-wrap>ul').children('li').eq(i).outerWidth(true) + 1;
                     }
                     $('.thead-control-wrap .item-wrap>ul').css('width', totalWidth + 'px')
                 }, 30)

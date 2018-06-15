@@ -426,8 +426,9 @@ define(['loginApp'], function (loginApp) {
                 }, 1);
             }
 
+            /*************第二页幻灯片*************/
             var index = 0;
-            var maximg = 5;
+            var maximg = 2;
             //滑动导航改变内容
             $("#productNav li").hover(function () {
                 if (MyTime) {
@@ -438,14 +439,13 @@ define(['loginApp'], function (loginApp) {
                     ShowjQueryFlash(index);
                     $('#productContent').stop();
                 }, 400);
-
             }, function () {
                 clearInterval(MyTime);
                 MyTime = setInterval(function () {
                     ShowjQueryFlash(index);
                     index++;
                     if (index == maximg) { index = 0; }
-                }, 3000);
+                }, 5000);
             });
 
             //自动播放
@@ -453,22 +453,38 @@ define(['loginApp'], function (loginApp) {
                 ShowjQueryFlash(index);
                 index++;
                 if (index == maximg) { index = 0; }
-            }, 3000);
+            }, 5000);
             function ShowjQueryFlash(i) {
                 $("#productContent .banner_teb").eq(i).animate({ opacity: 1 }, 1000).css({ "z-index": "1" }).siblings().animate({ opacity: 0 }, 1000).css({ "z-index": "0" });
                 $("#productNav li").eq(i).addClass("current").siblings().removeClass("current");
             }
 
+
+            /**********登录弹窗显示隐藏*************/
             //点击登录按钮显示登录弹窗
             $(".loginBtn").click(function () {
+                $(".main_ul").css("filter", "blur(5px)");
                 $(".mengc").show();
                 $("#login").show(10);
+                type = false;
             })
             //点击登录弹窗关闭按钮隐藏登录弹窗
             $("#closeBtn").click(function () {
+                type = true;
+                $(".main_ul").css("filter", "none")
                 $("#login").hide();
                 $(".mengc").hide(10);
             })
+
+            //获取页面各块级高度
+            var bodyH = $(".main").height();
+            var titH = $(".contactUs_tit").innerHeight() * 2;
+            var liH = $(".friendshipLink_ul img").height() * 2;
+            var QRCodeH = $(".QRCode").innerHeight();
+            var ftConH = $(".ftCon").innerHeight();
+            var padHeight = (bodyH - titH - liH - QRCodeH - ftConH - 120) / 4;
+            //设置padding自适应高度
+            $(".contactUs_ul li,.friendshipLink_ul li").css({ "padding-top": padHeight, "padding-bottom": padHeight })
         }
     }
 });

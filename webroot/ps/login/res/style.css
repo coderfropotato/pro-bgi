@@ -3,9 +3,16 @@
     margin: 0;
 }
 
+p {
+    padding: 0;
+    margin: 0;
+}
+
 li {
     list-style: none;
 }
+
+/*********样式开始*********/
 
 .main {
     position: absolute;
@@ -19,18 +26,18 @@ li {
     font-size: 14px;
 }
 
-    .main input {
-        outline: none;
-    }
+.main input {
+    outline: none;
+}
 
 .main_ul {
     position: relative;
 }
 
-    .main_ul .content {
-        position: relative;
-        overflow: hidden;
-    }
+.main_ul .content {
+    position: relative;
+    overflow: hidden;
+}
 
 .bgi_top {
     width: 1680px;
@@ -63,7 +70,7 @@ li {
     margin-left: 60px;
     line-height: 40px;
     color: #ffffff;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .index {
@@ -154,10 +161,10 @@ li {
     width: 100%;
 }
 
-    .bgi_conter_ul .bgi_conter_li {
-        float: left;
-        width: 50%;
-    }
+.bgi_conter_ul .bgi_conter_li {
+    float: left;
+    width: 50%;
+}
 
 .macbook {
     width: 800px;
@@ -213,10 +220,10 @@ li {
     padding-top: 78px;
 }
 
-    .bgi_conter_div2 li {
-        padding-bottom: 14px;
-        display: flex;
-    }
+.bgi_conter_div2 li {
+    padding-bottom: 14px;
+    display: flex;
+}
 
 .banner_teb {
     position: absolute;
@@ -239,16 +246,18 @@ li {
 .bgi_conter_right .dian {
     background: #333333;
 }
+
 /*幻灯片*/
+
 #productContent {
     overflow: hidden;
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 
-    #productContent .smask {
-        z-index: -1;
-    }
+#productContent .smask {
+    z-index: -1;
+}
 
 #productNav {
     display: block;
@@ -261,55 +270,56 @@ li {
     z-index: 5;
 }
 
-    #productNav li {
-        width: 14px;
-        height: 14px;
-        display: block;
-        float: left;
-        cursor: pointer;
-        text-align: center;
-        margin-left: 10px;
-        background: #ccc;
-        color: #fff;
-        margin-right: 5px;
-        border-radius: 100%;
-    }
+#productNav li {
+    width: 14px;
+    height: 14px;
+    display: block;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 10px;
+    background: #ccc;
+    color: #fff;
+    margin-right: 5px;
+    border-radius: 100%;
+}
 
-    #productNav .nbg {
-        background: #666;
-    }
+#productNav .nbg {
+    background: #666;
+}
 
-    #productNav .current {
-        background: #5378f8;
-    }
+#productNav .current {
+    background: #5378f8;
+}
 
 .contactUs_ul, .friendshipLink_ul {
     overflow: hidden;
     width: 1020px;
     margin: 0 auto;
-    box-shadow: 0 6px 12px 0 rgba(183,199,255,0.3);
+    box-shadow: 0 6px 12px 0 rgba(183, 199, 255, 0.3);
 }
 
-    .contactUs_ul li {
-        float: left;
-        width: 340px;
-        text-align: center;
-        padding: 55px 0;
-    }
+.contactUs_ul li {
+    float: left;
+    width: 340px;
+    text-align: center;
+    /*padding: 55px 0;*/
+}
 
-        .contactUs_ul li img {
-        }
+.contactUs_ul li p {
+    padding-top: 20px;
+}
 
-        .contactUs_ul li p {
-            padding-top: 20px;
-        }
+.friendshipLink_ul li {
+    float: left;
+    width: 340px;
+    text-align: center;
+    /*padding: 58.5px 0;*/
+}
 
-    .friendshipLink_ul li {
-        float: left;
-        width: 340px;
-        text-align: center;
-        padding: 58.5px 0;
-    }
+.friendshipLink_ul li img {
+    height: 80px;
+}
 
 .index_yuanq {
     color: #5378F8;
@@ -318,11 +328,11 @@ li {
 }
 
 .contactUs {
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .friendshipLink {
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .contactUs_tit, .friendshipLink_tit {
@@ -332,12 +342,12 @@ li {
 
 .QRCode {
     text-align: center;
+    padding-top: 40px;
 }
 
 .QRCode_img {
     width: 92px;
     height: 92px;
-    padding-top: 40px;
 }
 
 .QRCode_con {
@@ -348,10 +358,11 @@ li {
     color: #333333;
     text-align: center;
     font-size: 12px;
-    padding-top: 40px;
+    padding: 40px 0;
 }
 
 /*登录*/
+
 .login {
     width: 388px;
     background: #fff;
@@ -394,7 +405,7 @@ li {
     position: absolute;
     left: 20px;
     top: 15px;
-    z-index:10000;
+    z-index: 1000;
 }
 
 .login_userName, .login_password, .verificationCodeInput {
@@ -418,16 +429,16 @@ li {
     padding: 30px 0 50px 0;
 }
 
-    .signIn button {
-        background: #5378F8;
-        border-radius: 4px;
-        width: 100%;
-        border: none;
-        height: 48px;
-        font-size: 16px;
-        color: #fff;
-        cursor: pointer;
-    }
+.signIn button {
+    background: #5378F8;
+    border-radius: 4px;
+    width: 100%;
+    border: none;
+    height: 48px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
 
 .mengc {
     position: fixed;
@@ -444,12 +455,12 @@ li {
 .login_footer {
     width: 1200px;
     margin: 0 auto;
-    overflow-y: auto;
-    height: 100%;
+    /*overflow-y: auto;
+    height: 100%;*/
 }
 
 .content_two_a {
-    background: url(images/bg2.png)no-repeat 100% ;
+    background: url(images/bg2.png)no-repeat 100%;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -466,120 +477,136 @@ li {
     width: 100%;
     height: 100%;
 }
+
 /*设备屏幕大于1600px，小于1680px*/
+
 @media screen and (min-width:1600px) and (max-width:1680px) {
     .bgi_top, .bgi_conter {
         width: 1440px;
     }
-
     .bgi_conter1_p1 {
         font-size: 38px;
     }
-
     .bgi_conter1_p2 {
         font-size: 22px;
         color: #999999;
         padding-bottom: 60px;
     }
-
     .macbook {
         width: 720px;
     }
-
     .macbook2 {
         width: 660px;
         height: auto !important;
     }
-
     .macbook3 {
         width: 640px;
         height: auto !important;
     }
-
     .bgi_conter_tit1 {
         font-size: 48px;
     }
-
     .bgi_conter_tit2, .bgi_conter_tit3 {
         font-size: 34px;
+    }
+    .contactUs_ul li p {
+        padding-top: 10px;
+    }
+    .friendshipLink_ul li img {
+        width: 180px;
+        height: 60px;
+    }
+    .QRCode_img {
+        width: 84px;
+        height: 84px;
     }
 }
 
 /*设备屏幕大于1500px，小于1600px*/
+
 @media screen and (min-width:1500px) and (max-width:1600px) {
     .bgi_top, .bgi_conter {
         width: 1360px;
     }
-
     .bgi_conter1_p1 {
         font-size: 34px;
     }
-
     .bgi_conter1_p2 {
         font-size: 20px;
         color: #999999;
         padding-bottom: 60px;
     }
-
     .macbook {
         width: 680px;
     }
-
     .macbook2 {
         width: 640px;
         height: auto !important;
     }
-
     .macbook3 {
         width: 620px;
         height: auto !important;
     }
-
     .bgi_conter_tit1 {
         font-size: 46px;
     }
-
     .bgi_conter_tit2, .bgi_conter_tit3 {
         font-size: 32px;
+    }
+    .contactUs_ul li p {
+        padding-top: 10px;
+    }
+    .friendshipLink_ul li img {
+        width: 140px;
+        height: 54px;
+    }
+    .QRCode_img {
+        width: 84px;
+        height: 84px;
     }
 }
 
 /*设备屏幕大于1440px，小于1500px*/
+
 @media screen and (min-width:1440px) and (max-width:1500px) {
     .bgi_top, .bgi_conter {
         width: 1260px;
     }
-
     .bgi_conter1_p1 {
         font-size: 30px;
     }
-
     .bgi_conter1_p2 {
         font-size: 20px;
         color: #999999;
         padding-bottom: 60px;
     }
-
     .macbook {
         width: 620px;
     }
-
     .macbook2 {
         width: 620px;
         height: auto !important;
     }
-
     .macbook3 {
         width: 600px;
         height: auto !important;
     }
-
     .bgi_conter_tit1 {
         font-size: 44px;
     }
-
     .bgi_conter_tit2, .bgi_conter_tit3 {
         font-size: 30px;
+    }
+    .contactUs_ul li p {
+        padding-top: 10px;
+    }
+    .friendshipLink_ul li img {
+        width: 140px;
+        height: 54px;
+    }
+    .QRCode_img {
+        width: 84px;
+        height: 84px;
     }
 }
 
@@ -587,41 +614,50 @@ li {
     .bgi_top, .bgi_conter {
         width: 1200px;
     }
-
     .bgi_conter1_p1 {
         font-size: 28px;
     }
-
     .bgi_conter1_p2 {
         font-size: 18px;
         color: #999999;
         padding-bottom: 60px;
     }
-
     .macbook {
         width: 600px;
     }
-
     .bgi_conter_tit1 {
         font-size: 42px;
     }
-
     .macbook2 {
         width: 600px;
         height: auto !important;
     }
-
     .macbook3 {
         width: 580px;
         height: auto !important;
     }
-
     .contactUs, .friendshipLink {
         margin-top: 60px;
     }
-
     .bgi_conter_tit2, .bgi_conter_tit3 {
         font-size: 28px;
+    }
+    .contactUs_tit, .friendshipLink_tit {
+        font-size: 22px;
+    }
+    .contactUs_ul li p {
+        padding-top: 10px;
+    }
+    .contactUs_ul li img {
+        width: 36px;
+    }
+    .friendshipLink_ul li img {
+        width: 140px;
+        height: 54px;
+    }
+    .QRCode_img {
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -629,40 +665,49 @@ li {
     .bgi_top, .bgi_conter {
         width: 1126px;
     }
-
     .bgi_conter1_p1 {
         font-size: 26px;
     }
-
     .bgi_conter1_p2 {
         font-size: 16px;
         color: #999999;
         padding-bottom: 60px;
     }
-
     .macbook {
         width: 560px;
     }
-
     .bgi_conter_tit1 {
         font-size: 40px;
     }
-
     .macbook2 {
         width: 580px;
         height: auto !important;
     }
-
     .macbook3 {
         width: 560px;
         height: auto !important;
     }
-
     .contactUs, .friendshipLink {
         margin-top: 60px;
     }
-
     .bgi_conter_tit2, .bgi_conter_tit3 {
         font-size: 26px;
+    }
+    .contactUs_tit, .friendshipLink_tit {
+        font-size: 20px;
+    }
+    .contactUs_ul li p {
+        padding-top: 10px;
+    }
+    .contactUs_ul li img {
+        width: 36px;
+    }
+    .friendshipLink_ul li img {
+        width: 140px;
+        height: 46px;
+    }
+    .QRCode_img {
+        width: 80px;
+        height: 80px;
     }
 }

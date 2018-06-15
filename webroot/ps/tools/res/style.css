@@ -69,11 +69,13 @@
     opacity: 0.6;
 }
 
-.btn-tools.btn-tools-primary:hover, .btn-tools.btn-tools-warning:hover {
+.btn-tools.btn-tools-primary:hover,
+.btn-tools.btn-tools-warning:hover {
     opacity: 1.0;
 }
 
-.btn-tools.btn-tools-default:hover, .btn-tools.btn-tools-default.active {
+.btn-tools.btn-tools-default:hover,
+.btn-tools.btn-tools-default.active {
     color: #FFFFFF;
     background-color: #666666;
 }
@@ -113,7 +115,8 @@
     left: 4px;
     top: 5px;
 }
-.filter .remove{
+
+.filter .remove {
     position: absolute;
     right: 6px;
     top: 6px;
@@ -123,7 +126,8 @@
     opacity: .6;
     cursor: pointer;
 }
-.filter .remove:hover{
+
+.filter .remove:hover {
     opacity: 1.0
 }
 
@@ -177,7 +181,8 @@
     transition: 0.3s all ease;
 }
 
-.advance-panel ul>li ol li.active, .advance-panel ul ol.date li input:focus {
+.advance-panel ul>li ol li.active,
+.advance-panel ul ol.date li input:focus {
     border-color: #333;
 }
 
@@ -232,29 +237,44 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.editProject>input{
+
+.editProject>input {
     text-align: center;
     width: calc(100% - 18px);
 }
 
-.btn-links{
+.btn-links {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 120%;
 }
-.btn-links:hover ul{
+
+.btn-links:hover ul {
     display: block;
 }
-.btn-links li p{
+
+.btn-links li p {
     white-space: normal;
 }
-.btn-links ul{
+
+.btn-links ul {
     left: 0;
     top: 30px;
 }
 
-.page_report .alert-default span{
+.page_report .alert-default span {
     line-height: 2;
+}
+
+.report-page-title h2 {
+    background: #5378F8!important;
+    color: #FFFFFF;
+    border-radius: 2px!important;
+    text-align: center;
+}
+
+.report-page-title h2 span {
+    font-size: 24px!important;
 }

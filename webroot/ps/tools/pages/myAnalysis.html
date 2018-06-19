@@ -1,7 +1,6 @@
 <div class="myAnalysis-page" ng-init="InitPage()" ng-controller="myAnalysisController">
     <div class="report-page-title" custom-title="title"></div>
     <div class="tools-analysis-panel tableListPanel" id="myanalysis-table">
-        <p class="title">我的分析</p>
         <div class="btns clearfix">
             <button class="btn-advance btn-tools btn-tools-default pull-right" ng-class="{'active': isFilter}" ng-click="handlerAdvanceClick($event)">advance</button>
             <!-- filter panel -->
@@ -31,10 +30,10 @@
                 </ul>
                 <!-- btn -->
                 <button class="btn btn-success pull-right" ng-click="handlerFilterClick()">筛选</button>
-                <button class="btn btn-default pull-right" style="margin-right:12px;" ng-click="handlerResetClick($event)">重置</button>
+                <button class="btn btn-default pull-right reSet" style="margin-right:12px;" ng-click="handlerResetClick($event)">重置</button>
             </div>
             <div class="filter pull-right">
-                <input placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label" ng-keyup="handlerSearch($event)">
+                <input class="keywordInput" placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label" ng-keyup="handlerSearch($event)">
                 <i class="glyphicon glyphicon-search search"></i>
                 <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
             </div>
@@ -57,13 +56,13 @@
                             <td class="text-center editProject">
                                 <span ng-show="!item.isEdit">{{item.projectName}}</span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
-                                <input  ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
+                                <input ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
                                 <i class="glyphicon glyphicon-pencil" ng-click="handlerEditClick(item)"></i>
                             </td>
                             <td class="text-center">
-                                <span ng-if="item.process==1">成功</span>
-                                <span ng-if="item.process==-1">进行中，剩余:{{item.restTime}}</span>
-                                <span ng-if="item.process==0">失败</span>
+                                <span ng-if="item.process==1"><i class="iconfont icon-wancheng"></i>成功</span>
+                                <span ng-if="item.process==-1"><i class="iconfont icon-yunhangzhong"></i>进行中，剩余:{{item.restTime}}</span>
+                                <span ng-if="item.process==0"><i class="iconfont icon-shibai"></i>失败</span>
                             </td>
                             <td class="text-center" ng-bind="item.time"></td>
                             <td class="text-center">

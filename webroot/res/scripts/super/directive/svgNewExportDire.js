@@ -110,15 +110,42 @@ define("superApp.svgNewExportDire",
                     image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
 
                 }else{
-                    var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
-                    var a = document.createElement('a');
-                    document.body.appendChild(a);
-                    a.href = href;
-                    a.download = saveImgName + ".svg";
-                    setTimeout(function() {
-                        a.click();
-                        a.remove();
-                    }, 200);
+                    var ajaxConfig = {
+                        data: svgXml,
+                        url: options.api.base_url + "/Transfer"
+                    };
+                    var promise = ajaxService.GetDeferData(ajaxConfig);
+                    promise.then(function(responseData) {
+                        if (responseData.Error) {
+                            //系统异常
+                            toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
+                        } else {
+                            var fileInfo = responseData;
+                            var aEle = document.createElement("a");
+                            document.body.appendChild(aEle);
+                            var file = new Blob([fileInfo], {
+                                type: 'application/pdf;charset=utf-8;'
+                            });
+                            aEle.href = URL.createObjectURL(file);
+                            if ($scope.isMultipleName) {
+                                aEle.download = $scope.varFileName + ".svg";
+                            } else {
+                                aEle.download = saveImgName + ".svg";
+                            }
+                            aEle.click();
+                            aEle.remove();
+                        }
+                    });
+
+                    // var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
+                    // var a = document.createElement('a');
+                    // document.body.appendChild(a);
+                    // a.href = href;
+                    // a.download = saveImgName + ".svg";
+                    // setTimeout(function() {
+                    //     a.click();
+                    //     a.remove();
+                    // }, 200);
                 }
                 
             };

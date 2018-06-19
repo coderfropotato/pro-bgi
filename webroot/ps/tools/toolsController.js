@@ -38,7 +38,7 @@ define(['toolsApp'], function (toolsApp) {
                 data: $rootScope.analysisEntity,
                 url: $scope.analysisListUrl
             }
-            var promise = ajaxService.GetDeferData(ajaxConfig);
+            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
                 if (res.status!=200) {
                     $rootScope.analysisError = 'syserror';

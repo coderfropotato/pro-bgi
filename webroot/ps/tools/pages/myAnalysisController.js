@@ -60,7 +60,7 @@ define(['toolsApp'], function (toolsApp) {
                 data: $scope.analysisEntity,
                 url: $scope.analysisListUrl
             }
-            var promise = ajaxService.GetDeferData(ajaxConfig);
+            var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
                 toolService.gridFilterLoading.close("myanalysis-table");
                 if (res.status!=200) {

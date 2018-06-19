@@ -58,7 +58,6 @@ define(["toolsApp"], function(toolsApp) {
             }
 
             if ($scope.geneDetails.length) {
-                console.log($scope.geneDetails);
                 $scope.isHasKegg = $.inArray("kegg", $scope.geneDetails) != -1;
                 $scope.isHasGO = $.inArray("go", $scope.geneDetails) != -1;
                 $scope.isHasSnp = $.inArray("snp", $scope.geneDetails) != -1;

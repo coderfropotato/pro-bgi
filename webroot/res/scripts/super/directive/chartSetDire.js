@@ -25,8 +25,8 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='dropdown'>" +
-                    "<button class='btn btn-default  btn-silver btn-sm tool-tip' ng-click='isShow=!isShow' ng-class='{active:isShow}' title='设置'>" +
-                    " <span class='glyphicon glyphicon-cog'></span>" +
+                    "<button class='new-table-switch-btns noborder tool-tip' ng-click='isShow=!isShow' ng-class='{active:isShow}' title='设置'>" +
+                    " <span class='iconfont icon-shezhi'></span>" +
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>{{setTitle}}：</span></p>" +

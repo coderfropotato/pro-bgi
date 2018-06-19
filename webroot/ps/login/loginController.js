@@ -64,7 +64,7 @@ define(['loginApp'], function (loginApp) {
         $scope.renovate = function () {
             $scope.uuid = getUUID();
             var img = document.getElementById("imgcode");
-            img.src = options.api.java_url + "/checkImg?uuid" +  $scope.uuid;
+            img.src = options.api.java_url + "/checkImg?uuid" + $scope.uuid;
             $scope.formEntity.UUID = $scope.uuid
         }
 
@@ -362,6 +362,7 @@ define(['loginApp'], function (loginApp) {
             function mouseBottom() {
                 //第二屏
                 if (main.scrollTop == liLen[0].offsetTop && type == true) {
+                    timeFunt();
                     type = false;
                     //延时滚动。要不然会先执行代码再执行滚轮，那样会多滚动出一截子。
                     setTimeout(function () {
@@ -428,35 +429,40 @@ define(['loginApp'], function (loginApp) {
             }
 
             /*************第二页幻灯片*************/
-            var index = 0;
-            var maximg = 2;
-            //滑动导航改变内容
-            $("#productNav li").hover(function () {
-                if (MyTime) {
-                    clearInterval(MyTime);
-                }
-                index = $("#productNav li").index(this);
-                MyTime = setTimeout(function () {
-                    ShowjQueryFlash(index);
-                    $('#productContent').stop();
-                }, 400);
-            }, function () {
-                clearInterval(MyTime);
-                MyTime = setInterval(function () {
+            //幻灯片
+            function timeFunt() {
+                var index = 1;
+                var maximg = 2;
+
+                //自动播放
+                var MyTime = setInterval(function () {
                     ShowjQueryFlash(index);
                     index++;
                     if (index == maximg) { index = 0; }
                 }, 5000);
-            });
 
-            //自动播放
-            var MyTime = setInterval(function () {
-                ShowjQueryFlash(index);
-                index++;
-                if (index == maximg) { index = 0; }
-            }, 5000);
+                //滑动导航改变内容
+                $("#productNav li").hover(function () {
+                    if (MyTime) {
+                        clearInterval(MyTime);
+                    }
+                    index = $("#productNav li").index(this);
+                    MyTime = setTimeout(function () {
+                        ShowjQueryFlash(index);
+                        $('#productContent').stop();
+                    }, 400);
+                }, function () {
+                    clearInterval(MyTime);
+                    MyTime = setInterval(function () {
+                        ShowjQueryFlash(index);
+                        index++;
+                        if (index == maximg) { index = 0; }
+                    }, 5000);
+                });
+            }
+
             function ShowjQueryFlash(i) {
-                $("#productContent .banner_teb").eq(i).animate({ opacity: 1 }, 1000).css({ "z-index": "1" }).siblings().animate({ opacity: 0 }, 1000).css({ "z-index": "0" });
+                $("#productContent .banner_teb").hide(1000).stop(true, true).eq(i).fadeIn(1000);
                 $("#productNav li").eq(i).addClass("current").siblings().removeClass("current");
             }
 

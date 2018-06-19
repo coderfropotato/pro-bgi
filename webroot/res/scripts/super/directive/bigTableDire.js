@@ -65,7 +65,7 @@ define("superApp.bigTableDire",
 
             //获取注释表数据
             $scope.GetTableData = function (pageNumber) {
-                toolService.gridFilterLoading.open($scope.tablePanelId);
+                toolService.gridFilterLoading.open($scope.panelId);
                 $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
                 $scope.pageEntity.pageNum = pageNumber;
@@ -84,9 +84,9 @@ define("superApp.bigTableDire",
                         $scope.error = "";
                         $scope.tableData = responseData;
                     }
-                    toolService.gridFilterLoading.close($scope.tablePanelId);
+                    toolService.gridFilterLoading.close($scope.panelId);
                 }, function (errorMesg) {
-                    toolService.gridFilterLoading.close($scope.tablePanelId);
+                    toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
             };

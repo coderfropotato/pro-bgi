@@ -34,8 +34,8 @@ define("superApp.gridExportDire", ["angular", "super.superMessage", "select2"],
                     downloadId: "@"
                 },
                 template: "<div class='dropdown drop-menu'>" +
-                    "<button class='btn btn-default btn-silver btn-sm tool-tip' title='导出数据'>" +
-                    "<span class='iconglyph icon-download-alt'></span>" +
+                    "<button class='new-table-switch-btns noborder tool-tip' title='导出数据'>" +
+                    "<span class='iconfont icon-xiazai'></span>" +
                     "</button>" +
                     "<ul class='dropdown-menu'>"
                     // + "<li ng-click='ben_SaveLocal_OnClick(1)'><a href='javascript:;'>导出Excel文件到本地</a></li>"

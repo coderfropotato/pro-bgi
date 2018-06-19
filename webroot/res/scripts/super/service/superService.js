@@ -136,11 +136,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         window.location.reload();
                                         // window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                                     } else {
-                                        if (responseData.Status == "Wrong username or password") {
-                                            var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
-                                        } else {
-                                            var myPromise = toolService.popMesgWindow(responseData.Status);
-                                        }
+                                        // if (responseData.Status == "Wrong username or password") {
+                                        //     var myPromise = toolService.popMesgWindow('对不起，您输入的流程编号或密码错误！');
+                                        // } else {
+                                        //     var myPromise = toolService.popMesgWindow(responseData.Status);
+                                        // }
+                                        var myPromise = toolService.popMesgWindow(responseData.Error);
                                         myPromise.then(function () {
                                             globalTokenError = false;
                                             window.location.href = '../../../../ps/login/login.html';

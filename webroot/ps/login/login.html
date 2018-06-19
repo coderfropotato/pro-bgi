@@ -206,10 +206,10 @@
 
                     <div class="login_sum">
                         <img src="./res/images/verificationCode.png" class="verificationCode" />
-                        <input type="text" name="code" placeholder="请输入验证码" super-validate="请输入验证码" ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
+                        <input type="text"  name="code" placeholder="请输入验证码" super-validate="请输入验证码"  ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
                         <div class="verificationCode_img">
-                            <img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码" id="imgcode" class="yzm" />
-                            <input type="text" name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
+                            <img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码"  id="imgcode" class="yzm" />
+                            <input type="text"  name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
                         </div>
                     </div>
                     <div class="signIn">

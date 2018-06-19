@@ -5024,8 +5024,8 @@ ol.tree .olTreeLnks .olTreeA {
     }
 }
 
-.btn_options_filelist {
-    background-color: #F7FBFD/*EBF5FD*/
+/* .btn_options_filelist {
+    background-color: #F7FBFD;
     ;
     border: 1px solid #E5EBF1;
     margin-bottom: 0px;
@@ -5033,9 +5033,8 @@ ol.tree .olTreeLnks .olTreeA {
     clear: both;
     line-height: 30px;
     border-bottom: 0px;
-}
+} */
 
-.btn_options_filelist ul {}
 
 .btn_options_filelist ul li {
     display: inline;

@@ -505,8 +505,8 @@ define("superApp.gridFilterDire",
                     eventName: "=",             // 手动接受改变的searchOne的自定义事件名
                     filterStatusCallback: "&"        // 是否筛选中，定义外部布局样式
                 },
-                template: " <button class=\"btn btn-default btn-sm btn-silver tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
-                    + "                    <span class=\"iconglyph icon-filter\"></span></button>",
+                template: " <button class=\"new-table-switch-btns noborder tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
+                    + "                    <span class=\"iconfont icon-shaixuan\"></span></button>",
                 replace: false,
                 transclude: true,
                 controller: "gridFilterBeginController",

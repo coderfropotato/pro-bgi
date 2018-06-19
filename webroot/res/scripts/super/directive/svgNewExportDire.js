@@ -24,7 +24,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
             return {
                 restrict: "ACE",
                 template: "<div class='dropdown drop-menu'>" +
-                    "<button class='btn btn-default btn-sm btn-silver tool-tip' title='导出'>" +
+                    "<button class='new-table-switch-btns noborder tool-tip' title='导出'>" +
                     "<span class='glyphicon glyphicon-picture'></span> "
                     //+ "<span class='icon-caret-down'></span>"
                     +
@@ -32,9 +32,6 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     "<ul class='dropdown-menu'>" +
                     "</ul>" +
                     "</div>",
-                scope: {
-                    isBigSvg: "="
-                },
                 controller: "svgNewExportController",
                 link: function(scope, element, attrs) {
                     var $element = $(element);

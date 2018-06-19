@@ -229,7 +229,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
             // 多选确定
             $scope.handlerConfirm = function () {
-                $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
+                if(!$scope.single){
+                    $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
+                }
             }
 
             $scope.$watch('selectData', function (newVal, oldVal) {

@@ -1,8 +1,13 @@
 ﻿<div class="report_view_leftside leftside_mousewheel" ng-class="{zmax:$scope.isLeftsideHover}" ng-init="$scope.isLeftsideHover=false">
     <!-- 显示/隐藏 -->
-    <div class="sidebar_fold" ng-click="sidebarFold_OnClick()">
+    <!-- <div class="sidebar_fold" ng-click="sidebarFold_OnClick()">
         <span class="glyphicon glyphicon-menu-hamburger" style="cursor:pointer;" title="显示/隐藏">
         </span>
+    </div> -->
+    <!-- 显示隐藏 -->
+    <div class="expand-icon" ng-class="{'unexpand':!isViewFull}">
+        <img ng-show="isViewFull" ng-click="sidebarFold_OnClick()" src="../mrna/res/images/icon/expand.png"/>
+        <img ng-show="!isViewFull" ng-click="sidebarFold_OnClick()" src="../mrna/res/images/icon/unexpand.png"/>
     </div>
     <!-- 左侧菜单开始 ng-class="{hideContent:navConfig.product.folded}"  ng-class="{sidebar_nav_fold:!navConfig.product.folded}" ng-mouseenter="leftTree_OnMouseover($index);"
                 ng-mouseleave="leftTree_OnMouseleave($index);"-->
@@ -33,7 +38,8 @@
                             </span>
                         </span>
                         <!-- arrows -->
-                        <span ng-show="isViewFull" class="glyphicon" ng-class="{ 'icon-caret-down':!leftList.isExpand,'icon-caret-left':leftList.isExpand}"
+                         <!-- 'icon-caret-down':!leftList.isExpand, -->
+                        <span ng-show="isViewFull" class="glyphicon" ng-class="{'icon-caret-left':leftList.isExpand}"
                             ng-if="leftList.ISTBLJ">
                             <span class="sidebar-manage ng-scope">
                             </span>

@@ -22,8 +22,8 @@ function (angular, SUPER_CONSOLE_MESSAGE) {
                 isTableShow: "="               //表格视图是否点击
             },
             template: "  <div class=\"btn-group pagePanel-heading-btn btn-group-switch\">"
-                     + "     <button type=\"button\" class=\"btn btn-default btn-silver btn-sm tool-tip\" ng-class=\"{active:!isTableShow}\" title=\"统计视图\" ng-click=\"btn_ShowGraph_OnClick()\"><span class=\"glyphicon glyphicon-stats\"></span></button> "
-                     + "     <button type=\"button\" ng-if=\"isTable\" class=\"btn btn-default btn-silver btn-sm tool-tip\" ng-class=\"{active:isTableShow}\" title=\"表格视图\" ng-click=\"btn_ShowTable_OnClick()\"><span class=\"glyphicon glyphicon-th-list\"></span></button>"
+                     + "     <button type=\"button\"  class=\"new-table-switch-btns  tool-tip\" ng-class=\"{active:!isTableShow}\" title=\"统计视图\" ng-click=\"btn_ShowGraph_OnClick()\"><span class=\"glyphicon glyphicon-stats\"></span></button> "
+                     + "     <button type=\"button\" ng-if=\"isTable\" style=\"margin-left:-5px;\" class=\" new-table-switch-btns  tool-tip\" ng-class=\"{active:isTableShow}\" title=\"表格视图\" ng-click=\"btn_ShowTable_OnClick()\"><span class=\"glyphicon glyphicon-th-list\"></span></button>"
                      + " </dvi>",
             replace: false,
             transclude: true,

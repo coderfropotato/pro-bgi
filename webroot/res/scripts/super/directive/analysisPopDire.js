@@ -29,7 +29,7 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
                     "</tr>" +
                     "</tbody>" +
                     "</table></div>" +
-                    "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i><div>我的分析</div></div>" +
+                    "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"iconfont icon-jihua\"></i><div>我的分析</div></div>" +
                     "<p class=\"error-tips\" ng-show=\"(analysisList.length==0) && error=='nodata'\">暂无分析信息</p>" +
                     "<p class=\"error-tips\" ng-show=\"error=='syserror'\">服务器错误</p>" +
                     "</div>",

@@ -25,11 +25,11 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
                     "<tr ng-repeat=\"val in analysisList \" track by $index>"
                     //  | date:'yyyy-MM-dd hh:mm:ss'
                     +
-                    "<td ><span uib-tooltip=\"{{val.projectName}}\" style='display:block;max-width:90px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'>{{val.projectName}}</span></td><td><span ng-if=\"val.process==0\">失败</span><span ng-if=\"val.process==-1\">进行中</span><span ng-if=\"val.process==1\">成功</span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>" +
+                    "<td ><span uib-tooltip=\"{{val.projectName}}\" style='display:block;max-width:90px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'>{{val.projectName}}</span></td><td><span ng-show=\"val.process==0\" style='color:#F04848;'><i class=\"iconfont icon-shibai\"></i></span><span ng-show=\"val.process==-1\" style='color:#32AAFF'><i class=\"iconfont icon-yunhangzhong\"></i></span><span ng-show=\"val.process==1\" style='color:#63D359;'><i class=\"iconfont icon-wancheng\"></i></span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\">查看</td>" +
                     "</tr>" +
                     "</tbody>" +
                     "</table></div>" +
-                    "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"icon\" ng-class=\"isExpand?'icon-angle-right':'icon-angle-left'\"></i><div>我的分析</div></div>" +
+                    "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"iconfont icon-jihua\"></i><div>我的分析</div></div>" +
                     "<p class=\"error-tips\" ng-show=\"(analysisList.length==0) && error=='nodata'\">暂无分析信息</p>" +
                     "<p class=\"error-tips\" ng-show=\"error=='syserror'\">服务器错误</p>" +
                     "</div>",

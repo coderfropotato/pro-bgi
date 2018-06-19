@@ -1,5 +1,5 @@
 <div id="{{contentId}}" ng-init="InitPage()">
-    <div class="bs-examples">
+    <div class="bs-examples table-switch-chart-wrap">
         <div class="graph_group" id="{{panelId}}">
             <div class="graph_header">
                 <ul class="fLeft">
@@ -30,10 +30,9 @@
                         </button>
                     </li>
                     <li ng-show="!isTableShow && isSelectChartData && !onlySingle && !error">
-                        <button ng-show="!single" ng-click="handlerSingle()" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                        <button style="margin-right:12px;" ng-if="single" ng-click="handlerMultiple()" class="btn btn-sm btn-silver btn-default tool-tip"
-                            title="多选">多选</button>
-                        <button ng-show="!single" ng-click="handlerConfirm()" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
+                        <button  ng-click="handlerSingle()" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip" title="单选">单选</button>
+                        <button style="margin-left:-5px;margin-right:7px;"  ng-class="{'active':!single}" ng-click="handlerMultiple()" class="new-table-switch-btns new-btns-big tool-tip " title="多选">多选</button>
+                        <button ng-click="handlerConfirm()" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <!-- 精度 -->
                     <li ng-show="isTableShow && showAccuracy">
@@ -52,8 +51,8 @@
                     </li>
                     <!-- 刷新 -->
                     <li>
-                        <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="handlerRefresh()">
-                            <span class="glyphicon glyphicon-refresh"></span>
+                        <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="handlerRefresh()">
+                            <span class="iconfont icon-shuaxin"></span>
                         </button>
                     </li>
                     <!-- 表格导出 -->

@@ -62,7 +62,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
             }
 
             $scope.GetTableData = function () {
-                toolService.gridFilterLoading.open($scope.tablePanelId);
+                toolService.gridFilterLoading.open($scope.panelId);
                 var ajaxConfig = {
                     data: $scope.pageEntity,
                     url: $scope.url,
@@ -78,9 +78,9 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.error = "";
                         $scope.tableData = responseData;
                     }
-                    toolService.gridFilterLoading.close($scope.tablePanelId);
+                    toolService.gridFilterLoading.close($scope.panelId);
                 }, function (errorMesg) {
-                    toolService.gridFilterLoading.close($scope.tablePanelId);
+                    toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
             }

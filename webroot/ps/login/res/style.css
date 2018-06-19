@@ -4,15 +4,13 @@
 }
 
 p {
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 li {
     list-style: none;
 }
-
-/*********样式开始*********/
 
 .main {
     position: absolute;
@@ -405,7 +403,7 @@ li {
     position: absolute;
     left: 20px;
     top: 15px;
-    z-index: 1000;
+    z-index:9999999999;
 }
 
 .login_userName, .login_password, .verificationCodeInput {
@@ -413,7 +411,7 @@ li {
     height: 48px;
     border: 1px solid #E8E8E8;
     border-radius: 2px;
-    text-indent: 50px;
+    padding: 0 10px 0 50px;
 }
 
 .verificationCode_img {
@@ -456,7 +454,7 @@ li {
     width: 1200px;
     margin: 0 auto;
     /*overflow-y: auto;
-    height: 100%;*/
+height: 100%;*/
 }
 
 .content_two_a {

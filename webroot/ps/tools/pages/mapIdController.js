@@ -59,7 +59,7 @@ define(['toolsApp'], function(toolsApp) {
                     "sortType": "",
                 };
 
-                $scope.pathWayIframeUrl = options.pathWayPath + "report/report_" + LCID + "/re_" + taskId + "/" + LCID + "_" + taskId + "/Pathway_map/" + mapId + ".html";
+                $scope.pathWayIframeUrl = options.pathWayPath + "report_" + LCID + "/re_" + taskId + "/" + LCID + "_" + taskId + "/Pathway_map/" + mapId + ".html";
             } else {
                 $scope.mapIdEntity = {
                     "LCID": LCID,

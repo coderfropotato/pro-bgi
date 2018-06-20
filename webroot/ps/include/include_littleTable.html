@@ -1,5 +1,5 @@
-<div id="{{panelId}}" ng-hide="isNoDataHide" ng-init="InitPage()" class="tableListPanel little-table-wrap">
-    <div ng-hide="isNoDataHide && error" class="btn_options_filelist clearfix">
+<div id="{{panelId}}" ng-hide="isNoDataHide && error" ng-init="InitPage()" class="tableListPanel little-table-wrap">
+    <div  class="btn_options_filelist clearfix">
         <ul class="ul_left">
             <li>
                 <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>

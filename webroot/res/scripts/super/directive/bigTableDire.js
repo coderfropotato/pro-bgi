@@ -36,7 +36,9 @@ define("superApp.bigTableDire",
                     // 是否显示精度
                     showAccuracy: "=",
                     // 外部更新触发 不需要外部更新null 需要默认传false
-                    outerUpdate: "="
+                    outerUpdate: "=",
+                    // 是否需要重分析
+                    isReanalysis: "="
                 },
                 replace: false,
                 transclude: true,
@@ -53,6 +55,8 @@ define("superApp.bigTableDire",
                 // 精度默认 全数据
                 $scope.accuracy = -1;
                 // 获取表格数据
+                // genecount
+                $scope.geneCount = 0;
                 $scope.GetTableData(1);
             };
 
@@ -78,11 +82,14 @@ define("superApp.bigTableDire",
                 promise.then(function (responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
+                        $scope.geneCount = 0;
                     } else if (responseData.length == 0) {
+                        $scope.geneCount = 0;
                         $scope.error = "nodata";
                     } else {
                         $scope.error = "";
                         $scope.tableData = responseData;
+                        $scope.geneCount = responseData.total;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
                 }, function (errorMesg) {
@@ -109,6 +116,63 @@ define("superApp.bigTableDire",
             // 筛选状态改变
             $scope.handlerFilterStatusChange = function (status) {
                 $scope.isBeginFilter = status;
+            }
+
+            $scope.reanalysisError = false;
+            $scope.handlerReanalysis = function (params) {
+                // params {'type': type, 'check': checkedItems,'chartType':chartType }
+
+                $scope.reAnalysisEntity = { entity: '' };
+                $scope.reAnalysisEntity.entity = angular.copy($scope.pageEntity);
+                $scope.reAnalysisEntity.geneUnselectList = [];
+                $scope.reAnalysisEntity.url = angular.copy($scope.url).split('mrna')[1];
+                // $scope.reAnalysisEntity.allThead = [];
+
+                if (params.chartType === 'heatmap') {
+                    $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
+                } else {
+                    $scope.reAnalysisEntity.chartType = params.chartType;
+                }
+
+                $scope.reAnalysisEntity.chooseType = params.type;
+                $scope.reAnalysisEntity.chooseList = angular.copy(params.check);
+
+                for (var key in $scope.geneUnselectList) {
+                    $scope.reAnalysisEntity.geneUnselectList.push(key);
+                }
+
+                // 不要allThead 2018年6月6日10:46:06
+                // $scope.bigTableData.baseThead.forEach(function (val, index) {
+                //     $scope.reAnalysisEntity.allThead.push(val.true_key);
+                // });
+                var newFrame = window.open('../../../../ps/tools/index.html#/home/loading')
+                var promise = ajaxService.GetDeferData({
+                    data: $scope.reAnalysisEntity,
+                    url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
+                })
+                toolService.pageLoading.open('正在提交重分析申请，请稍后...');
+                promise.then(function (res) {
+                    toolService.pageLoading.close();
+                    if (res.Error) {
+                        newFrame.close();
+                        $scope.reanalysisError = "syserror";
+                        toolService.popMesgWindow(res.Error);
+                    } else {
+                        $scope.reanalysisError = false;
+                        $scope.$emit('openAnalysisPop');
+                        $rootScope.GetAnalysisList(1);
+                        // 如果不需要重新分析 就直接打开详情页
+                        if (params.chartType === 'heatmap' || params.chartType === 'goRich' || params.chartType === 'pathwayRich') {
+                            newFrame.close();
+                            toolService.popMesgWindow('重分析提交成功');
+                        } else {
+                            newFrame.location.href = '../../../../ps/tools/index.html#/home/' + $scope.reAnalysisEntity.chartType + '/' + res.id
+                        }
+                    }
+                }, function (err) {
+                    newFrame.close();
+                    toolService.popMesgWindow(err);
+                })
             }
 
 

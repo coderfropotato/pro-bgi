@@ -1,88 +1,90 @@
 <div class="net-page" ng-init="InitPage()" ng-controller="netController">
     <div class="report-page-title" custom-title="title"></div>
     <h6>蛋白网络互作</h6>
-    <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
-        <div class="graph_header">
-            <ul class="fLeft">
-                <li>
-                    <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
-                </li>
-                <li ng-hide="error || isTableShow">
-                    <button ng-show="myOptions.isMultiChoose" ng-click="changeFlag(myOptions)" class="btn btn-sm btn-silver btn-default tool-tip" title="单选">单选</button>
-                    <button ng-show="!myOptions.isMultiChoose" ng-click="changeFlag(myOptions)" class="btn btn-sm btn-silver btn-default tool-tip" title="多选" style="margin-right:12px;">多选</button>
-                    <button ng-show="myOptions.isMultiChoose" ng-click="getChooseGeneList(netData)" class="btn btn-sm btn-silver btn-default tool-tip" title="确定所有选择">确定</button>
-                </li>
-            </ul>
-            <ul class="fRight">
-                <li ng-if="!error">
-                    <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
-                                <span style="color:red;">({{links.length}})</span>
-                                <div class="links btn-links" style="color:#333;">
-                                    <ul ng-if="links.length" class="link-lists">
-                                        <li ng-click="handlerSeeClick(item)" ng-repeat="item in links track by $index">
-                                            <p>类型：{{item.chartType}}</p>
-                                            <p>项目名称：{{item.projectName}}</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </button>
-                </li>
-                <li ng-hide="isTableShow || error">
-                    <div class="chart-set" set-title="斥力" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
-                </li>
-                <li ng-hide="error || isTableShow">
-                    <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
-                </li>
-                <li ng-hide="tableError || !isTableShow">
-                    <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
-                </li>
-                <li ng-hide="isTableShow">
-                    <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetNetData()">
-                                    <span class="glyphicon glyphicon-refresh"></span>
-                                </button>
-                </li>
-                <li ng-show="isTableShow">
-                    <button class="btn btn-default btn-silver btn-sm tool-tip" title="刷新" ng-click="GetTableData()">
-                                    <span class="glyphicon glyphicon-refresh"></span>
-                                </button>
-                </li>
-            </ul>
-        </div>
-
-        <!-- table -->
-        <div class="table_scroll_wrap" ng-show="isTableShow">
-            <div ng-hide="tableError" style="max-height: 800px;overflow: auto;">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed">
-                    <thead>
-                        <tr>
-                            <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
-                                <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
-                                <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="row in tableData.rows track by $index">
-                            <td class="center" ng-repeat="val in tableData.baseThead track by $index">
-                                {{row[val.true_key]}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="table-switch-chart-wrap"> 
+        <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
+            <div class="graph_header">
+                <ul class="fLeft">
+                    <li>
+                        <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                    </li>
+                </ul>
+                <ul class="fRight">
+                    <li ng-hide="error || isTableShow">
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="单选">单选</button>
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="多选" style="margin-right:7px;">多选</button>
+                        <button  ng-click="getChooseGeneList(netData)"  class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
+                    </li>
+                    <li ng-if="!error">
+                        <button style="position:relative;" class="btn-sm list_btn">前置任务
+                            <span style="color:red;">({{links.length}})</span>
+                            <div class="links btn-links" style="color:#333;">
+                                <ul ng-if="links.length" class="link-lists">
+                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links track by $index">
+                                        <p>类型：{{item.chartType}}</p>
+                                        <p>项目名称：{{item.projectName}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
+                    </li>
+                    <li ng-hide="isTableShow || error">
+                        <div class="chart-set" set-title="斥力" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
+                    </li>
+                    <li ng-hide="error || isTableShow">
+                        <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
+                    </li>
+                    <li ng-hide="tableError || !isTableShow">
+                        <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
+                    </li>
+                    <li ng-hide="isTableShow">
+                        <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetNetData()">
+                                        <span class="iconfont icon-shuaxin"></span>
+                                    </button>
+                    </li>
+                    <li ng-show="isTableShow">
+                        <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData()">
+                                        <span class="iconfont icon-shuaxin"></span>
+                                    </button>
+                    </li>
+                </ul>
             </div>
-            <div class="table-nodata" error-type="tableError"></div>
-        </div>
 
-        <!-- chart -->
-        <div class="tab-switch-chart" ng-hide="isTableShow">
-            <div class="chart_wrap" ng-hide="error">
-                <div class="chart_graph" id="div_reAnalysis_net_panel" style="text-align:center">
-                    <svg id="reAnalysis_net_panel_svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            <!-- table -->
+            <div class="table_scroll_wrap" ng-show="isTableShow">
+                <div ng-hide="tableError" style="max-height: 800px;overflow: auto;">
+                    <table class="table table-bordered table-hover table-striped table_grid table-fixed">
+                        <thead>
+                            <tr>
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in tableData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                    <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
+                                    <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in tableData.rows track by $index">
+                                <td class="center" ng-repeat="val in tableData.baseThead track by $index">
+                                    {{row[val.true_key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+                <div class="table-nodata" error-type="tableError"></div>
             </div>
-            <div class="table-nodata" error-type="error"></div>
-        </div>
 
+            <!-- chart -->
+            <div class="tab-switch-chart" ng-hide="isTableShow">
+                <div class="chart_wrap" ng-hide="error">
+                    <div class="chart_graph" id="div_reAnalysis_net_panel" style="text-align:center">
+                        <svg id="reAnalysis_net_panel_svg" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                </div>
+                <div class="table-nodata" error-type="error"></div>
+            </div>
+
+        </div>
     </div>
 
     <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"

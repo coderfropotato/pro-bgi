@@ -1,9 +1,9 @@
 <div class="add-delete-big-table-content" ng-init="InitPage()">
     <div id="{{theadControlId}}">
         <div ng-if="isShowTheadControl && !error" parent-id="{{theadControlId}}" class="thead-control thead-control-dire" is-reset="isResetTheadControl"
-        data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
+            data="allTableHeader" handle-thead-change="theadChange(arg)"></div>
     </div>
-    
+
     <div class="tableListPanel" id="{{contentId}}">
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">
@@ -42,45 +42,23 @@
                     <!-- genelist panel  -->
                     <div id="{{unselectGenePanelId}}" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGeneListPanel}"
                         ng-mouseenter="handlerMouseEnter()" ng-mouseleave="handlerMouseLeave()">
-                        <button class="btn btn-default btn-silver btn-sm">
+                        <button class="btn btn-default btn-silver btn-sm btn-genelist">
                             未选中GeneList
                             <span class="red">({{geneUnselectListLength}})</span>
                             <span class="icon-caret-down"></span>
                         </button>
                         <div class="dropdown-menu div_gn_droplist">
                             <div style="max-height:400px; overflow-y:auto; overflow-x:hidden;">
-                                <table class="table table-bordered table-hover table-striped table_grid table-fixed" cellpadding="0" cellspacing="0" border="0">
-                                    <thead>
-                                        <tr>
-                                            <th width="40"></th>
-                                            <th style="width: 60px; text-align: center;">
-                                                NO.
-                                            </th>
-                                            <th>{{geneid.name}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-if="geneUnselectListLength == 0">
-                                            <td colspan="3" style="text-align:center;">
-                                                暂无未选中列表
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat="(key,val) in geneUnselectList track by $index">
-                                            <td>
-                                                <button ng-click="removeGeneItem(key)" type="button" class="btn btn-default btn-silver btn_tiny" style="margin-right: 0px;">
-                                                    <span class="iconglyph icon-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td align="center" ng-bind="$index+1"></td>
-                                            <td ng-bind="key"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <dl ng-show="geneUnselectListLength">
+                                    <dt>GeneId</dt>
+                                    <dd ng-repeat="(key,val) in geneUnselectList track by $index">
+                                        <i ng-click="removeGeneItem(key)" class="custom-icon"></i>{{key}}</dd>
+                                </dl>
+                                <span ng-show="!geneUnselectListLength">暂无数据</span>
                             </div>
-                            <div class="btnPanel" style="margin-top:10px; border-top:1px solid #ddd;" ng-show="geneUnselectListLength">
-                                <button ng-click="handlerClearUnselect()" type="button" class="btn btn-default searchBtn btn-danger" style="margin-right: 0px;">清空</button>
+                            <div class="btnPanel" style="margin-top:20px; border-top:1px solid #ddd;" ng-show="geneUnselectListLength">
+                                <button ng-click="handlerClearUnselect()" type="button" class="nbtn nbtn-default searchBtn" style="margin-right: 0px;margin-top: 10px;">清空</button>
                             </div>
-
                         </div>
                     </div>
                 </li>
@@ -129,10 +107,10 @@
                                 <td style="width:40px; text-align:center;">
                                     <i ng-click="handlerChecked($index,$event)" class="icon choose-icon" ng-class="{'icon-eye-slash':!val.isChecked,'icon-eye':val.isChecked,}"></i>
                                 </td>
-                                <td class="center nowrap" >
+                                <td class="center nowrap">
                                     <!-- gene_id || xxx_query_id -->
                                     <span ng-if="val.true_key==='gene_id' || val.true_key.indexOf('query_id')!=-1">
-                                        <a href="../tools/index.html#/home/geneDetail/{{val[geneid.true_key]}}" target="_blank">{{val[geneid.true_key]}}</a>
+                                        <a ng-href="../tools/index.html#/home/geneDetail/{{val[geneid.true_key]}}" target="_blank">{{val[geneid.true_key]}}</a>
                                     </span>
                                     <span ng-if="val.true_key!=='gene_id' && val.true_key.indexOf('query_id')==-1">{{val[geneid.true_key]}}</span>
                                 </td>
@@ -153,10 +131,11 @@
                         </thead>
                         <tbody ng-hide="error">
                             <tr ng-class="{'unChecked':!row.isChecked}" ng-repeat="row in bigTableData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key"
-                                    ng-repeat="val in bigTableData.baseThead track by $index" thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId" compare-group="compareGroup" method="method">
+                                <td class="center nowrap popover-table" ng-if="val.true_key!==geneid.true_key" ng-repeat="val in bigTableData.baseThead track by $index"
+                                    thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId"
+                                    compare-group="compareGroup" method="method">
                                     <!-- 其他 -->
-                                    <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_id'">
+                                    <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_mix_tools' && val.true_key!=='go_term_id'">
                                         <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
                                             {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
                                         </span>
@@ -172,8 +151,9 @@
                                          go_desc 
                                          go_subject_annotation 
                                          go_term_mix 
+                                         go_term_mix_tools
                                          go_term_id-->
-                                    <span ng-if="val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc' || val.true_key==='kegg_term_mix' || val.true_key==='kegg_term_mix_tools' || val.true_key==='kegg_term_id' || val.true_key.indexOf('kegg_term_mix_')!=-1 || val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation' || val.true_key==='go_term_mix' || val.true_key==='go_term_id'">
+                                    <span ng-if="val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc' || val.true_key==='kegg_term_mix' || val.true_key==='kegg_term_mix_tools' || val.true_key==='kegg_term_id' || val.true_key.indexOf('kegg_term_mix_')!=-1 || val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation' || val.true_key==='go_term_mix' || val.true_key==='go_term_mix_tools' || val.true_key==='go_term_id'">
                                         <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
                                         <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                     </span>

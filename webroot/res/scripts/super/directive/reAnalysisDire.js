@@ -17,7 +17,7 @@ define("superApp.reAnalysisDire",
                 template: "<div class='re-analysis-panel clearfix'>"
 
                     + "<ul class='pull-right clearfix'>"
-                    + "<li class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'至少选择2个基因作图':'聚类'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\"><i class=\"iconfont icon-tools icon-juleizhongfenxi\"></i></li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'至少选择两个基因作图':'聚类'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\"><i class=\"iconfont icon-tools icon-juleizhongfenxi\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':goRichError}\"uib-tooltip=\"{{goRichError?'至少选择三个基因作图':'GO富集'}}\" ng-click=\"handlerReanalysisClick(goRichError,'goRich')\"><i class=\"iconfont icon-tools icon-go\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':pathwayRichError}\" uib-tooltip=\"{{pathwayRichError?'至少选择三个基因作图':'kegg富集'}}\" ng-click=\"handlerReanalysisClick(pathwayRichError,'pathwayRich')\"><i class=\"iconfont icon-tools icon-pathwayfuji\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':goClassError}\" uib-tooltip=\"{{goClassError?'至少选择一个基因作图':'GO分类'}}\" ng-click=\"handlerReanalysisClick(goClassError,'goClass')\"><i class=\"iconfont icon-tools icon-gofenlei\"></i></li>"

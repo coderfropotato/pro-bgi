@@ -1,41 +1,43 @@
 <div class="line-page" ng-init="InitPage()" ng-controller="lineController">
     <div class="report-page-title" custom-title="title"></div>
     <div id="div_line_page">
-        <div class="graph_group" id="analysis-linePanel" >
-            <div class="graph_header">
-                <ul class="fRight">
-                    <li ng-if="!linksError">
-                        <button style="position:relative;" class="btn btn-default btn-sm btn-silver list_btn">前置任务
-                            <span style="color:red;">({{links.length}})</span>
-                            <div class="links btn-links" style="color:#333;">
-                                <ul ng-if="links.length" class="link-lists">
-                                    <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
-                                        <p>类型：{{item.chartType}}</p>
-                                        <p>项目名称：{{item.projectName}}</p>
-                                    </li>
-                                </ul>
+        <div class="table-switch-chart-wrap">
+            <div class="graph_group" id="analysis-linePanel" >
+                <div class="graph_header">
+                    <ul class="fRight">
+                        <li ng-if="!linksError">
+                            <button style="position:relative;" class="btn-sm list_btn">前置任务
+                                <span style="color:red;">({{links.length}})</span>
+                                <div class="links btn-links" style="color:#333;">
+                                    <ul ng-if="links.length" class="link-lists">
+                                        <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
+                                            <p>类型：{{item.chartType}}</p>
+                                            <p>项目名称：{{item.projectName}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </button>
+                        </li>
+                        <li ng-hide="lineError">
+                            <div class="svg-new-export" chartid="lineChart_panel" saveimgname="折线图"></div>
+                        </li>
+                        <li>
+                            <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetLineChartData()">
+                                <span class="iconfont icon-shuaxin"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-switch-chart">
+                    <div class="chart_wrap" ng-hide="lineError">
+                        <div class="chart_graph panel_center">
+                            <div id="lineChart_panel" style="text-align:center;">
+                                <svg xmlns="http://www.w3.org/2000/svg"></svg>
                             </div>
-                        </button>
-                    </li>
-                    <li ng-hide="lineError">
-                        <div class="svg-new-export" chartid="lineChart_panel" saveimgname="折线图"></div>
-                    </li>
-                    <li>
-                        <button class="btn btn-default btn-sm btn-silver list_btn tool-tip" title="刷新" ng-click="GetLineChartData()">
-                            <span class="glyphicon glyphicon-refresh"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-switch-chart">
-                <div class="chart_wrap" ng-hide="lineError">
-                    <div class="chart_graph panel_center">
-                        <div id="lineChart_panel" style="text-align:center;">
-                            <svg xmlns="http://www.w3.org/2000/svg"></svg>
                         </div>
                     </div>
+                    <div class="table-nodata" error-type="lineError"></div>
                 </div>
-                <div class="table-nodata" error-type="lineError"></div>
             </div>
         </div>
 

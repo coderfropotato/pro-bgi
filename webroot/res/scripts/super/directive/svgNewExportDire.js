@@ -24,7 +24,7 @@ define("superApp.svgNewExportDire",
             return {
                 restrict: "ACE",
                 template: "<div class='dropdown drop-menu'>"
-                + "<button class='new-table-switch-btns noborder tool-tip' title='导出'>"
+                + "<button style='margin-top:-1px;'  class='new-table-switch-btns noborder tool-tip' title='导出'>"
                 + "<span class='glyphicon glyphicon-picture'></span> "
                 //+ "<span class='icon-caret-down'></span>"
                 + "</button>"

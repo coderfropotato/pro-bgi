@@ -1,29 +1,3 @@
-<!-- <div class="thead-control-wrap" ng-if="data.length">
-    <button class="btn btn-default btn-silver btn-sm" ng-click="toggleShow()">AddColumns
-        <span ng-if="nodata">（暂无数据）</span>
-    </button>
-    <div ng-show="show" class="thead-control-dire">
-        <div ng-init="initData()" class="thead-lists">
-            <ol>
-                <li ng-if="group.list.length" ng-repeat="(index,group) in data" track by $index>
-                    <div class="thead-title" uib-tooltip="{{group.groupName}}">{{group.groupName}}</div>
-                    <ul ng-class="{'showmore':group.isShowMore}">
-                        <li ng-repeat="item in group.list" track by $index ng-class="{active:item.isActive,disabled:remove}" ng-click="handlerItemClick(item,index)">{{item._id}}</li>
-                    </ul>
-                    <div ng-click="handlerIsShowMoreClick($index)" ng-if="!group.isShowMore &&group.showMore" class="thead-title more">查看更多</div>
-                    <div ng-click="handlerExpandClick($index)" ng-if="group.isShowMore && group.showMore " class="thead-title more">收起</div>
-                </li>
-            </ol>
-        </div>
-        <div ng-show="!nodata" class="thead-btns">
-            <button class="btn btn-default" ng-click="cancel()">取消</button>
-            <button class="btn btn-default" ng-click="apply()">应用</button>
-            <button class="btn btn-danger" ng-click="clear()">清除</button>
-            <button class="btn btn-default" ng-click="confirm()">确定</button>
-        </div>
-    </div>
-</div> -->
-
 <div class="thead-control-wrap" ng-if="data.length">
     <div class="thead-control-top clearfix">
         <span class="add-column-btn" ng-click="toggleShow()"><i class="iconfont icon-guanbi" style="transform:rotate(45deg); margin-right:6px"></i> 扩展列

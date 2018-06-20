@@ -120,6 +120,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         var dialog = toolService.reaccessPop.open();
                         dialog.then(function (password) {
                             $.ajax({
+                                headers:{
+                                    "Authorization":"Token "+window.localStorage.token,
+                                },
                                 url: options.api.base_url + '/login',
                                 type: 'POST',
                                 data: JSON.stringify({

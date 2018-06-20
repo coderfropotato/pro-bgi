@@ -350,7 +350,7 @@
 }
 
 .btn-links ul {
-    left: 0;
+    left: calc(-360px + 100%);
     top: 30px;
 }
 

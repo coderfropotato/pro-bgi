@@ -1,11 +1,12 @@
-define(["toolsApp"], function (toolsApp) {
+define(["toolsApp"], function(toolsApp) {
     toolsApp.controller("goClassController", goClassController);
     goClassController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+
     function goClassController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
-        $scope.InitPage = function () {
+        $scope.InitPage = function() {
             //定时关闭等待框
-            setTimeout(function () {
+            setTimeout(function() {
                 toolService.pageLoading.close();
             }, 300);
 
@@ -63,9 +64,9 @@ define(["toolsApp"], function (toolsApp) {
 
 
         $scope.selectData = [];
-        $scope.chartSelectFn = function (arg) {
+        $scope.chartSelectFn = function(arg) {
             var select = [];
-            arg.forEach(function (val, index) {
+            arg.forEach(function(val, index) {
                 select = select.concat(val.geneList);
             })
             if (!angular.equals($scope.selectData, select)) {
@@ -75,19 +76,19 @@ define(["toolsApp"], function (toolsApp) {
             }
         }
 
-        $scope.handlerRefreshClick = function () {
+        $scope.handlerRefreshClick = function() {
             $scope.selectData = [];
             $scope.isResetTableStatus = true;
         }
 
-        $scope.tableToChartDataFn = function (res) {
+        $scope.tableToChartDataFn = function(res) {
             $scope.level1Key = res.baseThead[1]['true_key'];
             $scope.level2Key = res.baseThead[0]['true_key'];
             $scope.numKey = res.baseThead[2]['true_key'];
             var chartData = [];
             // {category: 0, key: 5, value: 23}
             // key1  key2 num
-            res.rows.forEach(function (val, index) {
+            res.rows.forEach(function(val, index) {
                 var obj = { "category": "", "key": 0, "value": 0, "geneList": [] };
                 obj.category = val[$scope.level1Key];
                 obj.key = val[$scope.level2Key];
@@ -118,7 +119,7 @@ define(["toolsApp"], function (toolsApp) {
                 "direction": "horizontal"
             }
         }
-        $scope.drawChartFn = function (data) {
+        $scope.drawChartFn = function(data) {
             $('#' + $scope.chartId).html('');
             var width = $('#' + $scope.contentId + ' .graph_header').eq(0).width();
 
@@ -130,10 +131,15 @@ define(["toolsApp"], function (toolsApp) {
             $scope.barchart = new gooal.barInit("#" + $scope.chartId, $scope.options);
 
             var group2tooltip = $scope.barchart.addTooltip(group2tooltipConfig);
+
             function group2tooltipConfig(d) {
                 group2tooltip.html("key:" + d.key + "</br>" + "value: " + d.value + "</br>" + "Category: " + d.category)
             }
-
+            //改标题
+            $scope.barchart.dbClickTitle(function() {
+                var textNode = d3.select(this).node();
+                toolService.popPrompt(textNode, textNode.textContent);
+            })
             return $scope.barchart;
         }
     };

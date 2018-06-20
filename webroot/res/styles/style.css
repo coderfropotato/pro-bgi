@@ -437,7 +437,8 @@ a:hover .glyphicon-trash {
     font-size: 19px;
     margin-right: 14px;
 }
-.logo2{
+
+.logo2 {
     width: 140px;
     background: url(../images/logo2.png) no-repeat 14px 22px;
 }
@@ -5024,6 +5025,7 @@ ol.tree .olTreeLnks .olTreeA {
     }
 }
 
+
 /* .btn_options_filelist {
     background-color: #F7FBFD;
     ;
@@ -5034,7 +5036,6 @@ ol.tree .olTreeLnks .olTreeA {
     line-height: 30px;
     border-bottom: 0px;
 } */
-
 
 .btn_options_filelist ul li {
     display: inline;
@@ -8483,21 +8484,34 @@ div.tipsContainer,
 
 /* 重分析弹窗样式 */
 
+.ngdialog-theme-default .ngdialog-content {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15), 0 10px 20px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
 .popAnalysis span {
     font-size: 14px!important;
 }
 
 .popAnalysis .popTitle {
-    background-color: #108CEE;
-    color: #fff;
+    background-color: #fff;
     border: none;
     padding: 4px 8px;
     margin-right: 12px;
     border-radius: 4px;
-    font-size: 14px;
-    text-align: center;
     margin-bottom: 6px;
-    width: 75px;
+    width: 80px;
+    height: 32px;
+    font-size: 12px;
+    color: #99A1BF;
+    letter-spacing: 0.6px;
+    text-align: left;
+}
+
+.taskName span {
+    color: #333333;
+    letter-spacing: 0.7px;
+    text-align: center;
+    line-height: 14px;
 }
 
 .popTitle span {
@@ -8520,23 +8534,28 @@ div.tipsContainer,
 .dataChoose ul li {
     float: left;
     padding: 4px 8px;
-    border: 1px solid #ccc;
     margin-right: 12px;
-    border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
     text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #F0F1F5;
+    border-radius: 2px;
+    height: 32px;
+    line-height: 22px;
+    color: #99A1BF;
+    letter-spacing: 0.7px;
 }
 
 .dataChoose ul li:hover {
-    border: 1px solid rgb(91, 177, 243);
-    color: rgb(91, 177, 243);
+    border: 1px solid #F0F1F5;
+    color: #ccc;
 }
 
 .dataChoose ul li.active {
-    background-color: rgb(91, 177, 243);
-    color: #ffffff;
+    background: #F0F1F5;
+    border: 1px solid #F0F1F5;
+    color: #333333;
 }
 
 .dataChoose button {
@@ -8546,7 +8565,31 @@ div.tipsContainer,
 .taskName,
 .dataChoose,
 .resources {
-    margin: 10px;
+    margin: 20px;
+}
+
+.popAnalysis .taskName {
+    margin-top: 0;
+}
+
+.popAnalysis .ngdialog-buttons {
+    border-top: 1px solid #E8E8E8;
+}
+
+.popAnalysis .ngdialog-buttons button {
+    border-radius: 2px;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    text-align: center;
+}
+
+.popAnalysis .ngdialog-buttons button.confirmBtn {
+    color: #FFFFFF;
+    background: #5378F8;
+}
+
+.popAnalysis .ngdialog-buttons button.confirmBtn:hover {
+    background: #4666d3;
 }
 
 .bgi_static_pic {

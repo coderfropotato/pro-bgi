@@ -8586,10 +8586,12 @@ div.tipsContainer,
 .popAnalysis .ngdialog-buttons button.confirmBtn {
     color: #FFFFFF;
     background: #5378F8;
+    border: 1px solid #5378F8;
 }
 
 .popAnalysis .ngdialog-buttons button.confirmBtn:hover {
     background: #4666d3;
+    border: 1px solid #5378F8;
 }
 
 .bgi_static_pic {

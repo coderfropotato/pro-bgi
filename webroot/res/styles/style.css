@@ -8174,9 +8174,24 @@ div.tipsContainer,
     border-right: 10px white solid;
 }
 
+
+/* 修改标题弹窗 */
+
+.popPrompt {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
 .popPrompt .errorInfo {
     color: red;
-    font-size: 14px
+    font-size: 14px;
+    text-align: left;
+    padding-left: 14px;
+}
+
+.popPrompt #TextInput {
+    width: 80%;
+    height: 32px;
 }
 
 
@@ -8525,6 +8540,11 @@ div.tipsContainer,
     clear: both;
 }
 
+.popAnalysis .dataChoose ul {
+    max-height: 120px;
+    overflow: auto;
+}
+
 .popAnalysis .noChooseSpan {
     color: red;
     font-size: 14px;
@@ -8572,26 +8592,36 @@ div.tipsContainer,
     margin-top: 0;
 }
 
-.popAnalysis .ngdialog-buttons {
-    border-top: 1px solid #E8E8E8;
+
+/* 弹窗按钮 */
+
+.ngdialog-buttons {
+    border-top: 1px solid #E8E8E8 !important;
 }
 
-.popAnalysis .ngdialog-buttons button {
+.ngdialog-buttons button {
     border-radius: 2px;
     font-size: 14px;
     letter-spacing: 0.7px;
     text-align: center;
 }
 
-.popAnalysis .ngdialog-buttons button.confirmBtn {
+.ngdialog-buttons button.confirmBtn {
     color: #FFFFFF;
     background: #5378F8;
     border: 1px solid #5378F8;
 }
 
-.popAnalysis .ngdialog-buttons button.confirmBtn:hover {
+.ngdialog-buttons button.confirmBtn:hover {
     background: #4666d3;
     border: 1px solid #5378F8;
+}
+
+.form-control:focus {
+    border-color: #e8e8e8;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .bgi_static_pic {

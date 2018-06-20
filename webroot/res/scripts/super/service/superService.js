@@ -117,8 +117,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         var dialog = toolService.reaccessPop.open();
                         dialog.then(function(password) {
                             $.ajax({
-                                headers:{
-                                    "Authorization":"Token "+window.localStorage.token,
+                                headers: {
+                                    "Authorization": "Token " + window.localStorage.token,
                                 },
                                 url: options.api.base_url + '/login',
                                 type: 'POST',
@@ -536,10 +536,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popPrompt'><input type='text' id='TextInput' value='" + value + "' class='form-control'><span ng-show='isError' class='errorInfo'>不能为空，请输入名称</span></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popPrompt'><input type='text' id='TextInput' value='" + value + "' class='form-control'><p ng-show='isError' class='errorInfo'>不能为空，请输入名称</p></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
-                    title: popTitle,
+                    // title: popTitle,
                     top: top,
                     width: _width,
                     height: _height,

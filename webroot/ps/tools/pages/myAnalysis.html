@@ -57,7 +57,7 @@
                                 <span ng-show="!item.isEdit">{{item.projectName}}</span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
                                 <input ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
-                                <i class="glyphicon glyphicon-pencil" ng-click="handlerEditClick(item)"></i>
+                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick(item)"></i>
                             </td>
                             <td class="text-center">
                                 <span ng-if="item.process==1"><i class="iconfont icon-wancheng"></i>成功</span>
@@ -89,7 +89,7 @@
                     </tbody>
                 </table>
                 <!-- error -->
-                <div style="width:100%;" class="table-nodata" error-type="analysisError"></div>
+                <div style="width:100%;border-top:1px solid #dddddd; " class="table-nodata" error-type="analysisError"></div>
                 <!-- Page grid -->
                 <div ng-hide="analysisError" class="pager-grid" grid-data="analysisList" side="left " callback="GetAnalysisList(arg1) "></div>
             </div>

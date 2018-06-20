@@ -1,12 +1,12 @@
-define(['toolsApp'], function (toolsApp) {
+define(['toolsApp'], function(toolsApp) {
     toolsApp.controller('lineController', lineController);
     lineController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function lineController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.close();
         toolService.pageLoading.open();
-        $scope.InitPage = function () {
-            $timeout(function () {
+        $scope.InitPage = function() {
+            $timeout(function() {
                 toolService.pageLoading.close();
             }, 300)
 
@@ -19,7 +19,7 @@ define(['toolsApp'], function (toolsApp) {
             var s = toolService.sessionStorage.get('SampleList');
             s = s.split(',');
             var sl = [];
-            s.forEach(function (val, index) {
+            s.forEach(function(val, index) {
                 sl.push({
                     name: val,
                     type: 'sample'
@@ -27,7 +27,7 @@ define(['toolsApp'], function (toolsApp) {
             })
             var o = g.concat(sc);
             var gl = [];
-            o.forEach(function (val, index) {
+            o.forEach(function(val, index) {
                 gl.push({
                     name: val.name,
                     type: 'compareGroup'
@@ -64,7 +64,7 @@ define(['toolsApp'], function (toolsApp) {
             // Geneid table params end
         }
 
-        $scope.GetLineChartData = function (flag) {
+        $scope.GetLineChartData = function(flag) {
             toolService.gridFilterLoading.open("analysis-linePanel");
             var ajaxConfig = {
                 data: {
@@ -74,7 +74,7 @@ define(['toolsApp'], function (toolsApp) {
                 url: options.api.mrnaseq_url + "/FoldLine/RE"
             }
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.Error) {
                     $scope.lineError = "syserror";
                 } else if (res.length == 0) {
@@ -85,7 +85,7 @@ define(['toolsApp'], function (toolsApp) {
                     $scope.chartData = [];
                     $scope.mapTheadJson = {};
                     var order = [];
-                    res.baseThead.forEach(function (val, index) {
+                    res.baseThead.forEach(function(val, index) {
                         if (index != 0) {
                             for (var key in val) {
                                 $scope.mapTheadJson[val[key]] = key;
@@ -94,7 +94,7 @@ define(['toolsApp'], function (toolsApp) {
                         }
                     })
 
-                    res.rows.forEach(function (val, index) {
+                    res.rows.forEach(function(val, index) {
                         // $scope.chartData[index] = [];
                         for (var name in val) {
                             if (name !== x) {
@@ -112,22 +112,22 @@ define(['toolsApp'], function (toolsApp) {
                     for (var key in res.baseThead[1]) {
                         flag = key;
                     }
-                    $scope.list.forEach(function (val, index) {
+                    $scope.list.forEach(function(val, index) {
                         if (val.name === flag) {
                             $scope.curType = val.type;
                         }
                     })
 
-                    if(!$scope.chartData.length){
+                    if (!$scope.chartData.length) {
                         $scope.lineError = 'nodata';
-                    }else{
-                        $scope.chartData = $scope.sortArr(order,angular.copy($scope.chartData));
+                    } else {
+                        $scope.chartData = $scope.sortArr(order, angular.copy($scope.chartData));
                         $scope.drawLineChart($scope.chartData);
                     }
                 }
                 toolService.gridFilterLoading.close("analysis-linePanel");
 
-            }, function (errMsg) {
+            }, function(errMsg) {
                 $scope.lineError = "syserror";
                 toolService.gridFilterLoading.close("analysis-linePanel");
             })
@@ -162,7 +162,7 @@ define(['toolsApp'], function (toolsApp) {
                 "normalColor": angular.copy($rootScope.colorArr)
             }
         }
-        $scope.drawLineChart = function (data) {
+        $scope.drawLineChart = function(data) {
             $("#lineChart_panel").html("");
 
             var width = $("#analysis-linePanel .graph_header").eq(0).width();
@@ -176,18 +176,20 @@ define(['toolsApp'], function (toolsApp) {
             var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 
             function linetooltipConfig(d) {
-                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType+"：" + d.key + "</br>" + "log10(FPKM+1): " + d.value+"<br>FPKM "+d.key+"："+d.value)
+                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType + "：" + d.key + "</br>" + "log10(FPKM+1): " + d.value + "<br>FPKM " + d.key + "：" + d.value)
             }
 
             // 改色
             (function changeColor() {
                 groupedbarGetItem();
                 var index = '';
+
                 function groupedbarGetItem() {
-                    $scope.linechart.getLegendItem(function (d, i) {
+                    $scope.linechart.getLegendItem(function(d, i) {
                         reportService.selectColor(changeColorCallback);
                         index = i;
                     })
+
                     function changeColorCallback(color2) {
                         color = color2;
                         $scope.linechart.changeColor(index, color2);
@@ -195,35 +197,47 @@ define(['toolsApp'], function (toolsApp) {
                         groupedbarChangeColor(color2);
                     }
                 }
+
                 function groupedbarChangeColor(color) {
                     $scope.linechart.redraw($('#analysis-linePanel .graph_header').eq(0).width() * 0.8);
+                    //改标题
+                    $scope.linechart.dbClickTitle(function() {
+                        var textNode = d3.select(this).node();
+                        toolService.popPrompt(textNode, textNode.textContent);
+                    })
                     groupedbarGetItem();
                 }
             })()
+
+            //改标题
+            $scope.linechart.dbClickTitle(function() {
+                var textNode = d3.select(this).node();
+                toolService.popPrompt(textNode, textNode.textContent);
+            })
         }
 
 
         //get links 
         $scope.linksError = false;
-        $scope.GetLinks = function () {
+        $scope.GetLinks = function() {
             var promise = ajaxService.GetDeferData({
                 data: {},
                 url: options.api.java_url + "/analysis/parent/" + $scope.id
             })
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.status != 200) {
                     $scope.linksError = "syserror";
                 } else {
                     $scope.linksError = false;
                     $scope.links = res.data.links;
                 }
-            }, function (err) {
+            }, function(err) {
                 console.log(err);
             })
         }
 
         // 查看links
-        $scope.handlerSeeClick = function (item) {
+        $scope.handlerSeeClick = function(item) {
             var type = item.chartType || item.charType;
             if (item.process == 0) {
                 $window.open('../tools/index.html#/home/error/' + item.id);
@@ -233,13 +247,13 @@ define(['toolsApp'], function (toolsApp) {
             }
         }
 
-        $scope.sortArr = function(orderArr,arr){
+        $scope.sortArr = function(orderArr, arr) {
             var res = [];
-            for(var i=0;i<orderArr.length;i++){
-                for(var k=0;k<arr.length;k++){
-                    if(orderArr[i]===arr[k].key){
+            for (var i = 0; i < orderArr.length; i++) {
+                for (var k = 0; k < arr.length; k++) {
+                    if (orderArr[i] === arr[k].key) {
                         res.push(arr[k]);
-                        arr.splice(k,1);
+                        arr.splice(k, 1);
                         k--;
                     }
                 }

@@ -303,7 +303,7 @@
     position: relative;
 }
 
-.editProject .glyphicon {
+.editProject i {
     position: absolute;
     right: 0;
     top: 12px;
@@ -312,7 +312,7 @@
     visibility: hidden;
 }
 
-.editProject:hover .glyphicon {
+.editProject:hover i {
     visibility: visible;
 }
 

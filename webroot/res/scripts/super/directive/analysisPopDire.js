@@ -4,7 +4,7 @@
  */
 
 define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.analysisPopDire", []);
         superApp.directive('analysisPop', analysisPopDirective);
         analysisPopDirective.$inject = ["$log"];
@@ -12,8 +12,8 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
         function analysisPopDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >" +
-                    "<div ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析<em>（只显示最新十条记录）</em></div>"
+                template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
+                    // + "<div ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析<em>（只显示最新十条记录）</em></div>"
                     // + "<table class=\"table table-hover\">"
                     // + "<thead>"
                     // + "<tr><td class=\"text-center\">任务名称</td> <td class=\"text-center\">进度</td> <td class=\"text-center\">提交时间</td></tr>"
@@ -50,12 +50,12 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
 
         function analysisPopCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             //切换显示面板
-            $scope.toggleShow = function(ev) {
-                    $scope.isExpand = !$scope.isExpand;
-                    ev.stopPropagation();
-                }
-                // 查看分析详情
-            $scope.handlerAnalysisDetail = function(item) {
+            $scope.toggleShow = function (ev) {
+                $scope.isExpand = !$scope.isExpand;
+                ev.stopPropagation();
+            }
+            // 查看分析详情
+            $scope.handlerAnalysisDetail = function (item) {
                 if (item.process == 1) {
                     // success + '/' + item.projectName
                     $window.open('../../../../ps/tools/index.html#/home/' + item.charType + '/' + item.id);

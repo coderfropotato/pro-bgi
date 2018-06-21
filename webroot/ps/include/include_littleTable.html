@@ -1,14 +1,6 @@
 <div id="{{panelId}}" ng-hide="isNoDataHide && error" ng-init="InitPage()" class="tableListPanel little-table-wrap">
     <div  class="btn_options_filelist clearfix">
         <ul class="ul_left">
-            <li>
-                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
-            </li>
-            <li>
-                <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData()">
-                    <span class="iconfont icon-shuaxin"></span>
-                </button>
-            </li>
             <li ng-show="isHasSelectOption">
                 <div class="selector_area">
                     <select class="super-select" style="width: 200px" ng-model="pageEntity[entityKey]" ng-change="GetTableData()">
@@ -31,6 +23,14 @@
                         <option value=-1>精度:全数据</option>
                     </select>
                 </div>
+            </li>
+            <li>
+                <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData()">
+                    <span class="iconfont icon-shuaxin"></span>
+                </button>
+            </li>
+            <li>
+                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
             </li>
         </ul>
     </div>

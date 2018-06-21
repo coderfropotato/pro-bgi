@@ -31,12 +31,6 @@
                     <li ng-hide="isTableShow || error">
                         <div class="chart-set" set-title="斥力" is-input='true' is-show="isShowSetPanel" set-value="forceValue" get-set-option="getSetOption(value)"></div>
                     </li>
-                    <li ng-hide="error || isTableShow">
-                        <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
-                    </li>
-                    <li ng-hide="tableError || !isTableShow">
-                        <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
-                    </li>
                     <li ng-hide="isTableShow">
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetNetData()">
                                         <span class="iconfont icon-shuaxin"></span>
@@ -46,6 +40,12 @@
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData()">
                                         <span class="iconfont icon-shuaxin"></span>
                                     </button>
+                    </li>
+                    <li ng-hide="error || isTableShow">
+                        <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
+                    </li>
+                    <li ng-hide="tableError || !isTableShow">
+                        <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
                     </li>
                 </ul>
             </div>

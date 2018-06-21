@@ -97,6 +97,7 @@ define("superApp.superDire",
                 $state.go(routerName, { FILEKEY: parms });
             }
         }
+        
 
         //动态加载框架头
         superApp.directive('superMangerFrameTop', superMangerFrameTopDirective);

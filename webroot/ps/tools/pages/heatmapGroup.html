@@ -19,13 +19,13 @@
                     <li ng-hide="clusterError">
                         <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
                     </li>
-                    <li ng-hide="clusterError">
-                        <div class="svg-new-export" chartid="heatmapgroup_chartClusterpic" saveimgname="聚类图"></div>
-                    </li>
                     <li>
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetHeatmapData('refresh')">
                             <span class="iconfont icon-shuaxin"></span>
                         </button>
+                    </li>
+                    <li ng-hide="clusterError">
+                        <div class="svg-new-export" chartid="heatmapgroup_chartClusterpic" saveimgname="聚类图"></div>
                     </li>
                 </ul>
             </div>

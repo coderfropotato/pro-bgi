@@ -6,7 +6,7 @@
         <div class="table-switch-chart-wrap">
             <!-- 富集表 start -->
             <p style="color: red;" ng-show="goSelectList.length>60">最多只对qvalue较小的top60进行重新画图</p>
-            <div  id="reAnalysis_pathwayRich_go" style="position: relative">
+            <div id="reAnalysis_pathwayRich_go" style="position: relative">
                 <div class="btn_options_filelist">
                     <ul class="FLeft">
                         <li>
@@ -42,13 +42,13 @@
                                 </select>
                             </div>
                         </li>
-                        <li ng-hide="error">
-                            <div class="grid-export" find-entity="pageEntity" export-location="exportLocationTable" savefilename="Pathway 富集"></div>
-                        </li>
                         <li>
                             <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData(1)">
                                 <span class="iconfont icon-shuaxin"></span>
                             </button>
+                        </li>
+                        <li ng-hide="error">
+                            <div class="grid-export" find-entity="pageEntity" export-location="exportLocationTable" savefilename="Pathway 富集"></div>
                         </li>
                     </ul>
                     <div class="clear"></div>
@@ -186,17 +186,17 @@
                                 title="多选" style="margin-right:7px;">多选</button>
                             <button ng-click="handlerConfirm()" class="new-table-switch-btns new-btns-big tool-tip new-btns-blue" title="确定所有选择">确定</button>
                         </li>
+                        <li>
+                            <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBubbleData()">
+                                <span class="iconfont icon-shuaxin"></span>
+                            </button>
+                        </li>
                         <li ng-hide="bubbleError || isTableShow">
                             <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_diffExpress_6_2_bubble" saveimgname="气泡图"></div>
                             <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_diffExpress_6_2_column" saveimgname="柱状图"></div>
                         </li>
                         <li ng-hide="bubbleError || !isTableShow">
                             <div class="grid-export" find-entity="bubbleEntity" export-location="bubbleExportLocationTable" savefilename="统计"></div>
-                        </li>
-                        <li>
-                            <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBubbleData()">
-                                <span class="iconfont icon-shuaxin"></span>
-                            </button>
                         </li>
                     </ul>
                 </div>

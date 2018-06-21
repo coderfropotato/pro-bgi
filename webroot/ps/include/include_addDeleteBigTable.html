@@ -8,14 +8,6 @@
         <div class="btn_options_filelist">
             <ul class="ul_left grid_filter_ul">
                 <li>
-                    <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="exportLocationGOAnno" savefilename="{{tableDownloadName}}"></div>
-                </li>
-                <li>
-                    <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBigTableData(1)">
-                        <span class="iconfont icon-shuaxin"></span>
-                    </button>
-                </li>
-                <li>
                     <!-- tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体      -->
                     <!-- 2018年4月19日15:58:03 tablehead -->
                     <div ng-show="!error" class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)"
@@ -61,6 +53,14 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li>
+                    <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBigTableData(1)">
+                        <span class="iconfont icon-shuaxin"></span>
+                    </button>
+                </li>
+                <li>
+                    <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="exportLocationGOAnno" savefilename="{{tableDownloadName}}"></div>
                 </li>
             </ul>
             <div class="clear"></div>

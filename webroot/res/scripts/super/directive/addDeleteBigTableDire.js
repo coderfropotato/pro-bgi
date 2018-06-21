@@ -213,10 +213,9 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 for (var i = 0; i < $scope.bigTableData.rows.length; i++) {
                     if ($scope.bigTableData.rows[i][$scope.geneid_truekey] === key) {
                         $scope.bigTableData.rows[i].isChecked = true;
-                        $scope.computedTheadStatus();
-                        break;
                     }
                 }
+                $scope.computedTheadStatus();
             }
 
             // 基因集改变后的公共逻辑

@@ -1293,6 +1293,9 @@ define("superApp.superDire",
                         $scope.GoToPage = function (page) {
                             //$log.log($scope.$parent.selectItems);
                             if (page != undefined) {
+                                if (isNaN(Number(page))) {
+                                    page = 1;
+                                }
                                 if (parseInt(page) <= 0) {
                                     page = 1;
                                 }
@@ -1493,7 +1496,7 @@ define("superApp.superDire",
                         $scope.PageNumKeyup = function (e) {
                             var keycode = window.event ? e.keyCode : e.which;
                             if (keycode == 13) {
-                                if (isNaN(Number($scope.tbxPageNum))){
+                                if (isNaN(Number($scope.tbxPageNum))) {
                                     $scope.tbxPageNum = 1;
                                 }
                                 $scope.GoToPage($scope.tbxPageNum);

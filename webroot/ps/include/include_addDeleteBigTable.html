@@ -135,7 +135,7 @@
                                     thead-key="val.true_key" data-title="{{row[val.true_key]}}" reanalysis-id="reanalysisId"
                                     compare-group="compareGroup" method="method">
                                     <!-- 其他 -->
-                                    <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_mix_tools' && val.true_key!=='go_term_id'">
+                                    <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_mix_tools' && val.true_key.indexOf('go_term_mix_')==-1 && val.true_key!=='go_term_id'">
                                         <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
                                             {{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}
                                         </span>
@@ -153,7 +153,7 @@
                                          go_term_mix 
                                          go_term_mix_tools
                                          go_term_id-->
-                                    <span ng-if="val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc' || val.true_key==='kegg_term_mix' || val.true_key==='kegg_term_mix_tools' || val.true_key==='kegg_term_id' || val.true_key.indexOf('kegg_term_mix_')!=-1 || val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation' || val.true_key==='go_term_mix' || val.true_key==='go_term_mix_tools' || val.true_key==='go_term_id'">
+                                    <span ng-if="val.true_key==='kegg_subject_annotation' || val.true_key==='desc_kegg' || val.true_key==='kegg_desc' || val.true_key==='kegg_term_mix' || val.true_key==='kegg_term_mix_tools' || val.true_key==='kegg_term_id' || val.true_key.indexOf('kegg_term_mix_')!=-1 || val.true_key==='desc_go' || val.true_key==='go_desc' || val.true_key==='go_subject_annotation' || val.true_key==='go_term_mix' || val.true_key==='go_term_mix_tools' || val.true_key.indexOf('go_term_mix_')!=-1 || val.true_key==='go_term_id'">
                                         <span ng-if="(row[val.true_key] || row[val.true_key]==0)" ng-bind-html="row[val.true_key] | orderTheadToAnchor:val.true_key:compareGroup:method:reanalysisId"></span>
                                         <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                     </span>

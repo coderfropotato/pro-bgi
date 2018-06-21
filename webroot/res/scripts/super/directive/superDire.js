@@ -444,7 +444,8 @@ define("superApp.superDire",
                     var list = input.split(';');
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
-                            str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">' + val + '</a>';
+                            var flag = index==0?'':';';
+                            str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">'+flag+val + '</a>';
                         }
                     })
                 } else if (thead === 'go_term_id') {
@@ -460,20 +461,21 @@ define("superApp.superDire",
                             str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a>';
                         }
                     })
-                } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools') {
+                } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools' || thead.indexOf('go_term_mix_')!=-1) {
                     //官网 [] 换行
                     // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                     var list = input.split(';');
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
                             // 有 []
+                            var flagtext = index==0?"":";";
                             if (/\[([\s\S]*)\]/g.test(val)) {
                                 var flag = val.match(/\[([\s\S]*)\]/g);
                                 var s = val.split(flag);
                                 str += '<span>' + flag + '</span>';
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + s[s.length - 1] + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + flagtext+s[s.length - 1] + '</a>';
                             } else {
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' +flagtext+ val + '</a>';
                             }
                         }
                     })

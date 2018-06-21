@@ -667,7 +667,7 @@ define("superApp.toolTipDire",
                                         str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
                                     }
                                 })
-                            } else if (scope.theadKey === 'go_term_mix' || scope.theadKey==='go_term_mix_tools') {
+                            } else if (scope.theadKey === 'go_term_mix' || scope.theadKey==='go_term_mix_tools' || scope.theadKey.indexOf('go_term_mix_')!=-1) {
                                 //官网 [] 换行
                                 // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                                 var list = text.split(';');

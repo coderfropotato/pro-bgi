@@ -1,14 +1,6 @@
 <div class="tableListPanel" id="{{panelId}}" ng-init="InitPage()">
     <div class="btn_options_filelist">
         <ul class="ul_left grid_filter_ul">
-            <li>
-                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
-            </li>
-            <li>
-                <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData(1)">
-                    <span class="iconfont icon-shuaxin"></span>
-                </button>
-            </li>
             <li ng-show="!error">
                 <div class="grid-filter-begin" tableid="{{tablePanelId}}" callback="InitFindEntity(arg1)" parentid="{{panelId}}" filter-status-callback="handlerFilterStatusChange(status)"></div>
             </li>
@@ -20,8 +12,8 @@
                 </div>
             </li>
         </ul>
-        <ul class="fRight" ng-show="showAccuracy">
-            <li>
+        <ul class="fRight">
+            <li ng-show="showAccuracy">
                 <div class="selector_normal" style="width: 120px;">
                     <select super-select ng-model="accuracy" class="form-control" is-search="false">
                         <option value=1>精度:1位小数</option>
@@ -34,6 +26,14 @@
                         <option value=-1>精度:全数据</option>
                     </select>
                 </div>
+            </li>
+            <li>
+                <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData(1)">
+                    <span class="iconfont icon-shuaxin"></span>
+                </button>
+            </li>
+            <li>
+                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
             </li>
         </ul>
         <div class="clear"></div>
@@ -75,7 +75,8 @@
                             <!-- title="{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}" -->
                             <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">
-                                    <a ng-if="val.true_key==='gene_id' || val.true_key.indexOf('_query_id')!=-1 " ng-href="../tools/index.html#/home/geneDetail/{{row[val.true_key]}}" target="_blank">{{row[val.true_key]}}</a>
+                                    <a ng-if="val.true_key==='gene_id' || val.true_key.indexOf('_query_id')!=-1 " ng-href="../tools/index.html#/home/geneDetail/{{row[val.true_key]}}"
+                                        target="_blank">{{row[val.true_key]}}</a>
                                     <span ng-if="val.true_key!=='gene_id' && val.true_key.indexOf('_query_id')==-1 ">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
                                 </span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>

@@ -41,13 +41,13 @@
                                 </select>
                             </div>
                         </li>
-                        <li ng-hide="error">
-                            <div class="grid-export" find-entity="pageEntity" export-location="exportLocationTable" savefilename="Pathway 富集"></div>
-                        </li>
                         <li>
                             <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData(1)">
                                 <span class="iconfont icon-shuaxin"></span>
                             </button>
+                        </li>
+                        <li ng-hide="error">
+                            <div class="grid-export" find-entity="pageEntity" export-location="exportLocationTable" savefilename="Pathway 富集"></div>
                         </li>
                     </ul>
                     <div class="clear"></div>
@@ -178,17 +178,17 @@
                             <button ng-click="handlerMultiple(barchart)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip" title="多选" style="margin-right:7px;">多选</button>
                             <button ng-click="handlerConfirm()" class="new-table-switch-btns new-btns-big tool-tip new-btns-blue" title="确定所有选择">确定</button>
                         </li>
+                        <li>
+                            <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBubbleData()">
+                                <span class="iconfont icon-shuaxin"></span>
+                            </button>
+                        </li>
                         <li ng-hide="bubbleError || isTableShow">
                             <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_bubble" saveimgname="气泡图"></div>
                             <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_column" saveimgname="柱状图"></div>
                         </li>
                         <li ng-hide="bubbleError || !isTableShow">
                             <div class="grid-export" find-entity="bubbleEntity" export-location="bubbleExportLocationTable" savefilename="统计"></div>
-                        </li>
-                        <li>
-                            <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetBubbleData()">
-                                <span class="iconfont icon-shuaxin"></span>
-                            </button>
                         </li>
                     </ul>
                 </div>

@@ -97,6 +97,7 @@ define("superApp.superDire",
                 $state.go(routerName, { FILEKEY: parms });
             }
         }
+        
 
         //动态加载框架头
         superApp.directive('superMangerFrameTop', superMangerFrameTopDirective);
@@ -437,7 +438,7 @@ define("superApp.superDire",
                         // 没有就是报告内部跳转mapid
                         str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&comparegroup=' + compareGroup + '&method=' + method + '" >' + val + '</a>';
                     }
-                } else if (/^kegg_term_mix_/.test()) {
+                } else if (thead.indexOf('kegg_term_mix_')!=-1) {
                     // kegg_term_mix_dsaq131s5a4fq1
                     // 根据LCID、ko、任务ID，跳转重分析生成的html
                     var list = input.split(';');

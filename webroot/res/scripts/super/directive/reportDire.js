@@ -32,6 +32,7 @@ define("superApp.reportDire",
             $scope.isTest = $rootScope.isTest; //是否测试版
             $scope.isMangerSys = $rootScope.isMangerSystem;
 
+            $scope.loginOutShow = false;
             //获取用户实体信息
             $scope.userInfoEntity = toolService.GetUserInfoEntity();
 

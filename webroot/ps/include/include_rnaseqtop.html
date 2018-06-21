@@ -31,11 +31,13 @@
                 <div class="topbar_nav fLeft" >
                     <a  class="topbar_btn" style="text-decoration: none;" >帮助</a>
                 </div>
-                <div class="topbar_nav fLeft zhuxiao" style="position: relative;" >
+                <div class="topbar_nav fLeft" ng-mouseenter="loginOutShow = true" ng-mouseleave="loginOutShow = false" style="position: relative; padding-bottom:10px;" >
                     <a style="text-decoration: none;margin-top: 4px;"  class="topbar_btn iconfont icon-shezhi"></a>
-                    <div  class="userinfo-pop">
+                    <div class="userinfo-pop" ng-show="loginOutShow">
                         <span>项目名称：{{LCID}}</span>
-                        <p style="text-align: right;color: #f40;" onclick="window.location.href = '../login/login.html'">注销</p>
+                        <p style="text-align: right;">
+                            <span style="padding:4px;color: #f40; cursor:pointer;" onclick="window.location.href = '../login/login.html'">注销</span>
+                        </p>
                     </div> 
                 </div>
             </div>

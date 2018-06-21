@@ -497,7 +497,7 @@ define(['toolsApp'], function(toolsApp) {
             var bubbletooltip = $scope.bubble.addTooltip(bubbletooltipConfig);
 
             function bubbletooltipConfig(d) {
-                bubbletooltip.html("Go term: " + d.key + "</br>" + "rich ratio:" + d.value + "</br>" + "qvalue: " + d.category1 + "</br>" + "基因数：" + d.category2);
+                bubbletooltip.html("KEGG term: " + d.key + "</br>" + "Pathway ID:" + d.term_id + "</br>" + "rich ratio:" + d.value + "</br>" + "qvalue: " + d.category1 + "</br>" + "基因数：" + d.category2);
             }
 
             $scope.changeColor($scope.bubble, "reAnalysis_pathwayRich_bubble", 0.8);
@@ -558,15 +558,15 @@ define(['toolsApp'], function(toolsApp) {
             $scope.columnOptions.data[1] = pointData;
 
             $scope.barchart = new gooal.customInit("#div_reAnalysis_pathwayRich_column", $scope.columnOptions);
-            var groupcharttooltip = $scope.barchart.addTooltip(bartooltipConfig)
+            var groupcharttooltip = $scope.barchart.addTooltip(bartooltipConfig, linetooltipConfig)
 
             function bartooltipConfig(d) {
-                groupcharttooltip[0].html("Go term:" + d.key + "</br>" + "qvalue: " + d.value + "</br>" + "基因数：" + d.gene_num)
+                groupcharttooltip[0].html("KEGG term:" + d.key + "</br>" + "Pathway ID:" + d.term_id + "</br>" + "qvalue: " + d.value + "</br>" + "基因数：" + d.gene_num)
             }
 
-            // function linetooltipConfig(d) {
-            //     groupcharttooltip[1].html("Go term:" + d.key + "</br>" + "qvalue: " + d.value)
-            // }
+            function linetooltipConfig(d) {
+                groupcharttooltip[1].html("KEGG term:" + d.key + "</br>" + "qvalue: " + d.value)
+            }
 
             // $scope.changeColor($scope.barchart, "reAnalysis_pathwayRich_bubble", 0.8);
             $scope.handlerSingle($scope.barchart);

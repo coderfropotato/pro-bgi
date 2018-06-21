@@ -12,7 +12,7 @@
 
     var SUPER_CONSOLE_MESSAGE = {
         testTitle: "生物云计算平台",
-        officialTitle: "古奥基因云计算V1.0",
+        officialTitle: "华大基因动态报告系统",
         localUrl: {
             topPath: "./include/include_top.html",
             leftPath: "./include/include_left.html",

@@ -39,7 +39,7 @@ define(['loginApp'], function (loginApp) {
             // $scope.jump()
             // $scope.GetIsTest();
             $scope.initJquery();
-            console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
+            // console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
         };
 
 

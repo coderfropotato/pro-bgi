@@ -6,12 +6,11 @@
         <div class="table-switch-chart-wrap">
             <!-- 富集表 start -->
             <p style="color: red;" ng-show="goSelectList.length>60">最多只对qvalue较小的top60进行重新画图</p>
-            <div  id="reAnalysis_pathwayRich_go" style="position: relative">
+            <div id="reAnalysis_pathwayRich_go" style="position: relative">
                 <div class="btn_options_filelist">
                     <ul class="FLeft">
                         <li>
-                            <div class="grid-filter-begin" tableid="reAnalysis_pathwayRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_pathwayRich_go"
-                                filter-status-callback="handlerFilterStatusChange(status)"></div>
+                            <div class="grid-filter-begin" tableid="reAnalysis_pathwayRich_go_table" callback="InitFindEntity(arg1)" parentid="reAnalysis_pathwayRich_go" filter-status-callback="handlerFilterStatusChange(status)"></div>
                         </li>
                     </ul>
                     <ul class="fRight">
@@ -60,7 +59,7 @@
                         <div class="filter-right">
                             <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
                                 <span class="filter-item" ng-bind-html="f"></span>
-                                <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                            <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                             </span>
                         </div>
                     </div>
@@ -91,8 +90,7 @@
                                             <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
                                         </td>
                                         <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                            <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="../../ps/tools/index.html#/home/mapId?map={{row[val.true_key].substring(2,row[val.true_key].length)}}&taskId={{id}}"
-                                                target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
+                                            <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="../../ps/tools/index.html#/home/mapId?map={{row[val.true_key].substring(2,row[val.true_key].length)}}&taskId={{id}}" target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
                                                 accuracy)}}
                                             </a>
                                             <span ng-if="val.true_key!='kegg_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
@@ -131,8 +129,7 @@
                 <div class="graph_header">
                     <ul class="fLeft">
                         <li>
-                            <div class="graph-view-btn" parentid="reAnalysis_pathwayRich_bubble" charpanelid="div_reAnalysis_pathwayRich_bubble" is-table="true"
-                                is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                            <div class="graph-view-btn" parentid="reAnalysis_pathwayRich_bubble" charpanelid="div_reAnalysis_pathwayRich_bubble" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
                         </li>
                         <li>
                             <div class="selector_normal" style="width: 110px;">
@@ -144,8 +141,7 @@
                         </li>
                         <!-- GoList panel  -->
                         <li>
-                            <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true"
-                                ng-mouseleave="isShowGoListPanel=false">
+                            <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true" ng-mouseleave="isShowGoListPanel=false">
                                 <button class="btn btn-default btn-silver btn-sm btn-genelist">
                                     选中的GO
                                     <span class="red">({{goSelectList.length
@@ -173,22 +169,18 @@
                     </ul>
                     <ul class="fRight">
                         <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='bubble'">
-                            <button ng-click="handlerSingle(bubble)" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip"
-                                title="单选">单选</button>
-                            <button ng-click="handlerMultiple(bubble)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip"
-                                title="多选" style="margin-right:7px;">多选</button>
+                            <button ng-click="handlerSingle(bubble)" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip" title="单选">单选</button>
+                            <button ng-click="handlerMultiple(bubble)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip" title="多选" style="margin-right:7px;">多选</button>
                             <button ng-click="handlerConfirm()" class="new-table-switch-btns new-btns-big tool-tip new-btns-blue" title="确定所有选择">确定</button>
                         </li>
                         <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='column'">
-                            <button ng-click="handlerSingle(barchart)" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip"
-                                title="单选">单选</button>
-                            <button ng-click="handlerMultiple(barchart)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip"
-                                title="多选" style="margin-right:7px;">多选</button>
+                            <button ng-click="handlerSingle(barchart)" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip" title="单选">单选</button>
+                            <button ng-click="handlerMultiple(barchart)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip" title="多选" style="margin-right:7px;">多选</button>
                             <button ng-click="handlerConfirm()" class="new-table-switch-btns new-btns-big tool-tip new-btns-blue" title="确定所有选择">确定</button>
                         </li>
                         <li ng-hide="bubbleError || isTableShow">
-                            <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_diffExpress_6_2_bubble" saveimgname="气泡图"></div>
-                            <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_diffExpress_6_2_column" saveimgname="柱状图"></div>
+                            <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_bubble" saveimgname="气泡图"></div>
+                            <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_column" saveimgname="柱状图"></div>
                         </li>
                         <li ng-hide="bubbleError || !isTableShow">
                             <div class="grid-export" find-entity="bubbleEntity" export-location="bubbleExportLocationTable" savefilename="统计"></div>
@@ -217,8 +209,7 @@
                             <tbody>
                                 <tr ng-repeat="row in bubbleTableData.rows track by $index">
                                     <td class="center">{{$index+1}}</td>
-                                    <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name"
-                                        data-title="{{row[val.true_key]}}">
+                                    <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                         <span>{{row[val.true_key]}}</span>
                                     </td>
                                 </tr>
@@ -242,9 +233,7 @@
 
         </div>
         <!-- 交互表 (geneId表) start -->
-        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
-            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
-            params-value-list="paramsValueList" method="method" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
+        <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" method="method" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
             reanalysis-id="reanalysisId"></div>
     </div>

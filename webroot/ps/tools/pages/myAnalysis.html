@@ -38,6 +38,15 @@
                 <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
             </div>
         </div>
+        <div class="btn_options_filelist clearfix">
+            <ul class="ul_right">
+                <li>
+                    <button class="new-table-switch-btns noborder" uib-tooltip="刷新" ng-click="GetAnalysisList(1)">
+                        <span class="iconfont icon-shuaxin"></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
         <div>
             <div class="table_scroll_wrap" style="overflow:visible;">
                 <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed custom-table">

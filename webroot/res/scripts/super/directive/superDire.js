@@ -373,7 +373,7 @@ define("superApp.superDire",
         superApp.filter('orderTheadToAnchor', orderTheadToAnchor);
         orderTheadToAnchor.$inject = ['$log', '$sce'];
         function orderTheadToAnchor($log, $sce) {
-            return function (input,thead, compareGroup, method,reanalysisId) {
+            return function (input, thead, compareGroup, method, reanalysisId) {
                 var str = '';
                 if (thead == 'kegg_subject_annotation' || thead == 'desc_kegg' || thead === 'kegg_desc') {
                     // 用； 切出大段
@@ -459,7 +459,7 @@ define("superApp.superDire",
                             str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a>';
                         }
                     })
-                } else if (thead === 'go_term_mix' || thead==='go_term_mix_tools') {
+                } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools') {
                     //官网 [] 换行
                     // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                     var list = input.split(';');
@@ -1079,39 +1079,39 @@ define("superApp.superDire",
         function fixFooterDirective($rootScope, $log, $document, $window) {
 
             var footObj =
-                {
-                    restrict: "ACE",
-                    link: function (scope, element, attr) {
-                        //获取最外层panel对象，模板页路由视图外围对象，有滚动条样式的对象
-                        var scollObj = $(".super-frame-main");
+            {
+                restrict: "ACE",
+                link: function (scope, element, attr) {
+                    //获取最外层panel对象，模板页路由视图外围对象，有滚动条样式的对象
+                    var scollObj = $(".super-frame-main");
 
-                        scollObj.bind("scroll", function () {
-                            SetFooterBottom();
-                        });
-                        var $eleObj = $(element);
-                        var jsObj_Top = $eleObj.offset().top;
-                        var jsObj_Height = $eleObj.height();
+                    scollObj.bind("scroll", function () {
                         SetFooterBottom();
-                        function SetFooterBottom() {
-                            //var letSideWidth = $(".view_leftside").width();//获取左边宽度
-                            var scrollTop = scollObj.scrollTop();
-                            var winHeight = $($window).height();
-                            //$log.log("scrollTop:" + scrollTop);
-                            //$log.log("winHeight:" + winHeight);
-                            //$log.log("$element.height:" + jsObj_Height);
-                            //$log.log("$element.top:" + jsObj_Top);
-                            //if (scrollTop + winHeight - jsObj_Height < jsObj_Top)
-                            if (scrollTop + winHeight < jsObj_Top) {
-                                $eleObj.addClass("footer-fix");
-                                //$eleObj.css("padding-left", (letSideWidth+14)+"px");
-                            }
-                            else {
-                                $eleObj.removeClass("footer-fix");
-                                //$eleObj.css("padding-left", "15px");
-                            }
+                    });
+                    var $eleObj = $(element);
+                    var jsObj_Top = $eleObj.offset().top;
+                    var jsObj_Height = $eleObj.height();
+                    SetFooterBottom();
+                    function SetFooterBottom() {
+                        //var letSideWidth = $(".view_leftside").width();//获取左边宽度
+                        var scrollTop = scollObj.scrollTop();
+                        var winHeight = $($window).height();
+                        //$log.log("scrollTop:" + scrollTop);
+                        //$log.log("winHeight:" + winHeight);
+                        //$log.log("$element.height:" + jsObj_Height);
+                        //$log.log("$element.top:" + jsObj_Top);
+                        //if (scrollTop + winHeight - jsObj_Height < jsObj_Top)
+                        if (scrollTop + winHeight < jsObj_Top) {
+                            $eleObj.addClass("footer-fix");
+                            //$eleObj.css("padding-left", (letSideWidth+14)+"px");
+                        }
+                        else {
+                            $eleObj.removeClass("footer-fix");
+                            //$eleObj.css("padding-left", "15px");
                         }
                     }
-                };
+                }
+            };
             return footObj
         };
 
@@ -1493,6 +1493,9 @@ define("superApp.superDire",
                         $scope.PageNumKeyup = function (e) {
                             var keycode = window.event ? e.keyCode : e.which;
                             if (keycode == 13) {
+                                if (isNaN(Number($scope.tbxPageNum))){
+                                    $scope.tbxPageNum = 1;
+                                }
                                 $scope.GoToPage($scope.tbxPageNum);
                             }
                         };

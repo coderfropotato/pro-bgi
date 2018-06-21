@@ -141,8 +141,9 @@ define(['toolsApp'], function(toolsApp) {
             "data": [],
             "width": 1000,
             "titleBox": {
-                "show": false,
-                "position": "bottom"
+                "title":"折线图",
+                "show": true,
+                "position": "top"
             },
             "legendBox": {
                 "show": true,

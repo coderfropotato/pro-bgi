@@ -503,7 +503,7 @@ define(['toolsApp'], function(toolsApp) {
             $scope.changeColor($scope.bubble, "reAnalysis_pathwayRich_bubble", 0.8);
             $scope.handlerSingle($scope.bubble);
             //改标题
-            $scope.barchart.dbClickTitle(function() {
+            $scope.bubble.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
                 toolService.popPrompt(textNode, textNode.textContent);
             })

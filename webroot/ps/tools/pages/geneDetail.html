@@ -159,7 +159,7 @@
                     <p>{{go.go_level1}}</p>
                     <div class="geneDetailGoDiv">
                         <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
-                            <a href="http://amigo.geneontology.org/amigo/search/ontology?q={{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
+                            <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
                         </div>
                     </div>
                     

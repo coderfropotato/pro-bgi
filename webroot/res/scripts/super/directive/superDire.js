@@ -97,7 +97,7 @@ define("superApp.superDire",
                 $state.go(routerName, { FILEKEY: parms });
             }
         }
-        
+
 
         //动态加载框架头
         superApp.directive('superMangerFrameTop', superMangerFrameTopDirective);
@@ -438,14 +438,14 @@ define("superApp.superDire",
                         // 没有就是报告内部跳转mapid
                         str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&comparegroup=' + compareGroup + '&method=' + method + '" >' + val + '</a>';
                     }
-                } else if (thead.indexOf('kegg_term_mix_')!=-1) {
+                } else if (thead.indexOf('kegg_term_mix_') != -1) {
                     // kegg_term_mix_dsaq131s5a4fq1
                     // 根据LCID、ko、任务ID，跳转重分析生成的html
                     var list = input.split(';');
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
-                            var flag = index==0?'':';';
-                            str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">'+flag+val + '</a>';
+                            var flag = index == 0 ? '' : ';';
+                            str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">' + flag + val + '</a>';
                         }
                     })
                 } else if (thead === 'go_term_id') {
@@ -461,21 +461,21 @@ define("superApp.superDire",
                             str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a>';
                         }
                     })
-                } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools' || thead.indexOf('go_term_mix_')!=-1) {
+                } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools' || thead.indexOf('go_term_mix_') != -1) {
                     //官网 [] 换行
                     // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                     var list = input.split(';');
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
                             // 有 []
-                            var flagtext = index==0?"":";";
+                            var flagtext = index == 0 ? "" : ";";
                             if (/\[([\s\S]*)\]/g.test(val)) {
                                 var flag = val.match(/\[([\s\S]*)\]/g);
                                 var s = val.split(flag);
                                 str += '<span>' + flag + '</span>';
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + flagtext+s[s.length - 1] + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + flagtext + s[s.length - 1] + '</a>';
                             } else {
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' +flagtext+ val + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + flagtext + val + '</a>';
                             }
                         }
                     })
@@ -1296,23 +1296,17 @@ define("superApp.superDire",
                         $scope.GoToPage = function (page) {
                             //$log.log($scope.$parent.selectItems);
                             if (page != undefined) {
-                                if (isNaN(Number(page))) {
-                                    page = 1;
-                                }
-                                if (parseInt(page) <= 0) {
-                                    page = 1;
-                                }
+                                page = parseInt(Number(page));
+                                page = page ? page : 1;
                                 var pageCount = Math.ceil($scope.gridData.total / $scope.gridData.pageSize);
                                 $scope.tbxPageNum = page = (page > pageCount) ? pageCount : page;
                                 if (parseInt(page) > $scope.options.pageCount) {
                                     page = $scope.options.pageCount;
                                 }
                                 $scope.options.pageNum = page;
+
+                                $scope.callback({ arg1: page });
                             }
-                            //$rootScope.selectItems = [];
-                            //$scope.$parent.SearchData(page);
-                            //Initgo(page);
-                            $scope.callback({ arg1: page });
                         }
 
                         $scope.options = {
@@ -1499,9 +1493,8 @@ define("superApp.superDire",
                         $scope.PageNumKeyup = function (e) {
                             var keycode = window.event ? e.keyCode : e.which;
                             if (keycode == 13) {
-                                if (isNaN(Number($scope.tbxPageNum))) {
-                                    $scope.tbxPageNum = 1;
-                                }
+                                $scope.tbxPageNum = parseInt(Number($scope.tbxPageNum));
+                                $scope.tbxPageNum = $scope.tbxPageNum ? $scope.tbxPageNum : 1;
                                 $scope.GoToPage($scope.tbxPageNum);
                             }
                         };

@@ -14,7 +14,7 @@ define(["toolsApp"], function(toolsApp) {
             //gene id
             $scope.id = $state.params.id;
 
-            $scope.title = $scope.id + "基因详情页";
+            $scope.title = $scope.id + "基因详情";
 
             $scope.geneEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),
@@ -307,7 +307,7 @@ define(["toolsApp"], function(toolsApp) {
 
         //表达量折线图
         $scope.drawLine = function(resData) {
-            var width = 600;
+            var width = (resData.baseThead.length*20+80) <600 ? 600:resData.baseThead.length*20+80;
             var rows = resData.rows;
             var baseThead = resData.baseThead;
             var data = [];
@@ -348,7 +348,8 @@ define(["toolsApp"], function(toolsApp) {
                 },
                 "dataBox": {
                     "showLabel": false,
-                    "normalColor": ["#5378F8"]
+                    "normalColor": ["#5378F8"],
+                    "curve":false,
                 }
             }
 
@@ -362,19 +363,19 @@ define(["toolsApp"], function(toolsApp) {
         }
 
         //resize redraw
-        var timer = null;
-        window.removeEventListener('resize', handlerResize);
-        window.addEventListener('resize', handlerResize, false)
+        // var timer = null;
+        // window.removeEventListener('resize', handlerResize);
+        // window.addEventListener('resize', handlerResize, false)
 
-        function handlerResize() {
-            var resizeWidth = 600;
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-                if ($scope.linechart) {
-                    $scope.linechart.redraw(resizeWidth);
-                }
-            }, 100)
-        }
+        // function handlerResize() {
+        //     var resizeWidth = 600;
+        //     clearTimeout(timer);
+        //     timer = setTimeout(function() {
+        //         if ($scope.linechart) {
+        //             $scope.linechart.redraw(resizeWidth);
+        //         }
+        //     }, 100)
+        // }
 
         //获取文献
         $scope.getLiterature = function() {

@@ -1,7 +1,7 @@
 <div class="geneDetail-page" ng-controller="geneDetailController" ng-init="InitPage()" style="position: relative;">
     <div class="report-page-title" custom-title="title"></div>
     <div id="div_geneDetail_page">
-        <h5>基因信息</h5>
+        <h4>基因信息</h4>
         <div class="geneinfoDiv">
             <p ng-repeat="gene in geneInfoList track by $index" ng-hide="geneInfoError">
                 <span uib-tooltip="{{gene.hover}}" class="geneName">{{gene.name}}</span>
@@ -17,10 +17,10 @@
         <!-- 表达量信息表 -->
         <h5>样本表达量（FPKM）</h5>
         <div class="table_scroll_wrap" id="expressTable_panel">
-            <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="sampleExpError">
+            <table class="table table-bordered table-hover table-striped table_grid" ng-hide="sampleExpError">
                 <thead>
                     <tr>
-                        <th ng-repeat="item in sampleExpData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                        <th ng-repeat="item in sampleExpData.baseThead track by $index" style="max-width:500px;white-space:nowrap !important;">
                             <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                         </th>
                     </tr>
@@ -157,9 +157,12 @@
             <div class="divContent" ng-hide="goError">
                 <div ng-repeat="go in goList track by $index">
                     <p>{{go.go_level1}}</p>
-                    <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
-                        <a href="http://amigo.geneontology.org/amigo/search/ontology?q= {{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
+                    <div class="geneDetailGoDiv">
+                        <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
+                            <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <!-- <div class="table-nodata" error-type="goError" style="border: 0"></div> -->

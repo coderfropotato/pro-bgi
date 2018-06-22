@@ -139,7 +139,8 @@ define(['toolsApp'], function(toolsApp) {
             "id": "",
             "type": "line",
             "data": [],
-            "width": 1000,
+            "width": 460,
+            "height":400,
             "titleBox": {
                 "title":"折线图",
                 "show": true,
@@ -170,7 +171,6 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.lineOptions.id = "lineChart_panel";
             $scope.lineOptions.data = data;
-            $scope.lineOptions.width = width * 0.8;
 
 
             $scope.linechart = new gooal.lineInit("#lineChart_panel", $scope.lineOptions)
@@ -200,7 +200,8 @@ define(['toolsApp'], function(toolsApp) {
                 }
 
                 function groupedbarChangeColor(color) {
-                    $scope.linechart.redraw($('#analysis-linePanel .graph_header').eq(0).width() * 0.8);
+                    var width = $scope.linechart.getOptions().width;
+                    $scope.linechart.redraw(width);
                     //改标题
                     $scope.linechart.dbClickTitle(function() {
                         var textNode = d3.select(this).node();

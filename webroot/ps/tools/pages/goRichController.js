@@ -566,7 +566,7 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             function linetooltipConfig(d) {
-                groupcharttooltip[1].html("Go term:" + d.key + "</br>" + "qvalue: " + d.value)
+                groupcharttooltip[1].html("Go term:" + d.key + "</br>" + "基因数： " + d.value)
             }
 
             // $scope.changeColor($scope.barchart, "reAnalysis_goRich_bubble", 0.8);

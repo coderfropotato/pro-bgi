@@ -565,7 +565,7 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             function linetooltipConfig(d) {
-                groupcharttooltip[1].html("KEGG term:" + d.key + "</br>" + "qvalue: " + d.value)
+                groupcharttooltip[1].html("KEGG term:" + d.key + "</br>" + "基因数： " + d.value)
             }
 
             // $scope.changeColor($scope.barchart, "reAnalysis_pathwayRich_bubble", 0.8);

@@ -430,27 +430,27 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         //resize redraw
-        var timer = null;
-        window.removeEventListener('resize', handlerResize);
-        window.addEventListener('resize', handlerResize, false)
+        // var timer = null;
+        // window.removeEventListener('resize', handlerResize);
+        // window.addEventListener('resize', handlerResize, false)
 
-        function handlerResize() {
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-                if ($scope.curChart) {
-                    $scope.curChart.redraw(($('#reAnalysis_pathwayRich_bubble .graph_header').eq(0).width()) * 0.8);
-                    //改标题
-                    $scope.curChart.dbClickTitle(function() {
-                        var textNode = d3.select(this).node();
-                        toolService.popPrompt(textNode, textNode.textContent);
-                    })
-                    if ($scope.chartType != "column") {
-                        $scope.changeColor($scope.curChart, "reAnalysis_pathwayRich_bubble", 0.8);
-                    }
-                    $scope.handlerSingle($scope.curChart);
-                }
-            }, 100)
-        }
+        // function handlerResize() {
+        //     clearTimeout(timer);
+        //     timer = setTimeout(function() {
+        //         if ($scope.curChart) {
+        //             $scope.curChart.redraw(($('#reAnalysis_pathwayRich_bubble .graph_header').eq(0).width()) * 0.8);
+        //             //改标题
+        //             $scope.curChart.dbClickTitle(function() {
+        //                 var textNode = d3.select(this).node();
+        //                 toolService.popPrompt(textNode, textNode.textContent);
+        //             })
+        //             if ($scope.chartType != "column") {
+        //                 $scope.changeColor($scope.curChart, "reAnalysis_pathwayRich_bubble", 0.8);
+        //             }
+        //             $scope.handlerSingle($scope.curChart);
+        //         }
+        //     }, 100)
+        // }
 
 
         //画气泡图   
@@ -458,7 +458,7 @@ define(['toolsApp'], function(toolsApp) {
             "id": "div_reAnalysis_pathwayRich_bubble",
             "type": "bubble",
             "data": [],
-            "width": 0,
+            "width": 800,
             "height": 0,
             "titleBox": {
                 "show": true,
@@ -480,9 +480,10 @@ define(['toolsApp'], function(toolsApp) {
             }
         }
         $scope.drawBubble = function(resData) {
-            var data = resData.rows;
+            var data = resData.rows,
+                dataLen = data.length;
             var bubbleData = [];
-            for (i = 0; i < data.length; i++) {
+            for (i = 0; i < dataLen; i++) {
                 var dataObj = { "category1": data[i].kegg_qvalue, "category2": data[i].kegg_term_candidate_gene_num, "key": data[i].kegg_term, "value": data[i].kegg_rich_ratio, "term_id": data[i].kegg_term_id };
                 bubbleData.push(dataObj);
             }
@@ -490,8 +491,11 @@ define(['toolsApp'], function(toolsApp) {
             var width = $("#reAnalysis_pathwayRich_bubble .graph_header").eq(0).width();
 
             $scope.bubbleOptions.data = bubbleData;
-            $scope.bubbleOptions.width = width * 0.8;
-            $scope.bubbleOptions.height = data.length * 30;
+            $scope.bubbleOptions.width = 800;
+            $scope.bubbleOptions.height = dataLen * 20 + 100;
+            if ($scope.bubbleOptions.height < 420) {
+                $scope.bubbleOptions.height = 420;
+            }
 
             $scope.bubble = new gooal.scatterInit("#div_reAnalysis_pathwayRich_bubble", $scope.bubbleOptions);
             var bubbletooltip = $scope.bubble.addTooltip(bubbletooltipConfig);
@@ -517,7 +521,7 @@ define(['toolsApp'], function(toolsApp) {
             "id": "div_reAnalysis_pathwayRich_column",
             "type": "groupchart",
             "data": [],
-            "width": 0,
+            "width": 800,
             "height": 0,
             "titleBox": {
                 "show": true,
@@ -537,12 +541,13 @@ define(['toolsApp'], function(toolsApp) {
             }
         }
         $scope.drawColumn = function(resData) {
-            var data = resData.rows;
+            var data = resData.rows,
+                dataLen = data.length;
             $("#div_reAnalysis_pathwayRich_column").html("");
             var width = $("#reAnalysis_pathwayRich_bubble .graph_header").eq(0).width();
             var bardata = [],
                 pointData = [];
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < dataLen; i++) {
                 var barObj = { "key": data[i].kegg_term, "value": -Math.log10(data[i].kegg_qvalue), "term_id": data[i].kegg_term_id, "gene_num": data[i].kegg_term_candidate_gene_num, "qvalue": data[i].kegg_qvalue };
                 bardata.push(barObj);
 
@@ -551,8 +556,16 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             $scope.columnOptions.type = "groupchart";
-            $scope.columnOptions.width = width * 0.8;
-            $scope.columnOptions.height = 30 * data.length;
+            $scope.columnOptions.width = 800;
+
+            var rect_h = 18,
+                rect_space = 10;
+            var columnHeight = rect_h * dataLen + rect_space * (dataLen - 1) + 100;
+            if (columnHeight < 420) {
+                $scope.columnOptions.height = 420;
+            } else {
+                $scope.columnOptions.height = columnHeight;
+            }
             //data[0]为柱状图数据,data[1]为折线图数据
             $scope.columnOptions.data[0] = bardata;
             $scope.columnOptions.data[1] = pointData;

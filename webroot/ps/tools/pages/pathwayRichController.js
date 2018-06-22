@@ -367,7 +367,7 @@ define(['toolsApp'], function(toolsApp) {
         }
 
         // 改色
-        $scope.changeColor = function(chart, contentid, scale) {
+        $scope.changeColor = function(chart, width) {
             groupedbarGetItem();
             var index = '';
 
@@ -386,13 +386,13 @@ define(['toolsApp'], function(toolsApp) {
             }
 
             function groupedbarChangeColor(color) {
-                chart.redraw($('#' + contentid + ' .graph_header').eq(0).width() * scale);
+                chart.redraw(width);
                 //改标题
                 chart.dbClickTitle(function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);
                 })
-                $scope.changeColor(chart, contentid, scale);
+                $scope.changeColor(chart, width);
                 $scope.handlerSingle(chart);
                 groupedbarGetItem();
             }
@@ -504,7 +504,7 @@ define(['toolsApp'], function(toolsApp) {
                 bubbletooltip.html("KEGG term: " + d.key + "</br>" + "Pathway ID:" + d.term_id + "</br>" + "rich ratio:" + d.value + "</br>" + "qvalue: " + d.category1 + "</br>" + "基因数：" + d.category2);
             }
 
-            $scope.changeColor($scope.bubble, "reAnalysis_pathwayRich_bubble", 0.8);
+            $scope.changeColor($scope.bubble, $scope.bubbleOptions.width);
             $scope.handlerSingle($scope.bubble);
             //改标题
             $scope.bubble.dbClickTitle(function() {

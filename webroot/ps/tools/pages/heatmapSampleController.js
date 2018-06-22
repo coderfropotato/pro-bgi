@@ -1,14 +1,14 @@
-define(["toolsApp"], function (toolsApp) {
+define(["toolsApp"], function(toolsApp) {
     toolsApp.controller("heatmapSampleController", heatmapSampleController);
     heatmapSampleController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
 
     function heatmapSampleController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
-        $scope.InitPage = function () {
+        $scope.InitPage = function() {
             //定时关闭等待框
             setTimeout(
-                function () {
+                function() {
                     toolService.pageLoading.close();
                 }, 300);
             // custom title
@@ -28,7 +28,7 @@ define(["toolsApp"], function (toolsApp) {
             }
 
             //图颜色
-            var colorArr = ["#bac5fd", "#ef9794", "#91d691"];
+            var colorArr = ["#ff0000", "#ffffff", "#0070c0"];
             toolService.sessionStorage.set('colors', colorArr);
 
             // Geneid table params start
@@ -58,11 +58,11 @@ define(["toolsApp"], function (toolsApp) {
             $scope.accuracy = -1; // 精度默认 全数据
 
             $scope.setOption = {
-                isShowName: false,
-                isShowTopLine: true,
-                sortNames: []
-            }
-            // 获取增删列dire数据
+                    isShowName: false,
+                    isShowTopLine: true,
+                    sortNames: []
+                }
+                // 获取增删列dire数据
             $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
             // 获取聚类图数据
             $scope.GetHeatmapData();
@@ -71,7 +71,7 @@ define(["toolsApp"], function (toolsApp) {
         };
 
         //获取聚类图数据
-        $scope.GetHeatmapData = function (flag) {
+        $scope.GetHeatmapData = function(flag) {
             $scope.isShowSetPanel = false;
 
             toolService.gridFilterLoading.open("analysis-heatmapClusterPanel");
@@ -81,7 +81,7 @@ define(["toolsApp"], function (toolsApp) {
                 url: options.api.mrnaseq_url + "/clusterHeatmap/GetClusterHeatmapData"
             }
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.Error) {
                     $scope.clusterError = "syserror";
                 } else if (JSON.stringify(res) === '{}') { // js: JSON.stringify(res)==='{}' ;  jquery: $.isEmptyObject(res) ; es6: Object.keys(res).length === 0
@@ -102,7 +102,7 @@ define(["toolsApp"], function (toolsApp) {
 
                     if (flag && flag === 'refresh') {
                         $scope.isRefresh = true;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.isRefresh = false;
                         }, 30)
                     }
@@ -112,19 +112,19 @@ define(["toolsApp"], function (toolsApp) {
 
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
 
-            }, function (errMsg) {
+            }, function(errMsg) {
                 $scope.clusterError = "syserror";
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");
             })
         }
 
         //设置面板点击确定的回调函数
-        $scope.getSetOption = function (oSet) {
+        $scope.getSetOption = function(oSet) {
             $scope.drawClusterHeatmap($scope.chartData, oSet);
         }
 
         //画图
-        $scope.drawClusterHeatmap = function (resdata, setOption) {
+        $scope.drawClusterHeatmap = function(resdata, setOption) {
             d3.selectAll("#heatmapsample_chartClusterpic svg g").remove();
             //定义数据
             var cluster_data = resdata.leftClusterData,
@@ -142,12 +142,12 @@ define(["toolsApp"], function (toolsApp) {
             var legend_space = 5;
 
             //文字最长
-            var max_x_textLength = d3.max(heatmap_data, function (d) {
+            var max_x_textLength = d3.max(heatmap_data, function(d) {
                 return d.name.length;
             })
             var max_y_textLength = 0;
             if (setOption.isShowName) {
-                max_y_textLength = d3.max(heatmap_data[0].heatmap, function (d) {
+                max_y_textLength = d3.max(heatmap_data[0].heatmap, function(d) {
                     return d.x.length;
                 })
             } else {
@@ -220,7 +220,7 @@ define(["toolsApp"], function (toolsApp) {
                 .text("差异基因层次聚类图")
                 .attr("font-size", "0.8em")
                 .attr("text-anchor", "middle")
-                .on("click", function () {
+                .on("click", function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);
                 })
@@ -239,7 +239,7 @@ define(["toolsApp"], function (toolsApp) {
             function drawTopCluster() {
                 var topCluster = d3.cluster()
                     .size([topCluster_width, topCluster_height])
-                    .separation(function () { return 1; });
+                    .separation(function() { return 1; });
 
                 var topCluster_g = body_g.append("g").attr("class", "topCluster")
                     .attr("transform", "translate(700,0) rotate(90)");
@@ -262,7 +262,7 @@ define(["toolsApp"], function (toolsApp) {
             function drawCluster() {
                 var cluster = d3.cluster()
                     .size([cluster_height, cluster_width])
-                    .separation(function () { return 1; });
+                    .separation(function() { return 1; });
 
                 var cluster_g = body_g.append("g").attr("class", "cluster")
                     .attr("transform", "translate(0," + topCluster_height + ")");
@@ -289,11 +289,11 @@ define(["toolsApp"], function (toolsApp) {
             //热图交互时所需比例尺
             var xScale = d3.scaleBand()
                 .range([0, heatmap_width])
-                .domain(heatmap_data.map(function (d) { return d.name; }));
+                .domain(heatmap_data.map(function(d) { return d.name; }));
 
             var yScale = d3.scaleBand()
                 .range([0, heatmap_height])
-                .domain(heatmap_data[0].heatmap.map(function (d) { return d.x }));
+                .domain(heatmap_data[0].heatmap.map(function(d) { return d.x }));
 
             //画热图
             function drawHeatmap(colors) {
@@ -308,10 +308,10 @@ define(["toolsApp"], function (toolsApp) {
                         .enter()
                         .append("rect")
                         .attr("x", i * single_rect_width)
-                        .attr("y", function (d, j) { return j * single_rect_height })
+                        .attr("y", function(d, j) { return j * single_rect_height })
                         .attr("width", single_rect_width)
                         .attr("height", single_rect_height)
-                        .attr("fill", function (d) { return colorScale(d.y) })
+                        .attr("fill", function(d) { return colorScale(d.y) })
 
                     //添加x轴的名称
                     rect_g.append("text")
@@ -346,7 +346,7 @@ define(["toolsApp"], function (toolsApp) {
                 var down_x = 0,
                     down_y = 0;
                 var isMousedown = false;
-                big_rect.on("mousedown", function (ev) {
+                big_rect.on("mousedown", function(ev) {
                     isMousedown = true;
                     var downEvent = ev || d3.event;
 
@@ -359,7 +359,7 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(downEvent);
                 })
 
-                big_rect.on("mousemove", function (ev) {
+                big_rect.on("mousemove", function(ev) {
                     var moveEvent = ev || d3.event;
                     var x_dis = moveEvent.offsetX - margin.left - cluster_width - space;
                     var y_dis = moveEvent.offsetY - margin.top - topCluster_height;
@@ -380,7 +380,7 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(moveEvent);
                 });
 
-                select_rect.on("mouseup", function (ev) {
+                select_rect.on("mouseup", function(ev) {
                     isMousedown = false;
                     var upEvent = ev || d3.event;
                     //当前up位置
@@ -401,7 +401,7 @@ define(["toolsApp"], function (toolsApp) {
                         var geneId = resdata.heatmapData[0].heatmap.slice(down_j, up_j + 1);
                     }
                     var resGeneId = [];
-                    geneId.forEach(function (val, index) {
+                    geneId.forEach(function(val, index) {
                         resGeneId.push(val.x);
                     });
 
@@ -420,22 +420,22 @@ define(["toolsApp"], function (toolsApp) {
                     clearEventBubble(upEvent);
                 });
 
-                big_rect.on("mouseup", function () {
+                big_rect.on("mouseup", function() {
                     clearEventBubble(d3.event);
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
 
-                big_rect.on("mouseout", function () {
+                big_rect.on("mouseout", function() {
                     reportService.GenericTip.Hide();
                 });
 
-                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mousedown", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mousedown", function() {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
 
-                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mouseup", function () {
+                $("#analysis-heatmapClusterPanel .tab-switch-chart").on("mouseup", function() {
                     select_rect.attr("width", 0).attr("height", 0);
                     isMousedown = false;
                 })
@@ -509,10 +509,10 @@ define(["toolsApp"], function (toolsApp) {
                     .append("text")
                     .style("font-family", "Consolas, Monaco, monospace")
                     .style("font-size", "0.8em")
-                    .text(function (d) {
+                    .text(function(d) {
                         return d.x;
                     })
-                    .attr("y", function (d, i) {
+                    .attr("y", function(d, i) {
                         return i * single_rect_height + single_rect_height / 2 + 4;
                     })
             }
@@ -551,11 +551,11 @@ define(["toolsApp"], function (toolsApp) {
                 .append("rect")
                 .attr("width", legend_width)
                 .attr("height", legendClickRect_h)
-                .attr("y", function (d, i) {
+                .attr("y", function(d, i) {
                     return i * legendClickRect_h;
                 })
                 .attr("fill", "transparent")
-                .on("click", function (d, i) {
+                .on("click", function(d, i) {
                     var oEvent = d3.event || event;
                     oEvent.stopPropagation();
 
@@ -565,7 +565,7 @@ define(["toolsApp"], function (toolsApp) {
                 });
 
             //色盘指令回调函数
-            $scope.colorChange = function (curColor) {
+            $scope.colorChange = function(curColor) {
                 colorArr.splice($scope.colorArr_i, 1, curColor);
                 toolService.sessionStorage.set("colors", colorArr);
                 drawLegend(colorArr);
@@ -582,25 +582,25 @@ define(["toolsApp"], function (toolsApp) {
 
         //get links 
         $scope.linksError = false;
-        $scope.GetLinks = function () {
+        $scope.GetLinks = function() {
             var promise = ajaxService.GetDeferData({
                 data: {},
                 url: options.api.java_url + "/analysis/parent/" + $scope.id
             })
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.status != 200) {
                     $scope.linksError = "syserror";
                 } else {
                     $scope.linksError = false;
                     $scope.links = res.data.links;
                 }
-            }, function (err) {
+            }, function(err) {
                 console.log(err);
             })
         }
 
         // 查看links
-        $scope.handlerSeeClick = function (item) {
+        $scope.handlerSeeClick = function(item) {
             var type = item.chartType || item.charType;
             if (item.process == 0) {
                 $window.open('../tools/index.html#/home/error/' + item.id);

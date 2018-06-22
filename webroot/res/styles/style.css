@@ -8633,6 +8633,60 @@ div.tipsContainer,
     box-shadow: none;
 }
 
-.bgi_static_pic {
+.bgi_static_div {
+    padding: 0 24px;
+    padding-top: 26px;
+    padding-bottom: 24px;
+    background-color: #fff;
+    min-width: 880px;
+    box-shadow: 0 2px 4px 0 rgba(183, 199, 255, 0.30);
+    border-radius: 2px;
+    box-shadow: 0 0 black;
+    text-shadow: 0 0 black;
+}
+
+.bgi_static_div .bgi_static_normal p {
+    font-size:14px;
+    color:  #636A82 ;
+    line-height: 20px;
+    text-indent:0;
+    margin-bottom:8px;
+}
+
+.bgi_static_div .bgi_static_normal .bgi_point {
+    font-weight:bold;
+    color: #000;
+}
+
+.bgi_static_bg{
+    background-color: #EEE;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #dfe2e5;
+    border-radius:4px;
+
+}
+
+.bgi_static_div .bgi_static_bg p {
+    font-size:14px;
+    color:  #636A82 ;
+    line-height: 18px;
+    text-indent:0;
+    margin-bottom:6px;
+}
+.bgi_static_div .bgi_static_bg .bgi_point {
+    color: #000;
+}
+
+.bgi_static_pic{
     text-align: center;
+    margin:10px;
+}
+.bgi_static_pic .bgi_static_pic_title{
+    text-align: center;
+    margin:4px 0 10px  0;
+}
+.bgi_static_pic .bgi_static_pic_title span{
+    font-size:14px;
+    color:  #636A82 ;
 }

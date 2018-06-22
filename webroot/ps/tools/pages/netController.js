@@ -575,7 +575,6 @@ define(['toolsApp'], function(toolsApp) {
                 } else {
                     $scope.linksError = false;
                     $scope.links = res.data.links;
-                    console.log($scope.links);
                 }
             }, function(err) {
                 console.log(err);

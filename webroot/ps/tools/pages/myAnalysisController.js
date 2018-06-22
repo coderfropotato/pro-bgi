@@ -132,7 +132,6 @@ define(['toolsApp'], function (toolsApp) {
         // 搜索
         var searchTimer = null;
         $scope.handlerSearch = function (event) {
-            console.log(event)
             if (event.keyCode === 13) {
                 // 回车立马搜索
                 $scope.handlerFilterClick();

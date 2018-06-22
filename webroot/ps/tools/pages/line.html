@@ -2,7 +2,7 @@
     <div class="report-page-title" custom-title="title"></div>
     <div id="div_line_page">
         <div class="table-switch-chart-wrap">
-            <div class="graph_group" id="analysis-linePanel" >
+            <div class="graph_group" id="analysis-linePanel">
                 <div class="graph_header">
                     <ul class="fRight">
                         <li ng-if="!linksError">
@@ -18,13 +18,13 @@
                                 </div>
                             </button>
                         </li>
-                        <li ng-hide="lineError">
-                            <div class="svg-new-export" chartid="lineChart_panel" saveimgname="折线图"></div>
-                        </li>
                         <li>
                             <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetLineChartData()">
                                 <span class="iconfont icon-shuaxin"></span>
                             </button>
+                        </li>
+                        <li ng-hide="lineError">
+                            <div class="svg-new-export" chartid="lineChart_panel" saveimgname="折线图"></div>
                         </li>
                     </ul>
                 </div>
@@ -44,10 +44,11 @@
         <!-- Geneid add delete big table -->
         <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="pageFindEntity" url="url" content-id="panelId"
             table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis" is-show-thead-control="isShowTheadControl" reanalysis-id="reanalysisId"></div>
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis"
+            is-show-thead-control="isShowTheadControl" reanalysis-id="reanalysisId"></div>
 
 
-            <!-- analysis pop -->
-    <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
+        <!-- analysis pop -->
+        <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
     </div>
 </div>

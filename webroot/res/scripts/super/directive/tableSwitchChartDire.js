@@ -202,7 +202,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     }
 
                     function groupedbarChangeColor(color) {
-                        $scope.chart.redraw($('#' + $scope.contentId + ' .graph_header').eq(0).width() * $scope.scale);
+                        var width = $scope.chart.getOptions().width;
+                        var height = $scope.chart.getOptions().height;
+                        $scope.chart.redraw(width);
                         //改标题
                         $scope.chart.dbClickTitle(function () {
                             var textNode = d3.select(this).node();
@@ -258,26 +260,26 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
 
             // redraw
-            var timer = null;
-            window.removeEventListener('resize', handlerResize);
-            window.addEventListener('resize', handlerResize, false)
+            // var timer = null;
+            // window.removeEventListener('resize', handlerResize);
+            // window.addEventListener('resize', handlerResize, false)
 
-            function handlerResize() {
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    if ($scope.chart) {
-                        var width = $scope.chart.getOptions.width;
-                        var height = $scope.chart.getOptions.height;
-                        $scope.chart.redraw(width);
-                        //改标题
-                        $scope.chart.dbClickTitle(function () {
-                            var textNode = d3.select(this).node();
-                            toolService.popPrompt(textNode, textNode.textContent);
-                        })
-                        $scope.applyChangeColor();
-                        if ($scope.isSelectChartData) $scope.handlerSingle();
-                    }
-                }, 100)
-            }
+            // function handlerResize() {
+            //     clearTimeout(timer);
+            //     timer = setTimeout(function () {
+            //         if ($scope.chart) {
+            //             var width = $scope.chart.getOptions().width;
+            //             var height = $scope.chart.getOptions().height;
+            //             $scope.chart.redraw(width);
+            //             //改标题
+            //             $scope.chart.dbClickTitle(function () {
+            //                 var textNode = d3.select(this).node();
+            //                 toolService.popPrompt(textNode, textNode.textContent);
+            //             })
+            //             $scope.applyChangeColor();
+            //             if ($scope.isSelectChartData) $scope.handlerSingle();
+            //         }
+            //     }, 100)
+            // }
         }
     })

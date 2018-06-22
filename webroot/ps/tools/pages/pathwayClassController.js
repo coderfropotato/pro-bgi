@@ -100,7 +100,7 @@ define(['toolsApp'], function(toolsApp) {
             "id": "",
             "type": "groupedbar2",
             "data": [],
-            "width": 0,
+            "width": 800,
             "height": 0,
             "titleBox": {
                 "show": true,
@@ -110,6 +110,14 @@ define(['toolsApp'], function(toolsApp) {
             },
             "legendBox": {
                 "show": true
+            },
+            "axisBox": {
+                "xAxis": {
+                    "title": "Number of Genes",
+                },
+                "yAxis": {
+                    "title": '',
+                }
             },
             "dataBox": {
                 "normalColor": angular.copy($rootScope.colorArr),
@@ -123,15 +131,14 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.options.id = $scope.chartId;
             $scope.options.data = data;
-            $scope.options.width = width * 0.9;
-            $scope.options.height = data.length * 15;
+            $scope.options.height = (14 * data.length + 20) < 480 ? 480 : (14 * data.length + 20);
 
             $scope.barchart = new gooal.barInit("#" + $scope.chartId, $scope.options);
 
             var group2tooltip = $scope.barchart.addTooltip(group2tooltipConfig);
 
             function group2tooltipConfig(d) {
-                group2tooltip.html("key:" + d.key + "</br>" + "value: " + d.value + "</br>" + "Category: " + d.category)
+                group2tooltip.html("Level1: " + d.category+"<br>Level2:" + d.key + "</br>" + "Number of Genes: " + d.value )
             }
             //改标题
             $scope.barchart.dbClickTitle(function() {

@@ -7,27 +7,27 @@
             <span ng-show="allActive.length">已选择：</span>
             <div class="item-wrap">
                 <ul class="clearfix">
-                    <li ng-repeat="item in allActive" ng-init="computedWrapWidth()" >{{item._id}}&emsp;<i class="iconfont icon-guanbi addthead-guanbi" style="cursor:pointer;" ng-click="handlerItemClick(item,item.index)"></i></li>
+                    <li ng-repeat="item in allActive track by $index" ng-init="computedWrapWidth()" >{{item._id}}&emsp;<i class="iconfont icon-guanbi addthead-guanbi" style="cursor:pointer;" ng-click="handlerItemClick(item,item.index)"></i></li>
                 </ul>
             </div>
         </div>
     </div>
     <div ng-show="show" ">
         <ul class="tab">
-            <li ng-show="group.list.length" ng-repeat="(index,group) in data" ng-class="{active:currentIndex==$index}" track by $index
+            <li ng-show="group.list.length" ng-repeat="(index,group) in data track by $index" ng-class="{active:currentIndex==$index}" 
                 ng-click="handlerTabClick($index)">{{group.groupName}}<span ng-if="allActiveItems[index].length" class="circle">{{allActiveItems[index].length}}</span></li>
         </ul>
         <div class="add-content" ng-init="initData()">
-            <div ng-show="currentIndex==$index && group.list.length" ng-repeat="(index,group) in data" track by $index>
-                <span ng-class="{active:item.isActive,disabled:remove}" ng-repeat="item in group.list" track by $index ng-click="handlerItemClick(item,index)">{{item._id}}</span>
+            <div ng-show="currentIndex==$index && group.list.length" ng-repeat="(index,group) in data track by $index">
+                <span ng-class="{active:item.isActive,disabled:remove}" ng-repeat="item in group.list track by $index" ng-click="handlerItemClick(item,index)">{{item._id}}</span>
             </div>
         </div>
         <!-- <div ng-init="initData()" class="thead-lists">
             <ol>
-                <li ng-if="group.list.length" ng-repeat="(index,group) in data" track by $index>
+                <li ng-if="group.list.length" ng-repeat="(index,group) in data track by $index">
                     <div class="thead-title" uib-tooltip="{{group.groupName}}">{{group.groupName}}</div>
                     <ul ng-class="{'showmore':group.isShowMore}">
-                        <li ng-repeat="item in group.list" track by $index ng-class="{active:item.isActive,disabled:remove}" ng-click="handlerItemClick(item,index)">{{item._id}}</li>
+                        <li ng-repeat="item in group.list track by $index" ng-class="{active:item.isActive,disabled:remove}" ng-click="handlerItemClick(item,index)">{{item._id}}</li>
                     </ul>
                     <div ng-click="handlerIsShowMoreClick($index)" ng-if="!group.isShowMore &&group.showMore" class="thead-title more">查看更多</div>
                     <div ng-click="handlerExpandClick($index)" ng-if="group.isShowMore && group.showMore " class="thead-title more">收起</div>

@@ -544,7 +544,7 @@ define(['toolsApp'], function(toolsApp) {
             var bardata = [],
                 pointData = [];
             for (var i = 0; i < data.length; i++) {
-                var barObj = { "key": data[i].go_term, "value": -Math.log10(data[i].go_qvalue), "term_id": data[i].go_term_id, "gene_num": data[i].go_term_candidate_gene_num };
+                var barObj = { "key": data[i].go_term, "value": -Math.log10(data[i].go_qvalue), "term_id": data[i].go_term_id, "gene_num": data[i].go_term_candidate_gene_num, "qvalue": data[i].go_qvalue };
                 bardata.push(barObj);
 
                 var pointObj = { "key": data[i].go_term, "value": data[i].go_term_candidate_gene_num };
@@ -562,7 +562,7 @@ define(['toolsApp'], function(toolsApp) {
             var groupcharttooltip = $scope.barchart.addTooltip(bartooltipConfig, linetooltipConfig)
 
             function bartooltipConfig(d) {
-                groupcharttooltip[0].html("Go term:" + d.key + "</br>" + "GO Term ID:" + d.term_id + "</br>" + "qvalue: " + d.value + "</br>" + "基因数：" + d.gene_num)
+                groupcharttooltip[0].html("Go term:" + d.key + "</br>" + "GO Term ID:" + d.term_id + "</br>" + "Qvalue: " + d.qvalue + "</br>" + "-log10（Qvalue）: " + d.value + "</br>" + "基因数：" + d.gene_num)
             }
 
             function linetooltipConfig(d) {

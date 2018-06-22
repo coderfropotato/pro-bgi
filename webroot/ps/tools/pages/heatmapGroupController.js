@@ -180,13 +180,13 @@ define(["toolsApp"], function(toolsApp) {
                     heatmap_width = single_rect_width * sampleLen;
                 }
 
-                if (YgeneDataLen >= 20) {
-                    heatmap_height = 480;
-                    single_rect_height = heatmap_height / YgeneDataLen;
-                } else {
-                    single_rect_height = 24;
-                    heatmap_height = single_rect_height * YgeneDataLen;
-                }
+                // if (YgeneDataLen >= 20) {
+                heatmap_height = 480;
+                single_rect_height = heatmap_height / YgeneDataLen;
+                // } else {
+                //     single_rect_height = 24;
+                //     heatmap_height = single_rect_height * YgeneDataLen;
+                // }
 
 
                 //定义折线宽高

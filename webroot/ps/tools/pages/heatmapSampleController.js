@@ -133,9 +133,12 @@ define(["toolsApp"], function(toolsApp) {
                 valuemax = resdata.maxValue,
                 valuemin = resdata.minValue;
 
+            var sampleLen = heatmap_data.length;
+            var YgeneDataLen = heatmap_data[0].heatmap.length;
+
             //定义图例的宽高
             var legend_width = 20;
-            var legend_height = 210;
+            var legend_height = 180;
 
             //heatmap与右边文字的间距、图例与右边文字间距
             var space = 10;
@@ -162,8 +165,28 @@ define(["toolsApp"], function(toolsApp) {
             var margin = { top: 40, bottom: XtextHeight, left: 10, right: 40 };
 
             //定义热图宽高
-            var heatmap_width = 600,
-                heatmap_height = 600;
+            var heatmap_width = 0,
+                heatmap_height = 0;
+
+            //计算单个rect长和宽
+            var single_rect_width = 0;
+            var single_rect_height = 0;
+
+            if (sampleLen <= 6) {
+                heatmap_width = 480;
+                single_rect_width = heatmap_width / sampleLen;
+            } else {
+                single_rect_width = 60;
+                heatmap_width = single_rect_width * sampleLen;
+            }
+
+            if (YgeneDataLen >= 20) {
+                heatmap_height = 480;
+                single_rect_height = heatmap_height / YgeneDataLen;
+            } else {
+                single_rect_height = 24;
+                heatmap_height = single_rect_height * YgeneDataLen;
+            }
 
             //定义折线宽高
             var cluster_height = heatmap_height,
@@ -180,10 +203,6 @@ define(["toolsApp"], function(toolsApp) {
             var totalWidth = margin.left + cluster_width + space + heatmap_width + space + YtextWidth + legend_space + legend_width + margin.right,
                 totalHeight = margin.top + topCluster_height + heatmap_height + XtextHeight + margin.bottom;
 
-            //计算单个rect长和宽
-            var single_rect_width = heatmap_width / heatmap_data.length;
-            var single_rect_height = heatmap_height / heatmap_data[0].heatmap.length;
-
             //定义渐变颜色
             var colorValue = toolService.sessionStorage.get("colors");
             var colorArr = colorValue.split(",");
@@ -197,7 +216,7 @@ define(["toolsApp"], function(toolsApp) {
 
             //定义图例位置偏移
             var legendTrans_x = totalWidth - legend_width - margin.right,
-                legendTrans_y = (heatmap_height - legend_height) / 2 + margin.top + topCluster_height;
+                legendTrans_y = margin.top + topCluster_height;
 
             //定义容器
             var svg = d3.select("#heatmapsample_chartClusterpic svg").attr("width", totalWidth).attr("height", totalHeight);
@@ -218,7 +237,7 @@ define(["toolsApp"], function(toolsApp) {
                 .append("text")
                 .attr("transform", "translate(" + (totalWidth / 2) + ", " + title_y + ")")
                 .text("差异基因层次聚类图")
-                .attr("font-size", "0.8em")
+                .attr("font-size", "18px")
                 .attr("text-anchor", "middle")
                 .on("click", function() {
                     var textNode = d3.select(this).node();
@@ -241,8 +260,10 @@ define(["toolsApp"], function(toolsApp) {
                     .size([topCluster_width, topCluster_height])
                     .separation(function() { return 1; });
 
+                var topLine_x = margin.left + cluster_width + heatmap_width;
+
                 var topCluster_g = body_g.append("g").attr("class", "topCluster")
-                    .attr("transform", "translate(700,0) rotate(90)");
+                    .attr("transform", "translate(" + topLine_x + ",0) rotate(90)");
 
                 //根据数据建立模型
                 var root = d3.hierarchy(topCluster_data);
@@ -253,7 +274,7 @@ define(["toolsApp"], function(toolsApp) {
                     .enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 1)
-                    .attr("stroke", "#cccccc")
+                    .attr("stroke", "#000000")
                     .attr("d", elbow);
 
             }
@@ -276,7 +297,7 @@ define(["toolsApp"], function(toolsApp) {
                     .enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 1)
-                    .attr("stroke", "#cccccc")
+                    .attr("stroke", "#000000")
                     .attr("d", elbow);
 
             }
@@ -300,7 +321,7 @@ define(["toolsApp"], function(toolsApp) {
                 d3.selectAll(".heatmapRects").remove();
                 //颜色比例尺
                 var colorScale = d3.scaleLinear().domain([valuemin, (valuemin + valuemax) / 2, valuemax]).range(colors).interpolate(d3.interpolateRgb);
-                for (i = 0; i < heatmap_data.length; i++) {
+                for (i = 0; i < sampleLen; i++) {
                     var rect_g = heatmap_g.append("g").attr("class", "heatmapRects");
                     //画矩形
                     rect_g.selectAll("rect")
@@ -316,9 +337,22 @@ define(["toolsApp"], function(toolsApp) {
                     //添加x轴的名称
                     rect_g.append("text")
                         .style("font-family", "Consolas, Monaco, monospace")
-                        .style("font-size", "0.8em")
+                        .style("font-size", "12px")
                         .text(heatmap_data[i].name)
-                        .attr("transform", "translate(" + (i * single_rect_width + single_rect_width / 2) + "," + (heatmap_height + 20) + ") rotate(25)").attr("text-anchor", "start");
+                        .style("text-anchor", function() {
+                            if (sampleLen <= 6) {
+                                return "middle";
+                            } else {
+                                return "start";
+                            }
+                        })
+                        .attr("transform", function() {
+                            if (sampleLen <= 6) {
+                                return "translate(" + (i * single_rect_width + single_rect_width / 2) + "," + (heatmap_height + 20) + ")";
+                            } else {
+                                return "translate(" + (i * single_rect_width + single_rect_width / 2) + "," + (heatmap_height + 20) + ") rotate(25)";
+                            }
+                        })
                 }
             }
 
@@ -445,7 +479,7 @@ define(["toolsApp"], function(toolsApp) {
             function getIndex(x, y) {
                 var rect_i = 0,
                     rect_j = 0;
-                var heatmapData_len = heatmap_data.length;
+                var heatmapData_len = sampleLen;
 
                 for (var i = 0; i < heatmapData_len; i++) {
                     if (i == heatmapData_len - 1) {
@@ -508,7 +542,7 @@ define(["toolsApp"], function(toolsApp) {
                     .enter()
                     .append("text")
                     .style("font-family", "Consolas, Monaco, monospace")
-                    .style("font-size", "0.8em")
+                    .style("font-size", "12px")
                     .text(function(d) {
                         return d.x;
                     })
@@ -577,6 +611,9 @@ define(["toolsApp"], function(toolsApp) {
             legend_g.append("g").attr("class", "heatmap_Axis")
                 .attr("transform", "translate(" + legend_width + ",0)")
                 .call(yAxis);
+
+            d3.selectAll(".heatmap_Axis .tick text")
+                .attr("font-size", "12px");
 
         }
 

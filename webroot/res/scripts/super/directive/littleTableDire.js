@@ -35,7 +35,7 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     isHasAccuracy: "=",
                     accuracy: "=",
                     // 无数据是否需要隐藏
-                    tableTitle: "@",
+                    // tableTitle: "@",
                     isNoDataHide: "=",
                 },
                 replace: false,

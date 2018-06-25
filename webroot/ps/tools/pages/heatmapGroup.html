@@ -1,11 +1,14 @@
 <div class="heatmap-page" ng-controller="heatmapGroupController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
+    <h6>差异基因表达量聚类热图</h6>
+    <p class="table-chart-desc">X轴代表进行聚类分析的差异比对，Y轴代表差异基因。颜色代表log2转换过的差异倍数(颜色越红代表上调倍数越大，越蓝代表下调倍数越大)。该图直观地反映了差异基因上下调的聚类情况，同时适用于不同差异方案间DEG差异倍数的比较。</p>
     <div id="div_heatmap_page" class="table-switch-chart-wrap">
-        <div class="graph_group" id="analysis-heatmapClusterPanel" >
+        <div class="graph_group" id="analysis-heatmapClusterPanel">
             <div class="graph_header">
                 <ul class="fRight">
                     <li ng-if="!linksError">
-                        <button style="position:relative;" class="btn-sm list_btn">前置任务<span style="color:red;">({{links.length}})</span>
+                        <button style="position:relative;" class="btn-sm list_btn">前置任务
+                            <span style="color:red;">({{links.length}})</span>
                             <div class="links btn-links" style="color:#333;">
                                 <ul ng-if="links.length" class="link-lists">
                                     <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
@@ -17,7 +20,8 @@
                         </button>
                     </li>
                     <li ng-hide="clusterError">
-                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
+                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption"
+                            is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
                     </li>
                     <li>
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetHeatmapData('refresh')">
@@ -45,8 +49,9 @@
 
     <!-- Geneid add delete big table -->
     <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="pageFindEntity" url="url" content-id="panelId"
-    table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-    is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis" reanalysisId="id" is-show-thead-control="isShowTheadControl"></div>
+        table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis"
+        reanalysisId="id" is-show-thead-control="isShowTheadControl"></div>
 
     <!-- analysis pop  $rootScope.analysis-->
     <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>

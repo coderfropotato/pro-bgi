@@ -464,7 +464,7 @@ define(['toolsApp'], function(toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "Enriched GO Term",
+                "title": "差异基因 GO 富集气泡图",
             },
             "axisBox": {
                 "xAxis": {

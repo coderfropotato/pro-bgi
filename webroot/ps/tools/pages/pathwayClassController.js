@@ -105,7 +105,7 @@ define(['toolsApp'], function(toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "Pathway分类图",
+                "title": "差异基因 Pathway 分类",
                 "editable": true
             },
             "legendBox": {

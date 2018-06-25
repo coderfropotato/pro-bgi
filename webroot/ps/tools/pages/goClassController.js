@@ -108,7 +108,7 @@ define(["toolsApp"], function (toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "GO分类图",
+                "title": "差异基因 GO 分类",
                 "editable": true
             },
             "axisBox": {

@@ -1,11 +1,11 @@
 <div class="goRich-page" ng-init="InitPage()" ng-controller="goRichController">
     <div class="report-page-title" custom-title="title"></div>
 
-    <h6>差异基因GO富集结果</h6>
+    <h6>差异基因 GO 富集结果</h6>
     <div id="div_reAnalysis_goRich">
         <div class="table-switch-chart-wrap">
             <!-- 富集表 start -->
-            <p style="color: red;" ng-show="goSelectList.length>60">最多只对qvalue较小的top60进行重新画图</p>
+            <p style="color: red;" ng-show="goSelectList.length>60">最多只对 qvalue 较小的 top60 进行重新画图</p>
             <div id="reAnalysis_goRich_go" style="position: relative;">
                 <div class="btn_options_filelist">
                     <ul class="FLeft">
@@ -127,8 +127,8 @@
             </div>
 
             <!-- 气泡图、柱状图 start -->
-            <h6 class="nmt nb nplr" ng-if="chartType==='column'">差异基因GO柱状图</h6>
-            <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">差异基因GO富集气泡图</h6>
+            <h6 class="nmt nb nplr" ng-if="chartType==='column'">差异基因 GO 柱状图</h6>
+            <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">差异基因 GO 富集气泡图</h6>
             <div class="graph_group"  id="reAnalysis_goRich_bubble">
                 <div class="graph_header">
                     <ul class="fLeft">

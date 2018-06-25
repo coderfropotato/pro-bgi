@@ -1,7 +1,7 @@
 <div class="pathwayRich-page" ng-init="InitPage()" ng-controller="pathwayRichController">
     <div class="report-page-title" custom-title="title"></div>
 
-    <h6>Pathway 富集</h6>
+    <h6>差异基因Pathway富集结果</h6>
     <div id="div_reAnalysis_pathwayRich ">
         <div class="table-switch-chart-wrap">
             <!-- 富集表 start -->
@@ -125,7 +125,9 @@
             </div>
 
             <!-- 气泡图 start -->
-            <div class="graph_group" style="margin-top: 50px" id="reAnalysis_pathwayRich_bubble">
+            <h6 class="nmt nb nplr" ng-if="chartType==='column'">差异基因GO柱状图</h6>
+            <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">差异基因GO富集气泡图</h6>
+            <div class="graph_group"  id="reAnalysis_pathwayRich_bubble">
                 <div class="graph_header">
                     <ul class="fLeft">
                         <li>

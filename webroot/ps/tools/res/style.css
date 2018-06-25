@@ -285,19 +285,22 @@
     color: #FFFFFF;
     letter-spacing: 0;
     text-align: center;
+    border: none;
 }
 
-.advance-panel button:hover {
+.advance-panel button:hover,.advance-panel button:focus,.advance-panel button:active {
     background: #5378F8;
     color: #FFFFFF;
+    border: none;
 }
 
 .advance-panel button.reSet {
     background: #f69191;
 }
 
-.advance-panel button.reSet:hover {
+.advance-panel button.reSet:hover,.advance-panel button.reSet:focus,.advance-panel button.reSet:active {
     background: #f04848;
+    border: none;
 }
 
 .editProject {

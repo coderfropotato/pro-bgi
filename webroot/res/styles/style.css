@@ -1831,13 +1831,15 @@ div.my-form-invaild {
     background-color: #5378f8 !important;
     border: solid 1px #5378f8 !important;
 }
-.form-control:focus{
+
+.form-control:focus {
     border-color: #5378f8;
     outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(83,120,248, .6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(83,120,248, .6);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(83, 120, 248, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(83, 120, 248, .6);
 }
-.form-control:hover{
+
+.form-control:hover {
     border-color: #5378f8!important;
 }
 
@@ -8338,6 +8340,13 @@ div.tipsContainer,
     left: inherit;
     right: 0;
     padding: 10px 0;
+    background: #FFFFFF;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15), 0 10px 20px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+}
+
+.heatsetPanel .oneline_foot {
+    border-top: 1px solid #E8E8E8 !important;
 }
 
 .heatsetPanel p {
@@ -8360,7 +8369,7 @@ div.tipsContainer,
 
 .heatSort {
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #E8E8E8;
     max-height: 300px;
     overflow-y: auto;
 }
@@ -8402,6 +8411,42 @@ div.tipsContainer,
     padding: 5px;
 }
 
+.heatsetPanel .opreatBtns {
+    float: right;
+    border-radius: 2px;
+    width: 80px;
+    height: 32px;
+    margin-right: 15px;
+}
+
+.heatsetPanel .sureBtn,
+.heatsetPanel .sureBtn:active,
+.heatsetPanel .sureBtn:focus {
+    background: #5378F8;
+    border: 1px solid #5378F8;
+}
+
+.heatsetPanel .valueInput {
+    font-size: 14px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.heatsetPanel .valueInput input {
+    border: 1px solid #e8e8e8;
+    height: 32px;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.heatsetPanel .tipTextInfo {
+    text-align: center;
+    font-size: 12px;
+    color: #ff0000;
+    margin-bottom: 20px;
+}
+
 
 /* 聚类图设置面板-switch开关 */
 
@@ -8419,7 +8464,7 @@ div.tipsContainer,
 .onoffswitch-label {
     display: block;
     overflow: hidden;
-    border: 1px solid #ccc;
+    border: 1px solid #e8e8e8;
     border-radius: 4px;
 }
 
@@ -8450,7 +8495,7 @@ div.tipsContainer,
 .onoffswitch-inner:before {
     content: "on";
     padding-left: 14px;
-    background-color: #2FFF3D;
+    background-color: #5378f8;
     color: #FFFFFF;
 }
 
@@ -8646,47 +8691,49 @@ div.tipsContainer,
 }
 
 .bgi_static_div .bgi_static_normal p {
-    font-size:14px;
-    color:  #636A82 ;
+    font-size: 14px;
+    color: #636A82;
     line-height: 20px;
-    text-indent:0;
-    margin-bottom:8px;
+    text-indent: 0;
+    margin-bottom: 8px;
 }
 
 .bgi_static_div .bgi_static_normal .bgi_point {
-    font-weight:bold;
+    font-weight: bold;
     color: #000;
 }
 
-.bgi_static_bg{
+.bgi_static_bg {
     background-color: #EEE;
-    padding:10px;
-    margin:10px 0;
-    border:1px solid #dfe2e5;
-    border-radius:4px;
-
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #dfe2e5;
+    border-radius: 4px;
 }
 
 .bgi_static_div .bgi_static_bg p {
-    font-size:14px;
-    color:  #636A82 ;
+    font-size: 14px;
+    color: #636A82;
     line-height: 18px;
-    text-indent:0;
-    margin-bottom:6px;
+    text-indent: 0;
+    margin-bottom: 6px;
 }
+
 .bgi_static_div .bgi_static_bg .bgi_point {
     color: #000;
 }
 
-.bgi_static_pic{
+.bgi_static_pic {
     text-align: center;
-    margin:10px;
+    margin: 10px;
 }
-.bgi_static_pic .bgi_static_pic_title{
+
+.bgi_static_pic .bgi_static_pic_title {
     text-align: center;
-    margin:4px 0 10px  0;
+    margin: 4px 0 10px 0;
 }
-.bgi_static_pic .bgi_static_pic_title span{
-    font-size:14px;
-    color:  #636A82 ;
+
+.bgi_static_pic .bgi_static_pic_title span {
+    font-size: 14px;
+    color: #636A82;
 }

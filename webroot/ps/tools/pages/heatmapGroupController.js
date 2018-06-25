@@ -57,7 +57,9 @@ define(["toolsApp"], function(toolsApp) {
             $scope.setOption = {
                     isShowName: false,
                     isShowTopLine: true,
-                    sortNames: []
+                    sortNames: [],
+                    width: 0,
+                    height: 0
                 }
                 // 获取聚类图数据
             $scope.GetHeatmapData();
@@ -172,21 +174,29 @@ define(["toolsApp"], function(toolsApp) {
                 var single_rect_width = 0;
                 var single_rect_height = 0;
 
-                if (sampleLen <= 6) {
-                    heatmap_width = 480;
+                if (sampleLen <= 8) {
+                    if (setOption.width != 0) {
+                        heatmap_width = setOption.width;
+                    } else {
+                        heatmap_width = 480;
+                    }
                     single_rect_width = heatmap_width / sampleLen;
                 } else {
-                    single_rect_width = 60;
-                    heatmap_width = single_rect_width * sampleLen;
+                    if (setOption.width == 0) {
+                        single_rect_width = 60;
+                        heatmap_width = single_rect_width * sampleLen;
+                    } else {
+                        heatmap_width = setOption.width;
+                        single_rect_width = heatmap_width / sampleLen;
+                    }
                 }
 
-                // if (YgeneDataLen >= 20) {
-                heatmap_height = 480;
+                if (setOption.height == 0) {
+                    heatmap_height = 480;
+                } else {
+                    heatmap_height = setOption.height;
+                }
                 single_rect_height = heatmap_height / YgeneDataLen;
-                // } else {
-                //     single_rect_height = 24;
-                //     heatmap_height = single_rect_height * YgeneDataLen;
-                // }
 
 
                 //定义折线宽高

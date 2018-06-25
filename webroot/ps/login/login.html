@@ -15,7 +15,7 @@
     <link href="../../res/scripts/lib/angular/ng-dialog/0.5.0/ngDialog.css" rel="stylesheet" type="text/css" />
     <link href="../../res/styles/website.css" rel="stylesheet" type="text/css" />
     <link href="./res/style.css" rel="stylesheet" type="text/css" />
-    <!-- <link rel="icon" href="../../res/./res/images/favicon.ico" type="image/x-icon"> -->
+    <link rel="icon" href="../../res/./res/images/favicon.ico" type="image/x-icon">
     <script src="../../res/scripts/lib/requirejs/2.1.20/require.min.js" defer data-main="loginMain.js"></script>
     <script>
         var _hmt = _hmt || [];
@@ -165,13 +165,13 @@
                             </span>友情链接</p>
                         <ul class="friendshipLink_ul" style="width:1020px;">
                             <li>
-                                <a href="http://www.bgitechsolutions.com " target="_blank"><img src="./res/images/friendshipLink1.png"/></a> 
+                                <a href="http://www.bgitechsolutions.com " target="_blank"><img src="./res/images/friendshipLink1.png" /></a>
                             </li>
                             <li>
-                                <a href="https://www.bgi.com " target="_blank"><img src="./res/images/friendshipLink2.png"/></a> 
+                                <a href="https://www.bgi.com " target="_blank"><img src="./res/images/friendshipLink2.png" /></a>
                             </li>
                             <li>
-                                <a href="http://www.mgitech.cn" target="_blank"><img src="./res/images/friendshipLink3.png" /></a> 
+                                <a href="http://www.mgitech.cn" target="_blank"><img src="./res/images/friendshipLink3.png" /></a>
                             </li>
                         </ul>
                     </div>
@@ -206,10 +206,10 @@
 
                     <div class="login_sum">
                         <img src="./res/images/verificationCode.png" class="verificationCode" />
-                        <input type="text"  name="code" placeholder="请输入验证码" super-validate="请输入验证码"  ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
+                        <input type="text" name="code" placeholder="请输入验证码" super-validate="请输入验证码" ng-model="formEntity.code" required class="verificationCodeInput input_pass" style="width:194px;" />
                         <div class="verificationCode_img">
-                            <img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码"  id="imgcode" class="yzm" />
-                            <input type="text"  name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
+                            <img ng-src="{{UUIDurl}}/checkImg?uuid={{uuid}}" ng-click="renovate()" alt="验证码" id="imgcode" class="yzm" />
+                            <input type="text" name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
                         </div>
                     </div>
                     <div class="signIn">

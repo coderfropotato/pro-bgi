@@ -2,15 +2,15 @@
     <div class="report-page-title" custom-title="title"></div>
     <div id="div_geneDetail_page">
         <h4>基因信息</h4>
-        <div class="geneinfoDiv">
-            <p ng-repeat="gene in geneInfoList track by $index" ng-hide="geneInfoError">
+        <div class="geneinfoDiv" ng-hide="geneInfoError">
+            <p ng-repeat="gene in geneInfoList track by $index">
                 <span uib-tooltip="{{gene.hover}}" class="geneName">{{gene.name}}</span>
                 <a ng-show="isgeneLink">{{gene.value}}</a>
                 <span ng-show="!isgeneLink">{{gene.value}}</span>
             </p>
-            <!-- <div class="table-nodata" error-type="geneInfoError" style="border: 0"></div> -->
-            <div ng-show="geneInfoError">无</div>
         </div>
+        <!-- <div class="table-nodata" error-type="geneInfoError" style="border: 0"></div> -->
+        <div ng-show="geneInfoError">无</div>
 
         <h4>表达量信息</h4>
 
@@ -162,7 +162,7 @@
                             <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <!-- <div class="table-nodata" error-type="goError" style="border: 0"></div> -->

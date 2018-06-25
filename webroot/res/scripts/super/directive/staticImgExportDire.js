@@ -165,48 +165,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                     }
 
                                     if (type == "pdf") {
-                                        // fileinfo是base64
-                                        // var aEle = document.createElement("a");
-                                        // document.body.appendChild(aEle);
-                                        // aEle.href = 'data:application/pdf;base64,' + fileInfo;
-                                        // aEle.download = saveImgName + ".pdf";
-                                        // setTimeout(function() {
-                                        //     aEle.click();
-                                        //     aEle.remove();
-                                        // }, 200);
-
-                                        // $.ajax({
-                                        //     type: 'HEAD', // 获取头信息，type=HEAD即可
-                                        //     url: $scope.exportLocation,
-                                        //     complete: function(xhr, data) {
-                                        //         // 获取相关Http Response header
-                                        //         var wpoInfo = {
-                                        //             // 服务器端时间
-                                        //             "date": xhr.getResponseHeader('Date'),
-                                        //             // 如果开启了gzip，会返回这个东西
-                                        //             "contentEncoding": xhr.getResponseHeader('Content-Encoding'),
-                                        //             // keep-alive ？ close？
-                                        //             "connection": xhr.getResponseHeader('Connection'),
-                                        //             // 响应长度
-                                        //             "contentLength": xhr.getResponseHeader('Content-Length'),
-                                        //             // 服务器类型，apache？lighttpd？
-                                        //             "server": xhr.getResponseHeader('Server'),
-                                        //             "vary": xhr.getResponseHeader('Vary'),
-                                        //             "transferEncoding": xhr.getResponseHeader('Transfer-Encoding'),
-                                        //             // text/html ? text/xml?
-                                        //             "contentType": xhr.getResponseHeader('Content-Type'),
-                                        //             "cacheControl": xhr.getResponseHeader('Cache-Control'),
-                                        //             // 生命周期？
-                                        //             "exprires": xhr.getResponseHeader('Exprires'),
-                                        //             "lastModified": xhr.getResponseHeader('Last-Modified'),
-                                        //             "contentDisposition": xhr.getResponseHeader('Content-Disposition')
-                                        //         };
-                                        //         console.log(wpoInfo.contentDisposition);
-                                        //         console.log(data);
-                                        //         console.log(this);
-                                        //     }
-                                        // });
-
+                                        // TODO
                                         // fileinfo是文件内容
                                         var aEle = document.createElement("a");
                                         document.body.appendChild(aEle);

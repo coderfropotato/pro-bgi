@@ -1,5 +1,5 @@
 <div id="{{panelId}}" ng-hide="isNoDataHide && error" ng-init="InitPage()" class="tableListPanel little-table-wrap">
-    <div  class="btn_options_filelist clearfix">
+    <div class="btn_options_filelist clearfix">
         <ul class="ul_left">
             <li ng-show="isHasSelectOption">
                 <div class="selector_area">
@@ -30,7 +30,7 @@
                 </button>
             </li>
             <li>
-                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" savefilename="{{tableDownloadName}}"></div>
+                <div ng-hide="error" class="grid-export" find-entity="pageEntity" export-location="url" varfilename="tableDownloadName"></div>
             </li>
         </ul>
     </div>
@@ -47,8 +47,8 @@
                 <tbody>
                     <tr ng-repeat="row in tableData.rows track by $index">
                         <td class="center nowrap popover-table" data-title="{{row[val.true_key]}}" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name">
-                                <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
-                                <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter: accuracy)}}</span>
+                            <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                         </td>
                     </tr>
                 </tbody>

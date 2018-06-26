@@ -11,6 +11,7 @@ define(['toolsApp'], function(toolsApp) {
             }, 300)
 
             $scope.id = $state.params.id;
+            $scope.lineWidth = 0;
             $scope.title = '折线图 ( ID：' + $scope.id + " ) ";
             $scope.lineError = false;
             $scope.curType = '';
@@ -85,6 +86,8 @@ define(['toolsApp'], function(toolsApp) {
                     $scope.chartData = [];
                     $scope.mapTheadJson = {};
                     var order = [];
+
+                    $scope.lineWidth = ((Math.ceil(res.baseThead.length / 18) * 140) + res.rows.length * 30 + 60) || 500
                     res.baseThead.forEach(function(val, index) {
                         if (index != 0) {
                             for (var key in val) {
@@ -139,7 +142,7 @@ define(['toolsApp'], function(toolsApp) {
             "id": "",
             "type": "line",
             "data": [],
-            "width": 460,
+            "width": 480,
             "height":400,
             "titleBox": {
                 "title":"折线图",
@@ -161,18 +164,19 @@ define(['toolsApp'], function(toolsApp) {
                 }
             },
             "dataBox": {
-                "normalColor": angular.copy($rootScope.colorArr)
+                "normalColor": angular.copy($rootScope.colorArr),
+                "curve":false,
             }
         }
         $scope.drawLineChart = function(data) {
+            
             $("#lineChart_panel").html("");
 
             var width = $("#analysis-linePanel .graph_header").eq(0).width();
 
             $scope.lineOptions.id = "lineChart_panel";
             $scope.lineOptions.data = data;
-
-
+            $scope.lineOptions.width = $scope.lineWidth
             $scope.linechart = new gooal.lineInit("#lineChart_panel", $scope.lineOptions)
             var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 

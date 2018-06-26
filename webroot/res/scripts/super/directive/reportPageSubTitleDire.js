@@ -36,18 +36,23 @@ define("superApp.reportPageSubTitleDire",
             $scope.two = 0;
             $scope.cur = 0;
             // 当前页面是三级
+            var str = '';
             if ($scope.id.length > 6) {
                 var twoP = findParent($scope.id, $rootScope.oneLevel);
                 var oneP = twoP.parent;
                 $scope.one = findIndex(oneP.GNSID, $rootScope.oneLevel);
                 $scope.two = findIndex(twoP.GNSID, oneP.children);
                 $scope.cur = findIndex($scope.id, twoP.children);
+
+                str = $scope.one + '.' + $scope.two + '.' + $scope.cur + '_' + $scope.currentPage.JDMC;
             } else {
                 var p = findParent($scope.id, $rootScope.oneLevel);
                 $scope.two = findIndex($scope.id, p.children);
                 $scope.one = findIndex(p.GNSID, $rootScope.oneLevel);
+                str = $scope.one + '.' + $scope.two + '_' + $scope.currentPage.JDMC;
             }
 
+            $rootScope.pageInfo[$scope.currentPageDirective] = str;
 
             function findParent(id, arr) {
                 if (arr.length) {

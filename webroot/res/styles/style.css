@@ -8738,7 +8738,7 @@ div.tipsContainer,
     color: #636A82;
 }
 /* reaccess dialog styles */
-#ngdialog1{
+/* #ngdialog1{
     color: #fff;
 }
 #ngdialog1 .ngdialog-content{
@@ -8806,4 +8806,4 @@ div.tipsContainer,
 #ngdialog1 .access-btn.access-confirm{
     background-color: #fff;
     color:#333;
-}
+} */

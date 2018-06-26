@@ -402,9 +402,11 @@ define("superApp.superDire",
                                 // 没有小段  有K     只有:  K09100//single-minded; 
                                 if (/^K/.test($.trim(d))) {
                                     str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a>';
-                                } else {
+                                } else if(/ko/g.test($.trim(d))) {
                                     // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
                                     str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a>'
+                                }else{
+                                    str+='<span>'+d+'</span>';
                                 }
                             }
                         }
@@ -458,7 +460,8 @@ define("superApp.superDire",
                     var index = 0;
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
-                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a>';
+                            // (val.match(/GO:\w+/))[0] val.split('//')[0]
+                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a>';
                         }
                     })
                 } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools' || thead.indexOf('go_term_mix_') != -1) {

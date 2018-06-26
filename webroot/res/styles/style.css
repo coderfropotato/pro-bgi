@@ -393,7 +393,7 @@ a:hover .glyphicon-trash {
     right: 0px;
     overflow: hidden;
     background: #EAEDF1;
-    z-index: 110;
+    z-index: 100;
 }
 
 .view_product_body {
@@ -8128,7 +8128,7 @@ div.tipsContainer,
     background-color: #fff;
     *border: 1px solid #ddd;
     color: #999;
-    z-index: 99999;
+    z-index: 100;
     /*word-break: break-all;*/
 }
 
@@ -8736,4 +8736,75 @@ div.tipsContainer,
 .bgi_static_pic .bgi_static_pic_title span {
     font-size: 14px;
     color: #636A82;
+}
+
+/* reaccess dialog styles */
+.reaccess-pop-dialog.ngdialog{
+    color: #fff;
+}
+.reaccess-pop-dialog .ngdialog-content{
+    position: absolute;
+    top:30%;
+    left:50%;
+    margin-left: -200px!important;
+    background-color: #333!important;
+    opacity:0.8;
+    color: #fff!important;
+}
+.reaccess-pop-dialog .my-ngdialog-title{
+    display: none;
+    background-color: #333;
+    border: none;
+}
+.reaccess-pop-dialog .my-ngdialog-content{
+    padding-top:30px;
+}
+.reaccess-pop-dialog .ngdialog-close{
+    display: none;
+}
+.reaccess-pop-dialog .ngdialog-buttons{
+    border: none;
+}
+.reaccess-pop-dialog  .tip{
+    text-align: center;
+    text-indent:0;
+    margin-bottom: 24px;
+}
+.reaccess-pop-dialog .form-group {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.reaccess-pop-dialog input{
+    width: 240px;
+    color:#fff;
+    border:none;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    border-radius: 0;
+    text-align:center;
+    letter-spacing: 14px;
+    text-indent: 14px;
+    font-size:24px;
+}
+.reaccess-pop-dialog input:hover{
+    border-color: #999!important;
+}
+.reaccess-pop-dialog .access-btn{
+    display: inline-block;
+    width: 240px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 26px;
+    cursor: pointer;
+}
+.reaccess-pop-dialog .btns-wrap{
+    text-align: center;
+}
+.reaccess-pop-dialog .access-btn.access-confirm{
+    background-color: #fff;
+    color:#333;
 }

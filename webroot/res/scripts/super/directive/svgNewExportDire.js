@@ -33,7 +33,6 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     + "</div>",
                 controller: "svgNewExportController",
                 scope: {
-                    isBigSvg: "=",
                     varimgname: "="
                 },
                 link: function (scope, element, attrs) {
@@ -90,9 +89,14 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                 var $chartObj = $chartDiv.find("svg:eq(0)");
                 $chartObj.attr('version', '1.1');
                 $chartObj.attr('xmlns', 'http://www.w3.org/2000/svg');
-
+                $chartObj.css('font-family'," 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei'");
 
                 var svgXml = $chartObj.prop("outerHTML");
+                var svgInnerXml = $chartObj.html();
+
+                var oDate = new Date();
+                var date = oDate.getFullYear() + addZero(oDate.getMonth() + 1) + addZero(oDate.getDate()) + addZero(oDate.getHours()) + addZero(oDate.getMinutes());
+
 
                 if (type != "svg") {
                     var image = new Image();
@@ -109,73 +113,28 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                         var a = document.createElement('a');
                         document.body.appendChild(a);
                         a.href = canvas.toDataURL(type); //将画布内的信息导出为png图片数据
-                        type == "image/png" ? a.download = saveImgName + ".png" : a.download = saveImgName + ".jpg"; //导出的图片名称
+                        type == "image/png" ? a.download = saveImgName + '_' + date + ".png" : a.download = saveImgName + '_' + date + ".jpg"; //导出的图片名称
                         a.click(); //点击触发下载
                         a.remove();
                     }
                     image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
-
                 } else {
-                    if ($scope.isBigSvg) {
-                        console.log(svgXml)
-                        // var ajaxConfig = {
-                        //     data: svgXml,
-                        //     url: options.api.base_url + "/Transfer"
-                        // };
-                        // var promise = ajaxService.GetDeferData(ajaxConfig);
-                        // promise.then(function(responseData) {
-                        //     console.log(responseData)
-                        //     if (responseData.Error) {
-                        //         //系统异常
-                        //         toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
-                        //     } else {
-
-                        var flag = Math.floor(svgXml.length / 100);
-                        var str = '';
-                        for (var i = 0; i < 100; i++) {
-                            str += window.btoa(unescape(encodeURIComponent(svgXml.substring(i * flag, (i + 1) * flag))));
-                        }
-                        str += window.btoa(unescape(encodeURIComponent(svgXml.substring(100 * flag))))
-                        console.log(str)
-                        // TODO
-                        var href = 'data:text/html;base64,' + str;
-                        var a = document.createElement('a');
-                        document.body.appendChild(a);
-                        a.href = href;
-                        a.download = saveImgName + ".svg";
+                    toolService.pageLoading.open("正在导出svg，请稍后");
+                    var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });
+                    var href = URL.createObjectURL(svgBlob);
+                    var a = document.createElement('a');
+                    document.body.appendChild(a);
+                    a.href = href;
+                    a.download = saveImgName + '_' + date + ".svg";
+                    setTimeout(function () {
                         a.click();
                         a.remove();
+                        toolService.pageLoading.close();
+                    }, 200);
+                }
 
-
-
-
-                        // var aEle = document.createElement("a");
-                        // document.body.appendChild(aEle);
-                        // var file = new Blob([fileInfo], {
-                        //     type: 'application/pdf;charset=utf-8;'
-                        // });
-                        // aEle.href = URL.createObjectURL(file);
-                        // if ($scope.isMultipleName) {
-                        //     aEle.download = $scope.varFileName + ".svg";
-                        // } else {
-                        //     aEle.download = saveImgName + ".svg";
-                        // }
-                        // aEle.click();
-                        // aEle.remove();
-                        //     }
-                        // });
-                    } else {
-                        var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
-                        var a = document.createElement('a');
-                        document.body.appendChild(a);
-                        a.href = href;
-                        a.download = saveImgName + ".svg";
-                        setTimeout(function () {
-                            a.click();
-                            a.remove();
-                        }, 200);
-                    }
-
+                function addZero(n) {
+                    return n < 10 ? '0' + n : n;
                 }
 
             };

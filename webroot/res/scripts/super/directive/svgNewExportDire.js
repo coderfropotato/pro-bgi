@@ -89,7 +89,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                 var $chartObj = $chartDiv.find("svg:eq(0)");
                 $chartObj.attr('version', '1.1');
                 $chartObj.attr('xmlns', 'http://www.w3.org/2000/svg');
-
+                $chartObj.css('font-family'," 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei'");
 
                 var svgXml = $chartObj.prop("outerHTML");
                 var svgInnerXml = $chartObj.html();

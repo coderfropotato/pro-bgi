@@ -93,7 +93,7 @@
                             <tr>
                                 <!-- checkbox -->
                                 <th style="width:40px;text-align:center;">
-                                    <i ng-click="handlerCheckedAll()" class="icon choose-icon" ng-class="{'icon-eye-slash':!checkedAll,'icon-eye':checkedAll}"></i>
+                                    <i ng-click="handlerCheckedAll()" class="iconfont choose-icon" ng-class="{'icon-buxianshi':!checkedAll,'icon-xianshi1':checkedAll}"></i>
                                 </th>
                                 <!-- geneid -->
                                 <th width="120">
@@ -105,7 +105,7 @@
                         <tbody>
                             <tr ng-class="{'unChecked':!val.isChecked}" ng-repeat="val in bigTableData.rows track by $index">
                                 <td style="width:40px; text-align:center;">
-                                    <i ng-click="handlerChecked($index,$event)" class="icon choose-icon" ng-class="{'icon-eye-slash':!val.isChecked,'icon-eye':val.isChecked,}"></i>
+                                    <i ng-click="handlerChecked($index,$event)" class="iconfont choose-icon" ng-class="{'icon-buxianshi':!val.isChecked,'icon-xianshi1':val.isChecked,}"></i>
                                 </td>
                                 <td class="center nowrap">
                                     <!-- gene_id || xxx_query_id -->

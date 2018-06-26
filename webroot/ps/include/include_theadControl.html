@@ -1,6 +1,6 @@
 <div class="thead-control-wrap" ng-if="data.length">
     <div class="thead-control-top clearfix">
-        <span class="add-column-btn" ng-click="toggleShow()"><i class="iconfont icon-guanbi" style="transform:rotate(45deg); margin-right:6px"></i> 
+        <span class="add-column-btn" ng-click="toggleShow()"><i class="iconfont " ng-class="{'icon-jia':!show,'icon-jian':show}" style=" margin-right:6px"></i> 
             <span ng-if="!nodata && !show">扩展列</span>
             <span ng-if="!nodata && show">收起</span>
             <span ng-if="nodata">（暂无数据）</span>

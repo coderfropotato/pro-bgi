@@ -393,7 +393,7 @@ a:hover .glyphicon-trash {
     right: 0px;
     overflow: hidden;
     background: #EAEDF1;
-    z-index: 110;
+    z-index: 100;
 }
 
 .view_product_body {
@@ -8128,7 +8128,7 @@ div.tipsContainer,
     background-color: #fff;
     *border: 1px solid #ddd;
     color: #999;
-    z-index: 99999;
+    z-index: 100;
     /*word-break: break-all;*/
 }
 

@@ -8738,42 +8738,42 @@ div.tipsContainer,
     color: #636A82;
 }
 /* reaccess dialog styles */
-/* #ngdialog1{
+.reaccess-pop-dialog.ngdialog{
     color: #fff;
 }
-#ngdialog1 .ngdialog-content{
+.reaccess-pop-dialog .ngdialog-content{
     position: absolute;
     top:30%;
     left:50%;
-    margin-left: -200px;
-    background-color: #333;
+    margin-left: -200px!important;
+    background-color: #333!important;
     opacity:0.8;
-    color: #fff
+    color: #fff!important;
 }
-#ngdialog1 .my-ngdialog-title{
+.reaccess-pop-dialog .my-ngdialog-title{
     display: none;
     background-color: #333;
     border: none;
 }
-#ngdialog1 .my-ngdialog-content{
+.reaccess-pop-dialog .my-ngdialog-content{
     padding-top:30px;
 }
-#ngdialog1 .ngdialog-close{
+.reaccess-pop-dialog .ngdialog-close{
     display: none;
 }
-#ngdialog1 .ngdialog-buttons{
+.reaccess-pop-dialog .ngdialog-buttons{
     border: none;
 }
-#ngdialog1  .tip{
+.reaccess-pop-dialog  .tip{
     text-align: center;
     text-indent:0;
     margin-bottom: 24px;
 }
-#ngdialog1 .form-group {
+.reaccess-pop-dialog .form-group {
     text-align: center;
     margin-bottom: 40px;
 }
-#ngdialog1 input{
+.reaccess-pop-dialog input{
     width: 240px;
     color:#fff;
     border:none;
@@ -8785,10 +8785,10 @@ div.tipsContainer,
     text-indent: 14px;
     font-size:24px;
 }
-#ngdialog1 input:hover{
+.reaccess-pop-dialog input:hover{
     border-color: #999!important;
 }
-#ngdialog1 .access-btn{
+.reaccess-pop-dialog .access-btn{
     display: inline-block;
     width: 240px;
     height: 50px;
@@ -8800,10 +8800,10 @@ div.tipsContainer,
     border-radius: 26px;
     cursor: pointer;
 }
-#ngdialog1 .btns-wrap{
+.reaccess-pop-dialog .btns-wrap{
     text-align: center;
 }
-#ngdialog1 .access-btn.access-confirm{
+.reaccess-pop-dialog .access-btn.access-confirm{
     background-color: #fff;
     color:#333;
-} */
+}

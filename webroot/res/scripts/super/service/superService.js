@@ -2325,9 +2325,15 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 $scope.confirm($scope.password);
                                 $scope.password = '';
                             }
+
+                            $scope.handlerKeyUp = function(event){
+                                if(event.keyCode===13){
+                                    $scope.handlerconfirm();
+                                }
+                            }
                         }],
                         template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
-                        appendClassName:"reaccess-pop-dialog"
+                        className:"ngdialog-theme-default reaccess-pop-dialog"
                     });
                 }
             }

@@ -691,7 +691,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 for (var i = 0; i < $rootScope.data.length; i++) {
                                     if ($rootScope.data[i].isChecked) {
                                         switch ($rootScope.data[i].name) {
-                                            case '样本差异':
+                                            case '表达量聚类':
                                                 type = 'sample';
                                                 break;
                                             default:

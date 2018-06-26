@@ -30,8 +30,8 @@ define(['toolsApp'], function (toolsApp) {
             $scope.advanceParams = [
                 {
                     "类型": [
-                        { name: '组间聚类', value: 'heatmapGroup', isActive: false },
-                        { name: '样本聚类', value: 'heatmapSample', isActive: false },
+                        { name: '差异聚类', value: 'heatmapGroup', isActive: false },
+                        { name: '表达量聚类', value: 'heatmapSample', isActive: false },
                         { name: 'GO 富集', value: 'goRich', isActive: false },
                         { name: 'KEGG 富集', value: 'pathwayRich', isActive: false },
                         { name: 'GO 分类', value: 'goClass', isActive: false },

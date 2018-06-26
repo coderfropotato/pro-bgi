@@ -570,6 +570,8 @@ define("superApp.toolTipDire",
                                             } else if(/ko/g.test($.trim(d))) {
                                                 // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
                                                 str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
+                                            }else{
+                                                str+='<span>'+d+'</span>';
                                             }
                                         }
                                     }
@@ -664,7 +666,8 @@ define("superApp.toolTipDire",
                                 var index = 0;
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
-                                        str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
+                                        // val.split('//')[0]
+                                        str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a><br>';
                                     }
                                 })
                             } else if (scope.theadKey === 'go_term_mix' || scope.theadKey==='go_term_mix_tools' || scope.theadKey.indexOf('go_term_mix_')!=-1) {

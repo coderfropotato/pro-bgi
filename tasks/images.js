@@ -23,7 +23,7 @@ var customer = argv.customer || 'customer';
  * 依赖任务：images:all，需在此之前对图片进行压缩
  */
 
-gulp.task('images', ['images:all'], function () {
+gulp.task('images', ['images:all'], function() {
     return gulp.src('').pipe(notify('压缩图片成功！'));
 });
 
@@ -32,7 +32,7 @@ gulp.task('images', ['images:all'], function () {
  * 作用：压缩图片，这里包括在线报告部分的图片和通用图片
  * 依赖任务：clean:images，删除原来压缩过的图片
  */
-gulp.task('images:all', ['clean:images'], function () {
+gulp.task('images:all', ['clean:images'], function() {
     var commonImages = mergeImages(modules.images.common.src, 'images/' + customer + '/**/*')
         .pipe(cache(imagemin()))
         .pipe(rev())
@@ -40,66 +40,35 @@ gulp.task('images:all', ['clean:images'], function () {
         .pipe(rev.manifest({ merge: true }))
         .pipe(rename('rev-common-images.json'))
         .pipe(gulp.dest(modules.rev));
-    var chipseqImages = mergeImages(modules.images.chipseq.src, 'images/' + customer + '/**/*')
+
+    var loginImages = mergeImages(modules.images.login.src, 'images/' + customer + '/**/*')
         .pipe(cache(imagemin()))
         .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.chipseq.dest))
+        .pipe(gulp.dest(argv.build + modules.images.login.dest))
         .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-chipseq-images.json'))
+        .pipe(rename('rev-login-images.json'))
         .pipe(gulp.dest(modules.rev));
-    var rnaseqImages = mergeImages(modules.images.rnaseq.src, 'images/' + customer + '/**/*')
+
+    var mrnaImages = mergeImages(modules.images.mrna.src, 'images/' + customer + '/**/*')
         .pipe(cache(imagemin()))
         .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.rnaseq.dest))
+        .pipe(gulp.dest(argv.build + modules.images.mrna.dest))
         .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-rnaseq-images.json'))
+        .pipe(rename('rev-mrna-images.json'))
         .pipe(gulp.dest(modules.rev));
-    var miRNAImages = mergeImages(modules.images.miRNA.src, 'images/' + customer + '/**/*')
+
+    var toolsImages = mergeImages(modules.images.tools.src, 'images/' + customer + '/**/*')
         .pipe(cache(imagemin()))
         .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.miRNA.dest))
+        .pipe(gulp.dest(argv.build + modules.images.tools.dest))
         .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-miRNA-images.json'))
+        .pipe(rename('rev-tools-images.json'))
         .pipe(gulp.dest(modules.rev));
-    var rna16sImages = mergeImages(modules.images.rna16s.src, 'images/' + customer + '/**/*')
-        .pipe(cache(imagemin()))
-        .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.rna16s.dest))
-        .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-rna16s-images.json'))
-        .pipe(gulp.dest(modules.rev));
-    var gwasImages = mergeImages(modules.images.gwas.src, 'images/' + customer + '/**/*')
-        .pipe(cache(imagemin()))
-        .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.gwas.dest))
-        .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-gwas-images.json'))
-        .pipe(gulp.dest(modules.rev));
-    var dnaReseqImages = mergeImages(modules.images.dnaReseq.src, 'images/' + customer + '/**/*')
-        .pipe(cache(imagemin()))
-        .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.dnaReseq.dest))
-        .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-dnaReseq-images.json'))
-        .pipe(gulp.dest(modules.rev));
-    var RADseqImages = mergeImages(modules.images.RADseq.src, 'images/' + customer + '/**/*')
-        .pipe(cache(imagemin()))
-        .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.RADseq.dest))
-        .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-RADseq-images.json'))
-        .pipe(gulp.dest(modules.rev));
-    var mangerSystemImages = mergeImages(modules.images.mangerSystem.src, 'images/' + customer + '/**/*')
-        .pipe(cache(imagemin()))
-        .pipe(rev())
-        .pipe(gulp.dest(argv.build + modules.images.mangerSystem.dest))
-        .pipe(rev.manifest({ merge: true }))
-        .pipe(rename('rev-mangerSystem-images.json'))
-        .pipe(gulp.dest(modules.rev));
-    return mergeStream(commonImages, chipseqImages, rnaseqImages, miRNAImages, rna16sImages, gwasImages, dnaReseqImages, RADseqImages,mangerSystemImages);
+
+    return mergeStream(commonImages, loginImages, mrnaImages, toolsImages);
 });
 
-var mergeImages = function (src, customer) {
+var mergeImages = function(src, customer) {
     return mergeStream(gulp.src(src), gulp.src(customer, {
         base: ''
     }))
@@ -109,6 +78,6 @@ var mergeImages = function (src, customer) {
  * 任务：clean:images
  * 作用：删除原来压缩之后的图片
  */
-gulp.task('clean:images', function () {
-    return del([argv.build + modules.images.common.dest, argv.build + modules.images.chipseq.dest, argv.build + modules.images.rnaseq.dest, argv.build + modules.images.miRNA.dest, argv.build + modules.images.rna16s.dest, argv.build + modules.images.gwas.dest, argv.build + modules.images.dnaReseq.dest, argv.build + modules.images.RADseq.dest,, argv.build + modules.images.mangerSystem.dest]);
+gulp.task('clean:images', function() {
+    return del([argv.build + modules.images.common.dest, argv.build + modules.images.login.dest, argv.build + modules.images.mrna.dest, argv.build + modules.images.tools.dest]);
 })

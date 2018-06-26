@@ -292,7 +292,11 @@ define(['loginApp'], function (loginApp) {
             });
         }
 
-
+        $scope.handlerKeyUp = function(event){
+            if(event.keyCode===13){
+                $scope.btn_lcLogin_OnClick();
+            }
+        }
 
         $scope.initJquery = function () {
             var type = true;//控制动画的开关

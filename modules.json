@@ -6,9 +6,6 @@
             "webroot/res/styles/*/*",
             "webroot/ps/testdata/**",
             "webroot/index.html",
-            "webroot/ps/chipseq/kegg.json",
-            "webroot/ps/rnaseq/kegg.json",
-            "webroot/ps/miRNA/kegg.json",
             "!webroot/res/scripts/**/*.css"
         ],
         "base": "webroot",
@@ -28,61 +25,26 @@
             "dest": "/res/images",
             "notify": "压缩通用图片成功！"
         },
-        "chipseq": {
+        "login": {
             "src": [
-                "webroot/ps/chipseq/res/images/**"
+                "webroot/ps/login/res/images/**"
             ],
-            "dest": "/ps/chipseq/res/images",
+            "dest": "/ps/login/res/images",
+            "notify": "压缩登录图片成功！"
+        },
+        "mrna": {
+            "src": [
+                "webroot/ps/mrna/res/images/**"
+            ],
+            "dest": "/ps/mrna/res/images",
             "notify": "压缩在线报告图片成功！"
         },
-        "rnaseq": {
+        "tools": {
             "src": [
-                "webroot/ps/rnaseq/res/images/**"
+                "webroot/ps/tools/res/images/**"
             ],
-            "dest": "/ps/rnaseq/res/images",
+            "dest": "/ps/tools/res/images",
             "notify": "压缩在线报告图片成功！"
-        },
-        "miRNA": {
-            "src": [
-                "webroot/ps/miRNA/res/images/**"
-            ],
-            "dest": "/ps/miRNA/res/images",
-            "notify": "压缩在线报告图片成功！"
-        },
-        "rna16s": {
-            "src": [
-                "webroot/ps/rna16s/res/images/**"
-            ],
-            "dest": "/ps/rna16s/res/images",
-            "notify": "压缩在线报告图片成功！"
-        },
-        "gwas": {
-            "src": [
-                "webroot/ps/gwas/res/images/**"
-            ],
-            "dest": "/ps/gwas/res/images",
-            "notify": "压缩在线报告图片成功！"
-        },
-        "dnaReseq": {
-            "src": [
-                "webroot/ps/dnaReseq/res/images/**"
-            ],
-            "dest": "/ps/dnaReseq/res/images",
-            "notify": "压缩在线报告图片成功！"
-        },
-        "RADseq": {
-            "src": [
-                "webroot/ps/RADseq/res/images/**"
-            ],
-            "dest": "/ps/RADseq/res/images",
-            "notify": "压缩在线报告图片成功！"
-        },
-        "mangerSystem": {
-            "src": [
-                "webroot/ps/mangerSystem/res/images/**"
-            ],
-            "dest": "/ps/mangerSystem/res/images",
-            "notify": "压缩管理报告系统图片成功！"
         }
     },
     "css": {
@@ -93,61 +55,26 @@
             "dest": "/res",
             "notify": "压缩通用CSS样式成功！"
         },
-        "chipseq": {
+        "login": {
             "src": [
-                "webroot/ps/chipseq/res/styles/*.css"
+                "webroot/ps/login/res/*.css"
             ],
-            "dest": "/ps/chipseq/res/styles",
+            "dest": "/ps/login/res",
+            "notify": "压缩登录CSS样式成功！"
+        },
+        "mrna": {
+            "src": [
+                "webroot/ps/mrna/res/styles/*.css"
+            ],
+            "dest": "/ps/mrna/res/styles",
             "notify": "压缩在线报告CSS样式成功！"
         },
-        "rnaseq": {
+        "tools": {
             "src": [
-                "webroot/ps/rnaseq/res/styles/*.css"
+                "webroot/ps/tools/res/*.css"
             ],
-            "dest": "/ps/rnaseq/res/styles",
+            "dest": "/ps/tools/res",
             "notify": "压缩在线报告CSS样式成功！"
-        },
-        "miRNA": {
-            "src": [
-                "webroot/ps/miRNA/res/styles/*.css"
-            ],
-            "dest": "/ps/miRNA/res/styles",
-            "notify": "压缩在线报告CSS样式成功！"
-        },
-        "rna16s": {
-            "src": [
-                "webroot/ps/rna16s/res/styles/*.css"
-            ],
-            "dest": "/ps/rna16s/res/styles",
-            "notify": "压缩在线报告CSS样式成功！"
-        },
-        "gwas": {
-            "src": [
-                "webroot/ps/gwas/res/styles/*.css"
-            ],
-            "dest": "/ps/gwas/res/styles",
-            "notify": "压缩在线报告CSS样式成功！"
-        },
-        "dnaReseq": {
-            "src": [
-                "webroot/ps/dnaReseq/res/styles/*.css"
-            ],
-            "dest": "/ps/dnaReseq/res/styles",
-            "notify": "压缩在线报告CSS样式成功！"
-        },
-        "RADseq": {
-            "src": [
-                "webroot/ps/RADseq/res/styles/*.css"
-            ],
-            "dest": "/ps/RADseq/res/styles",
-            "notify": "压缩在线报告CSS样式成功！"
-        },
-        "mangerSystem": {
-            "src": [
-                "webroot/ps/mangerSystem/res/styles/*.css"
-            ],
-            "dest": "/ps/mangerSystem/res/styles",
-            "notify": "压缩报告管理系统CSS样式成功！"
         }
     },
     "include": {
@@ -170,7 +97,7 @@
     "login": {
         "html": {
             "src": [],
-            "main": ["webroot/ps/login/login.html", "webroot/ps/login/managerLogin.html", "webroot/ps/login/message.html"],
+            "main": ["webroot/ps/login/login.html", "webroot/ps/login/message.html"],
             "dest": "/ps/login"
         },
         "js": {
@@ -182,203 +109,52 @@
             "del": ["/ps/login"]
         }
     },
-    "chipseq": {
+    "mrna": {
         "html": {
             "src": [
-                "webroot/ps/chipseq/**/*.html",
-                "!webroot/ps/chipseq/index.html"
+                "webroot/ps/mrna/**/*.html",
+                "!webroot/ps/mrna/index.html"
             ],
             "main": [
-                "webroot/ps/chipseq/index.html"
+                "webroot/ps/mrna/index.html"
             ],
-            "dest": "/ps/chipseq"
+            "dest": "/ps/mrna"
         },
         "js": {
-            "src": [
-                "webroot/ps/chipseq/*.js"
-            ],
-            "main": "webroot/ps/chipseq/chipseqMain.js",
-            "module": "/ps/chipseq/chipseqMain",
-            "file": "chipseqMain.js",
-            "dest": "/ps/chipseq",
-            "del": [
-                "/ps/chipseq/**/*.html",
-                "/ps/chipseq/**/*.js"
-            ]
-        }
-    },
-    "rnaseq": {
-        "html": {
-            "src": [
-                "webroot/ps/rnaseq/**/*.html",
-                "!webroot/ps/rnaseq/index.html"
-            ],
-            "main": [
-                "webroot/ps/rnaseq/index.html"
-            ],
-            "dest": "/ps/rnaseq"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/rnaseq/*.js"
-            ],
-            "main": "webroot/ps/rnaseq/rnaseqMain.js",
-            "module": "/ps/rnaseq/rnaseqMain",
+            "src": ["webroot/ps/mrna/*.js"],
+            "main": "webroot/ps/mrna/rnaseqMain.js",
+            "module": "/ps/mrna/rnaseqMain",
             "file": "rnaseqMain.js",
-            "dest": "/ps/rnaseq",
+            "dest": "/ps/mrna",
             "del": [
-                "/ps/rnaseq/**/*.html",
-                "/ps/rnaseq/**/*.js"
+                "/ps/mrna/**/*.html",
+                "/ps/mrna/**/*.js"
             ]
         }
     },
-    "miRNA": {
+    "tools": {
         "html": {
             "src": [
-                "webroot/ps/miRNA/**/*.html",
-                "!webroot/ps/miRNA/index.html"
+                "webroot/ps/tools/**/*.html",
+                "!webroot/ps/tools/index.html"
             ],
             "main": [
-                "webroot/ps/miRNA/index.html"
+                "webroot/ps/tools/index.html"
             ],
-            "dest": "/ps/miRNA"
+            "dest": "/ps/tools"
         },
         "js": {
             "src": [
-                "webroot/ps/miRNA/*.js"
+                "webroot/ps/tools/*.js",
+                "webroot/ps/tools/**/*.js"
             ],
-            "main": "webroot/ps/miRNA/miRNAMain.js",
-            "module": "/ps/miRNA/miRNAMain",
-            "file": "miRNAMain.js",
-            "dest": "/ps/miRNA",
+            "main": "webroot/ps/tools/toolsMain.js",
+            "module": "/ps/tools/toolsMain",
+            "file": "toolsMain.js",
+            "dest": "/ps/tools",
             "del": [
-                "/ps/miRNA/**/*.html",
-                "/ps/miRNA/**/*.js"
-            ]
-        }
-    },
-    "rna16s": {
-        "html": {
-            "src": [
-                "webroot/ps/rna16s/**/*.html",
-                "!webroot/ps/rna16s/index.html"
-            ],
-            "main": [
-                "webroot/ps/rna16s/index.html"
-            ],
-            "dest": "/ps/rna16s"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/rna16s/*.js"
-            ],
-            "main": "webroot/ps/rna16s/RNA16sMain.js",
-            "module": "/ps/rna16s/RNA16sMain",
-            "file": "RNA16sMain.js",
-            "dest": "/ps/rna16s",
-            "del": [
-                "/ps/rna16s/**/*.html",
-                "/ps/rna16s/**/*.js"
-            ]
-        }
-    },
-    "gwas": {
-        "html": {
-            "src": [
-                "webroot/ps/gwas/**/*.html",
-                "!webroot/ps/gwas/index.html"
-            ],
-            "main": [
-                "webroot/ps/gwas/index.html"
-            ],
-            "dest": "/ps/gwas"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/gwas/*.js"
-            ],
-            "main": "webroot/ps/gwas/gwasMain.js",
-            "module": "/ps/gwas/gwasMain",
-            "file": "gwasMain.js",
-            "dest": "/ps/gwas",
-            "del": [
-                "/ps/gwas/**/*.html",
-                "/ps/gwas/**/*.js"
-            ]
-        }
-    },
-    "dnaReseq": {
-        "html": {
-            "src": [
-                "webroot/ps/dnaReseq/**/*.html",
-                "!webroot/ps/dnaReseq/index.html"
-            ],
-            "main": [
-                "webroot/ps/dnaReseq/index.html"
-            ],
-            "dest": "/ps/dnaReseq"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/dnaReseq/*.js"
-            ],
-            "main": "webroot/ps/dnaReseq/DNAreseqMain.js",
-            "module": "/ps/dnaReseq/DNAreseqMain",
-            "file": "DNAreseqMain.js",
-            "dest": "/ps/dnaReseq",
-            "del": [
-                "/ps/dnaReseq/**/*.html",
-                "/ps/dnaReseq/**/*.js"
-            ]
-        }
-    },
-    "RADseq": {
-        "html": {
-            "src": [
-                "webroot/ps/RADseq/**/*.html",
-                "!webroot/ps/RADseq/index.html"
-            ],
-            "main": [
-                "webroot/ps/RADseq/index.html"
-            ],
-            "dest": "/ps/RADseq"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/RADseq/*.js"
-            ],
-            "main": "webroot/ps/RADseq/radseqMain.js",
-            "module": "/ps/RADseq/radseqMain",
-            "file": "radseqMain.js",
-            "dest": "/ps/RADseq",
-            "del": [
-                "/ps/RADseq/**/*.html",
-                "/ps/RADseq/**/*.js"
-            ]
-        }
-    },
-    "mangerSystem": {
-        "html": {
-            "src": [
-                "webroot/ps/mangerSystem/**/*.html",
-                "!webroot/ps/mangerSystem/index.html"
-            ],
-            "main": [
-                "webroot/ps/mangerSystem/index.html"
-            ],
-            "dest": "/ps/mangerSystem"
-        },
-        "js": {
-            "src": [
-                "webroot/ps/mangerSystem/*.js"
-            ],
-            "main": "webroot/ps/mangerSystem/mangerMain.js",
-            "module": "/ps/mangerSystem/mangerMain",
-            "file": "mangerMain.js",
-            "dest": "/ps/mangerSystem",
-            "del": [
-                "/ps/mangerSystem/**/*.html",
-                "/ps/mangerSystem/**/*.js"
+                "/ps/tools/**/*.html",
+                "/ps/tools/**/*.js"
             ]
         }
     }

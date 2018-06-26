@@ -1,5 +1,5 @@
 define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.staticImgExportDire", []);
         /*
          ** 创建日期：2017-06-19
@@ -34,7 +34,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     varFileName: "="
                 },
                 controller: "staticImgExportController",
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     var $element = $(element);
                     var $dropdownMenu = $element.find(".dropdown-menu:eq(0)");
 
@@ -56,7 +56,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
         staticImgExportController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
 
         function staticImgExportController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
-            $scope.export = function(chartid, saveImgName, type) {
+            $scope.export = function (chartid, saveImgName, type) {
                 if (!saveImgName) {
                     saveImgName = "图表";
                 }
@@ -96,42 +96,26 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                 } else {
                     var image = new Image();
                     image.src = img_src;
-                    image.onload = function() {
+                    image.onload = function () {
                         base64 = getBase64Image(image);
                         download();
                     }
                 }
 
                 function download() {
+                    var oDate = new Date();
+                    var date = oDate.getFullYear() + addZero(oDate.getMonth() + 1) + addZero(oDate.getDate()) + addZero(oDate.getHours()) + addZero(oDate.getMinutes());
+
                     if (type == "jpg" || type == "png") {
                         var a = document.createElement('a');
                         a.href = base64;
                         if ($scope.isMultipleName) {
-                            a.download = type == "png" ? $scope.varFileName + ".png" : $scope.varFileName + ".jpg";
+                            a.download = type == "png" ? $scope.varFileName + '_' + date + ".png" : $scope.varFileName + '_' + date + ".jpg";
                         } else {
-                            a.download = type == "png" ? saveImgName + ".png" : saveImgName + ".jpg";
+                            a.download = type == "png" ? saveImgName + "_" + date + ".png" : saveImgName + "_" + date + ".jpg";
                         }
                         a.click();
                     } else {
-                        // // pdf
-                        // var oReq = new XMLHttpRequest();
-                        // var URLToPDF = $scope.pdfExportUrl;
-                        // oReq.open("POST", URLToPDF, true);
-                        // oReq.responseType = "blob";
-
-                        // oReq.onreadystatechange = function() {
-                        //     if (oReq.readyState === 4) {
-                        //         if (oReq.status >= 200 && oReq.status < 300 || oReq.status == 304) {
-                        //             var file = new Blob([oReq.response], {
-                        //                 type: 'application/pdf'
-                        //             });
-                        //             saveAs(file, saveImgName + ".pdf");
-                        //         }
-                        //     }
-                        // }
-
-                        // oReq.send();
-
                         $scope.findEntity.IsExportReport = true;
                         toolService.pageLoading.open("正在为您导出，请稍候...", 200);
                         var ajaxConfig = {
@@ -139,57 +123,54 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                             url: $scope.exportLocation
                         };
                         var promise = ajaxService.GetDeferData(ajaxConfig);
-                        promise.then(function(responseData) {
-                                if (responseData.Error) {
-                                    //系统异常
-                                    toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
-                                } else {
-                                    //正常
-                                    var fileInfo = responseData;
-
-                                    if (type == "svg") {
-                                        var svgXml = fileInfo.substring(fileInfo.indexOf("<svg"), fileInfo.lastIndexOf("</svg>"));
-                                        var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
-                                        var a = document.createElement('a');
-                                        document.body.appendChild(a);
-                                        a.href = href;
-                                        if ($scope.isMultipleName) {
-                                            a.download = $scope.varFileName + ".svg";
-                                        } else {
-                                            a.download = saveImgName + ".svg";
-                                        }
-                                        setTimeout(function() {
-                                            a.click();
-                                            a.remove();
-                                        }, 200);
+                        promise.then(function (responseData) {
+                            if (responseData.Error) {
+                                //系统异常
+                                toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
+                            } else {
+                                //正常
+                                var fileInfo = responseData;
+                                if (type == "svg") {
+                                    var svgXml = fileInfo.substring(fileInfo.indexOf("<svg"), fileInfo.lastIndexOf("</svg>"));
+                                    var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
+                                    var a = document.createElement('a');
+                                    document.body.appendChild(a);
+                                    a.href = href;
+                                    if ($scope.isMultipleName) {
+                                        a.download = $scope.varFileName + "_" + date + ".svg";
+                                    } else {
+                                        a.download = saveImgName + "_" + date + ".svg";
                                     }
-
-                                    if (type == "pdf") {
-                                        // TODO
-                                        // fileinfo是文件内容
-                                        var aEle = document.createElement("a");
-                                        document.body.appendChild(aEle);
-                                        var file = new Blob([fileInfo], {
-                                            type: 'application/pdf;charset=utf-8;'
-                                        });
-                                        aEle.href = URL.createObjectURL(file);
-                                        if ($scope.isMultipleName) {
-                                            aEle.download = $scope.varFileName + ".pdf";
-                                        } else {
-                                            aEle.download = saveImgName + ".pdf";
-                                        }
-                                        aEle.click();
-                                        aEle.remove();
-                                    }
-
+                                    setTimeout(function () {
+                                        a.click();
+                                        a.remove();
+                                    }, 200);
                                 }
-                                toolService.pageLoading.close();
-                            },
-                            function(errorMesg) {
+
+                                if (type == "pdf") {
+                                    var pdf = new jsPdf();
+                                    pdf.addImage(base64, 'jpeg', 30, 20);
+                                    var name = '';
+                                    if ($scope.isMultipleName) {
+                                        name = $scope.varFileName + "_" + date + ".pdf";
+                                    } else {
+                                        name = saveImgName + "_" + date + ".pdf";
+                                    }
+                                    pdf.save(name);
+                                }
+
+                            }
+                            toolService.pageLoading.close();
+                        },
+                            function (errorMesg) {
                                 toolService.pageLoading.close();
                                 toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
                             });
 
+                    }
+
+                    function addZero(n) {
+                        return n < 10 ? '0' + n : n;
                     }
                 }
 

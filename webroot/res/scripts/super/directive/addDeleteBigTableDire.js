@@ -418,7 +418,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.reAnalysisEntity.geneUnselectList = [];
                 $scope.reAnalysisEntity.url = angular.copy($scope.url).split('mrna')[1];
                 // $scope.reAnalysisEntity.allThead = [];
-
                 if (params.chartType === 'heatmap') {
                     $scope.reAnalysisEntity.chartType = params.type === 'group' ? 'heatmapGroup' : 'heatmapSample';
                 } else {

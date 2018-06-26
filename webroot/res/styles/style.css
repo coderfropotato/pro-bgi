@@ -8737,3 +8737,73 @@ div.tipsContainer,
     font-size: 14px;
     color: #636A82;
 }
+/* reaccess dialog styles */
+#ngdialog1{
+    color: #fff;
+}
+#ngdialog1 .ngdialog-content{
+    position: absolute;
+    top:30%;
+    left:50%;
+    margin-left: -200px;
+    background-color: #333;
+    opacity:0.8;
+    color: #fff
+}
+#ngdialog1 .my-ngdialog-title{
+    display: none;
+    background-color: #333;
+    border: none;
+}
+#ngdialog1 .my-ngdialog-content{
+    padding-top:30px;
+}
+#ngdialog1 .ngdialog-close{
+    display: none;
+}
+#ngdialog1 .ngdialog-buttons{
+    border: none;
+}
+#ngdialog1  .tip{
+    text-align: center;
+    text-indent:0;
+    margin-bottom: 24px;
+}
+#ngdialog1 .form-group {
+    text-align: center;
+    margin-bottom: 40px;
+}
+#ngdialog1 input{
+    width: 240px;
+    color:#fff;
+    border:none;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    border-radius: 0;
+    text-align:center;
+    letter-spacing: 14px;
+    text-indent: 14px;
+    font-size:24px;
+}
+#ngdialog1 input:hover{
+    border-color: #999!important;
+}
+#ngdialog1 .access-btn{
+    display: inline-block;
+    width: 240px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 26px;
+    cursor: pointer;
+}
+#ngdialog1 .btns-wrap{
+    text-align: center;
+}
+#ngdialog1 .access-btn.access-confirm{
+    background-color: #fff;
+    color:#333;
+}

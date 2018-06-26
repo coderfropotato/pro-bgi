@@ -2327,6 +2327,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             }
                         }],
                         template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
+                        appendClassName:"reaccess-pop-dialog"
                     });
                 }
             }

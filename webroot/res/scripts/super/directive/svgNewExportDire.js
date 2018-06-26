@@ -7,7 +7,7 @@
 */
 
 define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.svgNewExportDire", []);
         /*
          ** 创建日期：2017-06-19
@@ -24,15 +24,19 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
             return {
                 restrict: "ACE",
                 template: "<div class='dropdown drop-menu'>"
-                + "<button style='margin-top:-1px;'  class='new-table-switch-btns noborder tool-tip' title='导出'>"
-                + "<span class='glyphicon glyphicon-picture'></span> "
-                //+ "<span class='icon-caret-down'></span>"
-                + "</button>"
-                + "<ul class='dropdown-menu'>"
-                + "</ul>"
-                + "</div>",
+                    + "<button style='margin-top:-1px;'  class='new-table-switch-btns noborder tool-tip' title='导出'>"
+                    + "<span class='glyphicon glyphicon-picture'></span> "
+                    //+ "<span class='icon-caret-down'></span>"
+                    + "</button>"
+                    + "<ul class='dropdown-menu'>"
+                    + "</ul>"
+                    + "</div>",
                 controller: "svgNewExportController",
-                link: function(scope, element, attrs) {
+                scope: {
+                    isBigSvg: "=",
+                    varimgname: "="
+                },
+                link: function (scope, element, attrs) {
                     var $element = $(element);
                     var $dropdownMenu = $element.find(".dropdown-menu:eq(0)");
 
@@ -55,9 +59,10 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
             //创建时间：2017-06-19
             //功能：导出图片
             //参数：chartid ; type 可选 "image/png" 或 "image/jpeg" ; saveImgName:保存文件名称
-            $scope.SvgNewExportImage = function(chartid, saveImgName, type) {
-                if (!saveImgName) {
-                    saveImgName = "图表";
+            $scope.SvgNewExportImage = function (chartid, saveImgName, type) {
+                var filename = $scope.varimgname || saveImgName;
+                if (!filename) {
+                    filename = "图表";
                 }
                 if (!type) {
                     type = "image/png";
@@ -69,7 +74,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     type = "image/png";
                 }
                 if (chartid) {
-                    DownLoadImage(chartid, saveImgName, type);
+                    DownLoadImage(chartid, filename, type);
                 }
             };
 
@@ -99,7 +104,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     context.fillStyle = "#ffffff";
                     context.fillRect(0, 0, canvas.width, canvas.height);
 
-                    image.onload = function() {
+                    image.onload = function () {
                         context.drawImage(image, 0, 0);
                         var a = document.createElement('a');
                         document.body.appendChild(a);
@@ -112,48 +117,60 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
 
                 } else {
                     if ($scope.isBigSvg) {
-                        console.log(svgXml);
+                        console.log(svgXml)
+                        // var ajaxConfig = {
+                        //     data: svgXml,
+                        //     url: options.api.base_url + "/Transfer"
+                        // };
+                        // var promise = ajaxService.GetDeferData(ajaxConfig);
+                        // promise.then(function(responseData) {
+                        //     console.log(responseData)
+                        //     if (responseData.Error) {
+                        //         //系统异常
+                        //         toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
+                        //     } else {
 
-                        var ajaxConfig = {
-                            data: svgXml,
-                            url: options.api.base_url + "/Transfer"
-                        };
-                        var promise = ajaxService.GetDeferData(ajaxConfig);
-                        promise.then(function(responseData) {
-                            if (responseData.Error) {
-                                //系统异常
-                                toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
-                            } else {
-                                // TODO
-                                var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(responseData)));
-                                var a = document.createElement('a');
-                                document.body.appendChild(a);
-                                a.href = href;
-                                a.download = saveImgName + ".svg";
-                                a.click();
-                                a.remove();
-                                // var aEle = document.createElement("a");
-                                // document.body.appendChild(aEle);
-                                // var file = new Blob([fileInfo], {
-                                //     type: 'application/pdf;charset=utf-8;'
-                                // });
-                                // aEle.href = URL.createObjectURL(file);
-                                // if ($scope.isMultipleName) {
-                                //     aEle.download = $scope.varFileName + ".svg";
-                                // } else {
-                                //     aEle.download = saveImgName + ".svg";
-                                // }
-                                // aEle.click();
-                                // aEle.remove();
-                            }
-                        });
+                        var flag = Math.floor(svgXml.length / 100);
+                        var str = '';
+                        for (var i = 0; i < 100; i++) {
+                            str += window.btoa(unescape(encodeURIComponent(svgXml.substring(i * flag, (i + 1) * flag))));
+                        }
+                        str += window.btoa(unescape(encodeURIComponent(svgXml.substring(100 * flag))))
+                        console.log(str)
+                        // TODO
+                        var href = 'data:text/html;base64,' + str;
+                        var a = document.createElement('a');
+                        document.body.appendChild(a);
+                        a.href = href;
+                        a.download = saveImgName + ".svg";
+                        a.click();
+                        a.remove();
+
+
+
+
+                        // var aEle = document.createElement("a");
+                        // document.body.appendChild(aEle);
+                        // var file = new Blob([fileInfo], {
+                        //     type: 'application/pdf;charset=utf-8;'
+                        // });
+                        // aEle.href = URL.createObjectURL(file);
+                        // if ($scope.isMultipleName) {
+                        //     aEle.download = $scope.varFileName + ".svg";
+                        // } else {
+                        //     aEle.download = saveImgName + ".svg";
+                        // }
+                        // aEle.click();
+                        // aEle.remove();
+                        //     }
+                        // });
                     } else {
                         var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
                         var a = document.createElement('a');
                         document.body.appendChild(a);
                         a.href = href;
                         a.download = saveImgName + ".svg";
-                        setTimeout(function() {
+                        setTimeout(function () {
                             a.click();
                             a.remove();
                         }, 200);

@@ -35,8 +35,11 @@ define("superApp.reportPageSubTitleDire",
             $scope.one = 0;
             $scope.two = 0;
             $scope.cur = 0;
+            
+            // 保存当前页面的标题，下载的时候需要用到
+            var pageTitleText = '';
+
             // 当前页面是三级
-            var str = '';
             if ($scope.id.length > 6) {
                 var twoP = findParent($scope.id, $rootScope.oneLevel);
                 var oneP = twoP.parent;
@@ -44,15 +47,16 @@ define("superApp.reportPageSubTitleDire",
                 $scope.two = findIndex(twoP.GNSID, oneP.children);
                 $scope.cur = findIndex($scope.id, twoP.children);
 
-                str = $scope.one + '.' + $scope.two + '.' + $scope.cur + '_' + $scope.currentPage.JDMC;
+                pageTitleText = $scope.one + '.' + $scope.two + '.' + $scope.cur + '_' + $scope.currentPage.JDMC;
             } else {
                 var p = findParent($scope.id, $rootScope.oneLevel);
                 $scope.two = findIndex($scope.id, p.children);
                 $scope.one = findIndex(p.GNSID, $rootScope.oneLevel);
-                str = $scope.one + '.' + $scope.two + '_' + $scope.currentPage.JDMC;
+                
+                pageTitleText = $scope.one + '.' + $scope.two + '_' + $scope.currentPage.JDMC;
             }
 
-            $rootScope.pageInfo[$scope.currentPageDirective] = str;
+            $rootScope.pageInfo[$scope.currentPageDirective] = pageTitleText;
 
             function findParent(id, arr) {
                 if (arr.length) {

@@ -1,3 +1,4 @@
+
 /**
  * Geneid 大表
  * 2018年5月21日11:00:47
@@ -449,7 +450,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         toolService.popMesgWindow(res.Error);
                     } else {
                         $scope.reanalysisError = false;
-                        $scope.$emit('openAnalysisPop');
+                        // $scope.$emit('openAnalysisPop');
                         $rootScope.GetAnalysisList(1);
                         // 如果不需要重新分析 就直接打开详情页
                         if (params.chartType === 'heatmap' || params.chartType === 'goRich' || params.chartType === 'pathwayRich') {
@@ -458,6 +459,13 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         } else {
                             newFrame.location.href = '../../../../ps/tools/index.html#/home/' + $scope.reAnalysisEntity.chartType + '/' + res.id
                         }
+
+                        var $targetOffset = $('.analysis-arrow').offset();
+                        var x1 = $('.re-analysis-panel ul li').eq(2).offset().left;
+                        var y1 = $('.re-analysis-panel ul li').eq(2).offset().top - 80;
+                        var x2 = $targetOffset.left + 10;
+                        var y2 = $targetOffset.top;
+                        reportService.flyDiv("<span class='glyphicon glyphicon-plus mkcheck flyCheck'></span>", x1, y1, x2, y2);
                     }
                 }, function (err) {
                     newFrame.close();

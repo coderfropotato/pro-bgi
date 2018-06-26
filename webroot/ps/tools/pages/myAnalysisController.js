@@ -31,7 +31,13 @@ define(['toolsApp'], function (toolsApp) {
                 {
                     "类型": [
                         { name: '组间聚类', value: 'heatmapGroup', isActive: false },
-                        { name: '样本聚类', value: 'heatmapSample', isActive: false }
+                        { name: '样本聚类', value: 'heatmapSample', isActive: false },
+                        { name: 'GO 富集', value: 'goRich', isActive: false },
+                        { name: 'KEGG 富集', value: 'pathwayRich', isActive: false },
+                        { name: 'GO 分类', value: 'goClass', isActive: false },
+                        { name: 'KEGG 分类', value: 'pathwayClass', isActive: false },
+                        { name: '折线图', value: 'line', isActive: false },
+                        { name: '网络图', value: 'net', isActive: false },
                     ]
                 },
                 {

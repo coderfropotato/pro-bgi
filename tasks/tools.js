@@ -26,7 +26,7 @@ argv.build = env;
  */
 gulp.task('tools', ['tools:html-rev'], function() {
     return gulp.src('').pipe(notify('压缩tools文件夹成功！')).on('end', function() {
-        del([argv.build + tools.js.dest + '/*.js', '!' + argv.build + tools.js.dest + '/toolsMain-*.js']);
+        del([argv.build + tools.js.dest + '/*.js', argv.build + tools.js.dest + '/**/*.js', '!' + argv.build + tools.js.dest + '/toolsMain-*.js']);
     });
 });
 

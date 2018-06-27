@@ -8805,6 +8805,17 @@ div.tipsContainer,
     text-align: center;
 }
 .reaccess-pop-dialog .access-btn.access-confirm{
-    background-color: #fff;
+    background-color: transparent;
+    color:#fff;
+    border:1px solid #fff;
+}
+.reaccess-pop-dialog .access-btn.access-confirm:hover{
+    background-color:#fff;
     color:#333;
 }
+
+
+.reaccess-pop-dialog input::-webkit-input-placeholder { 
+   color: #fff; 
+}
+   

@@ -2316,7 +2316,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         closeByDocument: false,
                         controller: ['$scope', function($scope) {
                             $scope.password = '';
-
+                            $scope.focus = false;
                             $scope.handlercloseThisDialog = function() {
                                 $scope.closeThisDialog(0);
                             }

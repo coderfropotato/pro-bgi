@@ -1,6 +1,6 @@
 <p class="tip">您长期未响应页面，我们需要进行安全验证</p>
 <div class="clearfix form-group">
-    <input style="display:inline-block;" class="form-control" ng-model="password" type="password" ng-keyup="handlerKeyUp($event)"/>
+    <input placeholder="{{focus?'':'输入密码'}}" ng-blur="focus = false;" ng-focus="focus = true" ng-style="{'letter-spacing':focus?'14px':'2px','text-indent':focus?'14px':'2px','font-size':focus?'24px':'18px'}" style="display:inline-block;" class="form-control" ng-model="password" type="password" ng-keyup="handlerKeyUp($event)"/>
 </div>
 <div class="btns-wrap">
     <a href="javascript:;" class="access-btn access-confirm" ng-click="handlerconfirm()">确定</a>

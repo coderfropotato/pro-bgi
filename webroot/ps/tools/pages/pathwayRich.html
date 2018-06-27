@@ -5,7 +5,7 @@
     <div id="div_reAnalysis_pathwayRich ">
         <div class="table-switch-chart-wrap">
             <!-- 富集表 start -->
-            <p style="color: red;" ng-show="goSelectList.length>60">最多只对 qvalue 较小的 top60 进行重新画图</p>
+            <p style="color: red;margin: 0;padding-top: 10px;background: #fff;" ng-show="goSelectList.length>60">最多只对 qvalue 较小的 top60 进行重新画图</p>
             <div id="reAnalysis_pathwayRich_go" style="position: relative">
                 <div class="btn_options_filelist">
                     <ul class="FLeft">
@@ -127,7 +127,7 @@
             <!-- 气泡图 start -->
             <h6 class="nmt nb nplr" ng-if="chartType==='column'">差异基因 GO 柱状图</h6>
             <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">差异基因 GO 富集气泡图</h6>
-            <div class="graph_group"  id="reAnalysis_pathwayRich_bubble">
+            <div class="graph_group" id="reAnalysis_pathwayRich_bubble">
                 <div class="graph_header">
                     <ul class="fLeft">
                         <li>
@@ -145,10 +145,10 @@
                         <li>
                             <div id="selectPathwayPanel" class="dropdown dropdown_selectedlist" ng-class="{selectedlist_open:isShowGoListPanel}" ng-mouseenter="isShowGoListPanel=true" ng-mouseleave="isShowGoListPanel=false">
                                 <button class="btn btn-default btn-silver btn-sm btn-genelist">
-                                    选中的GO
-                                    <span class="red">({{goSelectList.length
-                                        <60?goSelectList.length:60}})</span>
-                                            <span class="icon-caret-down"></span>
+                                    选中的ko
+                                    <span class="red" ng-if="goSelectList.length < 60">({{goSelectList.length}})</span>
+                                    <span class="red" ng-if="goSelectList.length >= 60">(60)</span>
+                                    <span class="icon-caret-down"></span>
                                 </button>
                                 <div class="dropdown-menu div_gn_droplist">
                                     <div style="max-height:400px; overflow-y:auto; overflow-x:hidden;" style="left:0;right: inherit">

@@ -6,8 +6,8 @@
     </div> -->
     <!-- 显示隐藏 -->
     <div class="expand-icon" ng-class="{'unexpand':!isViewFull}">
-        <img ng-show="isViewFull" ng-click="sidebarFold_OnClick()" src="../mrna/res/images/icon/expand.png"/>
-        <img ng-show="!isViewFull" ng-click="sidebarFold_OnClick()" src="../mrna/res/images/icon/unexpand.png"/>
+        <img ng-show="isViewFull" ng-click="sidebarFold_OnClick()" src="../../res/images/icon/expand.png" />
+        <img ng-show="!isViewFull" ng-click="sidebarFold_OnClick()" src="../../res/images/icon/unexpand.png" />
     </div>
     <!-- 左侧菜单开始 ng-class="{hideContent:navConfig.product.folded}"  ng-class="{sidebar_nav_fold:!navConfig.product.folded}" ng-mouseenter="leftTree_OnMouseover($index);"
                 ng-mouseleave="leftTree_OnMouseleave($index);"-->
@@ -17,12 +17,10 @@
 
                 <!-- root left nav start -->
                 <div id="leftlist_wrap">
-                    <div id="div_{{leftList.GNSID}}" class="sidebar_title" ng-class="{active:leftList.isExpand,sidebar_nav_fold:leftList.folded}"
-                        ng-click="isExpand(leftList,$index)">
+                    <div id="div_{{leftList.GNSID}}" class="sidebar_title" ng-class="{active:leftList.isExpand,sidebar_nav_fold:leftList.folded}" ng-click="isExpand(leftList,$index)">
                         <!-- 收起时候的二级菜单 -->
                         <ul ng-show="!isViewFull" class="un_expand">
-                            <li ng-repeat="item in twoList track by $index" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)"
-                                ng-mouseleave="handlerMouseLeave(item)" ng-click="handlerTwoClick(item)" id="li_{{item.GNSID}}">
+                            <li ng-repeat="item in twoList track by $index" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)" ng-mouseleave="handlerMouseLeave(item)" ng-click="handlerTwoClick(item)" id="li_{{item.GNSID}}">
                                 {{item.JDMC}}
                             </li>
                         </ul>
@@ -32,15 +30,14 @@
                         <!-- <span style="margin-left:5px;float:left">{{leftList.TBTEXT}}</span> -->
                         <span ng-show="isViewFull" class="sidebar-title-text">
                             <span class="menuicon {{leftList.icon_class}}" ng-class="{active:leftList.isExpand}"></span>
-                            <span style="float:left">{{leftList.JDMC}}</span>
-                            <span style="float:left;position: absolute;right:3px;top:-27px;z-index:1" ng-if="!leftList.ISREPORT">
+                        <span style="float:left">{{leftList.JDMC}}</span>
+                        <span style="float:left;position: absolute;right:3px;top:-27px;z-index:1" ng-if="!leftList.ISREPORT">
                                 <span class="timer"></span>
-                            </span>
+                        </span>
                         </span>
                         <!-- arrows -->
-                         <!-- 'icon-caret-down':!leftList.isExpand, -->
-                        <span ng-show="isViewFull" class="glyphicon" ng-class="{'icon-caret-left':leftList.isExpand}"
-                            ng-if="leftList.ISTBLJ">
+                        <!-- 'icon-caret-down':!leftList.isExpand, -->
+                        <span ng-show="isViewFull" class="glyphicon" ng-class="{'icon-caret-left':leftList.isExpand}" ng-if="leftList.ISTBLJ">
                             <span class="sidebar-manage ng-scope">
                             </span>
                         </span>
@@ -49,8 +46,7 @@
                         <!-- 二级 isViewFull -->
                         <ol>
                             <!-- ng-click="li_OnClick(item,list)" -->
-                            <li ng-repeat="item in twoList track by $index" class="sidebar_nav_two_item" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)"
-                                ng-mouseleave="handlerMouseLeave(item)" ng-click="handlerTwoClick(item)" id="li_{{item.GNSID}}">
+                            <li ng-repeat="item in twoList track by $index" class="sidebar_nav_two_item" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)" ng-mouseleave="handlerMouseLeave(item)" ng-click="handlerTwoClick(item)" id="li_{{item.GNSID}}">
                                 {{($index+1)+'. '+item.JDMC}}
                                 <!-- 三级  -->
                                 <ul class="sidebar_nav_pop" ng-show="item.showPop && threeList.length" ng-init="threeList = (leftDataJson | checkPidFilter : item.GNSID)">

@@ -106,7 +106,7 @@
             "module": "/ps/login/loginMain",
             "file": "loginMain.js",
             "dest": "/ps/login",
-            "del": ["/ps/login"]
+            "del": ["/ps/login/*.html", "/ps/login/*.js"]
         }
     },
     "mrna": {

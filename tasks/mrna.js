@@ -26,7 +26,7 @@ argv.build = env;
  */
 gulp.task('mrna', ['mrna:html-rev'], function() {
     return gulp.src('').pipe(notify('压缩mrna文件夹成功！')).on('end', function() {
-        del([argv.build + mrna.js.dest + '/*.js', '!' + argv.build + mrna.js.dest + '/mrnaMain-*.js']);
+        del([argv.build + mrna.js.dest + '/*.js', '!' + argv.build + mrna.js.dest + '/rnaseqMain-*.js']);
     });
 });
 

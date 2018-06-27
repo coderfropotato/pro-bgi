@@ -154,7 +154,8 @@
             "dest": "/ps/tools",
             "del": [
                 "/ps/tools/**/*.html",
-                "/ps/tools/**/*.js"
+                "/ps/tools/**/*.js",
+                "/ps/tools/*.js"
             ]
         }
     }

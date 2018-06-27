@@ -148,15 +148,23 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                 }
 
                                 if (type == "pdf") {
-                                    var pdf = new jsPdf();
-                                    pdf.addImage(base64, 'jpeg', 30, 20);
                                     var name = '';
                                     if ($scope.isMultipleName) {
                                         name = $scope.varFileName + "_" + date + ".pdf";
                                     } else {
                                         name = saveImgName + "_" + date + ".pdf";
                                     }
-                                    pdf.save(name);
+                                    var file = new Blob([fileInfo], { type: "application/pdf;charset=utf-8" });
+                                    console.log(file)
+                                    var href = URL.createObjectURL(file);
+                                    var a = document.createElement('a');
+                                    document.body.appendChild(a);
+                                    a.href = href;
+                                    a.download = name;
+                                    setTimeout(function () {
+                                        a.click();
+                                        a.remove();
+                                    }, 200);
                                 }
 
                             }

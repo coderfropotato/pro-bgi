@@ -1,7 +1,7 @@
 <div class="net-page" ng-init="InitPage()" ng-controller="netController">
     <div class="report-page-title" custom-title="title"></div>
     <h6>蛋白网络互作</h6>
-    <div class="table-switch-chart-wrap"> 
+    <div class="table-switch-chart-wrap">
         <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
             <div class="graph_header">
                 <ul class="fLeft">
@@ -11,9 +11,9 @@
                 </ul>
                 <ul class="fRight">
                     <li ng-hide="error || isTableShow">
-                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="单选">单选</button>
-                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
-                        <button  ng-click="getChooseGeneList(netData)"  class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="单选">单选</button>
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
+                        <button ng-click="getChooseGeneList(netData)" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <li ng-if="!error">
                         <button style="position:relative;" class="btn-sm list_btn">前置任务
@@ -42,7 +42,7 @@
                                     </button>
                     </li>
                     <li ng-hide="error || isTableShow">
-                        <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图" ></div>
+                        <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络互作图"></div>
                     </li>
                     <li ng-hide="tableError || !isTableShow">
                         <div class="grid-export" find-entity="netEntity" export-location="exportLocationTable" savefilename="蛋白网络互作表"></div>
@@ -87,11 +87,10 @@
         </div>
     </div>
 
-    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
-            table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="geneListChangeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
-            params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis" reanalysis-id="reanalysisId"></div>
+    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="geneListChangeFlag"
+        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
+        reanalysis-id="reanalysisId"></div>
 
-            <!-- analysis pop -->
-    <div  class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
+    <!-- analysis pop -->
+    <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>
 </div>

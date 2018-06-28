@@ -20,7 +20,7 @@
     "images": {
         "common": {
             "src": [
-                "webroot/res/images/**", "!webroot/res/images/logo_big_bg.jpg", "!webroot/res/images/website/logo.png", "!webroot/res/images/topbar_logo_icn.png"
+                "webroot/res/images/**"
             ],
             "dest": "/res/images",
             "notify": "压缩通用图片成功！"

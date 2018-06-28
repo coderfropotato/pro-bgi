@@ -1,14 +1,14 @@
 ﻿define([], function() {
     // var base_url = "http://47.97.11.16:5002/api/1";  //正式
-    var base_url = "http://192.168.29.198:5000/api/1"; //远程
+    var base_url = "http://218.106.117.5:9001/api/1"; //远程
     // var base_url = "http://192.168.0.112:5002/api/1"; //开发
     // var base_url = "http://192.168.0.142:5002/api/1"; //开发
     //  var base_url = "http://172.168.1.115:5006/api/1";   //测试
     var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
         // var geneInfo_url = "http://180.76.159.174:81/api";
     var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
-    var java_url = "http://192.168.29.203/reportweb";
-    var staticImg_url = "http://192.168.29.204:5000/static/"; //静态图片
+    var java_url = "http://218.106.117.5:9001/reportweb";
+    var staticImg_url = "http://218.106.117.5:9001/static/"; //静态图片
 
     var SUPER_CONSOLE_MESSAGE = {
         testTitle: "生物云计算平台",

@@ -232,10 +232,19 @@ define("superApp.reportDire",
                 parent.showPop = true;
             }
 
+            // $scope.hoverTimer = null;
             $scope.handlerMouseLeave = function (parent) {
                 parent.showPop = false;
+                // $scope.hoverTimer = setTimeout(function () {
+                //     parent.showPop = false;
+                //     $scope.$apply();
+                // },50)
             }
 
+            // $scope.handlerThreeMouseEnter = function(){
+            //     if($scope.hoverTimer) clearTimeout($scope.hoverTimer);
+            // }
+            
             // 二级菜单点击事件
             $scope.handlerTwoClick = function (two) {
                 var reg = new RegExp('^' + two.JDPID);

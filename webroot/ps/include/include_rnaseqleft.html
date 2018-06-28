@@ -49,7 +49,7 @@
                             <li ng-repeat="item in twoList track by $index" class="sidebar_nav_two_item" ng-class="{isActive:item.isActive}" ng-mouseenter="handlerMouseEnter(item)" ng-mouseleave="handlerMouseLeave(item)" ng-click="handlerTwoClick(item)" id="li_{{item.GNSID}}">
                                 {{($index+1)+'. '+item.JDMC}}
                                 <!-- 三级  -->
-                                <ul class="sidebar_nav_pop" ng-show="item.showPop && threeList.length" ng-init="threeList = (leftDataJson | checkPidFilter : item.GNSID)">
+                                <ul class="sidebar_nav_pop" ng-mouseenter="handlerThreeMouseEnter()" ng-show="item.showPop && threeList.length" ng-init="threeList = (leftDataJson | checkPidFilter : item.GNSID)">
                                     <li ng-click="handlerPopClick(popitem,$event)" ng-class="{isActive:popitem.isActive}" ng-repeat="popitem in threeList track by $index">{{($index+1)+'. '+popitem.JDMC}}</li>
                                 </ul>
                             </li>

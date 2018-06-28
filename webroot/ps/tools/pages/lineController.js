@@ -110,7 +110,6 @@ define(['toolsApp'], function(toolsApp) {
                             }
                         }
                     })
-
                     var flag = '';
                     for (var key in res.baseThead[1]) {
                         flag = key;
@@ -120,6 +119,8 @@ define(['toolsApp'], function(toolsApp) {
                             $scope.curType = val.type;
                         }
                     })
+
+                    if(!$scope.curType) $scope.curType = 'sample';
 
                     if (!$scope.chartData.length) {
                         $scope.lineError = 'nodata';
@@ -157,7 +158,7 @@ define(['toolsApp'], function(toolsApp) {
                 "xAxis": {
                     "type": "discrete",
                     "fontRotate": "auto",
-                    "title": $scope.curType
+                    "title": $scope.curType 
                 },
                 "yAxis": {
                     "title": "log10(FPKM+1)"

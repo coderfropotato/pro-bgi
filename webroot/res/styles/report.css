@@ -3466,8 +3466,8 @@ div.tipsContainer {
 /* analysisPop styles */
 
 .analysis-panel {
-    width: 438px;
-    right: -438px;
+    width: 380px;
+    right: -380px;
     top: 14%;
     position: fixed;
     z-index: 120;
@@ -3540,21 +3540,25 @@ div.tipsContainer {
     font-size: 12px;
     color: #99A1BF;
     letter-spacing: 0.6px;
-    line-height: 30px;
+    line-height: 24px;
     border: 0;
-    height: 30px;
+    height: 24px;
     background: #fff;
     border: 0;
     border-bottom: 1px solid #DFE3F2;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .analysis-panel .table-wrap table td {
     font-size: 12px;
     color: #333333;
     letter-spacing: 0;
-    line-height: 40px;
+    line-height: 22px;
     border: 0;
     height: 40px;
+    padding:4px;
+    vertical-align: middle;
 }
 
 .analysis-panel .table-wrap table td:last-child {
@@ -4637,7 +4641,7 @@ div.titleDetail {
     height: 70px;
     position: absolute;
     right: -3px;
-    top: 50%;
+    top: 75%;
     margin-top: -24px;
     z-index: 10;
 }

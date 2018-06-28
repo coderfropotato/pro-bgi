@@ -124,7 +124,7 @@ define("superApp.reAnalysisDire",
                                     } else {
                                         // 100-500
                                         $scope.lineError = true;
-                                        if (newVal > 100 && newVal < 501) {
+                                        if (newVal > 10 && newVal < 501) {
                                             $scope.heatmapError = false;
                                             $scope.goClassError = false;
                                             $scope.goRichError = false;

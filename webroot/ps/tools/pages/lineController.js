@@ -86,8 +86,10 @@ define(['toolsApp'], function(toolsApp) {
                     $scope.chartData = [];
                     $scope.mapTheadJson = {};
                     var order = [];
-
-                    $scope.lineWidth = ((Math.ceil(res.baseThead.length / 18) * 140) + res.rows.length * 30 + 60) || 500
+                    $scope.lineWidth = ((Math.ceil(res.baseThead.length / 18) * 140) + res.rows.length * 30 + 60) || 500;
+                    if($scope.lineWidth<500){
+                        $scope.lineWidth = 500;
+                    }
                     res.baseThead.forEach(function(val, index) {
                         if (index != 0) {
                             for (var key in val) {
@@ -104,7 +106,7 @@ define(['toolsApp'], function(toolsApp) {
                                 $scope.chartData.push({
                                     category: val[x],
                                     key: $scope.mapTheadJson[name],
-                                    value: val[name]
+                                    value: val[name] || 0
                                 });
 
                             }

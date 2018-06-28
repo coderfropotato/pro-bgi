@@ -4868,3 +4868,30 @@ h6.nplr {
     user-select: none;
     cursor:pointer;
 }
+
+/* chart-desc styles */
+.chart-desc-wrap{
+    color: #636A82;
+}
+.chart-desc-wrap > div span{
+    cursor: pointer;
+}
+.chart-desc-wrap > div{
+    width: 80px;
+    cursor: pointer;
+}
+.chart-desc-wrap > div.active{
+    color: #5378F8;
+}
+.chart-desc-wrap > div:hover{
+    color: #5378F8;
+}
+
+.chart-desc-wrap .table-chart-desc{
+    background-color: #F0F1F5;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #636A82;
+    padding:16px;
+    margin-top:12px;
+}

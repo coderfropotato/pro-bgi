@@ -12,7 +12,7 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
         function analysisPopDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<div class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
+                template: "<div ng-click=\"handlerReanalysisPopClick($event)\" class=\"analysis-panel\" ng-class=\"isExpand?'isActive':''\" >"
                     // + "<div ng-show=\"analysisList.length\" class=\"analysis-title\">我的分析<em>（只显示最新十条记录）</em></div>"
                     // + "<table class=\"table table-hover\">"
                     // + "<thead>"
@@ -67,6 +67,17 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
                     $window.open('../../../../ps/tools/index.html#/home/error/' + item.id);
                 }
             }
+
+            $scope.handlerReanalysisPopClick = function (event) {
+                event.stopPropagation();
+            }
+
+            function documentClick() {
+                $scope.isExpand = false;
+                $scope.$apply();
+            }
+            document.removeEventListener('click',documentClick);
+            document.addEventListener('click', documentClick, false);
 
         }
     });

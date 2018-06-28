@@ -112,8 +112,8 @@ define("superApp.reAnalysisDire",
                                     $scope.lineError = false;
                                     $scope.netError = false;
                                 } else {
-                                    // 3-10
-                                    if (newVal <= 10) {
+                                    // 3-100
+                                    if (newVal <= 100) {
                                         $scope.heatmapError = false;
                                         $scope.goClassError = false;
                                         $scope.goRichError = false;
@@ -122,9 +122,9 @@ define("superApp.reAnalysisDire",
                                         $scope.lineError = false;
                                         $scope.netError = false;
                                     } else {
-                                        // 10-500
+                                        // 100-500
                                         $scope.lineError = true;
-                                        if (newVal > 10 && newVal < 501) {
+                                        if (newVal > 100 && newVal < 501) {
                                             $scope.heatmapError = false;
                                             $scope.goClassError = false;
                                             $scope.goRichError = false;

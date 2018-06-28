@@ -220,7 +220,7 @@ define(["toolsApp"], function(toolsApp) {
 
 
                 //定义图例比例尺
-                var legend_yScale = d3.scaleLinear().range([0, legend_height])
+                var legend_yScale = d3.scaleLinear().range([legend_height, 0])
                     .domain([valuemin, valuemax]).clamp(true);
 
                 var yAxis = d3.axisRight(legend_yScale).tickSizeOuter(0).ticks(5); //设置Y轴
@@ -341,7 +341,7 @@ define(["toolsApp"], function(toolsApp) {
                 function drawHeatmap(colors) {
                     d3.selectAll(".heatmapRects").remove();
                     //颜色比例尺
-                    var colorScale = d3.scaleLinear().domain([valuemin, (valuemin + valuemax) / 2, valuemax]).range(colors).interpolate(d3.interpolateRgb);
+                    var colorScale = d3.scaleLinear().domain([valuemax, (valuemin + valuemax) / 2, valuemin]).range(colors).interpolate(d3.interpolateRgb);
                     for (i = 0; i < sampleLen; i++) {
                         var rect_g = heatmap_g.append("g").attr("class", "heatmapRects");
                         //画矩形
@@ -433,7 +433,7 @@ define(["toolsApp"], function(toolsApp) {
                             var i = index.x_index,
                                 j = index.y_index;
                             var d = heatmap_data[i].heatmap[j];
-                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "value: " + d.y];
+                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "fpkm: " + d.y];
                             reportService.GenericTip.Show(d3.event, tipText);
                         }
                         clearEventBubble(moveEvent);

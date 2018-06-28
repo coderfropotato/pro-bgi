@@ -544,7 +544,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     width: _width,
                     height: _height,
                     scope: $rootScope,
-                    controller: function($rootScope) {
+                    controller: ['$rootScope',function($rootScope) {
                         $rootScope.isError = false;
                         $rootScope.confirm = function() {
                             var val = $("#TextInput").val();
@@ -558,7 +558,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             textNode.textContent = value;
 
                         };
-                    }
+                    }]
                 });
             };
 
@@ -593,8 +593,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     top: top,
                     width: _width,
                     height: _height,
-                    scope: $rootScope,
-                    controller: function($rootScope) {
+                    controller: ['$rootScope',function($rootScope) {
                         $rootScope.isChoose = true;
                         //数据
                         $rootScope.data = taskInfo.data;
@@ -704,7 +703,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 ngDialog.close();
                             }
                         };
-                    }
+                    }]
                 });
             };
 

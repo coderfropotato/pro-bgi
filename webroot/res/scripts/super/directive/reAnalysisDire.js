@@ -15,7 +15,6 @@ define("superApp.reAnalysisDire",
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='re-analysis-panel clearfix'>"
-
                     + "<ul class='pull-right clearfix'>"
                     + "<li class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'选择2-2000个基因作图':'聚类'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\"><i class=\"iconfont icon-tools icon-juleizhongfenxi\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':goRichError}\"uib-tooltip=\"{{goRichError?'至少选择三个基因作图':'GO富集'}}\" ng-click=\"handlerReanalysisClick(goRichError,'goRich')\"><i class=\"iconfont icon-tools icon-go\"></i></li>"

@@ -21,7 +21,7 @@ define("superApp.reAnalysisDire",
                     + "<li class='pull-left' ng-class=\"{'disabled':pathwayRichError}\" uib-tooltip=\"{{pathwayRichError?'至少选择三个基因作图':'kegg富集'}}\" ng-click=\"handlerReanalysisClick(pathwayRichError,'pathwayRich')\"><i class=\"iconfont icon-tools icon-pathwayfuji\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':goClassError}\" uib-tooltip=\"{{goClassError?'至少选择一个基因作图':'GO分类'}}\" ng-click=\"handlerReanalysisClick(goClassError,'goClass')\"><i class=\"iconfont icon-tools icon-gofenlei\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':pathwayClassError}\" uib-tooltip=\"{{pathwayClassError?'至少选择一个基因作图':'kegg分类'}}\" ng-click=\"handlerReanalysisClick(pathwayClassError,'pathwayClass')\"><i class=\"iconfont icon-tools icon-pathwayfenlei\"></i></li>"
-                    + "<li class='pull-left' ng-class=\"{'disabled':lineError}\" uib-tooltip=\"{{lineError?'选择1-10个基因作图':'折线图'}}\" ng-click=\"handlerReanalysisClick(lineError,'line')\"><i class=\"iconfont icon-tools icon-zhexiantu\"></i></li>"
+                    + "<li class='pull-left' ng-class=\"{'disabled':lineError}\" uib-tooltip=\"{{lineError?'选择1-100个基因作图':'折线图'}}\" ng-click=\"handlerReanalysisClick(lineError,'line')\"><i class=\"iconfont icon-tools icon-zhexiantu\"></i></li>"
                     + "<li class='pull-left' ng-class=\"{'disabled':netError}\" uib-tooltip=\"{{netError?'选择1-500个基因作图':'网路图'}}\" ng-click=\"handlerReanalysisClick(netError,'net')\"><i class=\"iconfont icon-tools icon-danbaiwangluohuzuo\"></i></li>"
                     + "</ul>"
                     + "</div>",
@@ -124,7 +124,7 @@ define("superApp.reAnalysisDire",
                                     } else {
                                         // 100-500
                                         $scope.lineError = true;
-                                        if (newVal > 100 && newVal < 501) {
+                                        if (newVal > 10 && newVal < 501) {
                                             $scope.heatmapError = false;
                                             $scope.goClassError = false;
                                             $scope.goRichError = false;

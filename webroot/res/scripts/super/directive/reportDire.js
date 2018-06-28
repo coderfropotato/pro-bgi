@@ -244,7 +244,7 @@ define("superApp.reportDire",
             // $scope.handlerThreeMouseEnter = function(){
             //     if($scope.hoverTimer) clearTimeout($scope.hoverTimer);
             // }
-            
+
             // 二级菜单点击事件
             $scope.handlerTwoClick = function (two) {
                 var reg = new RegExp('^' + two.JDPID);

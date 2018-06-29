@@ -25,7 +25,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     "</ul>" +
                     "</div>",
                 scope: {
-                    // pdfExportUrl: "=",
+                    pdfExportUrl: "=",
                     isExportPdf: "=",
                     findEntity: "=",
                     exportLocation: "=",
@@ -116,21 +116,22 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                         }
                         a.click();
                     } else {
-                        $scope.findEntity.IsExportReport = true;
-                        toolService.pageLoading.open("正在为您导出，请稍候...", 200);
-                        var ajaxConfig = {
-                            data: $scope.findEntity,
-                            url: $scope.exportLocation
-                        };
-                        var promise = ajaxService.GetDeferData(ajaxConfig);
-                        promise.then(function (responseData) {
-                            if (responseData.Error) {
-                                //系统异常
-                                toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
-                            } else {
-                                //正常
-                                var fileInfo = responseData;
-                                if (type == "svg") {
+                        if (type == "svg") {
+                            $scope.findEntity.IsExportReport = true;
+                            toolService.pageLoading.open("正在为您导出，请稍候...", 200);
+                            var ajaxConfig = {
+                                data: $scope.findEntity,
+                                url: $scope.exportLocation
+                            };
+                            var promise = ajaxService.GetDeferData(ajaxConfig);
+                            promise.then(function (responseData) {
+                                toolService.pageLoading.close();
+                                if (responseData.Error) {
+                                    //系统异常
+                                    toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
+                                } else {
+                                    var fileInfo = responseData;
+
                                     var svgXml = fileInfo.substring(fileInfo.indexOf("<svg"), fileInfo.lastIndexOf("</svg>"));
                                     var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
                                     var a = document.createElement('a');
@@ -146,46 +147,34 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                         a.remove();
                                     }, 200);
                                 }
-
-                                if (type == "pdf") {
-                                    var name = '';
-                                    if ($scope.isMultipleName) {
-                                        name = $scope.varFileName + "_" + date + ".pdf";
-                                    } else {
-                                        name = saveImgName + "_" + date + ".pdf";
-                                    }
-                                    var file = new Blob([fileInfo], { type: "application/pdf;charset=utf-8" });
-                                    console.log(file)
-                                    var href = URL.createObjectURL(file);
-                                    var a = document.createElement('a');
-                                    document.body.appendChild(a);
-                                    a.href = href;
-                                    a.download = name;
-                                    setTimeout(function () {
-                                        a.click();
-                                        a.remove();
-                                    }, 200);
-                                }
-
-                            }
-                            toolService.pageLoading.close();
-                        },
-                            function (errorMesg) {
+                            }, function (errorMesg) {
                                 toolService.pageLoading.close();
                                 toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
                             });
+                        } else {
+                            if (type == "pdf") {
+                                var name = '';
+                                if ($scope.isMultipleName) {
+                                    name = $scope.varFileName + "_" + date + ".pdf";
+                                } else {
+                                    name = saveImgName + "_" + date + ".pdf";
+                                }
+
+                                var a = document.createElement('a');
+                                a.href = $scope.pdfExportUrl;
+                                a.target = '_blank';
+                                setTimeout(function () {
+                                    a.click();
+                                    a.remove();
+                                }, 200);
+                            }
+                        }
 
                     }
-
                     function addZero(n) {
                         return n < 10 ? '0' + n : n;
                     }
                 }
-
-
             };
-
         }
-
-
     });

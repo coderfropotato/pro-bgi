@@ -1,5 +1,5 @@
 define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.staticImgExportDire", []);
         /*
          ** 创建日期：2017-06-19
@@ -30,11 +30,10 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     findEntity: "=",
                     exportLocation: "=",
                     isExportSvg: "=",
-                    isMultipleName: "=",
                     varFileName: "="
                 },
                 controller: "staticImgExportController",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var $element = $(element);
                     var $dropdownMenu = $element.find(".dropdown-menu:eq(0)");
 
@@ -56,15 +55,16 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
         staticImgExportController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
 
         function staticImgExportController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
-            $scope.export = function (chartid, saveImgName, type) {
-                if (!saveImgName) {
-                    saveImgName = "图表";
+            $scope.export = function(chartid, saveImgName, type) {
+                var imgName = saveImgName || $scope.varFileName;
+                if (!imgName) {
+                    imgName = "图表";
                 }
                 if (!type) {
                     type = "png";
                 }
                 if (chartid) {
-                    DownLoadImage(chartid, saveImgName, type);
+                    DownLoadImage(chartid, imgName, type);
                 }
             };
 
@@ -96,7 +96,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                 } else {
                     var image = new Image();
                     image.src = img_src;
-                    image.onload = function () {
+                    image.onload = function() {
                         base64 = getBase64Image(image);
                         download();
                     }
@@ -109,11 +109,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     if (type == "jpg" || type == "png") {
                         var a = document.createElement('a');
                         a.href = base64;
-                        if ($scope.isMultipleName) {
-                            a.download = type == "png" ? $scope.varFileName + '_' + date + ".png" : $scope.varFileName + '_' + date + ".jpg";
-                        } else {
-                            a.download = type == "png" ? saveImgName + "_" + date + ".png" : saveImgName + "_" + date + ".jpg";
-                        }
+                        a.download = type == "png" ? saveImgName + "_" + date + ".png" : saveImgName + "_" + date + ".jpg";
                         a.click();
                     } else {
                         if (type == "svg") {
@@ -124,7 +120,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                 url: $scope.exportLocation
                             };
                             var promise = ajaxService.GetDeferData(ajaxConfig);
-                            promise.then(function (responseData) {
+                            promise.then(function(responseData) {
                                 toolService.pageLoading.close();
                                 if (responseData.Error) {
                                     //系统异常
@@ -137,33 +133,23 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                     var a = document.createElement('a');
                                     document.body.appendChild(a);
                                     a.href = href;
-                                    if ($scope.isMultipleName) {
-                                        a.download = $scope.varFileName + "_" + date + ".svg";
-                                    } else {
-                                        a.download = saveImgName + "_" + date + ".svg";
-                                    }
-                                    setTimeout(function () {
+                                    a.download = saveImgName + "_" + date + ".svg";
+                                    setTimeout(function() {
                                         a.click();
                                         a.remove();
                                     }, 200);
                                 }
-                            }, function (errorMesg) {
+                            }, function(errorMesg) {
                                 toolService.pageLoading.close();
                                 toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
                             });
                         } else {
                             if (type == "pdf") {
-                                var name = '';
-                                if ($scope.isMultipleName) {
-                                    name = $scope.varFileName + "_" + date + ".pdf";
-                                } else {
-                                    name = saveImgName + "_" + date + ".pdf";
-                                }
-
+                                // var name = saveImgName + "_" + date + ".pdf";
                                 var a = document.createElement('a');
                                 a.href = $scope.pdfExportUrl;
                                 a.target = '_blank';
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     a.click();
                                     a.remove();
                                 }, 200);
@@ -171,6 +157,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                         }
 
                     }
+
                     function addZero(n) {
                         return n < 10 ? '0' + n : n;
                     }

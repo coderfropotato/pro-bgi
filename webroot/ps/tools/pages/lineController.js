@@ -184,7 +184,7 @@ define(['toolsApp'], function(toolsApp) {
             var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 
             function linetooltipConfig(d) {
-                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType + "：" + d.key + "</br>" + "log10(FPKM+1): " + d.value + "<br>FPKM " + d.key + "：" + d.value)
+                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType + "：" + d.key + "</br>" + "log10(FPKM+1): " + Math.log10(d.value+1) + "<br>FPKM " + d.key + "：" + d.value)
             }
 
             // 改色

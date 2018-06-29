@@ -350,7 +350,7 @@ define(["toolsApp"], function(toolsApp) {
                         .style("font-size", "12px")
                         .text(heatmap_data[i].name)
                         .style("text-anchor", function() {
-                            if (sampleLen <= 6) {
+                            if (sampleLen <= 2) {
                                 return "middle";
                             } else {
                                 return "start";

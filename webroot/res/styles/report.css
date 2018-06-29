@@ -4778,11 +4778,12 @@ div.titleDetail {
 }
 
 .userinfo-pop {
-    padding: 4px 12px;
+    padding: 12px;
     max-width: 400px;
     position: absolute;
     right: calc(100% - 72px);
-    top: 42px;
+    top: 54px;
+    height:80px;
     background: #FFFFFF;
     box-shadow: 0 3px 6px 0 rgba(183, 199, 255, 0.30);
     border-radius: 2px 2px 0 0;
@@ -4804,14 +4805,23 @@ div.titleDetail {
 
 .userinfo-pop span {
     font-size: 14px;
-    color: #333;
+    color: #9ba3c1;
     white-space: nowrap;
+}
+.userinfo-pop .logout{
+    padding:4px;
+    color: #f40;
+    cursor:pointer;
+    opacity: 0.8;
+}
+.userinfo-pop .logout:hover{
+    opacity: 1.0;
 }
 
 .userinfo-pop p {
     font-size: 14px;
     margin: 0;
-    margin-top: 6px;
+    margin-top: 20px;
 }
 
 .noshadow>div {

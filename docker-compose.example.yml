@@ -1,4 +1,4 @@
-server_web_igbook:
+server_web:
     restart: always
     image: nginx
     volumes:

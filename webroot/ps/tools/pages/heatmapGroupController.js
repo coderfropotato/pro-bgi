@@ -433,7 +433,7 @@ define(["toolsApp"], function(toolsApp) {
                             var i = index.x_index,
                                 j = index.y_index;
                             var d = heatmap_data[i].heatmap[j];
-                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "fpkm: " + d.y];
+                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "log2(fpkm+1): " + d.y];
                             reportService.GenericTip.Show(d3.event, tipText);
                         }
                         clearEventBubble(moveEvent);

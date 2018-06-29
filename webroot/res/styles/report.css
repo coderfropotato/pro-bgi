@@ -3471,7 +3471,7 @@ div.tipsContainer {
 .analysis-panel {
     width: 380px;
     right: -380px;
-    top: 14%;
+    top: 20%;
     position: fixed;
     z-index: 120;
     background: #FFFFFF;
@@ -3508,7 +3508,7 @@ div.tipsContainer {
 }
 
 .analysis-panel .table-wrap {
-    max-height: 360px;
+    max-height: 240px;
     overflow-y: scroll;
     padding: 20px;
     padding-top: 0;

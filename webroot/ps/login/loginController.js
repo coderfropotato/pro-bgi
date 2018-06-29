@@ -24,7 +24,7 @@ define(['loginApp'], function (loginApp) {
             $scope.isLCSubmit = false;
             $scope.isMangerSubmit = false;
             $rootScope.isMangerSystem = false;
-            $scope.lcLoginText = '登录并查看在线报告';
+            $scope.lcLoginText = '登录';
             $scope.mangerLoginText = '管理控制台登录';
             $scope.UUIDurl = options.api.java_url;
             $window.sessionStorage.clear();
@@ -205,7 +205,7 @@ define(['loginApp'], function (loginApp) {
                         var myPromise = toolLoginService.popMesgWindow(responseData.Error);
                         myPromise.then(function (value) {
                             $scope.isLCSubmit = false;
-                            $scope.lcLoginText = '登录并查看在线报告';
+                            $scope.lcLoginText = '登录';
                         });
                     }
                 },
@@ -215,7 +215,7 @@ define(['loginApp'], function (loginApp) {
                     $scope.isLCSubmit = false;
                     if ($scope.tabIndex == 0) {
                         $scope.isLCSubmit = false;
-                        $scope.lcLoginText = '登录并查看在线报告';
+                        $scope.lcLoginText = '登录';
                     }
                 }
             });

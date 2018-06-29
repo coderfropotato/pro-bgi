@@ -357,7 +357,7 @@ define(["toolsApp"], function(toolsApp) {
                             }
                         })
                         .attr("transform", function() {
-                            if (sampleLen <= 6) {
+                            if (sampleLen <= 2) {
                                 return "translate(" + (i * single_rect_width + single_rect_width / 2) + "," + (heatmap_height + 20) + ")";
                             } else {
                                 return "translate(" + (i * single_rect_width + single_rect_width / 2) + "," + (heatmap_height + 20) + ") rotate(25)";

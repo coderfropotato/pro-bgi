@@ -21,7 +21,7 @@ define(['toolsApp'], function(toolsApp) {
 
             // 重分析id
             $scope.id = $state.params.id;
-            $scope.title = 'Pathway 富集 ( ID：' + $scope.id + " ) ";
+            $scope.title = 'KEGG Pathway 富集 ( ID：' + $scope.id + " ) ";
 
             //Pathway table entity
             $scope.pageEntity = {

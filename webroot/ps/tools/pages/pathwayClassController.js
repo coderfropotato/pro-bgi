@@ -13,7 +13,7 @@ define(['toolsApp'], function(toolsApp) {
 
             // 重分析id
             $scope.id = $state.params.id;
-            $scope.title = 'Pathway 分类 ( ID：' + $scope.id + " ) ";
+            $scope.title = 'KEGG Pathway 分类 ( ID：' + $scope.id + " ) ";
 
             // table-switch-chart params start
             $scope.contentId = "div_reanalysis_pathwayClass";
@@ -138,7 +138,7 @@ define(['toolsApp'], function(toolsApp) {
             var group2tooltip = $scope.barchart.addTooltip(group2tooltipConfig);
 
             function group2tooltipConfig(d) {
-                group2tooltip.html("Level1: " + d.category+"<br>Level2:" + d.key + "</br>" + "Number of Genes: " + d.value )
+                group2tooltip.html("Level1: " + d.category + "<br>Level2:" + d.key + "</br>" + "Number of Genes: " + d.value)
             }
             //改标题
             $scope.barchart.dbClickTitle(function() {

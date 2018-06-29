@@ -86,7 +86,7 @@ define(['toolsApp'], function(toolsApp) {
                     $scope.chartData = [];
                     $scope.mapTheadJson = {};
                     var order = [];
-                    $scope.lineWidth = ((Math.ceil(res.baseThead.length / 18) * 140) + res.rows.length * 30 + 60) || 500;
+                    $scope.lineWidth = ((Math.ceil(res.rows.length / 18) * 150) + res.baseThead.length * 30 + 60) || 500;
                     if($scope.lineWidth<500){
                         $scope.lineWidth = 500;
                     }

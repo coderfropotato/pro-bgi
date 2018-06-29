@@ -380,7 +380,7 @@ define(["toolsApp"], function(toolsApp) {
                 var select_rect = interact_g.append("rect")
                     .attr("width", 0)
                     .attr("height", 0)
-                    .attr("fill", "#f1f1f1")
+                    .attr("fill", "#000000")
                     .style("opacity", 0.4);
 
                 var select_rw = heatmap_width,

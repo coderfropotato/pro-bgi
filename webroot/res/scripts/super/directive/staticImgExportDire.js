@@ -56,7 +56,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
 
         function staticImgExportController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
             $scope.export = function(chartid, saveImgName, type) {
-                var imgName = saveImgName || $scope.varFileName;
+                var imgName = $scope.varFileName || saveImgName;
                 if (!imgName) {
                     imgName = "图表";
                 }

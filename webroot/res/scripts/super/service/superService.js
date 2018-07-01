@@ -90,7 +90,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         toolService.popLoading.close(); //关闭页面等待效果2
                                         toolService.pageLoading.close(); //关闭页面等待蒙版
                                         // reAccess();
-                                        window.location.href = '../../../../ps/login/login.html';
+                                        // window.location.href = '../../../../ps/login/login.html';
                                     }
                                 } catch (e) {}
                             });

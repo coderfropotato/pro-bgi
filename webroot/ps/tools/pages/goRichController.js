@@ -477,7 +477,7 @@ define(['toolsApp'], function(toolsApp) {
                 "sizeTitle": "Gene Number"
             },
             "dataBox": {
-                "normalColor": ["#87CEFA", "#00008B"],
+                "normalColor": ["#00008B", "#87CEFA"],
             }
         }
         $scope.drawBubble = function(resData) {

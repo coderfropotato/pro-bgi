@@ -4945,7 +4945,7 @@ h6.nplr {
     position: absolute;
     left: 50%;
     bottom: -12px;
-    margin-left: 10px;
+    margin-left: -6px;
     width: 0;
     height: 0;
     border: 6px solid transparent;

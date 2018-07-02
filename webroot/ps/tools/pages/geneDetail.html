@@ -92,7 +92,8 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in sampleDiffData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name"
+                                    data-title="{{row[val.true_key]}}">
                                     <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
@@ -159,7 +160,8 @@
                     <p>{{go.go_level1}}</p>
                     <div class="geneDetailGoDiv">
                         <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
-                            <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp; <span>{{item.go_term}}</span>
+                            <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp;
+                            <span>{{item.go_term}}</span>
                         </div>
                     </div>
 
@@ -233,7 +235,9 @@
             <div ng-hide="nrError" class="geneinfoDiv">
                 <p ng-repeat="nr in nrList track by $index">
                     <span uib-tooltip="{{nr.hover}}" class="geneName">{{nr.name}}</span>
-                    <span ng-if="nr.value">{{nr.value}}</span>
+                    <span class="long-tooltip" 
+                    
+                    tooltip="{{nr.value}}"  ng-if="nr.value">{{nr.value}}</span>
                     <span ng-if="!nr.value">--</span>
                 </p>
             </div>
@@ -376,7 +380,8 @@
             <h4>文献信息</h4>
             <div ng-repeat="item in literature track by $index">
                 <p>
-                    <span>{{$index+1}}</span>. <a ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{item.PubMed_ID}}" target="_blank">{{item.ArticleTitle}}</a>
+                    <span>{{$index+1}}</span>.
+                    <a ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{item.PubMed_ID}}" target="_blank">{{item.ArticleTitle}}</a>
                 </p>
                 <p>{{item.Author}}&nbsp;{{item.ISOAbbreviation}}&nbsp;{{item.JournalIssuem}}&nbsp;PMID&nbsp;{{item.PubMed_ID}}</p>
             </div>

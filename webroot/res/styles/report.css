@@ -4928,3 +4928,27 @@ h6.nplr {
 .table-switch-chart-wrap .table_scroll_wrap {
     max-height: 600px;
 }
+
+/* long-tool-tip-text */
+.long-tool-tip-text{
+    white-space: normal;
+    max-width: 500px;
+    text-indent:0;
+    font-size: 12px!important;
+    line-height:1.4;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+.long-tool-tip-arrow{
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    margin-left: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #000;
+    content: "";
+}

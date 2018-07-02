@@ -545,7 +545,7 @@ define("superApp.toolTipDire",
                                 // 用； 切出大段
                                 var list = text.split(';');
                                 list.forEach(function (d, i) {
-                                    if (d.length && d ) {
+                                    if (d.length && d) {
                                         if (/\+/g.test(d)) {
                                             // 有小段
                                             var index = 0;
@@ -567,11 +567,11 @@ define("superApp.toolTipDire",
                                             // 没有小段  有K     只有:  K09100//single-minded; 
                                             if (/^K/.test($.trim(d))) {
                                                 str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a><br>';
-                                            } else if(/ko/g.test($.trim(d))) {
+                                            } else if (/ko/g.test($.trim(d))) {
                                                 // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
                                                 str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
-                                            }else{
-                                                str+='<span>'+d+'</span>';
+                                            } else {
+                                                str += '<span>' + d + '</span>';
                                             }
                                         }
                                     }
@@ -670,7 +670,7 @@ define("superApp.toolTipDire",
                                         str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a><br>';
                                     }
                                 })
-                            } else if (scope.theadKey === 'go_term_mix' || scope.theadKey==='go_term_mix_tools' || scope.theadKey.indexOf('go_term_mix_')!=-1) {
+                            } else if (scope.theadKey === 'go_term_mix' || scope.theadKey === 'go_term_mix_tools' || scope.theadKey.indexOf('go_term_mix_') != -1) {
                                 //官网 [] 换行
                                 // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                                 var list = text.split(';');
@@ -732,6 +732,43 @@ define("superApp.toolTipDire",
                         timer = setTimeout(function () {
                             if (obj) obj.remove();
                         }, 80)
+                    })
+                }
+            }
+        }
+
+
+
+
+        // long tooltip
+        superApp.directive('longTooltip', longTooltip);
+        longTooltip.$inject = ["$log",];
+        function longTooltip($log) {
+            return {
+                restrict: "ACE",
+                link: function (scope, element, attrs) {
+                    var obj = $('<div class="long-tool-tip"><div class="long-tool-tip-arrow"></div><div class="long-tool-tip-text"></div></div>')
+                    $(element).on('mouseover', function () {
+                        var text = $(element).attr('tooltip');
+                        obj.find('.long-tool-tip-text').text(text);
+                        var offset = $(element).parent().offset();
+                        var elOffset = $(element).offset();
+                        var left =  $(element).offset().left;
+                        console.log(left)
+                        obj.css({
+                            'position': 'fixed',
+                            'visibility': "hidden",
+                            'left': left,
+                            'top': 0,
+                        });
+                        $(element).parent().append(obj);
+                        var height = obj.outerHeight();
+                        obj.css('top', offset.top - height);
+                        obj.css('visibility', 'visible');
+                    }).on('mouseout', function () {
+                        if (($(element).parent().find('.long-tool-tip')).length) {
+                            obj.remove();
+                        }
                     })
                 }
             }

@@ -372,3 +372,6 @@
 .report-page-title h2 span {
     font-size: 24px!important;
 }
+.tooltip{
+    text-indent: 0!important;
+}

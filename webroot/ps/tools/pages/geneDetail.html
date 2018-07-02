@@ -5,8 +5,8 @@
         <div class="geneinfoDiv" ng-hide="geneInfoError">
             <p ng-repeat="gene in geneInfoList track by $index">
                 <span uib-tooltip="{{gene.hover}}" class="geneName">{{gene.name}}</span>
-                <a ng-show="isgeneLink">{{gene.value}}</a>
-                <span ng-show="!isgeneLink">{{gene.value}}</span>
+                <a class="long-tooltip" tooltip="{{gene.value}}" ng-show="isgeneLink">{{gene.value}}</a>
+                <span class="long-tooltip" tooltip="{{gene.value}}" ng-show="!isgeneLink">{{gene.value}}</span>
             </p>
         </div>
         <!-- <div class="table-nodata" error-type="geneInfoError" style="border: 0"></div> -->
@@ -92,8 +92,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in sampleDiffData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name"
-                                    data-title="{{row[val.true_key]}}">
+                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                     <span ng-if="row[val.true_key] || row[val.true_key]==0">{{row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
@@ -177,7 +176,7 @@
                 <div class="geneinfoDiv">
                     <p ng-repeat="phi in phiList track by $index">
                         <span uib-tooltip="{{phi.hover}}" class="geneName">{{phi.name}}</span>
-                        <span ng-if="phi.value">{{phi.value}}</span>
+                        <span class="long-tooltip" tooltip="{{phi.value}}" ng-if="phi.value">{{phi.value}}</span>
                         <span ng-if="!phi.value">--</span>
                     </p>
                 </div>
@@ -208,7 +207,7 @@
             <div ng-hide="prgError" class="geneinfoDiv">
                 <p ng-repeat="prg in prgList track by $index">
                     <span uib-tooltip="{{prg.hover}}" class="geneName">{{prg.name}}</span>
-                    <span ng-if="prg.value">{{prg.value}}</span>
+                    <span class="long-tooltip" tooltip="{{prg.value}}" ng-if="prg.value">{{prg.value}}</span>
                     <span ng-if="!prg.value">--</span>
                 </p>
             </div>
@@ -221,8 +220,8 @@
             <div ng-hide="tfError" class="geneinfoDiv">
                 <p ng-repeat="tf in tfList track by $index">
                     <span uib-tooltip="{{tf.hover}}" class="geneName">{{tf.name}}</span>
-                    <a href="" target="_blank" ng-show="istfLink">{{tf.value}}</a>
-                    <span ng-show="!istfLink && tf.value">{{tf.value}}</span>
+                    <a href="" target="_blank" ng-show="istfLink" class="long-tooltip" tooltip="{{tf.value}}">{{tf.value}}</a>
+                    <span ng-show="!istfLink && tf.value" class="long-tooltip" tooltip="{{tf.value}}">{{tf.value}}</span>
                     <span ng-show="!istfLink && !tf.value">--</span>
                 </p>
             </div>
@@ -235,9 +234,7 @@
             <div ng-hide="nrError" class="geneinfoDiv">
                 <p ng-repeat="nr in nrList track by $index">
                     <span uib-tooltip="{{nr.hover}}" class="geneName">{{nr.name}}</span>
-                    <span class="long-tooltip" 
-                    
-                    tooltip="{{nr.value}}"  ng-if="nr.value">{{nr.value}}</span>
+                    <span class="long-tooltip" tooltip="{{nr.value}}" ng-if="nr.value">{{nr.value}}</span>
                     <span ng-if="!nr.value">--</span>
                 </p>
             </div>
@@ -250,7 +247,7 @@
             <div ng-hide="ntError" class="geneinfoDiv">
                 <p ng-repeat="nt in ntList track by $index">
                     <span uib-tooltip="{{nt.hover}}" class="geneName">{{nt.name}}</span>
-                    <span ng-if="nt.value">{{nt.value}}</span>
+                    <span ng-if="nt.value" class="long-tooltip" tooltip="{{nt.value}}">{{nt.value}}</span>
                     <span ng-if="!nt.value">--</span>
                 </p>
             </div>
@@ -263,7 +260,7 @@
             <div ng-hide="swissprotError" class="geneinfoDiv">
                 <p ng-repeat="swissprot in swissprotList track by $index">
                     <span uib-tooltip="{{swissprot.hover}}" class="geneName">{{swissprot.name}}</span>
-                    <span ng-if="swissprot.value">{{swissprot.value}}</span>
+                    <span ng-if="swissprot.value" class="long-tooltip" tooltip="{{swissprot.value}}">{{swissprot.value}}</span>
                     <span ng-if="!swissprot.value">--</span>
                 </p>
             </div>
@@ -276,7 +273,7 @@
             <div ng-hide="pfamError" class="geneinfoDiv">
                 <p ng-repeat="pfam in pfamList track by $index">
                     <span uib-tooltip="{{pfam.hover}}" class="geneName">{{pfam.name}}</span>
-                    <span ng-if="pfam.value">{{pfam.value}}</span>
+                    <span ng-if="pfam.value" class="long-tooltip" tooltip="{{pfam.value}}">{{pfam.value}}</span>
                     <span ng-if="!pfam.value">--</span>
                 </p>
             </div>

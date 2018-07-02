@@ -155,7 +155,7 @@ define(["toolsApp"], function(toolsApp) {
                 }
 
                 //下边文字高度、右边文字的宽度
-                var XtextHeight = max_x_textLength * 4 + 16;
+                var XtextHeight = max_x_textLength * 4 + 20;
                 var YtextWidth = max_y_textLength * 8;
 
                 //预留间距

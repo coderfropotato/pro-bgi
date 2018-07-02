@@ -356,6 +356,9 @@ define(["toolsApp"], function(toolsApp) {
                             .attr("width", single_rect_width)
                             .attr("height", single_rect_height)
                             .attr("fill", function(d) {
+                                if(d.y === null){
+                                    d.y = 0;
+                                }
                                 return colorScale(d.y)
                             })
 

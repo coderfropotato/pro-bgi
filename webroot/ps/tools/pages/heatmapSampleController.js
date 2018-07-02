@@ -342,7 +342,11 @@ define(["toolsApp"], function(toolsApp) {
                         .attr("y", function(d, j) { return j * single_rect_height })
                         .attr("width", single_rect_width)
                         .attr("height", single_rect_height)
-                        .attr("fill", function(d) { return colorScale(d.y) })
+                        .attr("fill", function(d) { 
+                            if(d.y === null){
+                                d.y = 0;
+                            }
+                            return colorScale(d.y) })
 
                     //添加x轴的名称
                     rect_g.append("text")

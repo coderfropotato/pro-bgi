@@ -155,7 +155,7 @@ define(["toolsApp"], function(toolsApp) {
                 }
 
                 //下边文字高度、右边文字的宽度
-                var XtextHeight = max_x_textLength * 10;
+                var XtextHeight = max_x_textLength * 4 + 20;
                 var YtextWidth = max_y_textLength * 8;
 
                 //预留间距
@@ -165,6 +165,10 @@ define(["toolsApp"], function(toolsApp) {
                     left: 10,
                     right: 40
                 };
+
+                if (sampleLen <= 2) {
+                    margin.bottom = 40;
+                }
 
                 //定义热图宽高
                 var heatmap_width = 0,
@@ -212,7 +216,7 @@ define(["toolsApp"], function(toolsApp) {
 
                 //svg总宽高
                 var totalWidth = margin.left + cluster_width + space + heatmap_width + space + YtextWidth + legend_space + legend_width + margin.right,
-                    totalHeight = margin.top + topCluster_height + heatmap_height + XtextHeight + margin.bottom;
+                    totalHeight = margin.top + topCluster_height + heatmap_height + margin.bottom;
 
                 //定义渐变颜色
                 var colorValue = toolService.sessionStorage.get("colors");
@@ -356,7 +360,7 @@ define(["toolsApp"], function(toolsApp) {
                             .attr("width", single_rect_width)
                             .attr("height", single_rect_height)
                             .attr("fill", function(d) {
-                                if(d.y === null){
+                                if (d.y === null) {
                                     d.y = 0;
                                 }
                                 return colorScale(d.y)

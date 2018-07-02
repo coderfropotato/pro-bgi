@@ -7093,6 +7093,8 @@ Thanks :)*/
     color: #000;
     border-radius: 2px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    max-height:200px;
+    overflow:auto;
 }
 
 .logo_big_bg {

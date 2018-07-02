@@ -207,6 +207,7 @@ define(['loginApp'], function (loginApp) {
                             $scope.isLCSubmit = false;
                             $scope.lcLoginText = '登录';
                         });
+                        $scope.renovate();
                     }
                 },
                 error: function (data) {
@@ -217,6 +218,7 @@ define(['loginApp'], function (loginApp) {
                         $scope.isLCSubmit = false;
                         $scope.lcLoginText = '登录';
                     }
+                    $scope.renovate();
                 }
             });
         }

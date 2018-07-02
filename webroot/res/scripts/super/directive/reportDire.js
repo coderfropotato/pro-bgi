@@ -81,6 +81,11 @@ define("superApp.reportDire",
                 }, 0)
             };
 
+            $scope.handlerLogout = function(){
+                window.location.href="../../../../ps/login/login.html";
+                toolService.localStorage.remove('token');
+            }
+
             $scope.ExportPDF = function () {
 
                 //已加载的页面先更改宽度为1080px（1080px为了适配chrome打印）

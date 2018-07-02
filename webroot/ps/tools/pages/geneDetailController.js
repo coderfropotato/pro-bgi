@@ -14,7 +14,7 @@ define(["toolsApp"], function(toolsApp) {
             //gene id
             $scope.id = $state.params.id;
 
-            $scope.title = $scope.id + "基因详情";
+            $scope.title = $scope.id + " 基因详情";
 
             $scope.geneEntity = {
                 "LCID": toolService.sessionStorage.get("LCID"),

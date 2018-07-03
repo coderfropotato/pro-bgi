@@ -69,7 +69,7 @@ define(['toolsApp'], function (toolsApp) {
             var promise = ajaxService.GetDeferDataNoAuth(ajaxConfig);
             promise.then(function (res) {
                 toolService.gridFilterLoading.close("myanalysis-table");
-                if (res.status!=200) {
+                if (res.status != 200) {
                     $scope.analysisError = 'syserror';
                 } else if (res.data.rows.length == 0) {
                     $scope.analysisError = 'nodata';
@@ -205,6 +205,13 @@ define(['toolsApp'], function (toolsApp) {
             item.isEdit = true;
         }
 
+        $scope.handlerEditClick2 = function (item) {
+            $scope.analysisList.rows.forEach(function (val, index) {
+                val.isEditRemark = false;
+            })
+            item.isEditRemark = true;
+        }
+
         // keyup
         // $scope.handlerKeyUp = function (event,index,item,value) {
         //     if (event.keyCode === 13) {
@@ -243,6 +250,41 @@ define(['toolsApp'], function (toolsApp) {
                 // 没有修改
                 item.projectName = value;
                 item.isEdit = false;
+            }
+        }
+
+
+        $scope.handlerBlur2 = function (index, item, value) {
+            // 去掉空白字符
+            if (/\s/g.test(value)) {
+                value = value.replace(/\s/g, '');
+            }
+            // 相比之前修改了
+            if (!angular.equals(value, $scope.beforeList.rows[index].remark)) {
+                //配置请求参数
+                var ajaxConfig = {
+                    data: {
+                        tid: item.id,
+                        content: value
+                    },
+                    url: options.api.java_url + '/reanalysis/remark'
+                }
+                var promise = ajaxService.GetDeferData(ajaxConfig);
+                promise.then(function (res) {
+                    if (res.status != 200) {
+                        item.remark = $scope.beforeList.rows[index].remark;
+                    } else {
+                        // 更新之前的状态到最新的值
+                        $scope.beforeList.rows[index].remark = value;
+                        item.isEditRemark = false;
+                    }
+                }, function (err) {
+                    console.log(err);
+                })
+            } else {
+                // 没有修改
+                item.remark = value;
+                item.isEditRemark = false;
             }
         }
 

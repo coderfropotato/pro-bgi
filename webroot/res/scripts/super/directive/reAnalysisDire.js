@@ -15,13 +15,13 @@ define("superApp.reAnalysisDire", ["angular", "super.superMessage", "select2"],
                 replace: true,
                 template: "<div class='re-analysis-panel clearfix'>" +
                     "<ul class='pull-right clearfix'>" +
-                    "<li ng-if='heatmapShow' class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'选择2-2000个基因作图':'聚类'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\"><i class=\"iconfont icon-tools icon-juleizhongfenxi\"></i></li>" +
+                    "<li ng-if='heatmapShow' class='pull-left' ng-class=\"{'disabled':heatmapError}\" uib-tooltip=\"{{heatmapError?'选择2-2000个基因作图':'聚类热图'}}\" ng-click=\"handlerReanalysisClick(heatmapError,'heatmap')\"><i class=\"iconfont icon-tools icon-juleizhongfenxi\"></i></li>" +
                     "<li ng-if='goRichShow' class='pull-left' ng-class=\"{'disabled':goRichError}\"uib-tooltip=\"{{goRichError?'至少选择三个基因作图':'GO富集'}}\" ng-click=\"handlerReanalysisClick(goRichError,'goRich')\"><i class=\"iconfont icon-tools icon-go\"></i></li>" +
-                    "<li ng-if='pathwayRichShow' class='pull-left' ng-class=\"{'disabled':pathwayRichError}\" uib-tooltip=\"{{pathwayRichError?'至少选择三个基因作图':'kegg富集'}}\" ng-click=\"handlerReanalysisClick(pathwayRichError,'pathwayRich')\"><i class=\"iconfont icon-tools icon-pathwayfuji\"></i></li>" +
+                    "<li ng-if='pathwayRichShow' class='pull-left' ng-class=\"{'disabled':pathwayRichError}\" uib-tooltip=\"{{pathwayRichError?'至少选择三个基因作图':'KEGG富集'}}\" ng-click=\"handlerReanalysisClick(pathwayRichError,'pathwayRich')\"><i class=\"iconfont icon-tools icon-pathwayfuji\"></i></li>" +
                     "<li ng-if='goClassShow' class='pull-left' ng-class=\"{'disabled':goClassError}\" uib-tooltip=\"{{goClassError?'至少选择一个基因作图':'GO分类'}}\" ng-click=\"handlerReanalysisClick(goClassError,'goClass')\"><i class=\"iconfont icon-tools icon-gofenlei\"></i></li>" +
-                    "<li ng-if='pathwayClassShow' class='pull-left' ng-class=\"{'disabled':pathwayClassError}\" uib-tooltip=\"{{pathwayClassError?'至少选择一个基因作图':'kegg分类'}}\" ng-click=\"handlerReanalysisClick(pathwayClassError,'pathwayClass')\"><i class=\"iconfont icon-tools icon-pathwayfenlei\"></i></li>" +
+                    "<li ng-if='pathwayClassShow' class='pull-left' ng-class=\"{'disabled':pathwayClassError}\" uib-tooltip=\"{{pathwayClassError?'至少选择一个基因作图':'KEGG分类'}}\" ng-click=\"handlerReanalysisClick(pathwayClassError,'pathwayClass')\"><i class=\"iconfont icon-tools icon-pathwayfenlei\"></i></li>" +
                     "<li ng-if='lineShow' class='pull-left' ng-class=\"{'disabled':lineError}\" uib-tooltip=\"{{lineError?'选择1-100个基因作图':'折线图'}}\" ng-click=\"handlerReanalysisClick(lineError,'line')\"><i class=\"iconfont icon-tools icon-zhexiantu\"></i></li>" +
-                    "<li ng-if='netShow' class='pull-left' ng-class=\"{'disabled':netError}\" uib-tooltip=\"{{netError?'选择1-500个基因作图':'网络图'}}\" ng-click=\"handlerReanalysisClick(netError,'net')\"><i class=\"iconfont icon-tools icon-danbaiwangluohuzuo\"></i></li>" +
+                    "<li ng-if='netShow' class='pull-left' ng-class=\"{'disabled':netError}\" uib-tooltip=\"{{netError?'选择1-500个基因作图':'蛋白网络互作图'}}\" ng-click=\"handlerReanalysisClick(netError,'net')\"><i class=\"iconfont icon-tools icon-danbaiwangluohuzuo\"></i></li>" +
                     "</ul>" +
                     "</div>",
                 scope: {

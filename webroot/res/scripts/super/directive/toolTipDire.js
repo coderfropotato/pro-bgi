@@ -696,6 +696,8 @@ define("superApp.toolTipDire",
                                 })
                             } else if (scope.theadKey === 'tf_family') {
                                 str += '<a href="' + row['tf_db_link'] + '" target="_blank">' + text + '</a>'
+                            } else if (scope.theadKey === 'gene_id' || scope.theadKey.indexOf('query_id') != -1) {
+                                str += '<a href="../../../../ps/tools/index.html#/home/geneDetail/' + text + '" target="_blank">' + text + '</a>';
                             } else {
                                 // 不需要特殊处理的
                                 // 有；按；切  没有默认

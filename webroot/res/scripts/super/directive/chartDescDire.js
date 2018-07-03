@@ -11,7 +11,7 @@ define("superApp.chartDescDire",
             return {
                 restrict: "ACE",
                 template:
-                    "<div class=\"chart-desc-wrap\"><div ng-class=\"{'active':show}\" ng-click=\"show = !show\"><i style=\"margin-right:4px;\" class=\"iconfont icon-shuoming\"></i><span>图片说明</span></div><p class=\"table-chart-desc\" ng-show=\"show\">{{text}}</p></div>",
+                    "<div class=\"chart-desc-wrap\"><div  ng-class=\"{'active':show}\" ng-click=\"show = !show\"><i style=\"margin-right:4px;\" class=\"iconfont icon-shuoming\"></i><span>图说明</span></div><p class=\"table-chart-desc\" ng-show=\"show\">{{text}}</p></div>",
                 replace: false,
                 transclude: true,
                 controller: "chartDescCtr",

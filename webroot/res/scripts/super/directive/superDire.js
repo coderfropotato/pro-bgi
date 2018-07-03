@@ -453,7 +453,7 @@ define("superApp.superDire",
                 } else if (thead === 'go_term_id') {
                     // 直接跳官网
                     // go_term(GO:123)
-                    str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/medial_search?q=' + val + '">' + val + '</a>';
+                    str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/term/' + val + '">' + val + '</a>';
                 } else if (thead === 'desc_go' || thead === 'go_desc' || thead === 'go_subject_annotation') {
                     // 没有 []
                     var list = input.split(';');
@@ -461,7 +461,7 @@ define("superApp.superDire",
                     list.forEach(function (val, index) {
                         if (val.length && $.trim(val)) {
                             // (val.match(/GO:\w+/))[0] val.split('//')[0]
-                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a>';
+                            str += '<a href="http://amigo.geneontology.org/amigo/term/' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a>';
                         }
                     })
                 } else if (thead === 'go_term_mix' || thead === 'go_term_mix_tools' || thead.indexOf('go_term_mix_') != -1) {
@@ -476,9 +476,9 @@ define("superApp.superDire",
                                 var flag = val.match(/\[([\s\S]*)\]/g);
                                 var s = val.split(flag);
                                 str += '<span>' + flag + '</span>';
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + flagtext + s[s.length - 1] + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/term/' + s[s.length - 1].split('//')[0] + '" target="_blank">' + flagtext + s[s.length - 1] + '</a>';
                             } else {
-                                str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + flagtext + val + '</a>';
+                                str += '<a href="http://amigo.geneontology.org/amigo/term/' + val.split('//')[0] + '" target="_blank">' + flagtext + val + '</a>';
                             }
                         }
                     })

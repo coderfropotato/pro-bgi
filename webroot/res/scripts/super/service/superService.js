@@ -2318,6 +2318,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             $scope.focus = false;
                             $scope.handlercloseThisDialog = function() {
                                 $scope.closeThisDialog(0);
+                                toolService.localStorage.remove('token');
                             }
 
                             $scope.handlerconfirm = function() {

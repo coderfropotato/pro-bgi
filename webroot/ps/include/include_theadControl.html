@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="show" ">
+    <div ng-show="show" style="padding-top: 10px;">
         <ul class="tab">
             <li ng-show="group.list.length" ng-repeat="(index,group) in data track by $index" ng-class="{active:currentIndex==$index}" 
                 ng-click="handlerTabClick($index)">{{group.groupName}}<span ng-if="allActiveItems[index].length" class="circle">{{allActiveItems[index].length}}</span></li>

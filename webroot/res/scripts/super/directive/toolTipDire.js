@@ -357,7 +357,7 @@ define("superApp.toolTipDire",
                         if ($divToolTip.length < 1) {
                             var str = $this.data("title");
                             str = str.replace(/;/g, "<br>")
-                            str = str.replace(/(GO:[0-9]+)/g, '<a href="http://amigo.geneontology.org/amigo/medial_search?q=$1" target="_blank">$1</a>')
+                            str = str.replace(/(GO:[0-9]+)/g, '<a href="http://amigo.geneontology.org/amigo/term/$1" target="_blank">$1</a>')
                             var toolTipHTML = "<div id=" + $this.data("toolTipID") + " class='tooltip GOKOToolTip " + $this.data("direct") + " poptip' role='tooltip'><div class='tooltip-arrow'></div><div class='tooltip-inner'>" + str + "</div></div>";
                             $("body").append(toolTipHTML);
 
@@ -659,7 +659,7 @@ define("superApp.toolTipDire",
                             } else if (scope.theadKey === 'go_term_id') {
                                 // 直接跳官网
                                 // go_term(GO:123)
-                                str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/medial_search?q=' + val + '">' + val + '</a><br>';
+                                str += '<a class="go-number" href="http://amigo.geneontology.org/amigo/term/' + val + '">' + val + '</a><br>';
                             } else if (scope.theadKey === 'desc_go' || scope.theadKey === 'go_desc' || scope.theadKey === 'go_subject_annotation') {
                                 // 没有 []
                                 var list = text.split(';');
@@ -667,7 +667,7 @@ define("superApp.toolTipDire",
                                 list.forEach(function (val, index) {
                                     if (val.length && $.trim(val)) {
                                         // val.split('//')[0]
-                                        str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a><br>';
+                                        str += '<a href="http://amigo.geneontology.org/amigo/term/' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a><br>';
                                     }
                                 })
                             } else if (scope.theadKey === 'go_term_mix' || scope.theadKey === 'go_term_mix_tools' || scope.theadKey.indexOf('go_term_mix_') != -1) {
@@ -687,9 +687,9 @@ define("superApp.toolTipDire",
                                             } else {
                                                 str += '<br><span>' + flag + '</span><br>';
                                             }
-                                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + s[s.length - 1].split('//')[0] + '" target="_blank">' + s[s.length - 1] + '</a><br>';
+                                            str += '<a href="http://amigo.geneontology.org/amigo/term/' + s[s.length - 1].split('//')[0] + '" target="_blank">' + s[s.length - 1] + '</a><br>';
                                         } else {
-                                            str += '<a href="http://amigo.geneontology.org/amigo/medial_search?q=' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
+                                            str += '<a href="http://amigo.geneontology.org/amigo/term/' + val.split('//')[0] + '" target="_blank">' + val + '</a><br>';
                                         }
                                     }
                                 })

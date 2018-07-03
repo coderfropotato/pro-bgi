@@ -2313,7 +2313,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     return ngDialog.openConfirm({
                         title: "重新授权提示",
                         closeByDocument: false,
-                        controller: ['$scope', function($scope) {
+                        controller: ['$scope','toolService', function($scope,toolService) {
                             $scope.password = '';
                             $scope.focus = false;
                             $scope.handlercloseThisDialog = function() {

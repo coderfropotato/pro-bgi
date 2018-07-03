@@ -1165,6 +1165,7 @@ ul {
     min-width: 880px;
     border: 1px solid #f6f7fa;
     border-bottom: none;
+    border-top:none;
 }
 .page_report h6.npb{
     padding-bottom: 0;
@@ -4583,6 +4584,12 @@ div.titleDetail {
     box-shadow: 0 2px 4px 0 rgba(183, 199, 255, 0.30);
     border-radius: 2px;
 }
+.table-switch-chart-wrap.npb{
+    padding-bottom: 0;
+}
+.table-switch-chart-wrap.npb .graph_group{
+    margin-bottom: 0;
+}
 
 .new-table-switch-btns {
     width: 24px;
@@ -4638,6 +4645,9 @@ div.titleDetail {
     height: 27px;
 }
 
+.little-table .tableListPanel{
+    padding-top:16px;
+}
 .tableListPanel.little-table-wrap {
     padding-bottom: 16px;
 }
@@ -4677,6 +4687,7 @@ div.titleDetail {
 .table-message {
     background-color: #fff;
     padding: 0 24px;
+    padding-bottom:16px;
 }
 
 .btn-genelist {
@@ -4838,13 +4849,16 @@ div.titleDetail {
 }
 
 .noshadow.tableListPanel {
-    padding-bottom: 26px;
+    padding-bottom: 0px;
     box-shadow: none!important;
 }
 
 .noshadow .table-switch-chart-wrap {
-    padding-bottom: 26px;
+    padding-bottom: 0px;
     box-shadow: none!important;
+}
+.noshadow .graph_group{
+    margin-bottom:0;
 }
 
 .table-switch-chart>div {
@@ -4859,6 +4873,9 @@ h6.nb {
     border: none;
 }
 
+h6.npb{
+    padding-bottom: 0;
+}
 h6.nplr {
     padding: 26px 0;
 }
@@ -4900,6 +4917,7 @@ h6.nplr {
 
 .chart-desc-wrap {
     color: #636A82;
+    margin-top:20px;
 }
 
 .chart-desc-wrap>div span {

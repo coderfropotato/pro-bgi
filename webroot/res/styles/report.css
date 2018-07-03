@@ -1159,12 +1159,15 @@ ul {
     /* padding: 8px 0; */
     clear: both;
     padding: 26px;
-    padding-bottom: 0;
+    /* padding-bottom: 0; */
     text-align: left;
     background-color: #fff;
     min-width: 880px;
     border: 1px solid #f6f7fa;
     border-bottom: none;
+}
+.page_report h6.npb{
+    padding-bottom: 0;
 }
 
 .page_report .graph_group h6 {
@@ -3138,7 +3141,7 @@ pre {
 }
 
 .tableListPanel {
-    padding: 16px 24px 72px;
+    padding: 0px 24px 72px;
     background: #FFFFFF;
     box-shadow: 0 3px 6px 0 rgba(183, 199, 255, 0.30);
     border-radius: 2px;
@@ -4251,7 +4254,7 @@ geneExpression
 
 .thead-control-top {
     display: flex;
-    height: 42px;
+    height: 32px;
 }
 
 .thead-control-top>div {
@@ -4573,7 +4576,7 @@ div.titleDetail {
 
 .table-switch-chart-wrap {
     padding: 0 24px;
-    padding-top: 26px;
+    /* padding-top: 26px; */
     padding-bottom: 24px;
     background-color: #fff;
     min-width: 880px;
@@ -4915,14 +4918,18 @@ h6.nplr {
 .chart-desc-wrap>div:hover {
     color: #5378F8;
 }
-
 .chart-desc-wrap .table-chart-desc {
-    background-color: #F0F1F5;
+    background-color: #f7f7f7;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 12px!important;
     color: #636A82;
-    padding: 16px;
+    padding: 12px;
     margin-top: 12px;
+    min-width: 834px;
+    border:1px solid #e1e5e7;
+    border-radius: 4px;
+    text-align: justify;
+    text-indent: 2em!important;
 }
 
 .table-switch-chart-wrap .table_scroll_wrap {

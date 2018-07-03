@@ -60,7 +60,9 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     // add 2018年6月12日10:32:01
                     // 是否显示前置任务
                     isShowBeforeTask: "=",
-                    taskId: "="
+                    taskId: "=",
+                    // 图表切换的图说明
+                    chartDescribe:"@",
                 },
                 replace: false,
                 transclude: true,

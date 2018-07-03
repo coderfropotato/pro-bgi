@@ -8273,40 +8273,41 @@ div.tipsContainer,
 
 .colors_select .colors {
     width: 226px;
-    padding: 2px 2px;
+    padding: 4px 2px;
     border: 1px solid #ddd;
     background: #fff;
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
+    border-top: 0;
 }
 
-.color_list {
-    top: 35%;
+.colors_select .color_list {
+    top: 236px;
 }
 
-.colorInput {
-    top: 29%;
+.colors_select .colorInput {
+    top: 200px;
     height: 36px;
     padding-top: 5px;
 }
 
-.colorInput input {
-    width: 170px;
+.colors_select .colorInput input {
+    width: 150px;
     height: 25px;
     float: left;
     margin-left: 6px;
 }
 
-.colorInput button {
+.colors_select .colorInput button {
     float: left;
     height: 25px;
     line-height: 1px;
     margin-left: 10px;
 }
 
-.color_list:after {
+.colors_select .color_list:after {
     display: block;
     content: "";
     clear: both;

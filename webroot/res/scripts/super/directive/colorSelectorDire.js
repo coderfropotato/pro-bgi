@@ -33,7 +33,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 restrict: "ACE",
                 replace: true,
                 template: "<div ng-show=\"isShow\" class='colors_select'>" +
-                    "<div class='colors colorInput'><input type='text' class='form-control' placeholder='请输入16进制颜色值' /><button class='btn btn-default btn-silver btn-sm' ng-click='confirmInput()'>确定</button></div>" +
+                    "<div class='colors colorInput'><input type='text' class='form-control' placeholder='请输入16进制颜色值' ng-keyup='changeInput($event)' /><button class='btn btn-default btn-silver btn-sm' ng-click='confirmInput()'>确定</button></div>" +
                     "<div class='colors color_list'>" +
                     "<ul>" +
                     "<li ng-repeat='color in colorList track by $index' ng-click='SetColor($event,color)' style='background-color:{{color}}'></li>" +
@@ -120,14 +120,19 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 $scope.getCurColor({ color: curColor }); //参数必须是对象
             }
 
+            $scope.inputValue = "";
+            $scope.changeInput = function(e) {
+                $scope.inputValue = e.target.value;
+            }
+
             $scope.confirmInput = function() {
-                var inputValue = $(".colors_select .colorInput input").val();
                 var regExp = /^#[\da-f]{3}([\da-f]{3})?$/i;
-                var isMatchColor = regExp.test(inputValue);
+                var isMatchColor = regExp.test($scope.inputValue);
 
                 if (isMatchColor) {
                     $scope.isShow = false;
-                    $scope.getCurColor({ color: inputValue });
+                    $scope.getCurColor({ color: $scope.inputValue });
+                    $(".colors_select .colorInput input").val("");
                 }
             }
 

@@ -502,7 +502,7 @@ define(['toolsApp'], function(toolsApp) {
             var bubbletooltip = $scope.bubble.addTooltip(bubbletooltipConfig);
 
             function bubbletooltipConfig(d) {
-                bubbletooltip.html("Go term: " + d.key + "</br>" + "GO Term ID:" + d.term_id + "</br>" + "rich ratio:" + d.value + "</br>" + "qvalue: " + d.category1 + "</br>" + "基因数：" + d.category2);
+                bubbletooltip.html("Go Term: " + d.key + "</br>" + "GO Term ID: " + d.term_id + "</br>" + "Rich Ratio: " + d.value + "</br>" + "Qvalue: " + d.category1 + "</br>" + "Gene Number: " + d.category2);
             }
 
             $scope.changeColor($scope.bubble, $scope.bubbleOptions.width);
@@ -575,11 +575,11 @@ define(['toolsApp'], function(toolsApp) {
             var groupcharttooltip = $scope.barchart.addTooltip(bartooltipConfig, linetooltipConfig)
 
             function bartooltipConfig(d) {
-                groupcharttooltip[0].html("Go term:" + d.key + "</br>" + "GO Term ID:" + d.term_id + "</br>" + "Qvalue: " + d.qvalue + "</br>" + "-log10（Qvalue）: " + d.value + "</br>" + "基因数：" + d.gene_num)
+                groupcharttooltip[0].html("Go Term: " + d.key + "</br>" + "GO Term ID: " + d.term_id + "</br>" + "Qvalue: " + d.qvalue + "</br>" + "-log10(Qvalue): " + d.value + "</br>" + "Gene Number: " + d.gene_num);
             }
 
             function linetooltipConfig(d) {
-                groupcharttooltip[1].html("Go term:" + d.key + "</br>" + "基因数： " + d.value)
+                groupcharttooltip[1].html("Go Term: " + d.key + "</br>" + "Gene Number: " + d.value);
             }
 
             // $scope.changeColor($scope.barchart, "reAnalysis_goRich_bubble", 0.8);

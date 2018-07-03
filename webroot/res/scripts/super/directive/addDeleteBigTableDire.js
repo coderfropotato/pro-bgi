@@ -363,7 +363,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                                 }
                             }
                         });
-
                         isIn ? $scope.checkedAll = false : $scope.checkedAll = true;
                     }
 

@@ -537,7 +537,7 @@ define("superApp.toolTipDire",
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');
-                        var row = JSON.parse($(element).attr('data-row'));  
+                        if ($(element).attr('data-row') != undefined && $(element).attr('data-row').length) var row = JSON.parse($(element).attr('data-row'));
                         // 溢出才显示
                         var str = '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visible:hidden " role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
                         if ($(element).width() <= $(element).children(":eq(0)").outerWidth()) {
@@ -694,8 +694,8 @@ define("superApp.toolTipDire",
                                         }
                                     }
                                 })
-                            } else if(scope.theadKey === 'tf_family'){
-                                str += '<a href="'+row['tf_db_link']+'" target="_blank">'+text+'</a>'
+                            } else if (scope.theadKey === 'tf_family') {
+                                str += '<a href="' + row['tf_db_link'] + '" target="_blank">' + text + '</a>'
                             } else {
                                 // 不需要特殊处理的
                                 // 有；按；切  没有默认
@@ -756,7 +756,7 @@ define("superApp.toolTipDire",
                         obj.find('.long-tool-tip-text').text(text);
                         var offset = $(element).parent().offset();
                         var elOffset = $(element).offset();
-                        var left =  $(element).offset().left;
+                        var left = $(element).offset().left;
                         console.log(left)
                         obj.css({
                             'position': 'fixed',

@@ -8841,3 +8841,18 @@ div.tipsContainer,
 .reaccess-pop-dialog input::-webkit-input-placeholder {
     color: #fff;
 }
+
+.ngdialog-message {
+    min-height: 45px!important;
+}
+
+.ngdialog-buttons button.btn-success {
+    color: #FFFFFF!important;
+    background: #5378F8!important;
+    border: 1px solid #5378F8!important;
+}
+
+.ngdialog-buttons button.btn-success:hover {
+    background: #4666d3!important;
+    border: 1px solid #5378F8!important;
+}

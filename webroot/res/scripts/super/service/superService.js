@@ -544,7 +544,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     width: _width,
                     height: _height,
                     scope: $rootScope,
-                    controller: ['$rootScope',function($rootScope) {
+                    controller: ['$rootScope', function($rootScope) {
                         $rootScope.isError = false;
                         $rootScope.confirm = function() {
                             var val = $("#TextInput").val();
@@ -577,23 +577,23 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
                 if (chartType === 'heatmap') {
-                    taskInfo.name = '聚类重分析';
+                    taskInfo.name = '聚类热图';
                 } else if (chartType === 'line') {
-                    taskInfo.name = '折线图重分析';
+                    taskInfo.name = '折线图';
                 }
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "重分析" : popTitle;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
                     /*<div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div> */
-                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>任务命名</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>类型</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='noChooseSpan' ng-hide='isChoose'>{{tips}}</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>分析类型</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>数据类别</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='noChooseSpan' ng-hide='isChoose'>{{tips}}</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     // title: popTitle,
                     top: top,
                     width: _width,
                     height: _height,
-                    controller: ['$rootScope',function($rootScope) {
+                    controller: ['$rootScope', function($rootScope) {
                         $rootScope.isChoose = true;
                         //数据
                         $rootScope.data = taskInfo.data;
@@ -882,8 +882,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 top = top ? top : 100;
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
                 popMesg = (angular.isUndefined(popMesg) || popMesg == "") ? "-" : popMesg;
-                width = (angular.isUndefined(width) || width == "") ? "500" : width;
-                height = (angular.isUndefined(height) || height == "") ? "110" : height;
+                width = (angular.isUndefined(width) || width == "") ? "460" : width;
+                height = (angular.isUndefined(height) || height == "") ? "100" : height;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 return ngDialog.openConfirm({
                     plain: true,
@@ -2313,7 +2313,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     return ngDialog.openConfirm({
                         title: "重新授权提示",
                         closeByDocument: false,
-                        controller: ['$scope','toolService', function($scope,toolService) {
+                        controller: ['$scope', 'toolService', function($scope, toolService) {
                             $scope.password = '';
                             $scope.focus = false;
                             $scope.handlercloseThisDialog = function() {
@@ -2326,14 +2326,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 $scope.password = '';
                             }
 
-                            $scope.handlerKeyUp = function(event){
-                                if(event.keyCode===13){
+                            $scope.handlerKeyUp = function(event) {
+                                if (event.keyCode === 13) {
                                     $scope.handlerconfirm();
                                 }
                             }
                         }],
                         template: SUPER_CONSOLE_MESSAGE.localUrl.reAccessPopPath,
-                        className:"ngdialog-theme-default reaccess-pop-dialog"
+                        className: "ngdialog-theme-default reaccess-pop-dialog"
                     });
                 }
             }

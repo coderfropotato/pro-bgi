@@ -8257,7 +8257,7 @@ div.tipsContainer,
 }
 
 .colors_select ul li {
-    margin: 2px;
+    margin: 1px;
     width: 20px;
     height: 20px;
     float: left;
@@ -8271,8 +8271,8 @@ div.tipsContainer,
     clear: both;
 }
 
-.colors {
-    width: 246px;
+.colors_select .colors {
+    width: 226px;
     padding: 2px 2px;
     border: 1px solid #ddd;
     background: #fff;

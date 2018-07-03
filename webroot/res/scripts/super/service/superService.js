@@ -2393,5 +2393,21 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 return srcData;
             }
 
+            // 切分svgxml后拼接base64 解决svg转base64过长的问题
+            this.spliceSvgxml = function(svgxml) {
+                var flag = 800; // 以1000个长度为限制
+                var count = Math.ceil(svgxml.length / flag);
+                var svgxmlList = [];
+                for (var i = 0; i < count; i++) {
+                    if (i == count - 1) {
+                        svgxmlList.push(svgxml.substring(i * flag, svgxml.length));
+                    } else {
+                        svgxmlList.push(svgxml.substring(i * flag, (i + 1) * flag));
+                    }
+                }
+
+                return svgxmlList
+            }
+
         };
     });

@@ -89,7 +89,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                 var $chartObj = $chartDiv.find("svg:eq(0)");
                 $chartObj.attr('version', '1.1');
                 $chartObj.attr('xmlns', 'http://www.w3.org/2000/svg');
-                $chartObj.css('font-family'," 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei'");
+                $chartObj.css('font-family', " 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei'");
 
                 var svgXml = $chartObj.prop("outerHTML");
                 var svgInnerXml = $chartObj.html();
@@ -108,6 +108,10 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     context.fillStyle = "#ffffff";
                     context.fillRect(0, 0, canvas.width, canvas.height);
 
+                    var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });
+                    var href = URL.createObjectURL(svgBlob);
+                    image.src = href;
+
                     image.onload = function () {
                         context.drawImage(image, 0, 0);
                         var a = document.createElement('a');
@@ -117,7 +121,7 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                         a.click(); //点击触发下载
                         a.remove();
                     }
-                    image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+                    // image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
                 } else {
                     toolService.pageLoading.open("正在导出svg，请稍后");
                     var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });

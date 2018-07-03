@@ -33,7 +33,8 @@
                 <button class="btn btn-default pull-right reSet" style="margin-right:12px;" ng-click="handlerResetClick($event)">重置</button>
             </div>
             <div class="filter pull-right">
-                <input class="keywordInput" placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label" ng-keyup="handlerSearch($event)">
+                <input class="keywordInput" placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label"
+                    ng-keyup="handlerSearch($event)">
                 <i class="glyphicon glyphicon-search search"></i>
                 <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
             </div>
@@ -69,9 +70,12 @@
                                 <i class="iconfont icon-xiugai" ng-click="handlerEditClick(item)"></i>
                             </td>
                             <td class="text-center">
-                                <span ng-if="item.process==1"><i class="iconfont icon-wancheng"></i>成功</span>
-                                <span ng-if="item.process==-1"><i class="iconfont icon-yunhangzhong"></i>进行中，剩余:{{item.restTime}}</span>
-                                <span ng-if="item.process==0"><i class="iconfont icon-shibai"></i>失败</span>
+                                <span ng-if="item.process==1">
+                                    <i class="iconfont icon-wancheng"></i>成功</span>
+                                <span ng-if="item.process==-1">
+                                    <i class="iconfont icon-yunhangzhong"></i>进行中，剩余:{{item.restTime}}</span>
+                                <span ng-if="item.process==0">
+                                    <i class="iconfont icon-shibai"></i>失败</span>
                             </td>
                             <td class="text-center" ng-bind="item.time"></td>
                             <td class="text-center">
@@ -87,7 +91,12 @@
 
                                 </div>
                             </td>
-                            <td class="text-center">{{item.remark}}</td>
+                            <td class="text-center editRemark">
+                                <span ng-show="!item.isEditRemark">{{item.remark}}</span>
+                                <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
+                                <input ng-blur="handlerBlur2($index,item,item.remark)" ng-show="item.isEditRemark" type="text" ng-model="item.remark">
+                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick2(item)"></i>
+                            </td>
                             <td class="text-center">
                                 <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item)">查看</button>
                                 <span ng-if="item.process==-1">--</span>

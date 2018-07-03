@@ -7093,8 +7093,8 @@ Thanks :)*/
     color: #000;
     border-radius: 2px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    max-height:200px;
-    overflow:auto;
+    max-height: 200px;
+    overflow: auto;
 }
 
 .logo_big_bg {
@@ -8262,6 +8262,7 @@ div.tipsContainer,
     height: 20px;
     float: left;
     cursor: pointer;
+    border: 1px solid #e8e8e8;
 }
 
 .colors_select ul:after {
@@ -8437,9 +8438,14 @@ div.tipsContainer,
 
 .heatsetPanel .valueInput input {
     border: 1px solid #e8e8e8;
+    width: 100px;
     height: 32px;
     padding: 10px;
     border-radius: 2px;
+}
+
+.heatsetPanel .valueInput span {
+    padding-left: 10px;
 }
 
 .heatsetPanel .tipTextInfo {
@@ -8740,58 +8746,70 @@ div.tipsContainer,
     color: #636A82;
 }
 
+
 /* reaccess dialog styles */
-.reaccess-pop-dialog.ngdialog{
+
+.reaccess-pop-dialog.ngdialog {
     color: #fff;
 }
-.reaccess-pop-dialog .ngdialog-content{
+
+.reaccess-pop-dialog .ngdialog-content {
     position: absolute;
-    top:30%;
-    left:50%;
+    top: 30%;
+    left: 50%;
     margin-left: -200px!important;
     background-color: #333!important;
-    opacity:0.8;
+    opacity: 0.8;
     color: #fff!important;
 }
-.reaccess-pop-dialog .my-ngdialog-title{
+
+.reaccess-pop-dialog .my-ngdialog-title {
     display: none;
     background-color: #333;
     border: none;
 }
-.reaccess-pop-dialog .my-ngdialog-content{
-    padding-top:30px;
+
+.reaccess-pop-dialog .my-ngdialog-content {
+    padding-top: 30px;
 }
-.reaccess-pop-dialog .ngdialog-close{
+
+.reaccess-pop-dialog .ngdialog-close {
     display: none;
 }
-.reaccess-pop-dialog .ngdialog-buttons{
+
+.reaccess-pop-dialog .ngdialog-buttons {
     border: none;
 }
-.reaccess-pop-dialog  .tip{
+
+.reaccess-pop-dialog .tip {
     text-align: center;
-    text-indent:0;
+    text-indent: 0;
     margin-bottom: 24px;
 }
+
 .reaccess-pop-dialog .form-group {
     text-align: center;
     margin-bottom: 40px;
 }
-.reaccess-pop-dialog input{
+
+.reaccess-pop-dialog input {
     width: 240px;
-    color:#fff;
-    border:none;
+    color: #fff;
+    border: none;
     border-bottom: 1px solid #999;
     background: transparent;
     border-radius: 0;
-    text-align:center;
+    text-align: center;
     letter-spacing: 14px;
     text-indent: 14px;
-    font-size:24px;
+    font-size: 24px;
 }
-.reaccess-pop-dialog input:hover{
+
+.reaccess-pop-dialog input:hover {
     border-color: #999!important;
 }
-.reaccess-pop-dialog .access-btn{
+
+.reaccess-pop-dialog .access-btn {
     display: inline-block;
     width: 240px;
     height: 50px;
@@ -8803,21 +8821,22 @@ div.tipsContainer,
     border-radius: 26px;
     cursor: pointer;
 }
-.reaccess-pop-dialog .btns-wrap{
+
+.reaccess-pop-dialog .btns-wrap {
     text-align: center;
 }
-.reaccess-pop-dialog .access-btn.access-confirm{
+
+.reaccess-pop-dialog .access-btn.access-confirm {
     background-color: transparent;
-    color:#fff;
-    border:1px solid #fff;
-}
-.reaccess-pop-dialog .access-btn.access-confirm:hover{
-    background-color:#fff;
-    color:#333;
+    color: #fff;
+    border: 1px solid #fff;
 }
 
-
-.reaccess-pop-dialog input::-webkit-input-placeholder { 
-   color: #fff; 
+.reaccess-pop-dialog .access-btn.access-confirm:hover {
+    background-color: #fff;
+    color: #333;
 }
-   
+
+.reaccess-pop-dialog input::-webkit-input-placeholder {
+    color: #fff;
+}

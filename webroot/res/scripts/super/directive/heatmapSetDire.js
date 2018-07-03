@@ -56,9 +56,9 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                     "</ul>" +
                     " </div>" +
                     "</div>" +
-                    "<div class='valueInput' style='margin-top:20px'>宽：<input id='setoptionWidth' type='number' ng-value='{{setOptions.width}}' /></div>" +
-                    "<div class='valueInput' style='margin-bottom:10px'>高：<input id='setoptionHeight' type='number' ng-value='{{setOptions.height}}' /></div>" +
-                    "<div class='tipTextInfo' ng-show='isShowTipText'>宽、高请输入200-2000之间的数字</div>" +
+                    "<div class='valueInput' style='margin-top:20px'>热图区宽度：<input id='setoptionWidth' type='number' ng-value='{{setOptions.width}}' /><span>像素</span></div>" +
+                    "<div class='valueInput' style='margin-bottom:10px'>热图区高度：<input id='setoptionHeight' type='number' ng-value='{{setOptions.height}}' /><span>像素</span></div>" +
+                    "<div class='tipTextInfo' ng-show='isShowTipText'>热图区宽、高请输入200-2000之间的数字</div>" +
                     "<button class='btn btn-success btn-sm opreatBtns sureBtn' ng-click='confirm(setOptions)'> 确定</button>" +
                     "<button class='btn btn-default btn-sm opreatBtns cancelBtn' ng-click='cancel()'>取消</button>" +
                     "</div>" +

@@ -374,7 +374,7 @@ define("superApp.superDire",
         superApp.filter('orderTheadToAnchor', orderTheadToAnchor);
         orderTheadToAnchor.$inject = ['$log', '$sce'];
         function orderTheadToAnchor($log, $sce) {
-            return function (input, thead, compareGroup, method, reanalysisId) {
+            return function (input, thead, compareGroup, method, reanalysisId,row) {
                 var str = '';
                 if (thead == 'kegg_subject_annotation' || thead == 'desc_kegg' || thead === 'kegg_desc') {
                     // 用； 切出大段
@@ -482,6 +482,8 @@ define("superApp.superDire",
                             }
                         }
                     })
+                } else if(thead === 'tf_family'){
+                    str+='<a href="'+row['tf_db_link']+'" target="_blank">'+input+'</a>'
                 }
                 return $sce.trustAsHtml(str);
             }

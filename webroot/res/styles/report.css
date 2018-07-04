@@ -172,6 +172,9 @@ ul {
     -moz-user-select: none;
     padding-left: 10px;
 }
+.report_view_leftside .sidebar_nav .sidebar_title:not(.active):hover{
+    background: #f5f5f5;
+}
 
 .report_view_leftside .sidebar_nav .sidebar_title span {
     cursor: pointer;

@@ -1,7 +1,7 @@
 <div class="pathwayRich-page" ng-init="InitPage()" ng-controller="pathwayRichController">
     <div class="report-page-title" custom-title="title"></div>
 
-    <h6>差异基因 Pathway 富集结果</h6>
+    <h6>KEGG Pathway 富集结果</h6>
     <div id="div_reAnalysis_pathwayRich ">
         <div class="table-switch-chart-wrap  nmb npb">
             <!-- 富集表 start -->
@@ -125,8 +125,8 @@
             </div>
 
             <!-- 气泡图 start -->
-            <h6 class="nmt nb nplr" ng-if="chartType==='column'">差异基因 GO 柱状图</h6>
-            <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">差异基因 GO 富集气泡图</h6>
+            <h6 class="nmt nb nplr" ng-if="chartType==='column'">KEGG Pathway 富集气泡图</h6>
+            <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">KEGG Pathway 富集柱状图</h6>
             <div class="graph_group" id="reAnalysis_pathwayRich_bubble">
                 <div class="graph_header">
                     <ul class="fLeft">
@@ -186,8 +186,8 @@
                             </button>
                         </li>
                         <li ng-hide="bubbleError || isTableShow">
-                            <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_bubble" saveimgname="气泡图"></div>
-                            <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_column" saveimgname="柱状图"></div>
+                            <div ng-show="chartType=='bubble'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_bubble" saveimgname="KEGG Pathway 富集气泡图"></div>
+                            <div ng-show="chartType=='column'" class="svg-new-export" chartid="div_reAnalysis_pathwayRich_column" saveimgname="KEGG Pathway 富集柱状图"></div>
                         </li>
                         <li ng-hide="bubbleError || !isTableShow">
                             <div class="grid-export" find-entity="bubbleEntity" export-location="bubbleExportLocationTable" savefilename="统计"></div>

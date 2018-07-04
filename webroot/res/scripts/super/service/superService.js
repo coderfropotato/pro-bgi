@@ -543,14 +543,13 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     top: top,
                     width: _width,
                     height: _height,
-                    scope: $rootScope,
-                    controller: ['$rootScope', function($rootScope) {
-                        $rootScope.isError = false;
-                        $rootScope.confirm = function() {
+                    controller: ['$scope', function($scope) {
+                        $scope.isError = false;
+                        $scope.confirm = function() {
                             var val = $("#TextInput").val();
                             var allNullExp = /^[ ]+$/;
                             if (val == null || val == "" || allNullExp.test(val)) {
-                                $rootScope.isError = true;
+                                $scope.isError = true;
                             } else {
                                 value = val;
                                 ngDialog.close();
@@ -576,9 +575,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
-                var isHeatmap = false;
+
                 if (chartType === 'heatmap') {
-                    isHeatmap = true;
                     for (var i = 0; i < taskInfo.data.length; i++) {
                         if (taskInfo.data[i].name === "表达量聚类") {
                             taskInfo.data[i].hover = "使用样本FPKM进行聚类";
@@ -588,7 +586,6 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         }
                     }
                 }
-                console.log(taskInfo.data, isHeatmap);
 
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "重分析" : popTitle;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
@@ -602,103 +599,109 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     top: top,
                     width: _width,
                     height: _height,
-                    controller: ['$rootScope', function($rootScope) {
-                        $rootScope.isChoose = true;
-                        //数据
-                        $rootScope.data = taskInfo.data;
-                        $rootScope.chooseList = [];
-                        $rootScope.checkedItems = [];
+                    controller: ['$scope', function($scope) {
+                        if (chartType === 'heatmap') {
+                            $scope.isHeatmap = true;
+                        } else {
+                            $scope.isHeatmap = false;
+                        }
 
-                        for (var i = 0; i < $rootScope.data.length; i++) {
-                            $rootScope.data[i].isChecked = false;
+                        $scope.isChoose = true;
+                        //数据
+                        $scope.data = taskInfo.data;
+                        $scope.chooseList = [];
+                        $scope.checkedItems = [];
+
+                        for (var i = 0; i < $scope.data.length; i++) {
+                            $scope.data[i].isChecked = false;
                         }
 
                         //默认
-                        $rootScope.data[0].isChecked = true;
+                        $scope.data[0].isChecked = true;
 
-                        var chooseList = $rootScope.data[0].chooseList;
+                        var chooseList = $scope.data[0].chooseList;
                         for (var i = 0; i < chooseList.length; i++) {
-                            $rootScope.chooseList.push({
+                            $scope.chooseList.push({
                                 name: chooseList[i],
                                 isChecked: false
                             })
                         }
-                        $rootScope.chooseList[0].isChecked = true;
-                        $rootScope.checkedItems = [];
-                        $rootScope.checkedItems.push($rootScope.chooseList[0].name);
+                        $scope.chooseList[0].isChecked = true;
+                        $scope.checkedItems = [];
+                        $scope.checkedItems.push($scope.chooseList[0].name);
 
                         // 类型选择
-                        $rootScope.chooseType = function(item) {
+                        $scope.chooseType = function(item) {
                             chooseList = [];
-                            $rootScope.chooseList = [];
+                            $scope.chooseList = [];
 
-                            for (var i = 0; i < $rootScope.data.length; i++) {
-                                $rootScope.data[i].isChecked = false;
+                            for (var i = 0; i < $scope.data.length; i++) {
+                                $scope.data[i].isChecked = false;
                             }
 
                             item.isChecked = true;
                             chooseList = item.chooseList;
 
                             for (var i = 0; i < chooseList.length; i++) {
-                                $rootScope.chooseList.push({
+                                $scope.chooseList.push({
                                     name: chooseList[i],
                                     isChecked: false
                                 })
                             }
-                            $rootScope.chooseList[0].isChecked = true;
-                            $rootScope.checkedItems = [];
-                            $rootScope.checkedItems.push($rootScope.chooseList[0].name);
+                            $scope.chooseList[0].isChecked = true;
+                            $scope.checkedItems = [];
+                            $scope.checkedItems.push($scope.chooseList[0].name);
                         }
 
 
                         //数据选择
-                        $rootScope.chooseData = function(item) {
+                        $scope.chooseData = function(item) {
                             item.isChecked = !item.isChecked;
                             if (item.isChecked) {
-                                $rootScope.checkedItems.push(item.name);
+                                $scope.checkedItems.push(item.name);
                             } else {
-                                $rootScope.checkedItems.forEach(function(val, index) {
+                                $scope.checkedItems.forEach(function(val, index) {
                                     if (val === item.name) {
-                                        $rootScope.checkedItems.splice(index, 1);
+                                        $scope.checkedItems.splice(index, 1);
                                     }
                                 })
                             }
                         }
 
                         //确定
-                        $rootScope.confirm = function() {
-                            var checkedItems = angular.copy($rootScope.checkedItems);
+                        $scope.confirm = function() {
+                            var checkedItems = angular.copy($scope.checkedItems);
                             var type = "";
                             if (checkedItems.length == 0) {
-                                $rootScope.isChoose = false;
+                                $scope.isChoose = false;
                                 if (chartType === 'heatmap') {
-                                    $rootScope.tips = '请选择1-20个样本/比较组作图';
+                                    $scope.tips = '请选择1-20个样本/比较组作图';
                                 } else if (chartType === 'line') {
-                                    $rootScope.tips = '至少选择2个样本/比较组';
+                                    $scope.tips = '至少选择2个样本/比较组';
                                 } else {
-                                    $rootScope.tips = '请至少选择一种数据';
+                                    $scope.tips = '请至少选择一种数据';
                                 }
                                 return;
                             } else {
                                 if (checkedItems.length == 1) {
                                     if (chartType === 'line') {
-                                        $rootScope.isChoose = false;
-                                        $rootScope.tips = '至少选择2个样本/比较组';
+                                        $scope.isChoose = false;
+                                        $scope.tips = '至少选择2个样本/比较组';
                                         return;
                                     }
                                 } else {
                                     // 1+
                                     if (checkedItems.length > 20) {
-                                        $rootScope.isChoose = false;
-                                        $rootScope.tips = '请选择1-20个样本/比较组作图';
+                                        $scope.isChoose = false;
+                                        $scope.tips = '请选择1-20个样本/比较组作图';
                                         return;
                                     }
                                 }
-                                $rootScope.isChoose = true;
+                                $scope.isChoose = true;
                                 // 回调
-                                for (var i = 0; i < $rootScope.data.length; i++) {
-                                    if ($rootScope.data[i].isChecked) {
-                                        switch ($rootScope.data[i].name) {
+                                for (var i = 0; i < $scope.data.length; i++) {
+                                    if ($scope.data[i].isChecked) {
+                                        switch ($scope.data[i].name) {
                                             case '表达量聚类':
                                                 type = 'sample';
                                                 break;

@@ -463,7 +463,7 @@ define(['toolsApp'], function(toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "差异基因 GO 富集气泡图",
+                "title": "KEGG Pathway 富集气泡图",
             },
             "legendBox": {
                 "show": true,
@@ -525,7 +525,7 @@ define(['toolsApp'], function(toolsApp) {
             "height": 0,
             "titleBox": {
                 "show": true,
-                "title": "差异基因 GO 柱状图"
+                "title": "KEGG Pathway 富集柱状图"
             },
             "axisBox": {
                 "xAxis": {

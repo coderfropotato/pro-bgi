@@ -946,7 +946,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     $oUl.append("<li style='background-color:" + defaultColorArr[i] + "'></li>");
                 }
 
-                $wrapDiv.append('<div class="colorSelectService colors colorInput"><input type="text" class="form-control" placeholder="请输入16进制颜色值"><button class="btn btn-default btn-silver btn-sm">确定</button></div>')
+                $wrapDiv.append('<div class="colorSelectService colors colorInput"><input type="text" class="form-control" placeholder="#FFFFFF,#fff"><button class="btn btn-default btn-silver btn-sm">确定</button></div>')
                 $wrapDiv.append($oColorDiv);
 
                 $backDiv.append($wrapDiv);
@@ -990,40 +990,6 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         $(".colorSelectService input").val("");
                     }
                 })
-
-                function RGBToHex(rgb) {
-                    if (rgb.indexOf("#") != -1) {
-                        return rgb.toLowerCase();
-                    } else {
-                        var regexp = /[0-9]{0,3}/g;
-                        var re = rgb.match(regexp); //利用正则表达式去掉多余的部分，将rgb中的数字提取
-                        var hexColor = "#";
-                        var hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
-
-                        for (var i = 0; i < re.length; i++) {
-                            var r = null,
-                                c = re[i],
-                                l = c;
-                            var hexAr = [];
-                            while (c > 16) {
-                                r = c % 16;
-                                c = (c / 16) >> 0;
-                                hexAr.push(hex[r]);
-                            }
-                            hexAr.push(hex[c]);
-                            if (l < 16 && l != "") {
-                                hexAr.push(0)
-                            }
-                            hexColor += hexAr.reverse().join('');
-                        }
-
-                        return hexColor.toLowerCase();
-                    }
-                }
             }
-
         }
-
-
-
     });

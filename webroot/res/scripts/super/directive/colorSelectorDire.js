@@ -9,7 +9,7 @@
 
 
 define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.colorSelectorDire", []);
 
 
@@ -33,7 +33,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 restrict: "ACE",
                 replace: true,
                 template: "<div ng-show=\"isShow\" class='colors_select'>" +
-                    "<div class='colors colorInput'><input type='text' class='form-control' placeholder='请输入16进制颜色值' ng-keyup='changeInput($event)' /><button class='btn btn-default btn-silver btn-sm' ng-click='confirmInput()'>确定</button></div>" +
+                    "<div class='colors colorInput'><input type='text' class='form-control' placeholder='#FFFFFF,#fff' ng-class=\"{'colorSelectinvaild':!match}\" ng-keyup='changeInput($event)' /><button class='btn btn-default btn-silver btn-sm' ng-click='confirmInput()'>确定</button></div>" +
                     "<div class='colors color_list'>" +
                     "<ul>" +
                     "<li ng-repeat='color in colorList track by $index' ng-click='SetColor($event,color)' style='background-color:{{color}}'></li>" +
@@ -44,7 +44,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                     isShow: "=",
                     getCurColor: "&"
                 },
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     $(element).parent().css("position", "relative");
                 },
                 controller: "colorSelectorCtr"
@@ -57,8 +57,11 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
         function colorSelectorCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
             $scope.colorList = ["#ff0000", "#ffffff", "#0070c0", "#8c564b", "#c49c94", "#e377c2", "#bcbd22", "#FF9900", "#FFCC00", "#17becf", "#9edae5", "#e6550d", "#66CCCB", "#CCFF66", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0", "#FFE5E5", "#FFF9E5", "#FFFFE5", "#F4FAED", "#E5F7ED", "#E5F7FD", "#E5F0F9", "#E5E8EF", "#F0EAF5", "#EFEFEF", "#FFCCCC", "#FFF2CC", "#FFFFCC", "#E9F6DC", "#CCEFDC", "#CCEFFC", "#CCE2F2", "#CCD2DF", "#E2D6EC", "#DFDFDF", "#FF9999", "#FFE699", "#FFFF99", "#D3ECB9", "#99DF89", "#99DFF9", "#99C6E6", "#99A6BF", "#C6ACD9", "#BFBFBF", "#FF6666", "#FFD966", "#FFFF66", "#BEE396", "#66D096", "#66D0F6", "#66A9D9", "#6679A0", "#A983C6", "#A0A0A0", "#FF3333", "#FFCD33", "#FFFF33", "#A8D973", "#33C073", "#33C3F3", "#338DCD", "#334D80", "#8D59B3", "#000000"];
 
-            $(document).on("click", function() {
+            $scope.match = true;
+            $(document).on("click", function () {
                 $scope.isShow = false;
+                $scope.match = true;
+                $(".colors_select .colorInput input").val("");
                 $scope.$apply();
             })
 
@@ -93,7 +96,7 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 }
             }
 
-            $(".colors_select .colorInput").on("click", function(evt) {
+            $(".colors_select .colorInput").on("click", function (evt) {
                 clearEventBubble(evt);
             })
 
@@ -112,25 +115,27 @@ define("superApp.colorSelectorDire", ["angular", "super.superMessage", "select2"
                 }
             }
 
-            $scope.SetColor = function($event, color) {
+            $scope.SetColor = function ($event, color) {
                 clearEventBubble($event);
                 var curColor = RGBToHex(color);
                 $scope.isShow = false;
-
+                $scope.match = true;
                 $scope.getCurColor({ color: curColor }); //参数必须是对象
+                $(".colors_select .colorInput input").val("");
             }
 
             $scope.inputValue = "";
-            $scope.changeInput = function(e) {
+            var regExp = /^#[\da-f]{3}([\da-f]{3})?$/i;
+            $scope.changeInput = function (e) {
                 $scope.inputValue = e.target.value;
+                $scope.match = regExp.test($scope.inputValue);
             }
 
-            $scope.confirmInput = function() {
-                var regExp = /^#[\da-f]{3}([\da-f]{3})?$/i;
-                var isMatchColor = regExp.test($scope.inputValue);
-
-                if (isMatchColor) {
+            $scope.confirmInput = function () {
+                $scope.match = regExp.test($scope.inputValue);
+                if ($scope.match) {
                     $scope.isShow = false;
+                    $scope.match = true;
                     $scope.getCurColor({ color: $scope.inputValue });
                     $(".colors_select .colorInput input").val("");
                 }

@@ -46,7 +46,7 @@
                 <!-- title="{{geneidCustomSearchOne}}" -->
                 <span class="filter-content" ng-repeat="f in filterText1.filterText track by $index">
                     <span class="filter-item" ng-bind-html="f"></span>
-                    <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
+                <i class="icon icon-times-circle" ng-click="handleDelete($event)"></i>
                 </span>
             </div>
         </div>
@@ -58,7 +58,7 @@
     <!-- table wrap -->
     <div class="table_scroll_wrap">
         <div id="{{tablePanelId}}">
-            <div ng-hide="error" style="max-height:600px;">
+            <div ng-hide="error">
                 <table class="table table-bordered table-hover table-striped table_grid table-fixed">
                     <thead>
                         <tr>

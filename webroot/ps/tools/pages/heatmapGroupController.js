@@ -251,7 +251,7 @@ define(["toolsApp"], function(toolsApp) {
                     .attr("class", "heatmapTitle")
                     .append("text")
                     .attr("transform", "translate(" + (totalWidth / 2) + ", " + title_y + ")")
-                    .text("差异基因层次聚类图")
+                    .text("差异聚类")
                     .attr("font-size", "18px")
                     .attr("text-anchor", "middle")
                     .on("click", function() {
@@ -440,7 +440,7 @@ define(["toolsApp"], function(toolsApp) {
                             var i = index.x_index,
                                 j = index.y_index;
                             var d = heatmap_data[i].heatmap[j];
-                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "log2(fpkm+1): " + d.y];
+                            var tipText = ["sample:" + heatmap_data[i].name, "gene: " + d.x, "log2FoldChange: " + d.y];
                             reportService.GenericTip.Show(d3.event, tipText);
                         }
                         clearEventBubble(moveEvent);

@@ -1,7 +1,7 @@
 <div class="heatmap-page" ng-controller="heatmapGroupController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
-    <h6>差异基因表达量聚类热图</h6>
-    <p class="table-chart-desc">X 轴代表进行聚类分析的差异比对，Y 轴代表差异基因。颜色代表 log2 转换过的差异倍数 ( 颜色越红代表上调倍数越大，越蓝代表下调倍数越大 )。该图直观地反映了差异基因上下调的聚类情况，同时适用于不同差异方案间 DEG 差异倍数的比较。</p>
+    <h6>差异聚类</h6>
+    <p class="table-chart-desc">横轴表示取log2后的差异倍数，即log2FoldChange。纵轴表示基因，默认配色下，色块的颜色越红表达量越高，颜色越蓝，表达量越低。</p>
     <div id="div_heatmap_page" class="table-switch-chart-wrap npb">
         <div class="graph_group" id="analysis-heatmapClusterPanel">
             <div class="graph_header">
@@ -20,8 +20,7 @@
                         </button>
                     </li>
                     <li ng-hide="clusterError">
-                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption"
-                            is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
+                        <div ng-if="setOption.sortNames.length" class="heatmap-set" is-show="isShowSetPanel" is-top-cluster="isTopCluster" set-options="setOption" is-refresh="isRefresh" get-set-options="getSetOption(setObj)"></div>
                     </li>
                     <li>
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetHeatmapData('refresh')">
@@ -48,10 +47,8 @@
     </div>
 
     <!-- Geneid add delete big table -->
-    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="pageFindEntity" url="url" content-id="panelId"
-        table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis"
-        reanalysisId="id" is-show-thead-control="isShowTheadControl"></div>
+    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="pageFindEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" is-reanalysis="isReanalysis" reanalysisId="id" is-show-thead-control="isShowTheadControl"></div>
 
     <!-- analysis pop  $rootScope.analysis-->
     <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>

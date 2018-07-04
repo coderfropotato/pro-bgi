@@ -576,17 +576,26 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
+                var isHeatmap = false;
                 if (chartType === 'heatmap') {
-                    taskInfo.name = '聚类热图';
-                } else if (chartType === 'line') {
-                    taskInfo.name = '折线图';
+                    isHeatmap = true;
+                    for (var i = 0; i < taskInfo.data.length; i++) {
+                        if (taskInfo.data[i].name === "表达量聚类") {
+                            taskInfo.data[i].hover = "使用样本FPKM进行聚类";
+                        }
+                        if (taskInfo.data[i].name === "差异聚类") {
+                            taskInfo.data[i].hover = "使用比较组的差异倍数，即log2FoldChange进行聚类";
+                        }
+                    }
                 }
+                console.log(taskInfo.data, isHeatmap);
+
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "重分析" : popTitle;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
                     /*<div class='resources'><button class='popTitle'>资源</button><span>本次分析需要消耗一次计算次数，当前剩余分析" + taskInfo.count + "次，本次分析需要消耗" + taskInfo.needIntegral + "积分，当前剩余积分" + taskInfo.restIntegral + "。</span></div> */
-                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>分析类型</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>数据类别</button><ul><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='noChooseSpan' ng-hide='isChoose'>{{tips}}</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popAnalysis'><div class='taskName'><button class='popTitle'>分析类型</button><span>" + taskInfo.name + "</span></div> <div class='dataChoose'><button class='popTitle'>数据类别</button><ul ng-if='isHeatmap'><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' uib-tooltip='{{item.hover}}' ng-click='chooseType(item)'></li></ul><ul ng-if='!isHeatmap'><li ng-repeat='item in data track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseType(item)'></li></ul></div> <div class='dataChoose'><button class='popTitle'>数据选择</button><ul><li ng-repeat='item in chooseList track by $index' ng-bind='item.name' ng-class='{active:item.isChecked}' ng-click='chooseData(item)'></li></ul></div><div class='noChooseSpan' ng-hide='isChoose'>{{tips}}</div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     // title: popTitle,

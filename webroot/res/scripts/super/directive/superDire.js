@@ -374,7 +374,7 @@ define("superApp.superDire",
         superApp.filter('orderTheadToAnchor', orderTheadToAnchor);
         orderTheadToAnchor.$inject = ['$log', '$sce'];
         function orderTheadToAnchor($log, $sce) {
-            return function (input, thead, compareGroup, method, reanalysisId,row) {
+            return function (input, thead, compareGroup, method, reanalysisId, row) {
                 var str = '';
                 if (thead == 'kegg_subject_annotation' || thead == 'desc_kegg' || thead === 'kegg_desc') {
                     // 用； 切出大段
@@ -402,11 +402,11 @@ define("superApp.superDire",
                                 // 没有小段  有K     只有:  K09100//single-minded; 
                                 if (/^K/.test($.trim(d))) {
                                     str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a>';
-                                } else if(/ko/g.test($.trim(d))) {
+                                } else if (/ko/g.test($.trim(d))) {
                                     // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
                                     str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a>'
-                                }else{
-                                    str+='<span>'+d+'</span>';
+                                } else {
+                                    str += '<span>' + d + '</span>';
                                 }
                             }
                         }
@@ -482,12 +482,54 @@ define("superApp.superDire",
                             }
                         }
                     })
-                } else if(thead === 'tf_family'){
-                    str+='<a href="'+row['tf_db_link']+'" target="_blank">'+input+'</a>'
+                } else if (thead === 'tf_family') {
+                    str += '<a href="' + row['tf_db_link'] + '" target="_blank">' + input + '</a>'
                 }
                 return $sce.trustAsHtml(str);
             }
 
+        }
+
+        /**
+         * 图标类型转换
+         */
+        superApp.filter('reverseChartType', reverseChartType);
+        reverseChartType.$inject = ['$log'];
+        function reverseChartType($log) {
+            return function (input) {
+                // ['heatmapSample','heatmapGroup','goClass','goRich','pathwayClass','pathwayRich','net','line']
+                // 差异聚类 表达量聚类 GO 富集 KEGG 富集 GO 分类 KEGG 分类 折线图 蛋白网络图
+
+                var flag = '';
+                switch (input) {
+                    case 'heatmapSample':
+                        flag = '表达量聚类';
+                        break;
+                    case 'heatmapGroup':
+                        flag = '差异聚类';
+                        break;
+                    case 'goClass':
+                        flag = 'GO 分类';
+                        break;
+                    case 'goRich':
+                        flag = 'GO 富集';
+                        break;
+                    case 'pathwayClass':
+                        flag = 'KEGG 分类';
+                        break;
+                    case 'pathwayRich':
+                        flag = 'KEGG 富集';
+                        break;
+                    case 'line':
+                        flag = '折线图';
+                        break;
+                    case 'net':
+                        flag = '蛋白网络图';
+                        break;
+                }
+
+                return flag;
+            }
         }
 
         /*
@@ -1087,39 +1129,39 @@ define("superApp.superDire",
         function fixFooterDirective($rootScope, $log, $document, $window) {
 
             var footObj =
-            {
-                restrict: "ACE",
-                link: function (scope, element, attr) {
-                    //获取最外层panel对象，模板页路由视图外围对象，有滚动条样式的对象
-                    var scollObj = $(".super-frame-main");
+                {
+                    restrict: "ACE",
+                    link: function (scope, element, attr) {
+                        //获取最外层panel对象，模板页路由视图外围对象，有滚动条样式的对象
+                        var scollObj = $(".super-frame-main");
 
-                    scollObj.bind("scroll", function () {
+                        scollObj.bind("scroll", function () {
+                            SetFooterBottom();
+                        });
+                        var $eleObj = $(element);
+                        var jsObj_Top = $eleObj.offset().top;
+                        var jsObj_Height = $eleObj.height();
                         SetFooterBottom();
-                    });
-                    var $eleObj = $(element);
-                    var jsObj_Top = $eleObj.offset().top;
-                    var jsObj_Height = $eleObj.height();
-                    SetFooterBottom();
-                    function SetFooterBottom() {
-                        //var letSideWidth = $(".view_leftside").width();//获取左边宽度
-                        var scrollTop = scollObj.scrollTop();
-                        var winHeight = $($window).height();
-                        //$log.log("scrollTop:" + scrollTop);
-                        //$log.log("winHeight:" + winHeight);
-                        //$log.log("$element.height:" + jsObj_Height);
-                        //$log.log("$element.top:" + jsObj_Top);
-                        //if (scrollTop + winHeight - jsObj_Height < jsObj_Top)
-                        if (scrollTop + winHeight < jsObj_Top) {
-                            $eleObj.addClass("footer-fix");
-                            //$eleObj.css("padding-left", (letSideWidth+14)+"px");
-                        }
-                        else {
-                            $eleObj.removeClass("footer-fix");
-                            //$eleObj.css("padding-left", "15px");
+                        function SetFooterBottom() {
+                            //var letSideWidth = $(".view_leftside").width();//获取左边宽度
+                            var scrollTop = scollObj.scrollTop();
+                            var winHeight = $($window).height();
+                            //$log.log("scrollTop:" + scrollTop);
+                            //$log.log("winHeight:" + winHeight);
+                            //$log.log("$element.height:" + jsObj_Height);
+                            //$log.log("$element.top:" + jsObj_Top);
+                            //if (scrollTop + winHeight - jsObj_Height < jsObj_Top)
+                            if (scrollTop + winHeight < jsObj_Top) {
+                                $eleObj.addClass("footer-fix");
+                                //$eleObj.css("padding-left", (letSideWidth+14)+"px");
+                            }
+                            else {
+                                $eleObj.removeClass("footer-fix");
+                                //$eleObj.css("padding-left", "15px");
+                            }
                         }
                     }
-                }
-            };
+                };
             return footObj
         };
 

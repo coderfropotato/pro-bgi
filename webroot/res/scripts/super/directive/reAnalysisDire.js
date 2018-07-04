@@ -34,7 +34,7 @@ define("superApp.reAnalysisDire", ["angular", "super.superMessage", "select2"],
 
         superApp.controller("reAnalysisCtr", reAnalysisCtr);
         reAnalysisCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
-
+        // ['heatmapSample','heatmapGroup','goClass','goRich','pathwayClass','pathwayRich','net','line']
         function reAnalysisCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
             $scope.reAnslysisError = false;
 

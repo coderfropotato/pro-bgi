@@ -37,7 +37,7 @@ define(['toolsApp'], function (toolsApp) {
                         { name: 'GO 分类', value: 'goClass', isActive: false },
                         { name: 'KEGG 分类', value: 'pathwayClass', isActive: false },
                         { name: '折线图', value: 'line', isActive: false },
-                        { name: '网络图', value: 'net', isActive: false },
+                        { name: '蛋白网络图', value: 'net', isActive: false },
                     ]
                 },
                 {
@@ -273,6 +273,7 @@ define(['toolsApp'], function (toolsApp) {
                 promise.then(function (res) {
                     if (res.status != 200) {
                         item.remark = $scope.beforeList.rows[index].remark;
+                        item.isEditRemark = false;
                     } else {
                         // 更新之前的状态到最新的值
                         $scope.beforeList.rows[index].remark = value;

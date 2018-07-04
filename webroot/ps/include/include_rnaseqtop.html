@@ -13,32 +13,32 @@
         <!-- welcome btns -->
         <div class="top-right">
             <div class="fRight hidden-xs" style="margin-left:20px; margin-top: 6px;">
-                <div class="topbar_nav fLeft" >
+                <div class="topbar_nav fLeft">
                     <a href="javascript:;" ng-click="myAnalysisClick()" class="topbar_btn">我的分析</a>
                 </div>
                 <!-- <div class="topbar_nav fLeft" style="border-right: 1px solid #E8E8E8;border-left: 1px solid #E8E8E8;">
                     <a href="JavaScript:;" class="topbar_btn" ng-click="GoHome()">首页</a>
                 </div> -->
-                <div class="topbar_nav fLeft" ng-if="!LCMC == ''" >
+                <div class="topbar_nav fLeft" ng-if="!LCMC == ''">
                     <a href="javascript:;" ng-click="myFile_OnClick()" class="topbar_btn" ng-bind="LCMC">流程名称</a>
                 </div>
-                <div class="topbar_nav fLeft" >
+                <div class="topbar_nav fLeft">
                     <a href="javascript:;" ng-click="ExportPDF()" class="topbar_btn">导出报告</a>
                 </div>
-                <div class="topbar_nav fLeft" >
+                <div class="topbar_nav fLeft">
                     <a ng-href="http://cdts-wh.genomics.cn/" target="_blank" class="topbar_btn">下载数据</a>
                 </div>
-                <div class="topbar_nav fLeft" >
-                    <a  class="topbar_btn" style="text-decoration: none;" >帮助</a>
+                <div class="topbar_nav fLeft">
+                    <a class="topbar_btn" style="text-decoration: none;" href="https://yuque.com/docs/share/f6e4e243-1fe6-4525-989b-3ba2940ed50c" target="_blank">帮助</a>
                 </div>
-                <div class="topbar_nav fLeft" ng-mouseenter="loginOutShow = true" ng-mouseleave="loginOutShow = false" style="position: relative; padding-bottom:30px;" >
-                    <a style="text-decoration: none;font-size:18px;"  class="topbar_btn iconfont icon-zhuxiao"></a>
+                <div class="topbar_nav fLeft" ng-mouseenter="loginOutShow = true" ng-mouseleave="loginOutShow = false" style="position: relative; padding-bottom:30px;">
+                    <a style="text-decoration: none;font-size:18px;" class="topbar_btn iconfont icon-zhuxiao"></a>
                     <div class="userinfo-pop" ng-show="loginOutShow">
                         <span>项目名称：{{LCID}}</span>
                         <p style="text-align: right;">
                             <span class="logout" ng-click="handlerLogout()">注销</span>
                         </p>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <!-- admin -->

@@ -8214,8 +8214,43 @@ div.tipsContainer,
     background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     z-index: 10;
+    left:0;
+    top:0;
+}
+.colorSelectWrap{
+    position: absolute;
+    top:250px;
+    left:50%;
+    margin-left:-113px;
+    width: 226px;
+    height:32px;
+}
+.colorSelectService{
+    background-color: #ffffff!important;
+    padding:4px;
+}
+.colorSelectService:after{
+    display: block;
+    clear: both;
+    content:"";
+}
+.colorSelectService input{
+    width: 166px;
+    float:left;
+}
+.colorSelectService button{
+    width: 46px;
+    height: 25px;
+    line-height: 1;
+    float:right;
+    margin-left: 6px;
+}
+
+.colorSelectinvaild{
+    background: url(../images/ng_invalid.png)  #FCEAEA no-repeat right center !important ;
+    background-size:10%!important;
 }
 
 .colorSelector {
@@ -8223,11 +8258,12 @@ div.tipsContainer,
     box-sizing: border-box;
     padding: 4px 2px;
     border: 1px solid #ddd;
-    width: 246px;
+    width: 226px;
     background: #fff;
     left: 0;
     right: 0;
     margin: 0 auto;
+    top:32px;
 }
 
 .colorSelector:after {
@@ -8237,7 +8273,7 @@ div.tipsContainer,
 }
 
 .colorSelector ul li {
-    margin: 2px;
+    margin: 1px;
     width: 20px;
     height: 20px;
     float: left;

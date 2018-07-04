@@ -191,7 +191,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
                     function groupedbarGetItem() {
                         $scope.chart.getLegendItem(function (d, i) {
-                            reportService.selectColor(changeColorCallback);
+                            reportService.selectColor(changeColorCallback,$scope.panelId);
                             index = i;
                         })
 

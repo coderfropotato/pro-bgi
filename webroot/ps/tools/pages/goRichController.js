@@ -375,7 +375,7 @@ define(['toolsApp'], function(toolsApp) {
 
             function groupedbarGetItem() {
                 chart.getLegendItem(function(d, i) {
-                    reportService.selectColor(changeColorCallback);
+                    reportService.selectColor(changeColorCallback,'reAnalysis_goRich_bubble');
                     index = i;
                 })
 

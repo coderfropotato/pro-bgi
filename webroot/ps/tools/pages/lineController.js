@@ -194,7 +194,7 @@ define(['toolsApp'], function(toolsApp) {
 
                 function groupedbarGetItem() {
                     $scope.linechart.getLegendItem(function(d, i) {
-                        reportService.selectColor(changeColorCallback);
+                        reportService.selectColor(changeColorCallback,'analysis-linePanel');
                         index = i;
                     })
 

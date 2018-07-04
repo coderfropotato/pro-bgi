@@ -963,7 +963,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     oEvent.stopPropagation();
                 })
 
-                $backDiv.on('click', function () {
+                $('.backDiv').on('click', function () {
                     $(".backDiv").remove();
                 })
 
@@ -978,10 +978,6 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     }
                 })
 
-                $('.colorSelectService').on('click', function (e) {
-                    e.stopPropagation();
-                })
-
                 $('.colorSelectService button').on('click', function () {
                     var isMatchColor = regExp.test(inputValue);
                     if (isMatchColor) {
@@ -989,6 +985,10 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         fn && fn(inputValue);
                         $(".colorSelectService input").val("");
                     }
+                })
+
+                $('.colorSelectWrap').on('click',function(e){
+                    e.stopPropagation();
                 })
             }
         }

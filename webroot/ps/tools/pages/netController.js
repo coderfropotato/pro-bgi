@@ -9,7 +9,7 @@ define(['toolsApp'], function(toolsApp) {
                 toolService.pageLoading.close();
             }, 300)
             $scope.id = $state.params.id;
-            $scope.title = '蛋白网络互作 ( ID：' + $scope.id + " ) ";
+            $scope.title = '蛋白网络图 ( ID：' + $scope.id + " ) ";
             $scope.isShowSetPanel = false;
 
             // 默认force

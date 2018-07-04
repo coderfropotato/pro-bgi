@@ -29,7 +29,6 @@ require.config({
         "superApp.graphGroupBtnDire": "res/scripts/super/directive/graphGroupBtnDire",
         "superApp.selectRangeDire": "res/scripts/super/directive/selectRangeDire",
         "superApp.gridExportDire": "res/scripts/super/directive/gridExportDire",
-        "superApp.selectColorDire": "res/scripts/super/directive/selectColorDire",
         "superApp.colorSelectorDire": "res/scripts/super/directive/colorSelectorDire",
         "superApp.heatmapSetDire": "res/scripts/super/directive/heatmapSetDire",
         "superApp.svgNewExportDire": "res/scripts/super/directive/svgNewExportDire",

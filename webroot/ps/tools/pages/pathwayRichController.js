@@ -373,7 +373,7 @@ define(['toolsApp'], function(toolsApp) {
 
             function groupedbarGetItem() {
                 chart.getLegendItem(function(d, i) {
-                    reportService.selectColor(changeColorCallback);
+                    reportService.selectColor(changeColorCallback,'reAnalysis_pathwayRich_bubble');
                     index = i;
                 })
 

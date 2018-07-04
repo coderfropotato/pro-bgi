@@ -4,12 +4,12 @@
  * 2018年5月21日16:46:17
  */
 
-define("superApp.bigTableDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.bigTableDire", []);
         superApp.directive('bigTableDire', bigTableDirective);
         bigTableDirective.$inject = ["$log"];
+
         function bigTableDirective($log) {
             return {
                 restrict: "ACE",
@@ -48,8 +48,9 @@ define("superApp.bigTableDire",
 
         superApp.controller("bigTableCtr", bigTableCtr);
         bigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+
         function bigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
-            $scope.InitPage = function () {
+            $scope.InitPage = function() {
                 // 是否在筛选
                 $scope.isBeginFilter = false;
                 // 精度默认 全数据
@@ -61,14 +62,14 @@ define("superApp.bigTableDire",
             };
 
             //过滤查询参数 
-            $scope.InitFindEntity = function (filterFindEntity) {
+            $scope.InitFindEntity = function(filterFindEntity) {
                 $scope.pageEntity = toolService.GetGridFilterFindEntity($scope.pageEntity, filterFindEntity);
                 $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 $scope.GetTableData(1);
             };
 
             //获取注释表数据
-            $scope.GetTableData = function (pageNumber) {
+            $scope.GetTableData = function(pageNumber) {
                 toolService.gridFilterLoading.open($scope.panelId);
                 $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
@@ -79,7 +80,7 @@ define("superApp.bigTableDire",
                 };
 
                 var promise = ajaxService.GetDeferData(ajaxConfig);
-                promise.then(function (responseData) {
+                promise.then(function(responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
                         $scope.geneCount = 0;
@@ -92,14 +93,14 @@ define("superApp.bigTableDire",
                         $scope.geneCount = responseData.total;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
-                }, function (errorMesg) {
+                }, function(errorMesg) {
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
             };
 
             // 点击删除筛选条件
-            $scope.handleDelete = function (event) {
+            $scope.handleDelete = function(event) {
                 var thead = angular.element(event.target).siblings('span').find('em').text();
                 var clearBtn;
                 for (var i = 0; i < $('#' + $scope.panelId + ' table th .grid_head').length; i++) {
@@ -108,18 +109,18 @@ define("superApp.bigTableDire",
                         break;
                     }
                 }
-                $timeout(function () {
+                $timeout(function() {
                     clearBtn.triggerHandler("click");
                 }, 0)
             }
 
             // 筛选状态改变
-            $scope.handlerFilterStatusChange = function (status) {
+            $scope.handlerFilterStatusChange = function(status) {
                 $scope.isBeginFilter = status;
             }
 
             $scope.reanalysisError = false;
-            $scope.handlerReanalysis = function (params) {
+            $scope.handlerReanalysis = function(params) {
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
 
                 $scope.reAnalysisEntity = { entity: '' };
@@ -151,7 +152,7 @@ define("superApp.bigTableDire",
                     url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
                 })
                 toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-                promise.then(function (res) {
+                promise.then(function(res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
                         newFrame.close();
@@ -164,7 +165,7 @@ define("superApp.bigTableDire",
                         // 如果不需要重新分析 就直接打开详情页
                         if (params.chartType === 'heatmap' || params.chartType === 'goRich' || params.chartType === 'pathwayRich') {
                             newFrame.close();
-                            toolService.popMesgWindow('重分析提交成功');
+                            toolService.popMesgWindow('任务提交成功');
                         } else {
                             newFrame.location.href = '../../../../ps/tools/index.html#/home/' + $scope.reAnalysisEntity.chartType + '/' + res.id
                         }
@@ -175,7 +176,7 @@ define("superApp.bigTableDire",
                         var y2 = $targetOffset.top;
                         reportService.flyDiv("<span class='glyphicon glyphicon-plus mkcheck flyCheck'></span>", x1, y1, x2, y2);
                     }
-                }, function (err) {
+                }, function(err) {
                     newFrame.close();
                     toolService.popMesgWindow(err);
                 })
@@ -184,10 +185,10 @@ define("superApp.bigTableDire",
 
             // 是否外部触发更新
             if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
-                $scope.$watch('outerUpdate', function (newVal, oldVal) {
+                $scope.$watch('outerUpdate', function(newVal, oldVal) {
                     if (newVal) {
                         $scope.GetTableData(1);
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.outerUpdate = false;
                         }, 30)
                     }
@@ -195,4 +196,3 @@ define("superApp.bigTableDire",
             }
         }
     });
-

@@ -245,6 +245,7 @@ li {
     background: #333333;
 }
 
+
 /*幻灯片*/
 
 #productContent {
@@ -290,7 +291,8 @@ li {
     background: #5378f8;
 }
 
-.contactUs_ul, .friendshipLink_ul {
+.contactUs_ul,
+.friendshipLink_ul {
     overflow: hidden;
     width: 1020px;
     margin: 0 auto;
@@ -333,7 +335,8 @@ li {
     margin-top: 60px;
 }
 
-.contactUs_tit, .friendshipLink_tit {
+.contactUs_tit,
+.friendshipLink_tit {
     font-size: 24px;
     padding-bottom: 40px;
 }
@@ -358,6 +361,7 @@ li {
     font-size: 12px;
     padding: 40px 0;
 }
+
 
 /*登录*/
 
@@ -399,14 +403,18 @@ li {
     margin-bottom: 15px;
 }
 
-.password_img, .userName_img, .verificationCode {
+.password_img,
+.userName_img,
+.verificationCode {
     position: absolute;
     left: 20px;
     top: 15px;
-    z-index:9999999999;
+    z-index: 9999999999;
 }
 
-.login_userName, .login_password, .verificationCodeInput {
+.login_userName,
+.login_password,
+.verificationCodeInput {
     width: 100%;
     height: 48px;
     border: 1px solid #E8E8E8;
@@ -476,10 +484,12 @@ height: 100%;*/
     height: 100%;
 }
 
+
 /*设备屏幕大于1600px，小于1680px*/
 
 @media screen and (min-width:1600px) and (max-width:1680px) {
-    .bgi_top, .bgi_conter {
+    .bgi_top,
+    .bgi_conter {
         width: 1440px;
     }
     .bgi_conter1_p1 {
@@ -504,7 +514,8 @@ height: 100%;*/
     .bgi_conter_tit1 {
         font-size: 48px;
     }
-    .bgi_conter_tit2, .bgi_conter_tit3 {
+    .bgi_conter_tit2,
+    .bgi_conter_tit3 {
         font-size: 34px;
     }
     .contactUs_ul li p {
@@ -520,10 +531,12 @@ height: 100%;*/
     }
 }
 
+
 /*设备屏幕大于1500px，小于1600px*/
 
 @media screen and (min-width:1500px) and (max-width:1600px) {
-    .bgi_top, .bgi_conter {
+    .bgi_top,
+    .bgi_conter {
         width: 1360px;
     }
     .bgi_conter1_p1 {
@@ -548,7 +561,8 @@ height: 100%;*/
     .bgi_conter_tit1 {
         font-size: 46px;
     }
-    .bgi_conter_tit2, .bgi_conter_tit3 {
+    .bgi_conter_tit2,
+    .bgi_conter_tit3 {
         font-size: 32px;
     }
     .contactUs_ul li p {
@@ -564,10 +578,12 @@ height: 100%;*/
     }
 }
 
+
 /*设备屏幕大于1440px，小于1500px*/
 
 @media screen and (min-width:1440px) and (max-width:1500px) {
-    .bgi_top, .bgi_conter {
+    .bgi_top,
+    .bgi_conter {
         width: 1260px;
     }
     .bgi_conter1_p1 {
@@ -592,7 +608,8 @@ height: 100%;*/
     .bgi_conter_tit1 {
         font-size: 44px;
     }
-    .bgi_conter_tit2, .bgi_conter_tit3 {
+    .bgi_conter_tit2,
+    .bgi_conter_tit3 {
         font-size: 30px;
     }
     .contactUs_ul li p {
@@ -609,7 +626,8 @@ height: 100%;*/
 }
 
 @media screen and (min-width:1366px) and (max-width:1440px) {
-    .bgi_top, .bgi_conter {
+    .bgi_top,
+    .bgi_conter {
         width: 1200px;
     }
     .bgi_conter1_p1 {
@@ -634,13 +652,16 @@ height: 100%;*/
         width: 580px;
         height: auto !important;
     }
-    .contactUs, .friendshipLink {
+    .contactUs,
+    .friendshipLink {
         margin-top: 60px;
     }
-    .bgi_conter_tit2, .bgi_conter_tit3 {
+    .bgi_conter_tit2,
+    .bgi_conter_tit3 {
         font-size: 28px;
     }
-    .contactUs_tit, .friendshipLink_tit {
+    .contactUs_tit,
+    .friendshipLink_tit {
         font-size: 22px;
     }
     .contactUs_ul li p {
@@ -660,7 +681,8 @@ height: 100%;*/
 }
 
 @media (max-width: 1366px) {
-    .bgi_top, .bgi_conter {
+    .bgi_top,
+    .bgi_conter {
         width: 1126px;
     }
     .bgi_conter1_p1 {
@@ -685,13 +707,16 @@ height: 100%;*/
         width: 560px;
         height: auto !important;
     }
-    .contactUs, .friendshipLink {
+    .contactUs,
+    .friendshipLink {
         margin-top: 60px;
     }
-    .bgi_conter_tit2, .bgi_conter_tit3 {
+    .bgi_conter_tit2,
+    .bgi_conter_tit3 {
         font-size: 26px;
     }
-    .contactUs_tit, .friendshipLink_tit {
+    .contactUs_tit,
+    .friendshipLink_tit {
         font-size: 20px;
     }
     .contactUs_ul li p {
@@ -708,4 +733,19 @@ height: 100%;*/
         width: 80px;
         height: 80px;
     }
+}
+
+.ngdialog-message {
+    min-height: 45px!important;
+}
+
+.ngdialog-buttons button.btn-success {
+    color: #FFFFFF!important;
+    background: #5378F8!important;
+    border: 1px solid #5378F8!important;
+}
+
+.ngdialog-buttons button.btn-success:hover {
+    background: #4666d3!important;
+    border: 1px solid #5378F8!important;
 }

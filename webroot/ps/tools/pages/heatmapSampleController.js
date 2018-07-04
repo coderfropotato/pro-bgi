@@ -13,7 +13,7 @@ define(["toolsApp"], function(toolsApp) {
                 }, 300);
             // custom title
             $scope.id = $state.params.id; // 重分析id
-            $scope.title = '聚类分析 ( ID：' + $scope.id + " ) ";
+            $scope.title = '聚类热图 ( ID：' + $scope.id + " ) ";
 
             $scope.geneCount = 0;
             $scope.isShowColorPanel = false; //是否显示颜色面板

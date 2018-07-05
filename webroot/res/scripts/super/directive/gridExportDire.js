@@ -33,18 +33,19 @@ define("superApp.gridExportDire", ["angular", "super.superMessage", "select2"],
                     varfilename: "=",
                     downloadId: "@"
                 },
-                template: "<div class='dropdown drop-menu'>" +
-                    "<button class='new-table-switch-btns noborder tool-tip' title='导出数据'>" +
+                template: 
+                // "<div class='dropdown drop-menu'>" +
+                    "<button ng-click='ben_SaveLocal_OnClick(2)' class='new-table-switch-btns noborder tool-tip' title='导出数据'>" +
                     "<span class='iconfont icon-xiazai'></span>" +
-                    "</button>" +
-                    "<ul class='dropdown-menu'>"
-                    // + "<li ng-click='ben_SaveLocal_OnClick(1)'><a href='javascript:;'>导出Excel文件到本地</a></li>"
-                    +
-                    "<li id='{{downloadId}}' ng-click='ben_SaveLocal_OnClick(2)'><a href='javascript:;'>导出CSV文件到本地</a></li>"
-                    // + "<li><a ng-click='btn_SaveMyFile_OnClick()' href='javascript:;'>将数据保存到我的云盘</a></li>"
-                    +
-                    "</ul>" +
-                    "</div>",
+                    "</button>" ,
+                    // "<ul class='dropdown-menu'>"
+                    // // + "<li ng-click='ben_SaveLocal_OnClick(1)'><a href='javascript:;'>导出Excel文件到本地</a></li>"
+                    // +
+                    // "<li id='{{downloadId}}' ng-click='ben_SaveLocal_OnClick(2)'><a href='javascript:;'>导出CSV文件到本地</a></li>"
+                    // // + "<li><a ng-click='btn_SaveMyFile_OnClick()' href='javascript:;'>将数据保存到我的云盘</a></li>"
+                    // +
+                    // "</ul>" +
+                    // "</div>",
                 controller: "gridExportController",
                 link: function(scope, element, attrs) {
                     var $element = $(element);

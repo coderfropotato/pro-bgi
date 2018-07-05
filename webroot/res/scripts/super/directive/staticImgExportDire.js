@@ -1,5 +1,5 @@
 define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.staticImgExportDire", []);
         /*
          ** 创建日期：2017-06-19
@@ -33,7 +33,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                     varFileName: "="
                 },
                 controller: "staticImgExportController",
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     var $element = $(element);
                     var $dropdownMenu = $element.find(".dropdown-menu:eq(0)");
 
@@ -55,7 +55,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
         staticImgExportController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
 
         function staticImgExportController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
-            $scope.export = function(chartid, saveImgName, type) {
+            $scope.export = function (chartid, saveImgName, type) {
                 var imgName = $scope.varFileName || saveImgName;
                 if (!imgName) {
                     imgName = "图表";
@@ -96,7 +96,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                 } else {
                     var image = new Image();
                     image.src = img_src;
-                    image.onload = function() {
+                    image.onload = function () {
                         base64 = getBase64Image(image);
                         download();
                     }
@@ -120,26 +120,24 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                 url: $scope.exportLocation
                             };
                             var promise = ajaxService.GetDeferData(ajaxConfig);
-                            promise.then(function(responseData) {
+                            promise.then(function (responseData) {
                                 toolService.pageLoading.close();
                                 if (responseData.Error) {
                                     //系统异常
                                     toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
                                 } else {
                                     var fileInfo = responseData;
-
-                                    var svgXml = fileInfo.substring(fileInfo.indexOf("<svg"), fileInfo.lastIndexOf("</svg>"));
-                                    var href = 'data:text/html;base64,' + window.btoa(unescape(encodeURIComponent(svgXml)));
+                                    var svgBlob = new Blob([fileInfo], { type: "image/svg+xml;charset=utf-8" });
                                     var a = document.createElement('a');
                                     document.body.appendChild(a);
-                                    a.href = href;
+                                    a.href = URL.createObjectURL(svgBlob);
                                     a.download = saveImgName + "_" + date + ".svg";
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         a.click();
                                         a.remove();
                                     }, 200);
                                 }
-                            }, function(errorMesg) {
+                            }, function (errorMesg) {
                                 toolService.pageLoading.close();
                                 toolService.popMesgWindow("数据导出异常，请及时联系系统管理员！");
                             });
@@ -149,7 +147,7 @@ define("superApp.staticImgExportDire", ["angular", "super.superMessage", "select
                                 var a = document.createElement('a');
                                 a.href = $scope.pdfExportUrl;
                                 a.target = '_blank';
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     a.click();
                                     a.remove();
                                 }, 200);

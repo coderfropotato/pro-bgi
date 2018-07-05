@@ -4848,6 +4848,9 @@ div.titleDetail {
     padding-bottom: 26px;
     box-shadow: none!important;
 }
+.noshadow .little-table-wrap{
+    padding-top: 0;
+}
 
 .noshadow .tableListPanel {
     padding-bottom: 26px;

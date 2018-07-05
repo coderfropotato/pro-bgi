@@ -821,11 +821,12 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
 
             this.vennSelectColor = function(fn, panelid) {
-                var defaultColorArr = [
-                    "rgba(255,0,0,0.2)", "rgba(255,205,51,0.2)", "rgba(255,255,51,0.2)", "rgba(168,217,115,0.2)", "rgba(51,192,115,0.2)", "rgba(51,195,243,0.2)", "rgba(51,141,205,0.2)", "rgba(51,77,128,0.2)", "rgba(141,89,179,0.2)", "rgba(0,0,0,0.2)", "rgba(255,0,0,0.4)", "rgba(255,205,51,0.4)", "rgba(255,255,51,0.4)", "rgba(168,217,115,0.4)", "rgba(51,192,115,0.4)", "rgba(51,195,243,0.4)", "rgba(51,141,205,0.4)", "rgba(51,77,128,0.4)", "rgba(141,89,179,0.4)", "rgba(0,0,0,0.4)", "rgba(255,0,0,0.6)", "rgba(255,205,51,0.6)", "rgba(255,255,51,0.6)", "rgba(168,217,115,0.6)", "rgba(51,192,115,0.6)", "rgba(51,195,243,0.6)", "rgba(51,141,205,0.6)", "rgba(51,77,128,0.6)", "rgba(141,89,179,0.6)", "rgba(0,0,0,0.6)", "rgba(255,0,0,0.8)", "rgba(255,205,51,0.8)", "rgba(255,255,51,0.8)", "rgba(168,217,115,0.8)", "rgba(51,192,115,0.8)", "rgba(51,195,243,0.8)", "rgba(51,141,205,0.8)", "rgba(51,77,128,0.8)", "rgba(141,89,179,0.8)", "rgba(0,0,0,0.8)"
-                ];
-                var top = 80;
+                var defaultColorArr = ["rgba(255,0,0,0.8)", "rgba(255,255,255,0.8)", "rgba(0,112,192,0.8)", "rgba(140,86,75,0.8)", "rgba(196,156,148,0.8)", "rgba(227,119,194,0.8)", "rgba(188,189,34,0.8)", "rgba(255,153,0,0.8)", "rgba(255,204,0,0.8)", "rgba(23,190,207,0.8)", "rgba(158,218,229,0.8)", "rgba(230,85,13,0.8)", "#rgba(102,204,203,0.8)", "rgba(204,255,102,0.8)", "rgba(146,208,80,0.8)", "rgba(0,176,80,0.8)", "rgba(0,176,240,0.8)", "rgba(0,112,192,0.8)", "rgba(0,32,96,0.8)", "rgba(112,48,160,0.8)", "rgba(255,229,229,0.8)", "rgba(255,249,229,0.8)", "rgba(255,255,229,0.8)", "rgba(244,250,237,0.8)", "rgba(229,247,237,0.8)", "rgba(229,247,253,0.8)", "rgba(229,240,249,0.8)", "rgba(229,232,239,0.8)", "rgba(240,234,245,0.8)", "rgba(239,239,239,0.8)", "rgba(255,204,204,0.8)", "rgba(255,242,204,0.8)", "rgba(255,255,204,0.8)", "rgba(233,246,220,0.8)", "rgba(204,239,220,0.8)", "rgba(204,239,252,0.8)", "rgba(204,226,242,0.8)", "rgba(204,210,223,0.8)", "rgba(226,214,236,0.8)", "rgba(223,223,223,0.8)", "rgba(255,153,153,0.8)", "rgba(255,230,153,0.8)", "rgba(255,255,153,0.8)", "rgba(211,236,185,0.8)", "rgba(153,223,137,0.8)", "rgba(153,223,249,0.8)", "rgba(153,198,230,0.8)", "rgba(153,166,191,0.8)", "rgba(198,172,217,0.8)", "rgba(191,191,191,0.8)", "rgba(255,102,102,0.8)", "rgba(255,217,102,0.8)", "rgba(255,255,102,0.8)", "rgba(190,227,150,0.8)", "rgba(102,208,150,0.8)", "rgba(102,208,246,0.8)", "rgba(102,169,217,0.8)", "rgba(102,121,160,0.8)", "rgba(169,131,198,0.8)", "rgba(160,160,160,0.8)", "rgba(255,51,51,0.8)", "rgba(255,205,51,0.8)", "rgba(255,255,51,0.8)", "rgba(168,217,115,0.8)", "rgba(51,192,115,0.8)", "rgba(51,195,243,0.8)", "rgba(51,141,205,0.8)", "rgba(51,77,128,0.8)", "rgba(141,89,179,0.8)", "rgba(0,0,0,0.8)"];
+
+                if ($('.backDiv').length) $('.backDiv').remove();
+
                 var $backDiv = $("<div class='backDiv'></div>")
+                var $wrapDiv = $("<div class='colorSelectWrap'></div>");
                 var $oColorDiv = $("<div class='colorSelector'></div>");
                 var $oUl = $("<ul></ul>");
                 $oColorDiv.append($oUl);
@@ -834,27 +835,49 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     $oUl.append("<li style='background-color:" + defaultColorArr[i] + "'></li>");
                 }
 
-                $backDiv.append($oColorDiv);
+                $wrapDiv.append('<div class="colorSelectService colors colorInput"><input type="text" class="form-control" placeholder="rgba(244,80,26,0.5)"><button class="btn btn-default btn-silver btn-sm">确定</button></div>')
+                $wrapDiv.append($oColorDiv);
+
+                $backDiv.append($wrapDiv);
                 $("#" + panelid).append($backDiv);
 
-
-                $("#div_ViewProduct").css("overflow", "hidden");
-                $(".colorSelector").css("top", top + "px");
-
-                // choose color
+                $wrapDiv.css('top', ($('#' + panelid).outerHeight()) * 0.2)
+                    // choose color
                 $(".colorSelector ul li").on("click", function(ev) {
                     var color = $(this).css('background-color');
                     $(".backDiv").remove();
-                    $("#div_ViewProduct").css("overflow", "auto");
                     fn && fn(color);
 
                     var oEvent = ev || event;
                     oEvent.stopPropagation();
                 })
 
-                $backDiv.on('click', function() {
+                $('.backDiv').on('click', function() {
                     $(".backDiv").remove();
-                    $("#div_ViewProduct").css("overflow", "auto");
+                })
+
+                var regExp = /^[rR][gG][Bb][Aa][\(]((2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),){2}(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),?(0\.\d{1,2}|1|0)[\)]{1}$/;
+                var inputValue = '';
+                $('.colorSelectService input').on('keyup', function(e) {
+                    inputValue = e.target.value;
+                    if (!regExp.test(inputValue)) {
+                        $(this).addClass('colorSelectinvaild');
+                    } else {
+                        $(this).removeClass('colorSelectinvaild');
+                    }
+                })
+
+                $('.colorSelectService button').on('click', function() {
+                    var isMatchColor = regExp.test(inputValue);
+                    if (isMatchColor) {
+                        $(".backDiv").remove();
+                        fn && fn(inputValue);
+                        $(".colorSelectService input").val("");
+                    }
+                })
+
+                $('.colorSelectWrap').on('click', function(e) {
+                    e.stopPropagation();
                 })
             }
 
@@ -862,6 +885,8 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
             this.selectColor = function(fn, panelid) {
                 var defaultColorArr = ["#ff0000", "#ffffff", "#0070c0", "#8c564b", "#c49c94", "#e377c2", "#bcbd22", "#FF9900", "#FFCC00", "#17becf", "#9edae5", "#e6550d", "#66CCCB", "#CCFF66", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0", "#FFE5E5", "#FFF9E5", "#FFFFE5", "#F4FAED", "#E5F7ED", "#E5F7FD", "#E5F0F9", "#E5E8EF", "#F0EAF5", "#EFEFEF", "#FFCCCC", "#FFF2CC", "#FFFFCC", "#E9F6DC", "#CCEFDC", "#CCEFFC", "#CCE2F2", "#CCD2DF", "#E2D6EC", "#DFDFDF", "#FF9999", "#FFE699", "#FFFF99", "#D3ECB9", "#99DF89", "#99DFF9", "#99C6E6", "#99A6BF", "#C6ACD9", "#BFBFBF", "#FF6666", "#FFD966", "#FFFF66", "#BEE396", "#66D096", "#66D0F6", "#66A9D9", "#6679A0", "#A983C6", "#A0A0A0", "#FF3333", "#FFCD33", "#FFFF33", "#A8D973", "#33C073", "#33C3F3", "#338DCD", "#334D80", "#8D59B3", "#000000"];
+                if ($('.backDiv').length) $('.backDiv').remove();
+
                 var $backDiv = $("<div class='backDiv'></div>")
                 var $wrapDiv = $("<div class='colorSelectWrap'></div>");
                 var $oColorDiv = $("<div class='colorSelector'></div>");

@@ -35,7 +35,7 @@
             <div class="filter pull-right">
                 <input class="keywordInput" placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label"
                     ng-keyup="handlerSearch($event)">
-                <i class="glyphicon glyphicon-search search"></i>
+                <i class="iconfont icon-chazhao search"></i>
                 <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
             </div>
         </div>
@@ -73,7 +73,7 @@
                                 <span ng-if="item.process==1">
                                     <i class="iconfont icon-wancheng"></i>成功</span>
                                 <span ng-if="item.process==-1">
-                                    <i class="iconfont icon-yunhangzhong"></i>进行中，剩余:{{item.restTime}}</span>
+                                    <i class="iconfont icon-yunhangzhong1"></i>进行中，剩余:{{item.restTime}}</span>
                                 <span ng-if="item.process==0">
                                     <i class="iconfont icon-shibai"></i>失败</span>
                             </td>

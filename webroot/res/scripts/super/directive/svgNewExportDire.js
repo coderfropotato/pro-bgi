@@ -109,16 +109,14 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
                     context.fillRect(0, 0, canvas.width, canvas.height);
 
                     var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });
-                    var href = URL.createObjectURL(svgBlob);
-                    image.src = href;
+                    image.src = URL.createObjectURL(svgBlob);
 
                     image.onload = function () {
                         context.drawImage(image, 0, 0);
                         var a = document.createElement('a');
                         document.body.appendChild(a);
                         canvas.toBlob(function (blob) {
-                            var href = URL.createObjectURL(blob);
-                            a.href = href;
+                            a.href = URL.createObjectURL(blob);
                             type == "image/png" ? a.download = saveImgName + '_' + date + ".png" : a.download = saveImgName + '_' + date + ".jpg";
                             a.click();
                             a.remove();

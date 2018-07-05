@@ -835,9 +835,9 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 }
 
                 $backDiv.append($oColorDiv);
-                $("#"+panelid).append($backDiv);
+                $("#" + panelid).append($backDiv);
 
-                
+
                 $("#div_ViewProduct").css("overflow", "hidden");
                 $(".colorSelector").css("top", top + "px");
 
@@ -889,7 +889,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     oEvent.stopPropagation();
                 })
 
-                $('.backDiv').on('click', function() {
+                $(document).on('click', function() {
                     $(".backDiv").remove();
                 })
 

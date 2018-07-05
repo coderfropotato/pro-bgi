@@ -8192,14 +8192,13 @@ div.tipsContainer,
 
 .popPrompt {
     text-align: center;
-    margin-bottom: 24px;
 }
 
 .popPrompt .errorInfo {
-    color: red;
+    color: #cccccc;
     font-size: 14px;
-    text-align: left;
-    padding-left: 14px;
+    text-align: center;
+    margin: 10px;
 }
 
 .popPrompt #TextInput {
@@ -8216,40 +8215,45 @@ div.tipsContainer,
     height: 100%;
     position: absolute;
     z-index: 10;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
 }
-.colorSelectWrap{
+
+.colorSelectWrap {
     position: absolute;
-    left:50%;
-    margin-left:-113px;
+    left: 50%;
+    margin-left: -113px;
     width: 226px;
-    height:196px;
+    height: 196px;
 }
-.colorSelectService{
+
+.colorSelectService {
     background-color: #ffffff!important;
-    padding:4px;
+    padding: 4px;
 }
-.colorSelectService:after{
+
+.colorSelectService:after {
     display: block;
     clear: both;
-    content:"";
+    content: "";
 }
-.colorSelectService input{
+
+.colorSelectService input {
     width: 166px;
-    float:left;
+    float: left;
 }
-.colorSelectService button{
+
+.colorSelectService button {
     width: 46px;
     height: 25px;
     line-height: 1;
-    float:right;
+    float: right;
     margin-left: 6px;
 }
 
-.colorSelectinvaild{
-    background: url(../images/ng_invalid.png)  #FCEAEA no-repeat right center !important ;
-    background-size:10%!important;
+.colorSelectinvaild {
+    background: url(../images/ng_invalid.png) #FCEAEA no-repeat right center !important;
+    background-size: 10%!important;
 }
 
 .colorSelector {
@@ -8262,7 +8266,7 @@ div.tipsContainer,
     left: 0;
     right: 0;
     margin: 0 auto;
-    top:32px;
+    top: 32px;
 }
 
 .colorSelector:after {

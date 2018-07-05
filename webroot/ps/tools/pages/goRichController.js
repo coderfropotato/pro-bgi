@@ -375,7 +375,7 @@ define(['toolsApp'], function(toolsApp) {
 
             function groupedbarGetItem() {
                 chart.getLegendItem(function(d, i) {
-                    reportService.selectColor(changeColorCallback,'reAnalysis_goRich_bubble');
+                    reportService.selectColor(changeColorCallback, 'reAnalysis_goRich_bubble');
                     index = i;
                 })
 
@@ -464,7 +464,7 @@ define(['toolsApp'], function(toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "差异基因 GO 富集气泡图",
+                "title": "GO 富集气泡图",
             },
             "axisBox": {
                 "xAxis": {
@@ -526,7 +526,7 @@ define(['toolsApp'], function(toolsApp) {
             "height": 0,
             "titleBox": {
                 "show": true,
-                "title": "Enriched GO Term"
+                "title": "GO 富集柱状图"
             },
             "axisBox": {
                 "xAxis": {

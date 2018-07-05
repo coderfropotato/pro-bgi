@@ -90,11 +90,11 @@
                                             <span class="glyphicon glyphicon-check unSelectedGo" ng-class="{'selectedGo':row.isChecked,'unSelectedGo':!row.isChecked}"></span>
                                         </td>
                                         <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                            <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="../../ps/tools/index.html#/home/mapId?map={{row[val.true_key].substring(2,row[val.true_key].length)}}&taskId={{id}}" target="_blank">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
-                                                accuracy)}}
+                                            <a ng-if="val.true_key=='kegg_term_id'" ng-click="$event.stopPropagation()" ng-href="../../ps/tools/index.html#/home/mapId?map={{row[val.true_key].substring(2,row[val.true_key].length)}}&taskId={{id}}" target="_blank">
+                                                {{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}
                                             </a>
-                                            <span ng-if="val.true_key!='kegg_term_id'">{{val.searchType==='string'?row[val.true_key]:(row[val.true_key] | accuracyFilter:
-                                                accuracy)}}
+                                            <span ng-if="val.true_key!='kegg_term_id'">
+                                                    {{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}
                                             </span>
                                         </td>
                                     </tr>

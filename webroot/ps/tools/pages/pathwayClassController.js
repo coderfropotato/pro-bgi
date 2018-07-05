@@ -22,8 +22,8 @@ define(['toolsApp'], function(toolsApp) {
             $scope.isTableShow = false;
             $scope.showAccuracy = true;
             $scope.showSelect = true;
-            $scope.tableDownloadName = "Pathway 分类";
-            $scope.chartDownloadName = "Pathway 分类";
+            $scope.tableDownloadName = "KEGG Pathway 分类";
+            $scope.chartDownloadName = "KEGG Pathway 分类";
             $scope.isShowBeforeTask = true;
 
             $scope.pageEntity = {
@@ -105,7 +105,7 @@ define(['toolsApp'], function(toolsApp) {
             "titleBox": {
                 "show": true,
                 "position": "top",
-                "title": "差异基因 Pathway 分类",
+                "title": "KEGG Pathway 分类",
                 "editable": true
             },
             "legendBox": {

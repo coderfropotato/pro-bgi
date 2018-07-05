@@ -119,6 +119,10 @@ define([
                 url: "/home/loading",
                 templateUrl: '../tools/pages/loading.html'
             })
+            .state("help", {
+                url: "/home/help",
+                templateUrl: '../tools/pages/help.html'
+            })
             .state("error", {
                 url: "/home/error/:id",
                 templateUrl: "../tools/pages/error.html",

@@ -75,7 +75,8 @@ require.config({
         "netController": "ps/tools/pages/netController",
         "lineController": "ps/tools/pages/lineController",
         "geneDetailController": "ps/tools/pages/geneDetailController",
-        "loadingController": "ps/tools/pages/loadingController"
+        "loadingController": "ps/tools/pages/loadingController",
+        "helpController": "ps/tools/pages/helpController"
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -119,6 +120,7 @@ require([
     "lineController",
     "geneDetailController",
     "loadingController",
+    "helpController"
 ], function(jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function() {

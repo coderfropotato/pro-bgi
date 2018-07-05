@@ -1,37 +1,16 @@
 <div class="goClass-page" ng-controller="goClassController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
-    <h6>差异基因 GO 分类</h6>
+    <h6>GO 分类</h6>
     <div id="div_goClass_page">
         <!-- <h6>GO分类</h6> -->
-        <div class="table-switch-chart noshadow" content-id="contentId"
-        panel-id="panelId"
-        chart-id="chartId"
-        is-table-show="isTableShow"
-        show-accuracy="showAccuracy"
-        show-select="showSelect"
-        select-list="selectList"
-        key="key"
-        params-key="paramsKey"
-        page-entity="pageEntity"
-        url="url"
-        tabletochart="tableToChartDataFn(res)"
-        drawchart="drawChartFn(data)"
-        table-download-name="tableDownloadName"
-        chart-download-name="chartDownloadName"
-        select-change-callback = "selectChangeCallback(arg)"
-        handler-refresh-click="handlerRefreshClick()"
-        is-select-chart-data="isSelectChartData" 
-        chart-select-fn="chartSelectFn(arg)"
-        scale="scale"
-        is-show-before-task="isShowBeforeTask"
-        task-id="id"
-        ></div>
+        <div class="table-switch-chart noshadow" content-id="contentId" panel-id="panelId" chart-id="chartId" is-table-show="isTableShow" show-accuracy="showAccuracy" show-select="showSelect" select-list="selectList" key="key" params-key="paramsKey" page-entity="pageEntity"
+            url="url" tabletochart="tableToChartDataFn(res)" drawchart="drawChartFn(data)" table-download-name="tableDownloadName" chart-download-name="chartDownloadName" select-change-callback="selectChangeCallback(arg)" handler-refresh-click="handlerRefreshClick()"
+            is-select-chart-data="isSelectChartData" chart-select-fn="chartSelectFn(arg)" scale="scale" is-show-before-task="isShowBeforeTask" task-id="id"></div>
 
 
-        <div class="add-delete-big-table" thead-control-id="theadControlId2" page-entity="pageFindEntity" url="url2" content-id="panelId2"
-            table-id="tableId2" unselect-gene-panel-id="unselectId2" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
-            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" params-key-list="paramsKeyList"
-            params-value-list="paramsValueList" handler-thead-change="" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis" reanalysis-id="reanalysisId"></div>
+        <div class="add-delete-big-table" thead-control-id="theadControlId2" page-entity="pageFindEntity" url="url2" content-id="panelId2" table-id="tableId2" unselect-gene-panel-id="unselectId2" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"
+            is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" params-key-list="paramsKeyList" params-value-list="paramsValueList" handler-thead-change="" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
+            reanalysis-id="reanalysisId"></div>
     </div>
     <!-- analysis pop -->
     <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>

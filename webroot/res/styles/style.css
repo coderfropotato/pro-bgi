@@ -8126,7 +8126,7 @@ div.tipsContainer,
     font-size: 12px;
     display: block;
     height: auto;
-    width: 280px;
+    max-width: 400px;
     background-color: #fff;
     *border: 1px solid #ddd;
     color: #999;

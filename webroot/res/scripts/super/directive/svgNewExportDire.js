@@ -100,28 +100,28 @@ define("superApp.svgNewExportDire", ["angular", "super.superMessage", "select2"]
 
                 if (type != "svg") {
                     var image = new Image();
-                    var canvas = document.createElement('canvas'); //准备空画布
+                    var canvas = document.createElement('canvas');
                     canvas.width = $chartObj.width();
                     canvas.height = $chartObj.height();
 
-                    var context = canvas.getContext('2d'); //取得画布的2d绘图上下文
+                    var context = canvas.getContext('2d');
                     context.fillStyle = "#ffffff";
                     context.fillRect(0, 0, canvas.width, canvas.height);
 
                     var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });
-                    var href = URL.createObjectURL(svgBlob);
-                    image.src = href;
+                    image.src = URL.createObjectURL(svgBlob);
 
                     image.onload = function () {
                         context.drawImage(image, 0, 0);
                         var a = document.createElement('a');
                         document.body.appendChild(a);
-                        a.href = canvas.toDataURL(type); //将画布内的信息导出为png图片数据
-                        type == "image/png" ? a.download = saveImgName + '_' + date + ".png" : a.download = saveImgName + '_' + date + ".jpg"; //导出的图片名称
-                        a.click(); //点击触发下载
-                        a.remove();
+                        canvas.toBlob(function (blob) {
+                            a.href = URL.createObjectURL(blob);
+                            type == "image/png" ? a.download = saveImgName + '_' + date + ".png" : a.download = saveImgName + '_' + date + ".jpg";
+                            a.click();
+                            a.remove();
+                        }, type, 1);
                     }
-                    // image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
                 } else {
                     toolService.pageLoading.open("正在导出svg，请稍后");
                     var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });

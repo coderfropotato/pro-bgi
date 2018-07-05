@@ -25,7 +25,7 @@
  */
 
 define("superApp.reportService", ["super.superMessage", "ngDialog"],
-    function(SUPER_CONSOLE_MESSAGE) {
+    function (SUPER_CONSOLE_MESSAGE) {
         //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         var superApp = angular.module("superApp.reportService", ["ngDialog"]);
 
@@ -63,11 +63,11 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 返　　回：返回SVG线段
              */
             var px_mm = 11.8;
-            this.PXtoMM = function(px) {
+            this.PXtoMM = function (px) {
                 return Math.floor(px / px_mm);
             }
 
-            this.MMtoPX = function(mm) {
+            this.MMtoPX = function (mm) {
                 return Math.floor(mm * px_mm);
             }
 
@@ -80,7 +80,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG线段
              */
-            this.DrawLine = function(pos, className, style) {
+            this.DrawLine = function (pos, className, style) {
                 var $svgObj = $.svg("line");
                 $svgObj.attr({ 'x1': pos[0], 'y1': pos[1], 'x2': pos[2], 'y2': pos[3] });
                 if (!style) {
@@ -102,7 +102,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG线段
              */
-            this.DrawPath = function(d, className, style) {
+            this.DrawPath = function (d, className, style) {
                 var $svgObj = $.svg("path");
                 $svgObj.attr({ 'd': d });
                 if (!style) {
@@ -124,7 +124,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG线段
              */
-            this.DrawPolyline = function(points, className, style) {
+            this.DrawPolyline = function (points, className, style) {
                 var $svgObj = $.svg("polyline");
                 $svgObj.attr({ 'points': points });
                 if (!style) {
@@ -148,7 +148,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG线段
              */
-            this.DrawLitterArrow = function(direct, className, style) {
+            this.DrawLitterArrow = function (direct, className, style) {
                 if (!direct) {
                     direct = "left";
                 }
@@ -190,7 +190,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG文本对象
              */
-            this.DrawText = function(text, className, style) {
+            this.DrawText = function (text, className, style) {
                 var $svgObj = $.svg("text");
                 if (!style) {
                     style = "fill:#333";
@@ -213,7 +213,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              **          className【可选】   : 样式名
              ** 返　　回：返回SVG文本对象
              */
-            this.DrawRect = function(width, height, className, style) {
+            this.DrawRect = function (width, height, className, style) {
                 var $svgObj = $.svg("rect");
                 if (!style) {
                     style = "fill:#fff;stroke-width:1;stroke:rgb(0,0,0)";
@@ -233,7 +233,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 参数：一个十六进制色彩码
              ** 返回：一个RGB数组
              */
-            this.colorToRGB = function(code) {
+            this.colorToRGB = function (code) {
                 var len = code.length;
                 var f = new Array();
                 f['0'] = 0;
@@ -269,7 +269,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 参数：rgb1,rgb2:两个 RGB 数组， percent:百分比
              ** 返回：一个RGB数组
              */
-            this.colorBetween = function(rgb1, rgb2, percent) {
+            this.colorBetween = function (rgb1, rgb2, percent) {
 
 
                 var tR = Math.ceil(rgb1[0] + (rgb2[0] - rgb1[0]) * percent);
@@ -293,7 +293,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 参数：rgb1,rgb2:两个 RGB 数组， percent:百分比
              ** 返回：一个RGB数组
              */
-            this.RGBToColor = function(rgb1) {
+            this.RGBToColor = function (rgb1) {
                 var rStr = rgb1[0].toString(16);
                 var gStr = rgb1[1].toString(16);
                 var bStr = rgb1[2].toString(16);
@@ -347,7 +347,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             */
             this.GrphaLoading = {
 
-                Show: function(divId, text) {
+                Show: function (divId, text) {
 
                     var tObj;
                     if (typeof divId == "string") { //参数为 id 的情况
@@ -370,10 +370,10 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                         $graphLoading.find(".loadingMessage:eq(0)").html(text);
                     }
                     //console.log($graphLoading.html());
-                    $graphLoading.fadeIn(function() { $(this).show(); });
+                    $graphLoading.fadeIn(function () { $(this).show(); });
 
                 },
-                Hide: function(divId) {
+                Hide: function (divId) {
 
                     var tObj;
                     if (typeof divId == "string") { //参数为 id 的情况
@@ -398,7 +398,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 返　　回：无
              ** 备　　注：暂时不知道怎样调用自己内部方法，故没有用 this, 直接写 function
              */
-            this.FixChartFullMode = function() {
+            this.FixChartFullMode = function () {
                 FixChartFullMode();
             };
 
@@ -429,7 +429,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                  **          chartId            : 当前图表DIV的 Id
                  ** 返　　回：无
                  */
-                Open: function(chartId) {
+                Open: function (chartId) {
                     var $chart = $("#" + chartId);
 
                     var $group = $chart.parent().parent().parent();
@@ -480,7 +480,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                  **          chartFields        : 此图表的自定义参数数组 【用于重置恢复】
                  ** 返　　回：无
                  */
-                Close: function(chartId, funDrawChart, chartFields) {
+                Close: function (chartId, funDrawChart, chartFields) {
                     var $chart = $("#" + chartId);
                     var $group = $chart.parent().parent().parent();
                     var $chartWrap = $group.find(".chart_wrap");
@@ -546,7 +546,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 创建时间：2016年7月18日11:42:51
              ** 功能简介：首页左边树菜单，概述页面菜单点击事件
              */
-            this.IndexLoadPage = function(item) {
+            this.IndexLoadPage = function (item) {
                 //当前指令的父类Panel
                 var directivePanel = null;
                 //动态加载 directiveName
@@ -577,7 +577,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     directivePanelHtml = "<div id='" + directivePanelID + "' class='directivePanel fadeInRight'><div class='" + directiveName + "'></div></div>";
                     $directivePanel = $(directivePanelHtml);
                     contentPanel.append($directivePanel);
-                    angular.element(document).injector().invoke(["$compile", function($compile) {
+                    angular.element(document).injector().invoke(["$compile", function ($compile) {
                         var as = angular.element($directivePanel).scope();
                         $compile($directivePanel)(as);
                     }]);
@@ -593,7 +593,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
              ** 参　　数：<img /> 的 ID 属性
              ** 返　　回：无
              */
-            this.popFullScreenImage = function(imgID) {
+            this.popFullScreenImage = function (imgID) {
 
                 var theID = "fullImage_" + Math.ceil(Math.random() * 1000);
 
@@ -619,7 +619,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
                 $body.append($packed);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     var $winWidth = $(window).width();
                     var $winHeight = $(window).height();
 
@@ -646,7 +646,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                x2,y2   : 结束坐标 （使用窗口绝对坐标 position:fixed）
             ** 返回：一个RGB数组
             */
-            this.flyDiv = function(div, x1, y1, x2, y2) {
+            this.flyDiv = function (div, x1, y1, x2, y2) {
                 var $divObj = $(div);
                 $divObj.css({ "position": "fixed", "left": x1 + "px", "top": y1 + "px", "z-index": 9999 });
                 $("body:eq(0)").append($divObj);
@@ -654,7 +654,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
 
                 var aniOffset = 400;
                 var upY2 = y2 - aniOffset; //引入 Y2, 用于模拟抛物线
-                var flyAnimate = setInterval(function() {
+                var flyAnimate = setInterval(function () {
                     if (Math.abs(x2 - x1) < 150) {
                         x1 += (x2 - x1) * 0.1;
                         y1 += (upY2 - y1) * 0.1;
@@ -694,7 +694,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             reportService.GenericTip.Hide();
             */
             this.GenericTip = {
-                Show: function(e, textArr, height, spanIndex, rows) {
+                Show: function (e, textArr, height, spanIndex, rows) {
                     var event = e || event; //火狐浏览器不支持window.event,只支持event。
                     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
                     if (textArr.length === 0) { return; }
@@ -767,7 +767,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     }
 
                 },
-                Hide: function() {
+                Hide: function () {
                     $(".tipsContainer").remove();
                 }
             }
@@ -820,12 +820,13 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             }
 
 
-            this.vennSelectColor = function(fn, panelid) {
-                var defaultColorArr = [
-                    "rgba(255,0,0,0.2)", "rgba(255,205,51,0.2)", "rgba(255,255,51,0.2)", "rgba(168,217,115,0.2)", "rgba(51,192,115,0.2)", "rgba(51,195,243,0.2)", "rgba(51,141,205,0.2)", "rgba(51,77,128,0.2)", "rgba(141,89,179,0.2)", "rgba(0,0,0,0.2)", "rgba(255,0,0,0.4)", "rgba(255,205,51,0.4)", "rgba(255,255,51,0.4)", "rgba(168,217,115,0.4)", "rgba(51,192,115,0.4)", "rgba(51,195,243,0.4)", "rgba(51,141,205,0.4)", "rgba(51,77,128,0.4)", "rgba(141,89,179,0.4)", "rgba(0,0,0,0.4)", "rgba(255,0,0,0.6)", "rgba(255,205,51,0.6)", "rgba(255,255,51,0.6)", "rgba(168,217,115,0.6)", "rgba(51,192,115,0.6)", "rgba(51,195,243,0.6)", "rgba(51,141,205,0.6)", "rgba(51,77,128,0.6)", "rgba(141,89,179,0.6)", "rgba(0,0,0,0.6)", "rgba(255,0,0,0.8)", "rgba(255,205,51,0.8)", "rgba(255,255,51,0.8)", "rgba(168,217,115,0.8)", "rgba(51,192,115,0.8)", "rgba(51,195,243,0.8)", "rgba(51,141,205,0.8)", "rgba(51,77,128,0.8)", "rgba(141,89,179,0.8)", "rgba(0,0,0,0.8)"
-                ];
-                var top = 80;
+            this.vennSelectColor = function (fn, panelid) {
+                var defaultColorArr = ["rgba(255,0,0,0.8)", "rgba(255,255,255,0.8)", "rgba(0,112,192,0.8)", "rgba(140,86,75,0.8)", "rgba(196,156,148,0.8)", "rgba(227,119,194,0.8)", "rgba(188,189,34,0.8)", "rgba(255,153,0,0.8)", "rgba(255,204,0,0.8)", "rgba(23,190,207,0.8)", "rgba(158,218,229,0.8)", "rgba(230,85,13,0.8)", "#rgba(102,204,203,0.8)", "rgba(204,255,102,0.8)", "rgba(146,208,80,0.8)", "rgba(0,176,80,0.8)", "rgba(0,176,240,0.8)", "rgba(0,112,192,0.8)", "rgba(0,32,96,0.8)", "rgba(112,48,160,0.8)", "rgba(255,229,229,0.8)", "rgba(255,249,229,0.8)", "rgba(255,255,229,0.8)", "rgba(244,250,237,0.8)", "rgba(229,247,237,0.8)", "rgba(229,247,253,0.8)", "rgba(229,240,249,0.8)", "rgba(229,232,239,0.8)", "rgba(240,234,245,0.8)", "rgba(239,239,239,0.8)", "rgba(255,204,204,0.8)", "rgba(255,242,204,0.8)", "rgba(255,255,204,0.8)", "rgba(233,246,220,0.8)", "rgba(204,239,220,0.8)", "rgba(204,239,252,0.8)", "rgba(204,226,242,0.8)", "rgba(204,210,223,0.8)", "rgba(226,214,236,0.8)", "rgba(223,223,223,0.8)", "rgba(255,153,153,0.8)", "rgba(255,230,153,0.8)", "rgba(255,255,153,0.8)", "rgba(211,236,185,0.8)", "rgba(153,223,137,0.8)", "rgba(153,223,249,0.8)", "rgba(153,198,230,0.8)", "rgba(153,166,191,0.8)", "rgba(198,172,217,0.8)", "rgba(191,191,191,0.8)", "rgba(255,102,102,0.8)", "rgba(255,217,102,0.8)", "rgba(255,255,102,0.8)", "rgba(190,227,150,0.8)", "rgba(102,208,150,0.8)", "rgba(102,208,246,0.8)", "rgba(102,169,217,0.8)", "rgba(102,121,160,0.8)", "rgba(169,131,198,0.8)", "rgba(160,160,160,0.8)", "rgba(255,51,51,0.8)", "rgba(255,205,51,0.8)", "rgba(255,255,51,0.8)", "rgba(168,217,115,0.8)", "rgba(51,192,115,0.8)", "rgba(51,195,243,0.8)", "rgba(51,141,205,0.8)", "rgba(51,77,128,0.8)", "rgba(141,89,179,0.8)", "rgba(0,0,0,0.8)"];
+
+                if ($('.backDiv').length) $('.backDiv').remove();
+
                 var $backDiv = $("<div class='backDiv'></div>")
+                var $wrapDiv = $("<div class='colorSelectWrap'></div>");
                 var $oColorDiv = $("<div class='colorSelector'></div>");
                 var $oUl = $("<ul></ul>");
                 $oColorDiv.append($oUl);
@@ -834,34 +835,58 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     $oUl.append("<li style='background-color:" + defaultColorArr[i] + "'></li>");
                 }
 
-                $backDiv.append($oColorDiv);
-                $("#"+panelid).append($backDiv);
+                $wrapDiv.append('<div class="colorSelectService colors colorInput"><input type="text" class="form-control" placeholder="rgba(244,80,26,0.5)"><button class="btn btn-default btn-silver btn-sm">确定</button></div>')
+                $wrapDiv.append($oColorDiv);
 
-                
-                $("#div_ViewProduct").css("overflow", "hidden");
-                $(".colorSelector").css("top", top + "px");
+                $backDiv.append($wrapDiv);
+                $("#" + panelid).append($backDiv);
 
+                $wrapDiv.css('top', ($('#' + panelid).outerHeight()) * 0.2)
                 // choose color
-                $(".colorSelector ul li").on("click", function(ev) {
+                $(".colorSelector ul li").on("click", function (ev) {
                     var color = $(this).css('background-color');
                     $(".backDiv").remove();
-                    $("#div_ViewProduct").css("overflow", "auto");
                     fn && fn(color);
 
                     var oEvent = ev || event;
                     oEvent.stopPropagation();
                 })
 
-                $backDiv.on('click', function() {
+                $('.backDiv').on('click', function () {
                     $(".backDiv").remove();
-                    $("#div_ViewProduct").css("overflow", "auto");
+                })
+
+                var regExp = /^[rR][gG][Bb][Aa][\(]((2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),){2}(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),?(0\.\d{1,2}|1|0)[\)]{1}$/;
+                var inputValue = '';
+                $('.colorSelectService input').on('keyup', function (e) {
+                    inputValue = e.target.value;
+                    if (!regExp.test(inputValue)) {
+                        $(this).addClass('colorSelectinvaild');
+                    } else {
+                        $(this).removeClass('colorSelectinvaild');
+                    }
+                })
+
+                $('.colorSelectService button').on('click', function () {
+                    var isMatchColor = regExp.test(inputValue);
+                    if (isMatchColor) {
+                        $(".backDiv").remove();
+                        fn && fn(inputValue);
+                        $(".colorSelectService input").val("");
+                    }
+                })
+
+                $('.colorSelectWrap').on('click', function (e) {
+                    e.stopPropagation();
                 })
             }
 
 
 
-            this.selectColor = function(fn, panelid) {
+            this.selectColor = function (fn, panelid) {
                 var defaultColorArr = ["#ff0000", "#ffffff", "#0070c0", "#8c564b", "#c49c94", "#e377c2", "#bcbd22", "#FF9900", "#FFCC00", "#17becf", "#9edae5", "#e6550d", "#66CCCB", "#CCFF66", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0", "#FFE5E5", "#FFF9E5", "#FFFFE5", "#F4FAED", "#E5F7ED", "#E5F7FD", "#E5F0F9", "#E5E8EF", "#F0EAF5", "#EFEFEF", "#FFCCCC", "#FFF2CC", "#FFFFCC", "#E9F6DC", "#CCEFDC", "#CCEFFC", "#CCE2F2", "#CCD2DF", "#E2D6EC", "#DFDFDF", "#FF9999", "#FFE699", "#FFFF99", "#D3ECB9", "#99DF89", "#99DFF9", "#99C6E6", "#99A6BF", "#C6ACD9", "#BFBFBF", "#FF6666", "#FFD966", "#FFFF66", "#BEE396", "#66D096", "#66D0F6", "#66A9D9", "#6679A0", "#A983C6", "#A0A0A0", "#FF3333", "#FFCD33", "#FFFF33", "#A8D973", "#33C073", "#33C3F3", "#338DCD", "#334D80", "#8D59B3", "#000000"];
+                if ($('.backDiv').length) $('.backDiv').remove();
+
                 var $backDiv = $("<div class='backDiv'></div>")
                 var $wrapDiv = $("<div class='colorSelectWrap'></div>");
                 var $oColorDiv = $("<div class='colorSelector'></div>");
@@ -879,8 +904,8 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 $("#" + panelid).append($backDiv);
 
                 $wrapDiv.css('top', ($('#' + panelid).outerHeight()) * 0.2)
-                    // choose color
-                $(".colorSelector ul li").on("click", function(ev) {
+                // choose color
+                $(".colorSelector ul li").on("click", function (ev) {
                     var color = $(this).css('background-color');
                     $(".backDiv").remove();
                     fn && fn(color);
@@ -889,13 +914,13 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     oEvent.stopPropagation();
                 })
 
-                $('.backDiv').on('click', function() {
+                $('.backDiv').on('click', function () {
                     $(".backDiv").remove();
                 })
 
                 var regExp = /^#[\da-f]{3}([\da-f]{3})?$/i;
                 var inputValue = '';
-                $('.colorSelectService input').on('keyup', function(e) {
+                $('.colorSelectService input').on('keyup', function (e) {
                     inputValue = e.target.value;
                     if (!regExp.test(inputValue)) {
                         $(this).addClass('colorSelectinvaild');
@@ -904,7 +929,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     }
                 })
 
-                $('.colorSelectService button').on('click', function() {
+                $('.colorSelectService button').on('click', function () {
                     var isMatchColor = regExp.test(inputValue);
                     if (isMatchColor) {
                         $(".backDiv").remove();
@@ -913,7 +938,7 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                     }
                 })
 
-                $('.colorSelectWrap').on('click', function(e) {
+                $('.colorSelectWrap').on('click', function (e) {
                     e.stopPropagation();
                 })
             }

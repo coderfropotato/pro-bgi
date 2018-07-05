@@ -820,11 +820,11 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
             }
 
 
-            this.vennSelectColor = function(fn, tableid) {
+            this.vennSelectColor = function(fn, panelid) {
                 var defaultColorArr = [
                     "rgba(255,0,0,0.2)", "rgba(255,205,51,0.2)", "rgba(255,255,51,0.2)", "rgba(168,217,115,0.2)", "rgba(51,192,115,0.2)", "rgba(51,195,243,0.2)", "rgba(51,141,205,0.2)", "rgba(51,77,128,0.2)", "rgba(141,89,179,0.2)", "rgba(0,0,0,0.2)", "rgba(255,0,0,0.4)", "rgba(255,205,51,0.4)", "rgba(255,255,51,0.4)", "rgba(168,217,115,0.4)", "rgba(51,192,115,0.4)", "rgba(51,195,243,0.4)", "rgba(51,141,205,0.4)", "rgba(51,77,128,0.4)", "rgba(141,89,179,0.4)", "rgba(0,0,0,0.4)", "rgba(255,0,0,0.6)", "rgba(255,205,51,0.6)", "rgba(255,255,51,0.6)", "rgba(168,217,115,0.6)", "rgba(51,192,115,0.6)", "rgba(51,195,243,0.6)", "rgba(51,141,205,0.6)", "rgba(51,77,128,0.6)", "rgba(141,89,179,0.6)", "rgba(0,0,0,0.6)", "rgba(255,0,0,0.8)", "rgba(255,205,51,0.8)", "rgba(255,255,51,0.8)", "rgba(168,217,115,0.8)", "rgba(51,192,115,0.8)", "rgba(51,195,243,0.8)", "rgba(51,141,205,0.8)", "rgba(51,77,128,0.8)", "rgba(141,89,179,0.8)", "rgba(0,0,0,0.8)"
                 ];
-                var top = 250;
+                var top = 80;
                 var $backDiv = $("<div class='backDiv'></div>")
                 var $oColorDiv = $("<div class='colorSelector'></div>");
                 var $oUl = $("<ul></ul>");
@@ -835,11 +835,9 @@ define("superApp.reportService", ["super.superMessage", "ngDialog"],
                 }
 
                 $backDiv.append($oColorDiv);
-                $("#div_ViewProduct").append($backDiv);
+                $("#"+panelid).append($backDiv);
 
-                var scrollTop = $("#div_ViewProduct").scrollTop();
-                $backDiv.css("top", scrollTop);
-
+                
                 $("#div_ViewProduct").css("overflow", "hidden");
                 $(".colorSelector").css("top", top + "px");
 

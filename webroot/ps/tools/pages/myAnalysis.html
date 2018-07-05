@@ -33,7 +33,7 @@
                 <button class="btn btn-default pull-right reSet" style="margin-right:12px;" ng-click="handlerResetClick($event)">重置</button>
             </div>
             <div class="filter pull-right">
-                <input class="keywordInput" placeholder="关键字筛选" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label"
+                <input class="keywordInput" placeholder="搜索" ng-mouseover="handlerRemoveShow()" ng-mouseout="handlerRemoveHide()" ng-model="analysisEntity.searchContent.label"
                     ng-keyup="handlerSearch($event)">
                 <i class="iconfont icon-chazhao search"></i>
                 <i class="glyphicon glyphicon-remove remove" ng-mouseover="handlerRemoveIconShow()" ng-click="handlerClearSearch()"></i>
@@ -53,7 +53,7 @@
                 <table ng-show="!analysisError" class="table table-bordered table-hover table-striped table_grid table-fixed custom-table">
                     <thead>
                         <tr>
-                            <th class="text-center">项目</th>
+                            <th class="text-center">任务名称</th>
                             <th class="text-center">状态</th>
                             <th class="text-center">提交时间</th>
                             <th class="text-center">前置任务</th>
@@ -64,7 +64,9 @@
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
                             <td class="text-center editProject">
-                                <span ng-show="!item.isEdit">{{item.projectName}}</span>
+                                <span class="popover-table" thead-key="'projectName'" data-title="{{item.projectName}}" style="display:inline-block; width:100%; overflow:hidden;">
+                                    <span ng-show="!item.isEdit">{{item.projectName}}</span>
+                                </span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
                                 <input ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
                                 <i class="iconfont icon-xiugai" ng-click="handlerEditClick(item)"></i>
@@ -92,7 +94,9 @@
                                 </div>
                             </td>
                             <td class="text-center editRemark">
-                                <span ng-show="!item.isEditRemark">{{item.remark}}</span>
+                                <span class="popover-table" thead-key="'remark'" data-title="{{item.remark}}" style="display:inline-block; width:100%; overflow:hidden;">
+                                    <span ng-show="!item.isEditRemark">{{item.remark}}</span>
+                                </span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
                                 <input ng-blur="handlerBlur2($index,item,item.remark)" ng-show="item.isEditRemark" type="text" ng-model="item.remark">
                                 <i class="iconfont icon-xiugai" ng-click="handlerEditClick2(item)"></i>

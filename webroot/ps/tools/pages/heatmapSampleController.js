@@ -253,10 +253,19 @@ define(["toolsApp"], function(toolsApp) {
                 .text("表达量聚类")
                 .attr("font-size", "18px")
                 .attr("text-anchor", "middle")
-                .on("click", function() {
+                .on("dblclick", function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);
                 })
+                .on("mouseover", function() {
+                    d3.select(this).attr("fill", "#5378f8");
+                    var tipText = ["双击修改"];
+                    reportService.GenericTip.Show(d3.event, tipText);
+                })
+                .on("mouseout", function() {
+                    d3.select(this).attr("fill", "#000");
+                    reportService.GenericTip.Hide();
+                });
 
             if (setOption.isShowTopLine && $scope.isTopCluster) {
                 drawTopCluster();

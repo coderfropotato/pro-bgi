@@ -384,7 +384,7 @@ li {
     text-align: right;
 }
 
-#closeBtn {
+.login_close {
     cursor: pointer;
 }
 
@@ -401,6 +401,15 @@ li {
 .login_sum {
     position: relative;
     margin-bottom: 15px;
+}
+
+#noChrome p {
+    margin: 18px;
+    line-height: 2;
+}
+
+#noChrome .btn {
+    margin-right: 20px;
 }
 
 .password_img,
@@ -739,13 +748,15 @@ height: 100%;*/
     min-height: 45px!important;
 }
 
-.ngdialog-buttons button.btn-success {
+.ngdialog-buttons button.btn-success,
+#noChrome button#continueLogin {
     color: #FFFFFF!important;
     background: #5378F8!important;
     border: 1px solid #5378F8!important;
 }
 
-.ngdialog-buttons button.btn-success:hover {
+.ngdialog-buttons button.btn-success:hover,
+#noChrome button#continueLogin:hover {
     background: #4666d3!important;
     border: 1px solid #5378F8!important;
 }

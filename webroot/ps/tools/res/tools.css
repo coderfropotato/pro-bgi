@@ -400,8 +400,8 @@
 
 /* help page */
 .help-page{
-    min-width: 880px;
     position: relative;
+    padding: 0 40px;
 }
 .help-page p{
     font-size: 14px!important;
@@ -410,7 +410,6 @@
     line-height: 1.7!important;
     padding-left: 40px;
     margin-bottom: 0!important;
-    min-width: 880px;
     text-indent:0!important;
 }
 .help-page p .mask{
@@ -443,7 +442,8 @@ p.help-title{
 .help-page img{
     display: block;
     margin:36px auto;
-    max-width: 880px;
+    max-width: 100%;
+    max-height: 100%;
 }
 .help-page p.indent4{
     padding-left: 60px!important;
@@ -455,22 +455,22 @@ p.help-title{
     margin-top: 0!important;
 }
 .help-tip{
-    min-width: 880px;
-    height: 80px;
+    padding:30px 12px;
     font-size: 16px;
     color: #5378F8;
-    line-height: 80px;
     text-align: center;
     background: #E9EDFA;
     margin-top: 60px;
 }
+
 .help-page .help-anchor{
     width: auto;
     position: fixed;
-    top: 114px;
-    right: 12px;
+    top: 130px;
+    right: 20px;
     overflow: auto;
-    background-color:transparent;
+    background-color: transparent;
+    border-left: 1px solid #ccc;
 }
 .help-page .help-anchor li{
     cursor: pointer;
@@ -485,3 +485,12 @@ p.help-title{
 .help-page .help-anchor li.indent{
     padding-left: 32px;
 }
+.help-page .report-page-title .alert-default{
+    min-width: unset!important;
+}
+
+@media screen and (max-width: 1200px) { 
+    .help-page .help-anchor {
+      display: none;
+    }
+  }

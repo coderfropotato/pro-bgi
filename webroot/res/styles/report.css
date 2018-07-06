@@ -4656,6 +4656,9 @@ div.titleDetail {
 .little-table .tableListPanel{
     padding-top:16px;
 }
+.little-table.npt .tableListPanel{
+    padding-top:0;
+}
 .tableListPanel.little-table-wrap {
     padding-bottom: 16px;
 }
@@ -4976,6 +4979,7 @@ h6.nplr {
     color: #fff;
     padding: 4px 6px;
     border-radius: 4px;
+    word-break: break-all;
 }
 .long-tool-tip-arrow{
     position: absolute;

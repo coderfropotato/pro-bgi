@@ -37,6 +37,8 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     // 无数据是否需要隐藏
                     // tableTitle: "@",
                     isNoDataHide: "=",
+                    // 请求完成回调  根据数据来判断是否显示外部的信息
+                    reqDoneCallback:"&"
                 },
                 replace: false,
                 transclude: true,
@@ -79,9 +81,11 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.tableData = responseData;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
+                    $scope.reqDoneCallback && $scope.reqDoneCallback({arg:$scope.error});
                 }, function (errorMesg) {
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
+                    $scope.reqDoneCallback && $scope.reqDoneCallback({arg:$scope.error});
                 });
             }
         }

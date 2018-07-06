@@ -21,13 +21,17 @@
 .tools-analysis-panel .keywordInput {
     background: #FFFFFF;
     border-radius: 2px;
-    width: 116px;
+    width: 175px;
     height: 32px;
     border: 1px solid #DFE3F2;
     font-size: 12px;
     color: #333333;
     letter-spacing: 0;
     padding-left: 27px;
+}
+
+.tools-analysis-panel .keywordInput:focus {
+    border-color: #5378F8;
 }
 
 .tools-analysis-panel .analysis-content {
@@ -288,7 +292,9 @@
     border: none;
 }
 
-.advance-panel button:hover,.advance-panel button:focus,.advance-panel button:active {
+.advance-panel button:hover,
+.advance-panel button:focus,
+.advance-panel button:active {
     background: #5378F8;
     color: #FFFFFF;
     border: none;
@@ -298,16 +304,20 @@
     background: #f69191;
 }
 
-.advance-panel button.reSet:hover,.advance-panel button.reSet:focus,.advance-panel button.reSet:active {
+.advance-panel button.reSet:hover,
+.advance-panel button.reSet:focus,
+.advance-panel button.reSet:active {
     background: #f04848;
     border: none;
 }
 
-.editProject,.editRemark {
+.editProject,
+.editRemark {
     position: relative;
 }
 
-.editProject i,.editRemark i {
+.editProject i,
+.editRemark i {
     position: absolute;
     right: 0;
     top: 12px;
@@ -316,11 +326,13 @@
     visibility: hidden;
 }
 
-.editProject:hover i,.editRemark:hover i {
+.editProject:hover i,
+.editRemark:hover i {
     visibility: visible;
 }
 
-.editProject>span,.editRemark>span {
+.editProject>span,
+.editRemark>span {
     max-width: calc(100% - 18px);
     display: inline-block;
     white-space: nowrap;
@@ -328,7 +340,7 @@
     overflow: hidden;
 }
 
-.editProject>input{
+.editProject>input {
     text-align: center;
     width: calc(100% - 18px);
     background: #FFFFFF;
@@ -336,6 +348,7 @@
     border: 1px solid #DFE3F2;
     height: 25px;
 }
+
 .editRemark>input {
     text-align: center;
     width: calc(100% - 28px);
@@ -380,6 +393,7 @@
 .report-page-title h2 span {
     font-size: 24px!important;
 }
-.tooltip{
+
+.tooltip {
     text-indent: 0!important;
 }

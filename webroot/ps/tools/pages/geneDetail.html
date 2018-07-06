@@ -363,6 +363,7 @@
             <h4>序列信息</h4>
             <div ng-hide="sequenceError">
                 <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="获取序列" ng-click="isShowSequence = true">获取序列</button>
+                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="下载序列" style="margin-left: 20px;" ng-click="downloadSequence()">下载序列</button>
                 <div ng-show="isShowSequence" class="sequenceInfo">
                     <p ng-show="transcript" ng-repeat="transcript in transcriptList track by $index">{{transcript}}</p>
                     <p ng-show="cds" ng-repeat="cds in cdsList track by $index">{{cds}}</p>

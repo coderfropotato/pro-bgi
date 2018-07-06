@@ -305,9 +305,39 @@ define(["toolsApp"], function(toolsApp) {
                 });
         }
 
+        function addZero(n) {
+            return n < 10 ? '0' + n : n;
+        }
+
+        //下载序列
+        $scope.downloadSequence = function() {
+            var content = "";
+            var oDate = new Date();
+            var date = oDate.getFullYear() + addZero(oDate.getMonth() + 1) + addZero(oDate.getDate()) + addZero(oDate.getHours()) + addZero(oDate.getMinutes());
+            if ($scope.transcript) {
+                content = $scope.transcript;
+            }
+            if ($scope.cds) {
+                content = $scope.cds;
+            }
+            if ($scope.protein) {
+                content = $scope.protein;
+            }
+            var data = new Blob([content], {
+                type: "text/plain;charset=UTF-8"
+            });
+            var downloadUrl = window.URL.createObjectURL(data);
+            var anchor = document.createElement("a");
+            anchor.href = downloadUrl;
+            anchor.download = "序列信息_" + date + ".txt";
+            anchor.click();
+            anchor.remove();
+            window.URL.revokeObjectURL(data);
+        }
+
         //表达量折线图
         $scope.drawLine = function(resData) {
-            var width = (resData.baseThead.length*20+80) <600 ? 600:resData.baseThead.length*20+80;
+            var width = (resData.baseThead.length * 20 + 80) < 600 ? 600 : resData.baseThead.length * 20 + 80;
             var rows = resData.rows;
             var baseThead = resData.baseThead;
             var data = [];
@@ -349,7 +379,7 @@ define(["toolsApp"], function(toolsApp) {
                 "dataBox": {
                     "showLabel": false,
                     "normalColor": ["#5378F8"],
-                    "curve":false,
+                    "curve": false,
                 }
             }
 

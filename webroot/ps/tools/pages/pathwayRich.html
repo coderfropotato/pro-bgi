@@ -129,6 +129,8 @@
             <!-- 气泡图 start -->
             <h6 class="nmt nb nplr" ng-if="chartType==='column'">KEGG Pathway 富集柱状图</h6>
             <h6 class="nmt nb nplr" ng-if="chartType==='bubble'">KEGG Pathway 富集气泡图</h6>
+            <p ng-if="chartType==='bubble'" class="table-chart-desc">富集气泡图从三个维度展示KEGG Pathway的富集情况，默认Qvalue最小的前20个GO Term或按照选择的GO Term（按Qvalue排序，最多60个）作图。下图是所选基因集的KEGG Pathway富集结果。</p>
+            <p ng-if="chartType==='column'" class="table-chart-desc">以柱状图形式展示KEGG Pathway的富集程度，默认情况下以富集程度前20的KEGG Pathway或按照选择的KEGG Pathway（最多60个）作图。下图是所选基因集的KEGG Pathway富集结果。</p>
             <div class="graph_group" id="reAnalysis_pathwayRich_bubble">
                 <div class="graph_header">
                     <ul class="fLeft">
@@ -241,7 +243,10 @@
                     <div class="table-nodata" error-type="bubbleError"></div>
                 </div>
             </div>
-
+            <div ng-show="chartType=='bubble' && !bubbleError && !isTableShow" class="chart-desc" text="X轴为富集比例【选定的基因集中注释到某一条目的基因数与本物种注释到该条目总基因数的比值，计算公式为Rich Ratio = Term Candidate Gene Num / Term Gene Num】，Y轴为KEGG Pathway，气泡的大小表示注释到某个KEGG Pathway上的基因数目，颜色代表富集Qvalue值，颜色越深代表Qvalue值越小。
+            选择图中的某个气泡或者右上角“多选”模式下选择多个气泡，将在下方表格显示注释到这些KEGG Pathway上的差异基因情况。双击图标题或坐标轴标题可以修改文字，点击图例色条可以修改颜色。"></div>
+            <div ng-show="chartType=='column' && !bubbleError && !isTableShow" class="chart-desc" text="下方X 轴柱子的长短代表Qvalue的大小（-log10(Qvalue)）,折线上的点在上方X上的值是注释到该KEGG Pathway上的差异基因数目。
+            选择图中的某个柱子或者右上角“多选”模式下选择多个柱子，将在下方表格显示注释到这些KEGG Pathway上的差异基因情况。双击图标题或坐标轴标题可以修改文字，点击图例色块可以修改颜色。"></div>
         </div>
         <!-- 交互表 (geneId表) start -->
         <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"

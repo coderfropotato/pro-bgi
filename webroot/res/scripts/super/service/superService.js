@@ -536,7 +536,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popPrompt'><span>标题：</span><input type='text' id='TextInput' value='" + value + "' class='form-control'><p class='errorInfo'>温馨提示：点击图右上角刷新按钮可还原标题。</p></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popPrompt'><span>标题：</span><input placeholder='点击图片右上方刷新按钮可还原标题' type='text' id='TextInput' value='" + value + "' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     // title: popTitle,

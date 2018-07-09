@@ -376,12 +376,14 @@
 
         <div id="literature_panel" ng-hide="pubmedError">
             <h4>文献信息</h4>
-            <div ng-repeat="item in literature track by $index">
-                <p>
-                    <span>{{$index+1}}</span>.
-                    <a ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{item.PubMed_ID}}" target="_blank">{{item.ArticleTitle}}</a>
-                </p>
-                <p>{{item.Author}}&nbsp;{{item.ISOAbbreviation}}&nbsp;{{item.JournalIssuem}}&nbsp;PMID&nbsp;{{item.PubMed_ID}}</p>
+            <div style="max-height: 600px;overflow: auto;">
+                <div ng-repeat="item in literature track by $index">
+                    <p>
+                        <span>{{$index+1}}</span>.
+                        <a ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{item.PubMed_ID}}" target="_blank">{{item.ArticleTitle}}</a>
+                    </p>
+                    <p>{{item.Author}}&nbsp;{{item.ISOAbbreviation}}&nbsp;{{item.JournalIssuem}}&nbsp;PMID&nbsp;{{item.PubMed_ID}}</p>
+                </div>
             </div>
         </div>
 

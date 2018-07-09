@@ -64,12 +64,12 @@
                     <tbody>
                         <tr ng-repeat="item in analysisList.rows track by $index">
                             <td class="text-center editProject">
-                                <span class="popover-table" thead-key="'projectName'" data-title="{{item.projectName}}" style="display:inline-block; width:100%; overflow:hidden;">
+                                <span class="popover-table-tools"  data-title="{{item.projectName}}" style="display:inline-block;">
                                     <span ng-show="!item.isEdit">{{item.projectName}}</span>
                                 </span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
-                                <input ng-blur="handlerBlur($index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
-                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick(item)"></i>
+                                <input  ng-blur="handlerBlur($index,item,item.projectName)" ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" ng-show="item.isEdit" type="text" ng-model="item.projectName">
+                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick($index,item)"></i>
                             </td>
                             <td class="text-center">
                                 <span ng-if="item.process==1">
@@ -94,12 +94,12 @@
                                 </div>
                             </td>
                             <td class="text-center editRemark">
-                                <span class="popover-table" thead-key="'remark'" data-title="{{item.remark}}" style="display:inline-block; width:100%; overflow:hidden;">
+                                <span class="popover-table-tools"  data-title="{{item.remark}}" style="display:inline-block;">
                                     <span ng-show="!item.isEditRemark">{{item.remark}}</span>
                                 </span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
-                                <input ng-blur="handlerBlur2($index,item,item.remark)" ng-show="item.isEditRemark" type="text" ng-model="item.remark">
-                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick2(item)"></i>
+                                <input ng-blur="handlerBlur2($index,item,item.remark)" ng-keyup="handlerKeyUp2($event,$index,item,item.remark)" ng-show="item.isEditRemark" type="text" ng-model="item.remark">
+                                <i class="iconfont icon-xiugai" ng-click="handlerEditClick2($index,item)"></i>
                             </td>
                             <td class="text-center">
                                 <button ng-if="item.process==1 || item.process==0" class="btn-tools btn-tools-primary" ng-click="handlerSeeClick(item)">查看</button>

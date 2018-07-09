@@ -147,6 +147,14 @@ define(["toolsApp"], function(toolsApp) {
                 var textNode = d3.select(this).node();
                 toolService.popPrompt(textNode, textNode.textContent);
             })
+            $scope.barchart.mouseoverTitle(function() {
+                d3.select(this).attr("fill", "#5378f8");
+                d3.select(this).append("title").text("双击修改标题");
+            })
+            $scope.barchart.mouseoutTitle(function() {
+                d3.select(this).attr("fill", "#000000");
+                d3.select(this).select("title").remove();
+            })
             return $scope.barchart;
         }
     };

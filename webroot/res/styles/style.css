@@ -8779,12 +8779,12 @@ div.tipsContainer,
 
 .bgi_static_pic .bgi_static_pic_title {
     text-align: center;
-    margin: 4px 0 10px 0;
+    margin: 16px 0 20px 0;
 }
 
 .bgi_static_pic .bgi_static_pic_title span {
-    font-size: 14px;
-    color: #636A82;
+    font-size: 16px;
+    color: #000;
 }
 
 

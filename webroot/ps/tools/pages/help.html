@@ -20,170 +20,170 @@
     <!-- 页面布局和功能 -->
     <p id="yembjhgn" class="help-title">页面布局和功能</p>
     <p class="help-sub-title">报告页面主要分成：目录、页面切换、图、表格扩展、表、小工具和导航等七个区域。如下图：</p>
-    <img src="../../../res/images/tools/help1.png" alt="页面布局和功能">
+    <img src="res/images/help1.png" alt="页面布局和功能">
     <!-- 目录区 -->
     <p id="mulq" class="help-title">目录区</p>
-    <p class="help-sub-title">目录有三个层级，每个第二层级下有分析结果、分析方法和FAQ三部分，其中分析结果有一到多个页面。第三层级标题与页面切换区的标题相同，指向相同页面。点击目录边缘的“
-        <<”图标可收起或展开目录。</p>
-            <!-- 页面切换区 -->
-            <p id="yemqhq" class="help-title">页面切换区</p>
-            <p class="help-sub-title">切换区的标题对应第三层级目录名，包括一到多个结果页面、分析方案和FAQ三部分。</p>
-            <!-- 图区 -->
-            <p id="tuq" class="help-title">图区</p>
-            <img src="../../../res/images/tools/help2.png" alt="图区">
-            <p class="help-sub-title">图区分成功能区和图两部分，不同的图功能区略有差异，可能包括：</p>
-            <p>1.
-                <b>统计视图：</b>以图片的形式展示数据（默认）；</p>
-            <p>2.
-                <b>表格视图：</b>以表格的形式展示数据；</p>
-            <p>3.
-                <b>组别切换：</b>点击下拉按钮可以切换样本、比较组、分析方案等；</p>
-            <p>4.
-                <b>选择模式：</b>柱状图等图形支持单击图片筛选表格数据，有
-                <span class="mask">单选</span> 和
-                <span class="mask">多选</span> 两种模式，默认
-                <span class="mask">单选</span> 模式。例如GO分类条形图中，在
-                <span class="mask">单选</span> 模式下，单击GO Term名为"biological adhersion"对应的柱子，下方的表格会筛选出注释到该条目的基因集。点击
-                <span class="mask">多选</span> ，可以切换成
-                <span class="mask">多选</span> 模式，在条形图中分别单击多个柱子，再单击
-                <span class="mask">确认</span> 下方表格会筛选出所有这些条目的基因集。</p>
-            <img src="../../../res/images/tools/help3.png" alt="选择模式">
-            <p>5.
-                <b>刷新：</b>重新加载图片，遇到网络问题，图片加载不完整的情况可尝试该按钮重新加载；</p>
-            <p>6.
-                <b>导出图片：</b>可导出JPG、PNG、SVG三种格式的图片，其中SVG是矢量图，可以在Illustrator/Inkscape等矢量图编辑器中进行编辑，或者导入Photoshop转换成高清大图。</p>
-            <p>7.所有带图例的图片支持修改配色，单击图例色块可修改图上对应区域的颜色。</p>
-            <p>8.双击图标题、坐标轴标题可对文字进行修改。</p>
-            <!-- 表格扩展区 -->
-            <p id="biaogkzq" class="help-title">表格扩展区</p>
-            <img src="../../../res/images/tools/help4.png" alt="表格扩展">
-            <p class="help-sub-title">所有以基因（或Unigene）为维度的表格支持扩展信息，单击
-                <span class="mask">扩展列</span> 可以进入扩展模式。例如单击
-                <span class="mask">扩展列</span> 后切换到“注释”标签，选中“GO”，再单击
-                <span class="mask">确认</span> ，可以在表格中增加一列GO注释信息。 单击
-                <span class="mask">清除</span> 按钮可以清除所有选中的条件。单击
-                <span class="mask">取消</span> 只清除在上一次确定后选中的条件。单击
-                <span class="mask">确定</span> 按钮应用当前选中的条件，表格增加列，可在下方表格中拖动横向滚动条查看。</p>
-            <!-- 表格区 -->
-            <p id="biaogq" class="help-title">表格区</p>
-            <img src="../../../res/images/tools/help5.png" alt="表格区">
-            <p>1.
-                <b>筛选：</b>分成“文本检索”和“数字检索”。</p>
-            <p class="indent4">i.
-                <b>文本检索：</b>
-            </p>
-            <p class="indent6">a.等于：筛选出单元格内容与检索内容
-                <b>完全相同</b>的行；</p>
-            <p class="indent6">b.不等于：筛选出单元格内容与检索内容
-                <b>不同</b>的行；</p>
-            <p class="indent6">c.模糊：筛选出单元格内容与检索内容
-                <b>部分相同</b>的行，例如输入“P450”可筛选出所有该列带有“P450”的行；</p>
-            <p class="indent6">d.包含：可以输入多个关键词，每行一个关键词，筛选与其中任意关键词完全匹配的行；需要一次选择多个基因的情况可以使用该模式。例如输入GeneID：1001，2037（注意一行一个ID），可以在表格中筛选出1001、2037这两个基因。</p>
-            <p class="indent4">ii.
-                <b>数字检索：</b>
-            </p>
-            <p class="indent6">a.范围：输入最小值（A）和最大值（B），筛选在该范围内的值；</p>
-            <p class="indent6">b.包含：可输入多个值，筛选与这些值完全相同的内容；</p>
-            <p class="indent6">c.其它还包括：等于、不等于、大于、小于、大于等于和小于等于等。</p>
-            <p>2.精度切换：更改数值的显示精度</p>
-            <p>3.基因列表：在使用小工具时，可能需要剔除掉个别基因，单击Gene ID前的“眼睛”图案可以剔除该基因，这部分被剔除的Gene ID存入“未选中GeneList”。可以单击Gene ID前的“X”重新把这个基因放回表格中。</p>
-            <p>4.刷新：重新加载表格。</p>
-            <p>5.下载：导出CSV格式的表格数据。</p>
-            <!-- 小工具区 -->
-            <p id="xiaogjq" class="help-title">小工具区</p>
-            <p class="help-sub-title">所有第一列是Gene ID的表格，右下角可能最多有7个小工具图标，分别是聚类热图、GO富集、KEGG富集、GO分类、KEGG分类、散点图、蛋白网络互作分析。如下图：</p>
-            <img src="../../../res/images/tools/help6.png" alt="小工具">
-            <p>1.
-                <b>进行小工具分析的数据以当前表格的Gene ID为基础，与表格其它列无关。</b>若需要Gene ID以外的信息，将在点击小工具图标后弹框提示选择。</p>
-            <p>2.对于聚类热图、GO富集、KEGG富集分析时间稍长，单击图标后分析记录将添加到“我的分析”列表中，可以在右侧“我的分析”中查看最新10条分析，或者在页面顶部“我的分析”查看所有分析记录。</p>
-            <p>3.小工具的使用对基因个数进行限制，若当前表格中的基因个数超出限制，小工具图标将置灰为不可用状态。</p>
+    <p class="help-sub-title">目录有三个层级，每个第二层级下有分析结果、分析方法和FAQ三部分，其中分析结果有一到多个页面。第三层级标题与页面切换区的标题相同，指向相同页面。点击目录边缘的“&lt&lt”图标可收起或展开目录。
+    </p>
+    <!-- 页面切换区 -->
+    <p id="yemqhq" class="help-title">页面切换区</p>
+    <p class="help-sub-title">切换区的标题对应第三层级目录名，包括一到多个结果页面、分析方案和FAQ三部分。</p>
+    <!-- 图区 -->
+    <p id="tuq" class="help-title">图区</p>
+    <img src="res/images/help2.png" alt="图区">
+    <p class="help-sub-title">图区分成功能区和图两部分，不同的图功能区略有差异，可能包括：</p>
+    <p>1.
+        <b>统计视图：</b>以图片的形式展示数据（默认）；</p>
+    <p>2.
+        <b>表格视图：</b>以表格的形式展示数据；</p>
+    <p>3.
+        <b>组别切换：</b>点击下拉按钮可以切换样本、比较组、分析方案等；</p>
+    <p>4.
+        <b>选择模式：</b>柱状图等图形支持单击图片筛选表格数据，有
+        <span class="mask">单选</span> 和
+        <span class="mask">多选</span> 两种模式，默认
+        <span class="mask">单选</span> 模式。例如GO分类条形图中，在
+        <span class="mask">单选</span> 模式下，单击GO Term名为"biological adhersion"对应的柱子，下方的表格会筛选出注释到该条目的基因集。点击
+        <span class="mask">多选</span> ，可以切换成
+        <span class="mask">多选</span> 模式，在条形图中分别单击多个柱子，再单击
+        <span class="mask">确认</span> 下方表格会筛选出所有这些条目的基因集。</p>
+    <img src="res/images/help3.png" alt="选择模式">
+    <p>5.
+        <b>刷新：</b>重新加载图片，遇到网络问题，图片加载不完整的情况可尝试该按钮重新加载；</p>
+    <p>6.
+        <b>导出图片：</b>可导出JPG、PNG、SVG三种格式的图片，其中SVG是矢量图，可以在Illustrator/Inkscape等矢量图编辑器中进行编辑，或者导入Photoshop转换成高清大图。</p>
+    <p>7.所有带图例的图片支持修改配色，单击图例色块可修改图上对应区域的颜色。</p>
+    <p>8.双击图标题、坐标轴标题可对文字进行修改。</p>
+    <!-- 表格扩展区 -->
+    <p id="biaogkzq" class="help-title">表格扩展区</p>
+    <img src="res/images/help4.png" alt="表格扩展">
+    <p class="help-sub-title">所有以基因（或Unigene）为维度的表格支持扩展信息，单击
+        <span class="mask">扩展列</span> 可以进入扩展模式。例如单击
+        <span class="mask">扩展列</span> 后切换到“注释”标签，选中“GO”，再单击
+        <span class="mask">确认</span> ，可以在表格中增加一列GO注释信息。 单击
+        <span class="mask">清除</span> 按钮可以清除所有选中的条件。单击
+        <span class="mask">取消</span> 只清除在上一次确定后选中的条件。单击
+        <span class="mask">确定</span> 按钮应用当前选中的条件，表格增加列，可在下方表格中拖动横向滚动条查看。</p>
+    <!-- 表格区 -->
+    <p id="biaogq" class="help-title">表格区</p>
+    <img src="res/images/help5.png" alt="表格区">
+    <p>1.
+        <b>筛选：</b>分成“文本检索”和“数字检索”。</p>
+    <p class="indent4">i.
+        <b>文本检索：</b>
+    </p>
+    <p class="indent6">a.等于：筛选出单元格内容与检索内容
+        <b>完全相同</b>的行；</p>
+    <p class="indent6">b.不等于：筛选出单元格内容与检索内容
+        <b>不同</b>的行；</p>
+    <p class="indent6">c.模糊：筛选出单元格内容与检索内容
+        <b>部分相同</b>的行，例如输入“P450”可筛选出所有该列带有“P450”的行；</p>
+    <p class="indent6">d.包含：可以输入多个关键词，每行一个关键词，筛选与其中任意关键词完全匹配的行；需要一次选择多个基因的情况可以使用该模式。例如输入GeneID：1001，2037（注意一行一个ID），可以在表格中筛选出1001、2037这两个基因。</p>
+    <p class="indent4">ii.
+        <b>数字检索：</b>
+    </p>
+    <p class="indent6">a.范围：输入最小值（A）和最大值（B），筛选在该范围内的值；</p>
+    <p class="indent6">b.包含：可输入多个值，筛选与这些值完全相同的内容；</p>
+    <p class="indent6">c.其它还包括：等于、不等于、大于、小于、大于等于和小于等于等。</p>
+    <p>2.精度切换：更改数值的显示精度</p>
+    <p>3.基因列表：在使用小工具时，可能需要剔除掉个别基因，单击Gene ID前的“眼睛”图案可以剔除该基因，这部分被剔除的Gene ID存入“未选中GeneList”。可以单击Gene ID前的“X”重新把这个基因放回表格中。</p>
+    <p>4.刷新：重新加载表格。</p>
+    <p>5.下载：导出CSV格式的表格数据。</p>
+    <!-- 小工具区 -->
+    <p id="xiaogjq" class="help-title">小工具区</p>
+    <p class="help-sub-title">所有第一列是Gene ID的表格，右下角可能最多有7个小工具图标，分别是聚类热图、GO富集、KEGG富集、GO分类、KEGG分类、散点图、蛋白网络互作分析。如下图：</p>
+    <img src="res/images/help6.png" alt="小工具">
+    <p>1.
+        <b>进行小工具分析的数据以当前表格的Gene ID为基础，与表格其它列无关。</b>若需要Gene ID以外的信息，将在点击小工具图标后弹框提示选择。</p>
+    <p>2.对于聚类热图、GO富集、KEGG富集分析时间稍长，单击图标后分析记录将添加到“我的分析”列表中，可以在右侧“我的分析”中查看最新10条分析，或者在页面顶部“我的分析”查看所有分析记录。</p>
+    <p>3.小工具的使用对基因个数进行限制，若当前表格中的基因个数超出限制，小工具图标将置灰为不可用状态。</p>
 
-            <!-- 聚类热图 -->
-            <p id="julrt" class="help-title">聚类热图</p>
-            <p class="help-sub-title">使用条件：2≤基因数≤2000 且 样本数或比较组数>=1。</p>
-            <p class="help-sub-title">可以对样本的FPKM或比较组的log2FC进行聚类。聚类分析大约需要1-5分钟，可以在“我的分析”中查看分析进度。</p>
-            <p>1.单击图例色块（上、中、下）可修改热图配色；</p>
-            <p>2.单击热图右上角的设置图标可以修改热图大小。</p>
-            <!-- GO富集 -->
-            <p id="GOfuj" class="help-title">GO富集</p>
-            <p class="help-sub-title">使用条件：基因数≥3。</p>
-            <p class="help-sub-title">以本物种所有基因的GO注释为背景，对表格中的基因进行富集分析。</p>
-            <p>1.结果页面的图片区默认展示Qvalue最小的Top20个条目，默认为气泡图展示。可以在图区的工具栏切换成柱状图；</p>
-            <p>2.在图上方的表格中勾选希望画图展示的条目，单击图区工具栏的 画图 可以重新画图；</p>
-            <p>3.若勾选的条目超出60个，只画Qvalue最小的Top60个条目。</p>
-            <!-- KEGG富集 -->
-            <p id="KEGGfuj" class="help-title">KEGG富集</p>
-            <p class="help-sub-title">请参考GO富集。</p>
-            <p class="help-sub-title">另外，单击表格中的Pathway ID可查看代谢通路图。通路图上每一个方框代表一个/类基因对应一个K号，可能存在多个基因注释到同一个K号的情况。红色的框表示该基因上调，绿色表示下调，红色+绿色表示既有上调又有下调。 单击红/绿色方框可在下方表格中筛选出相应的基因。
-            </p>
-            <!-- GO分类 -->
-            <p id="GOfenl" class="help-title">GO分类</p>
-            <p class="help-sub-title">使用条件：基因数≥1。</p>
-            <p class="help-sub-title">对表格中的基因进行GO注释分类。</p>
-            <!-- KEGG分类 -->
-            <p id="KEGGfenl" class="help-title">KEGG分类</p>
-            <p class="help-sub-title">使用条件：基因数≥1。</p>
-            <p class="help-sub-title">对表格中的基因进行KEGG ORTHOLOGY分类。</p>
-            <!-- 折线图 -->
-            <p id="zhext" class="help-title">折线图</p>
-            <p class="help-sub-title">使用条件：1≤基因数≤100 且 样本/分组数≥2。</p>
-            <p class="help-sub-title">画折线图需要Gene ID，样本/分组名，Gene ID以表格中的为准，样本/分组在提示框中选定。折线图X轴样本/分组名的排列顺序以鼠标单击选定的先后顺序为准。</p>
-            <!-- 蛋白网络图 -->
-            <p id="danbwlt" class="help-title">蛋白网络图</p>
-            <p class="help-sub-title">分析方法：</p>
-            <p>1.网络关系的获得：使用
-                <a href="https://github.com/bbuchfink/diamond" target="_blank">DIAMOND</a>将基因比对至
-                <a href="https://string-db.org" target="_blank">STRING</a>数据库，利用与已知蛋白的同源性获得基因间的互作关系。</p>
-            <p>2.作图：基因间的互作关系有score值，表示互作关系的可靠程度，从150-1000，得分越高互作关系越可靠。默认筛选出score>500的网络关系进行作图。</p>
-            <p class="help-sub-title">使用方法：</p>
-            <p>1.默认为单选模式，单击图上的某个点可以选中与该基因有直接连接关系的所有基因，下方表格会列出这些基因；</p>
-            <p>2.切换成多选模式时，可以框选图上的基因。具体操作为，在鼠标左键按下的状态下，拖动鼠标选择图上的点，可以多次框选，选择完成后点击确定，完成基因选择；</p>
-            <p>3.在设置中可以设置斥力大小，斥力越大，点越分散；</p>
-            <p>4.表格视图下导出的网络关系文件，可导入
-                <a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>做进一步分析。Cytoscape是一款用于复杂网络分析以及可视化的软件，详细信息请参考
-                <a href="http://www.cytoscape.org/documentation_users.html" target="_blank">官方文档</a>。
-            </p>
-            <img src="../../../res/images/tools/help7.png" alt="蛋白网络图">
-            <!-- 导航区 -->
-            <p id="daohq" class="help-title">导航区</p>
-            <p id="wodfx" class="help-sub-title">1.我的分析</p>
-            <p>我的分析中记录了所有使用小工具的分析结果。导出的报告内容中不包括这部分内容。</p>
-            <p id="daocbg" class="help-sub-title">2.导出报告</p>
-            <p>支持导出pdf格式的报告，导出需要几分钟时间，请耐心等待。</p>
-            <p id="xiazsj" class="help-sub-title">3.下载数据</p>
-            <p>测序原始数据Clean data、本报告的数据包等大文件可通过FTP下载，账号密码与本报告的账号密码相同，若遇无法登录的情况，请联系项目管理。</p>
-            <p id="zhanghxx" class="help-sub-title">4.账号信息</p>
-            <p>鼠标悬停 在导航区最右侧图标上可以查看用户名（项目编号)，用户名唯一对应一份报告，可在此处查看用户名。</p>
+    <!-- 聚类热图 -->
+    <p id="julrt" class="help-title">聚类热图</p>
+    <p class="help-sub-title">使用条件：2≤基因数≤2000 且 样本数或比较组数>=1。</p>
+    <p class="help-sub-title">可以对样本的FPKM或比较组的log2FC进行聚类。聚类分析大约需要1-5分钟，可以在“我的分析”中查看分析进度。</p>
+    <p>1.单击图例色块（上、中、下）可修改热图配色；</p>
+    <p>2.单击热图右上角的设置图标可以修改热图大小。</p>
+    <!-- GO富集 -->
+    <p id="GOfuj" class="help-title">GO富集</p>
+    <p class="help-sub-title">使用条件：基因数≥3。</p>
+    <p class="help-sub-title">以本物种所有基因的GO注释为背景，对表格中的基因进行富集分析。</p>
+    <p>1.结果页面的图片区默认展示Qvalue最小的Top20个条目，默认为气泡图展示。可以在图区的工具栏切换成柱状图；</p>
+    <p>2.在图上方的表格中勾选希望画图展示的条目，单击图区工具栏的 画图 可以重新画图；</p>
+    <p>3.若勾选的条目超出60个，只画Qvalue最小的Top60个条目。</p>
+    <!-- KEGG富集 -->
+    <p id="KEGGfuj" class="help-title">KEGG富集</p>
+    <p class="help-sub-title">请参考GO富集。</p>
+    <p class="help-sub-title">另外，单击表格中的Pathway ID可查看代谢通路图。通路图上每一个方框代表一个/类基因对应一个K号，可能存在多个基因注释到同一个K号的情况。红色的框表示该基因上调，绿色表示下调，红色+绿色表示既有上调又有下调。 单击红/绿色方框可在下方表格中筛选出相应的基因。
+    </p>
+    <!-- GO分类 -->
+    <p id="GOfenl" class="help-title">GO分类</p>
+    <p class="help-sub-title">使用条件：基因数≥1。</p>
+    <p class="help-sub-title">对表格中的基因进行GO注释分类。</p>
+    <!-- KEGG分类 -->
+    <p id="KEGGfenl" class="help-title">KEGG分类</p>
+    <p class="help-sub-title">使用条件：基因数≥1。</p>
+    <p class="help-sub-title">对表格中的基因进行KEGG ORTHOLOGY分类。</p>
+    <!-- 折线图 -->
+    <p id="zhext" class="help-title">折线图</p>
+    <p class="help-sub-title">使用条件：1≤基因数≤100 且 样本/分组数≥2。</p>
+    <p class="help-sub-title">画折线图需要Gene ID，样本/分组名，Gene ID以表格中的为准，样本/分组在提示框中选定。折线图X轴样本/分组名的排列顺序以鼠标单击选定的先后顺序为准。</p>
+    <!-- 蛋白网络图 -->
+    <p id="danbwlt" class="help-title">蛋白网络图</p>
+    <p class="help-sub-title">分析方法：</p>
+    <p>1.网络关系的获得：使用
+        <a href="https://github.com/bbuchfink/diamond" target="_blank">DIAMOND</a>将基因比对至
+        <a href="https://string-db.org" target="_blank">STRING</a>数据库，利用与已知蛋白的同源性获得基因间的互作关系。</p>
+    <p>2.作图：基因间的互作关系有score值，表示互作关系的可靠程度，从150-1000，得分越高互作关系越可靠。默认筛选出score>500的网络关系进行作图。</p>
+    <p class="help-sub-title">使用方法：</p>
+    <p>1.默认为单选模式，单击图上的某个点可以选中与该基因有直接连接关系的所有基因，下方表格会列出这些基因；</p>
+    <p>2.切换成多选模式时，可以框选图上的基因。具体操作为，在鼠标左键按下的状态下，拖动鼠标选择图上的点，可以多次框选，选择完成后点击确定，完成基因选择；</p>
+    <p>3.在设置中可以设置斥力大小，斥力越大，点越分散；</p>
+    <p>4.表格视图下导出的网络关系文件，可导入
+        <a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>做进一步分析。Cytoscape是一款用于复杂网络分析以及可视化的软件，详细信息请参考
+        <a href="http://www.cytoscape.org/documentation_users.html" target="_blank">官方文档</a>。
+    </p>
+    <img src="res/images/help7.png" alt="蛋白网络图">
+    <!-- 导航区 -->
+    <p id="daohq" class="help-title">导航区</p>
+    <p id="wodfx" class="help-sub-title">1.我的分析</p>
+    <p>我的分析中记录了所有使用小工具的分析结果。导出的报告内容中不包括这部分内容。</p>
+    <p id="daocbg" class="help-sub-title">2.导出报告</p>
+    <p>支持导出pdf格式的报告，导出需要几分钟时间，请耐心等待。</p>
+    <p id="xiazsj" class="help-sub-title">3.下载数据</p>
+    <p>测序原始数据Clean data、本报告的数据包等大文件可通过FTP下载，账号密码与本报告的账号密码相同，若遇无法登录的情况，请联系项目管理。</p>
+    <p id="zhanghxx" class="help-sub-title">4.账号信息</p>
+    <p>鼠标悬停 在导航区最右侧图标上可以查看用户名（项目编号)，用户名唯一对应一份报告，可在此处查看用户名。</p>
 
-            <!-- tips -->
-            <div class="help-tip">
-                在使用过程中有任何疑问或建议，请拨打0755-36307094，或发送邮件到bgi-report@bgi.com。联系时请附项目编号，期待您的反馈。
-            </div>
+    <!-- tips -->
+    <div class="help-tip">
+        在使用过程中有任何疑问或建议，请拨打0755-36307094，或发送邮件到bgi-report@bgi.com。联系时请附项目编号，期待您的反馈。
+    </div>
 
-            <!-- anchor -->
-            <div class="help-anchor">
-                <ul ng-click="handlerAnchorClick($event)">
-                    <li data-target="#jianj">简介</li>
-                    <li data-target="#denglbg">登陆报告</li>
-                    <li data-target="#yembjhgn">页面布局和功能</li>
-                    <li data-target="#mulq">目录区</li>
-                    <li data-target="#yemqhq">页面切换区</li>
-                    <li data-target="#tuq">图区</li>
-                    <li data-target="#biaogkzq">表格扩展区</li>
-                    <li data-target="#biaogq">表格区</li>
-                    <li data-target="#xiaogjq">小工具区</li>
-                    <li data-target="#julrt" class="indent">聚类热图</li>
-                    <li data-target="#GOfuj" class="indent">GO富集</li>
-                    <li data-target="#KEGGfuj" class="indent">KEGG富集</li>
-                    <li data-target="#GOfenl" class="indent">GO分类</li>
-                    <li data-target="#KEGGfenl" class="indent">KEGG分类</li>
-                    <li data-target="#zhext" class="indent">折线图</li>
-                    <li data-target="#danbwlt" class="indent">蛋白网络图</li>
-                    <li data-target="#daohq">导航区</li>
-                    <li data-target="#wodfx" class="indent">我的分析</li>
-                    <li data-target="#daocbg" class="indent">导出报告</li>
-                    <li data-target="#xiazsj" class="indent">下载数据</li>
-                    <li data-target="#zhanghxx" class="indent">账号信息</li>
-                </ul>
-            </div>
+    <!-- anchor -->
+    <div class="help-anchor">
+        <ul ng-click="handlerAnchorClick($event)">
+            <li data-target="#jianj">简介</li>
+            <li data-target="#denglbg">登陆报告</li>
+            <li data-target="#yembjhgn">页面布局和功能</li>
+            <li data-target="#mulq">目录区</li>
+            <li data-target="#yemqhq">页面切换区</li>
+            <li data-target="#tuq">图区</li>
+            <li data-target="#biaogkzq">表格扩展区</li>
+            <li data-target="#biaogq">表格区</li>
+            <li data-target="#xiaogjq">小工具区</li>
+            <li data-target="#julrt" class="indent">聚类热图</li>
+            <li data-target="#GOfuj" class="indent">GO富集</li>
+            <li data-target="#KEGGfuj" class="indent">KEGG富集</li>
+            <li data-target="#GOfenl" class="indent">GO分类</li>
+            <li data-target="#KEGGfenl" class="indent">KEGG分类</li>
+            <li data-target="#zhext" class="indent">折线图</li>
+            <li data-target="#danbwlt" class="indent">蛋白网络图</li>
+            <li data-target="#daohq">导航区</li>
+            <li data-target="#wodfx" class="indent">我的分析</li>
+            <li data-target="#daocbg" class="indent">导出报告</li>
+            <li data-target="#xiazsj" class="indent">下载数据</li>
+            <li data-target="#zhanghxx" class="indent">账号信息</li>
+        </ul>
+    </div>
 </div>

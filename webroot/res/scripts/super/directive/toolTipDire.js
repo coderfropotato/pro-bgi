@@ -759,8 +759,6 @@ define("superApp.toolTipDire",
                     var leftPos = 0, topPos = 0;
 
                     $(element).on('mouseenter', function () {
-                        console.log($(element).outerWidth());
-                        console.log($(element).children(":eq(0)").width())
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');

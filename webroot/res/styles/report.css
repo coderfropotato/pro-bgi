@@ -3493,6 +3493,18 @@ div.tipsContainer {
     min-height: 200px;
     max-height: 400px;
 }
+.analysis-panel .all{
+    text-align: center;
+    text-indent: 0;
+    margin:0;
+    padding:6px 0 12px;
+}
+.analysis-panel .line{
+    height:1px;
+    background-color:  #DFE3F2;
+    width:calc(100% - 48px);
+    margin-left: 20px;
+}
 
 .analysis-panel .error-tips {
     text-align: center;

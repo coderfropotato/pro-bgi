@@ -1,5 +1,6 @@
 
 
+
 define(['toolsApp'], function (toolsApp) {
     toolsApp.controller('myAnalysisController', myAnalysisController);
     myAnalysisController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
@@ -198,18 +199,26 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // rename
-        $scope.handlerEditClick = function (item) {
+        $scope.handlerEditClick = function (index, item) {
             $scope.analysisList.rows.forEach(function (val, index) {
                 val.isEdit = false;
             })
             item.isEdit = true;
+            if (timer) $timeout.cancel(timer);
+            var timer = $timeout(function () {
+                $('.editProject input').eq(index).get(0).focus();
+            }, 0)
         }
 
-        $scope.handlerEditClick2 = function (item) {
+        $scope.handlerEditClick2 = function (index, item) {
             $scope.analysisList.rows.forEach(function (val, index) {
                 val.isEditRemark = false;
             })
             item.isEditRemark = true;
+            if (timer) $timeout.cancel(timer);
+            var timer = $timeout(function () {
+                $('.editRemark input').eq(index).get(0).focus();
+            }, 0)
         }
 
         // keyup
@@ -218,9 +227,11 @@ define(['toolsApp'], function (toolsApp) {
         //         $scope.handlerBlur(index,item,value);
         //     }
         // }
-
+        $scope.projectIsSave = false;
         $scope.handlerBlur = function (index, item, value) {
             // 去掉空白字符
+            if ($scope.projectIsSave) return;
+            $scope.projectIsSave = true;
             if (/\s/g.test(value)) {
                 value = value.replace(/\s/g, '');
             }
@@ -243,18 +254,31 @@ define(['toolsApp'], function (toolsApp) {
                         $scope.beforeList.rows[index].projectName = value;
                         item.isEdit = false;
                     }
+                    $scope.projectIsSave = false;
                 }, function (err) {
                     console.log(err);
+                    $scope.projectIsSave = false;
                 })
             } else {
                 // 没有修改
                 item.projectName = value;
                 item.isEdit = false;
+                $scope.projectIsSave = false;
+            }
+        }
+
+        $scope.handlerKeyUp = function (event, index, item, value) {
+            if (event.keyCode === 13) {
+                if ($scope.projectIsSave) return;
+                $scope.handlerBlur(index, item, value);
             }
         }
 
 
+        $scope.labelIsSave = false;
         $scope.handlerBlur2 = function (index, item, value) {
+            if ($scope.labelIsSave) return;
+            $scope.labelIsSave = true;
             // 去掉空白字符
             if (/\s/g.test(value)) {
                 value = value.replace(/\s/g, '');
@@ -279,13 +303,23 @@ define(['toolsApp'], function (toolsApp) {
                         $scope.beforeList.rows[index].remark = value;
                         item.isEditRemark = false;
                     }
+                    $scope.labelIsSave = false;
                 }, function (err) {
+                    $scope.labelIsSave = false;
                     console.log(err);
                 })
             } else {
                 // 没有修改
                 item.remark = value;
                 item.isEditRemark = false;
+                $scope.labelIsSave = false;
+            }
+        }
+
+        $scope.handlerKeyUp2 = function (event, index, item, value) {
+            if (event.keyCode === 13) {
+                if ($scope.labelIsSave) return;
+                $scope.handlerBlur2(index, item, value);
             }
         }
 

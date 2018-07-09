@@ -319,7 +319,7 @@
 .editProject i,
 .editRemark i {
     position: absolute;
-    right: 0;
+    right: -2px;
     top: 12px;
     font-size: 12px;
     margin-left: 6px;
@@ -342,7 +342,7 @@
 
 .editProject>input {
     text-align: center;
-    width: calc(100% - 18px);
+    width: calc(100% - 40px);
     background: #FFFFFF;
     border-radius: 2px;
     border: 1px solid #DFE3F2;
@@ -351,12 +351,13 @@
 
 .editRemark>input {
     text-align: center;
-    width: calc(100% - 28px);
+    width: calc(100% - 40px);
     background: #FFFFFF;
     border-radius: 2px;
     border: 1px solid #DFE3F2;
     height: 25px;
 }
+
 
 .btn-links {
     position: absolute;

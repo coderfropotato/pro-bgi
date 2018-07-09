@@ -29,7 +29,8 @@ define([
     "superApp.littleTableDire",
     "superApp.bigTableDire",
     "superApp.tableSwitchChartDire",
-    "superApp.chartSetDire"
+    "superApp.chartSetDire",
+    "superApp.chartDescDire"
 ], function() {
     var toolsApp = angular.module('toolsApp', [
         "ui.router",
@@ -62,7 +63,8 @@ define([
         "superApp.littleTableDire",
         "superApp.bigTableDire",
         "superApp.tableSwitchChartDire",
-        "superApp.chartSetDire"
+        "superApp.chartSetDire",
+        "superApp.chartDescDire"
     ]);
     toolsApp.config(["$logProvider", "$httpProvider", "$stateProvider", "$urlRouterProvider", function($logProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
         $stateProvider

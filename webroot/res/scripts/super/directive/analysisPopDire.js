@@ -28,7 +28,7 @@ define("superApp.analysisPopDire", ["angular", "super.superMessage", "select2"],
                     "<td ><span uib-tooltip=\"{{val.projectName}}\" style='display:block;max-width:90px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'>{{val.projectName}}</span></td><td><span ng-show=\"val.process==0\" style='color:#F04848;'><i class=\"iconfont icon-shibai\"></i></span><span ng-show=\"val.process==-1\" style='color:#32AAFF'><i class=\"iconfont icon-yunhangzhong1\"></i></span><span ng-show=\"val.process==1\" style='color:#63D359;'><i class=\"iconfont icon-wancheng\"></i></span></td><td>{{val.time}}</td><td ng-click=\"handlerAnalysisDetail(val)\"><span style=\"cursor:pointer;\">查看</span></td>" +
                     "</tr>" +
                     "</tbody>" +
-                    "</table></div>" +
+                    "</table></div><p class='line' ng-show='analysisList.length'></p><p class='all' ng-show='analysisList.length>1'><a href='../../../../ps/tools/index.html#/home/myAnalysis' target='_blank'>查看全部</a></p>" +
                     "<div class=\"analysis-arrow\" ng-click=\"toggleShow($event)\"><i class=\"iconfont icon-jihua\"></i><div>我的分析</div></div>" +
                     "<p class=\"error-tips\" ng-show=\"(analysisList.length==0) && error=='nodata'\">暂无分析信息</p>" +
                     "<p class=\"error-tips\" ng-show=\"error=='syserror'\">服务器错误</p>" +

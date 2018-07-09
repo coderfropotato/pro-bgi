@@ -1,11 +1,13 @@
 <div class="goClass-page" ng-controller="goClassController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
     <h6>GO 分类</h6>
+    <p class="module-desc">Gene Ontology 分为分子功能（molecular function）、细胞组分（cellular component）和生物过程（biological process）三大功能类。根据差异基因检测结果进行功能分类。每个大类下有各个层级的子类别。下图是所选基因集的GO注释分类结果。</p>
     <div id="div_goClass_page">
         <!-- <h6>GO分类</h6> -->
         <div class="table-switch-chart noshadow" content-id="contentId" panel-id="panelId" chart-id="chartId" is-table-show="isTableShow" show-accuracy="showAccuracy" show-select="showSelect" select-list="selectList" key="key" params-key="paramsKey" page-entity="pageEntity"
             url="url" tabletochart="tableToChartDataFn(res)" drawchart="drawChartFn(data)" table-download-name="tableDownloadName" chart-download-name="chartDownloadName" select-change-callback="selectChangeCallback(arg)" handler-refresh-click="handlerRefreshClick()"
-            is-select-chart-data="isSelectChartData" chart-select-fn="chartSelectFn(arg)" scale="scale" is-show-before-task="isShowBeforeTask" task-id="id"></div>
+            is-select-chart-data="isSelectChartData" chart-select-fn="chartSelectFn(arg)" scale="scale" is-show-before-task="isShowBeforeTask" task-id="id" chart-describe="X轴代表注释到GO条目上的基因数目，Y轴代表GO功能分类。选择图中的某根柱子或者右上角“多选”模式下选择多根柱子，将在下方表格显示注释到这些GO条目的基因列表。
+            双击图或坐标轴的标题可以修改文字。"></div>
 
 
         <div class="add-delete-big-table" thead-control-id="theadControlId2" page-entity="pageFindEntity" url="url2" content-id="panelId2" table-id="tableId2" unselect-gene-panel-id="unselectId2" table-download-name="filename" gene-list="geneList" gene-list-change-flag="changeFlag"

@@ -534,6 +534,8 @@ define("superApp.toolTipDire",
                     var leftPos = 0, topPos = 0;
 
                     $(element).on('mouseenter', function () {
+                        console.log($(element).width());
+                        console.log($(element).children(":eq(0)").outerWidth())
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');
@@ -742,7 +744,70 @@ define("superApp.toolTipDire",
             }
         }
 
+        // pop over
+        superApp.directive('popoverTableTools', popoverTableTools);
+        popoverTableTools.$inject = ["$log"];
+        function popoverTableTools($log) {
+            return {
+                restrict: "ACE",
+                // controller: "popoverTableCtr",
+                link: function (scope, element, attrs) {
+                    scope.element = element;
+                    $(element).css('position', 'relative');
+                    var obj, timer;
+                    var direc = 'left';
+                    var leftPos = 0, topPos = 0;
 
+                    $(element).on('mouseenter', function () {
+                        console.log($(element).outerWidth());
+                        console.log($(element).children(":eq(0)").width())
+                        if (obj) obj.remove();
+                        topPos = $(element).offset().top;
+                        var text = $(element).attr('data-title');
+
+                        var str = '<div class="tooltip ' + direc + ' poptip" style="max-width:600px;word-wrap:break-word; top:' + topPos + 'px; visible:hidden " role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">';
+                        // 溢出才显示
+                        if (($(element).children(":eq(0)").width() - $(element).outerWidth()) > 2) {
+
+                            var l = text.split(';');
+                            l.forEach(function (val, index) {
+                                if (val.length && $.trim(val)) {
+                                    str += '<span>' + val + ';</span><br>';
+                                }
+                            })
+
+                            obj = $(str);
+
+                            $('body').append(obj);
+                            obj.css('left', $(element).offset().left - obj.outerWidth());
+
+                            // 判断极值
+                            if (obj.width() > ($(element).offset().left)) {
+                                obj.removeClass('left').addClass('right');
+                                obj.css('left', $(element).offset().left + $(element).outerWidth())
+                            }
+
+                            obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
+                            obj.css('visibility', 'visible');
+
+                            obj.on('mouseenter', function () {
+                                if (timer) clearTimeout(timer);
+                            }).on('mouseleave', function () {
+                                obj.remove();
+                            })
+                        } else {
+                            return;
+                        }
+
+                    }).on('mouseleave', function () {
+                        if (timer) clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            if (obj) obj.remove();
+                        }, 80)
+                    })
+                }
+            }
+        }
 
 
         // long tooltip

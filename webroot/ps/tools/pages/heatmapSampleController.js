@@ -28,8 +28,7 @@ define(["toolsApp"], function(toolsApp) {
             }
 
             //图颜色
-            var colorArr = ["#ff0000", "#ffffff", "#0070c0"];
-            toolService.sessionStorage.set('colors', colorArr);
+            $scope.colorArr = ["#ff0000", "#ffffff", "#0070c0"];
 
             // Geneid table params start
             $scope.pageFindEntity = {
@@ -217,11 +216,6 @@ define(["toolsApp"], function(toolsApp) {
             var totalWidth = margin.left + cluster_width + space + heatmap_width + space + YtextWidth + legend_space + legend_width + margin.right,
                 totalHeight = margin.top + topCluster_height + heatmap_height + margin.bottom;
 
-            //定义渐变颜色
-            var colorValue = toolService.sessionStorage.get("colors");
-            var colorArr = colorValue.split(",");
-
-
             //定义图例比例尺
             var legend_yScale = d3.scaleLinear().range([legend_height, 0])
                 .domain([valuemin, valuemax]).clamp(true);
@@ -259,23 +253,22 @@ define(["toolsApp"], function(toolsApp) {
                 })
                 .on("mouseover", function() {
                     d3.select(this).attr("fill", "#5378f8");
-                    var tipText = ["双击修改"];
-                    reportService.GenericTip.Show(d3.event, tipText);
+                    d3.select(this).append("title").text("双击修改标题");
                 })
                 .on("mouseout", function() {
                     d3.select(this).attr("fill", "#000");
-                    reportService.GenericTip.Hide();
+                    d3.select(this).select("title").remove();
                 });
 
             if (setOption.isShowTopLine && $scope.isTopCluster) {
                 drawTopCluster();
             }
             drawCluster();
-            drawHeatmap(colorArr);
+            drawHeatmap($scope.colorArr);
             if (setOption.isShowName) {
                 drawYText();
             }
-            drawLegend(colorArr);
+            drawLegend($scope.colorArr);
 
             //画聚类顶部折线图
             function drawTopCluster() {
@@ -604,11 +597,11 @@ define(["toolsApp"], function(toolsApp) {
             }
 
             //点击图例改图颜色
-            var legendClickRect_h = legend_height / colorArr.length;
+            var legendClickRect_h = legend_height / $scope.colorArr.length;
             var legendClick_g = svg.append("g")
                 .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")");
             legendClick_g.selectAll(".legendClick_Rect")
-                .data(colorArr)
+                .data($scope.colorArr)
                 .enter()
                 .append("rect")
                 .attr("width", legend_width)
@@ -628,10 +621,9 @@ define(["toolsApp"], function(toolsApp) {
 
             //色盘指令回调函数
             $scope.colorChange = function(curColor) {
-                colorArr.splice($scope.colorArr_i, 1, curColor);
-                toolService.sessionStorage.set("colors", colorArr);
-                drawLegend(colorArr);
-                drawHeatmap(colorArr);
+                $scope.colorArr.splice($scope.colorArr_i, 1, curColor);
+                drawLegend($scope.colorArr);
+                drawHeatmap($scope.colorArr);
                 heatmapInteract();
             }
 

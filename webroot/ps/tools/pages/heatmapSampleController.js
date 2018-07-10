@@ -247,6 +247,7 @@ define(["toolsApp"], function(toolsApp) {
                 .text("表达量聚类")
                 .attr("font-size", "18px")
                 .attr("text-anchor", "middle")
+                .style("cursor", "pointer")
                 .on("dblclick", function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);

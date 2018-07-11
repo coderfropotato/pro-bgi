@@ -303,7 +303,7 @@ define(["toolsApp"], function(toolsApp) {
                     .separation(function() { return 1; });
 
                 var cluster_g = body_g.append("g").attr("class", "cluster")
-                    .attr("transform", "translate(0," + topCluster_height + ")");
+                    .attr("transform", "translate(" + space + "," + topCluster_height + ")");
 
                 //根据数据建立模型
                 var root = d3.hierarchy(cluster_data);

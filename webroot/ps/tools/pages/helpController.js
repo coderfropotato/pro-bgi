@@ -10,13 +10,24 @@ define(['toolsApp'], function (toolsApp) {
             }, 300)
 
             $scope.title = '帮助';
+            var moduleId = null;
+            if (location.href.indexOf('?') != -1) {
+                if(location.href.split('?')[1]){
+                    $timeout(function(){
+                        $scope.scrollTo("#"+location.href.split('?')[1].split('=')[1])
+                    },100)
+                }
+            }
         }
 
         $scope.handlerAnchorClick = function (event) {
-            var target = event.target.getAttribute('data-target');
+            $scope.scrollTo(event.target.getAttribute('data-target'));
+        }
+
+        $scope.scrollTo = function(id){
             $('.help-anchor li').removeClass('active');
-            $(event.target).addClass('active');
-            var dis = $(target).offset().top;
+            $("li[data-target="+id+"]").addClass('active');
+            var dis = $(id).offset().top;
             $('#div_ViewProduct').off();
             $('#div_ViewProduct').animate({ scrollTop: $('#div_ViewProduct').scrollTop() + dis }, function () {
                 $('#div_ViewProduct').on('scroll', scrollFn);

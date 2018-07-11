@@ -244,8 +244,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             $scope.handlerSingle = function() {
                 $scope.single = true;
                 $scope.chart.selectOff()
-                $scope.chart.selectOn("single", function(d) {
-                    console.log($scope.chart);
+                $scope.chart.selectOn("single", function (d) {
                     $scope.selectData = d;
                     $scope.$apply();
                 });
@@ -254,6 +253,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             // 开启多选
             $scope.handlerMultiple = function() {
                 $scope.single = false;
+                $scope.selectData = [];
                 $scope.chart.selectOff();
                 $scope.chart.selectOn("multiple", function(d) {
                     $scope.selectData = d;
@@ -262,9 +262,8 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             // 多选确定
-            $scope.handlerConfirm = function() {
-                console.log($scope.chart);
-                if (!$scope.single) {
+            $scope.handlerConfirm = function () {
+                if (!$scope.single && $scope.selectData.length) {
                     $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
                 }
             }

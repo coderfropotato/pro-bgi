@@ -15,7 +15,7 @@
                     <li ng-hide="error || isTableShow">
                         <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="单选">单选</button>
                         <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
-                        <button ng-click="getChooseGeneList(netData)" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
+                        <button ng-click="getChooseGeneList(netData)" ng-class="{'disabled':!myOptions.isMultiChoose || !geneCount}" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <li ng-if="!error">
                         <button style="position:relative;" class="btn-sm list_btn">前置任务

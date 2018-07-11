@@ -57,7 +57,7 @@
             <div ng-show="isHasGroupDiff">
                 <h5>组间差异</h5>
                 <div class="table_scroll_wrap" id="groupDiffTable_panel">
-                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="groupDiffError">
+                    <table class="table table-bordered table-hover table-striped table_grid" ng-hide="groupDiffError">
                         <thead>
                             <tr>
                                 <th ng-repeat="item in groupDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -82,7 +82,7 @@
             <div ng-show="isHasSampleDiff">
                 <h5>样本间差异</h5>
                 <div class="table_scroll_wrap" id="sampleDiffTable_panel">
-                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="sampleDiffError">
+                    <table class="table table-bordered table-hover table-striped table_grid" ng-hide="sampleDiffError">
                         <thead>
                             <tr>
                                 <th ng-repeat="item in sampleDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -123,7 +123,7 @@
             <div ng-show="isHasKegg">
                 <h5>KEGG ORTHOLOGY</h5>
                 <div class="table_scroll_wrap" id="keggTable_panel">
-                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="keggError">
+                    <table class="table table-bordered table-hover table-striped table_grid" ng-hide="keggError">
                         <tbody>
                             <tr ng-repeat="row in keggList track by $index">
                                 <td style="text-align: right;width: 100px;">
@@ -290,7 +290,7 @@
             <div ng-show="isHasSnp">
                 <h5>SNP</h5>
                 <div class="table_scroll_wrap" id="snpTable_panel">
-                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="snpError">
+                    <table class="table table-bordered table-hover table-striped table_grid" ng-hide="snpError">
                         <thead>
                             <tr>
                                 <th ng-repeat="item in snpData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -315,7 +315,7 @@
             <div ng-show="isHasIndel">
                 <h5>Indel</h5>
                 <div class="table_scroll_wrap" id="indelTable_panel">
-                    <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="indelError">
+                    <table class="table table-bordered table-hover table-striped table_grid" ng-hide="indelError">
                         <thead>
                             <tr>
                                 <th ng-repeat="item in indelData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
@@ -342,7 +342,7 @@
         <div ng-show="isHasFusion">
             <h4>融合基因</h4>
             <div class="table_scroll_wrap" id="fusionTable_panel">
-                <table class="table table-bordered table-hover table-striped table_grid table-fixed" ng-hide="fusionError">
+                <table class="table table-bordered table-hover table-striped table_grid" ng-hide="fusionError">
                     <thead>
                         <tr>
                             <th ng-repeat="item in fusionData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">

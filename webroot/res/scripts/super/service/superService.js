@@ -527,12 +527,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
              **          如果不传，默认为dialog-default
              */
-            this.popPrompt = function(textNode, value, popTitle, dialogClass, top, width, height) {
+            this.popPrompt = function(textNode, textValue, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 100;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "修改标题" : popTitle;
-                value = textNode.firstChild.nodeValue;
+                value = textValue ? textValue : textNode.firstChild.nodeValue;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,

@@ -374,7 +374,7 @@ define(['toolsApp'], function(toolsApp) {
 
             function groupedbarGetItem() {
                 chart.getLegendItem(function(d, i) {
-                    reportService.selectColor(changeColorCallback,'reAnalysis_pathwayRich_bubble');
+                    reportService.selectColor(changeColorCallback, 'reAnalysis_pathwayRich_bubble');
                     index = i;
                 })
 
@@ -392,6 +392,14 @@ define(['toolsApp'], function(toolsApp) {
                 chart.dbClickTitle(function() {
                     var textNode = d3.select(this).node();
                     toolService.popPrompt(textNode, textNode.textContent);
+                })
+                chart.mouseoverTitle(function() {
+                    d3.select(this).attr("fill", "#5378f8");
+                    d3.select(this).append("title").text("双击修改标题");
+                })
+                chart.mouseoutTitle(function() {
+                    d3.select(this).attr("fill", "#000000");
+                    d3.select(this).select("title").remove();
                 })
                 $scope.changeColor(chart, width);
                 $scope.handlerSingle(chart);
@@ -513,6 +521,14 @@ define(['toolsApp'], function(toolsApp) {
                 var textNode = d3.select(this).node();
                 toolService.popPrompt(textNode, textNode.textContent);
             })
+            $scope.bubble.mouseoverTitle(function() {
+                d3.select(this).attr("fill", "#5378f8");
+                d3.select(this).append("title").text("双击修改标题");
+            })
+            $scope.bubble.mouseoutTitle(function() {
+                d3.select(this).attr("fill", "#000000");
+                d3.select(this).select("title").remove();
+            })
 
             $scope.curChart = $scope.bubble;
 
@@ -590,6 +606,14 @@ define(['toolsApp'], function(toolsApp) {
             $scope.barchart.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
                 toolService.popPrompt(textNode, textNode.textContent);
+            })
+            $scope.barchart.mouseoverTitle(function() {
+                d3.select(this).attr("fill", "#5378f8");
+                d3.select(this).append("title").text("双击修改标题");
+            })
+            $scope.barchart.mouseoutTitle(function() {
+                d3.select(this).attr("fill", "#000000");
+                d3.select(this).select("title").remove();
             })
 
             $scope.curChart = $scope.barchart;

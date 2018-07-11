@@ -87,7 +87,7 @@ define(['toolsApp'], function(toolsApp) {
                     $scope.mapTheadJson = {};
                     var order = [];
                     $scope.lineWidth = ((Math.ceil(res.rows.length / 18) * 180) + res.baseThead.length * 30 + 160) || 500;
-                    if($scope.lineWidth<500){
+                    if ($scope.lineWidth < 500) {
                         $scope.lineWidth = 500;
                     }
                     res.baseThead.forEach(function(val, index) {
@@ -122,7 +122,7 @@ define(['toolsApp'], function(toolsApp) {
                         }
                     })
 
-                    if(!$scope.curType) $scope.curType = 'sample';
+                    if (!$scope.curType) $scope.curType = 'sample';
 
                     if (!$scope.chartData.length) {
                         $scope.lineError = 'nodata';
@@ -146,9 +146,9 @@ define(['toolsApp'], function(toolsApp) {
             "type": "line",
             "data": [],
             "width": 480,
-            "height":400,
+            "height": 400,
             "titleBox": {
-                "title":"折线图",
+                "title": "折线图",
                 "show": true,
                 "position": "top"
             },
@@ -160,7 +160,7 @@ define(['toolsApp'], function(toolsApp) {
                 "xAxis": {
                     "type": "discrete",
                     "fontRotate": "auto",
-                    "title": $scope.curType 
+                    "title": $scope.curType
                 },
                 "yAxis": {
                     "title": "log10(FPKM+1)"
@@ -168,11 +168,11 @@ define(['toolsApp'], function(toolsApp) {
             },
             "dataBox": {
                 "normalColor": angular.copy($rootScope.colorArr),
-                "curve":false,
+                "curve": false,
             }
         }
         $scope.drawLineChart = function(data) {
-            
+
             $("#lineChart_panel").html("");
 
             var width = $("#analysis-linePanel .graph_header").eq(0).width();
@@ -184,7 +184,7 @@ define(['toolsApp'], function(toolsApp) {
             var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 
             function linetooltipConfig(d) {
-                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType + "：" + d.key + "</br>" + "log10(FPKM+1): " + Math.log10(d.value+1) + "<br>FPKM " + d.key + "：" + d.value)
+                linecharttooltip.html('GeneID：' + d.category + "<br>" + $scope.curType + "：" + d.key + "</br>" + "log10(FPKM+1): " + Math.log10(d.value + 1) + "<br>FPKM " + d.key + "：" + d.value)
             }
 
             // 改色
@@ -194,7 +194,7 @@ define(['toolsApp'], function(toolsApp) {
 
                 function groupedbarGetItem() {
                     $scope.linechart.getLegendItem(function(d, i) {
-                        reportService.selectColor(changeColorCallback,'analysis-linePanel');
+                        reportService.selectColor(changeColorCallback, 'analysis-linePanel');
                         index = i;
                     })
 
@@ -214,6 +214,14 @@ define(['toolsApp'], function(toolsApp) {
                         var textNode = d3.select(this).node();
                         toolService.popPrompt(textNode, textNode.textContent);
                     })
+                    $scope.linechart.mouseoverTitle(function() {
+                        d3.select(this).attr("fill", "#5378f8");
+                        d3.select(this).append("title").text("双击修改标题");
+                    })
+                    $scope.linechart.mouseoutTitle(function() {
+                        d3.select(this).attr("fill", "#000000");
+                        d3.select(this).select("title").remove();
+                    })
                     groupedbarGetItem();
                 }
             })()
@@ -222,6 +230,14 @@ define(['toolsApp'], function(toolsApp) {
             $scope.linechart.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
                 toolService.popPrompt(textNode, textNode.textContent);
+            })
+            $scope.linechart.mouseoverTitle(function() {
+                d3.select(this).attr("fill", "#5378f8");
+                d3.select(this).append("title").text("双击修改标题");
+            })
+            $scope.linechart.mouseoutTitle(function() {
+                d3.select(this).attr("fill", "#000000");
+                d3.select(this).select("title").remove();
             })
         }
 

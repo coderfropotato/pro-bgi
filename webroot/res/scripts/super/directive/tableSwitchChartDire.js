@@ -5,7 +5,7 @@
  */
 
 define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.tableSwitchChartDire", []);
         superApp.directive('tableSwitchChart', tableSwitchChart);
         tableSwitchChart.$inject = ["$log"];
@@ -62,7 +62,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                     isShowBeforeTask: "=",
                     taskId: "=",
                     // 图表切换的图说明
-                    chartDescribe:"@",
+                    chartDescribe: "@",
                 },
                 replace: false,
                 transclude: true,
@@ -74,7 +74,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
         tableSwitchChartCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
 
         function tableSwitchChartCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            $scope.InitPage = function () {
+            $scope.InitPage = function() {
                 $scope.accuracy = -1;
                 $scope.showAccuracy = !!$scope.showAccuracy;
                 $scope.error = false;
@@ -90,25 +90,25 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
 
             //get links 
             $scope.linksError = false;
-            $scope.GetLinks = function () {
+            $scope.GetLinks = function() {
                 var promise = ajaxService.GetDeferData({
                     data: {},
                     url: options.api.java_url + "/analysis/parent/" + $scope.taskId
                 })
-                promise.then(function (res) {
+                promise.then(function(res) {
                     if (res.status != 200) {
                         $scope.linksError = "syserror";
                     } else {
                         $scope.linksError = false;
                         $scope.links = res.data.links;
                     }
-                }, function (err) {
+                }, function(err) {
                     console.log(err);
                 })
             }
 
             // 查看links
-            $scope.handlerSeeClick = function (item) {
+            $scope.handlerSeeClick = function(item) {
                 var type = item.chartType || item.charType;
                 if (item.process == 0) {
                     $window.open('../../../../ps/tools/index.html#/home/error/' + item.id);
@@ -118,7 +118,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 }
             }
 
-            $scope.GetTableData = function () {
+            $scope.GetTableData = function() {
                 toolService.gridFilterLoading.open($scope.panelId);
                 var ajaxConfig = {
                     data: $scope.pageEntity,
@@ -126,7 +126,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 };
 
                 var promise = ajaxService.GetDeferData(ajaxConfig);
-                promise.then(function (responseData) {
+                promise.then(function(responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
                     } else if (responseData.length == 0 || !responseData.rows.length) {
@@ -149,9 +149,17 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                                 $scope.chart.options.data = $scope.chartData;
                                 $scope.chart.redraw(($('#' + $scope.contentId + ' .graph_header').eq(0).width()) * $scope.scale);
                                 //改标题
-                                $scope.chart.dbClickTitle(function () {
+                                $scope.chart.dbClickTitle(function() {
                                     var textNode = d3.select(this).node();
                                     toolService.popPrompt(textNode, textNode.textContent);
+                                })
+                                $scope.chart.mouseoverTitle(function() {
+                                    d3.select(this).attr("fill", "#5378f8");
+                                    d3.select(this).append("title").text("双击修改标题");
+                                })
+                                $scope.chart.mouseoutTitle(function() {
+                                    d3.select(this).attr("fill", "#000000");
+                                    d3.select(this).select("title").remove();
                                 })
                                 $scope.applyChangeColor();
                                 if ($scope.isSelectChartData) $scope.handlerSingle();
@@ -160,38 +168,38 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         $scope.isFirst = false;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
-                }, function (errorMesg) {
+                }, function(errorMesg) {
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
             }
 
-            $scope.handlerSelectChange = function () {
+            $scope.handlerSelectChange = function() {
                 $scope.GetTableData();
                 $scope.selectChangeCallback && $scope.selectChangeCallback({ arg: $scope.pageEntity[$scope.paramsKey] })
             }
 
             // 刷新
-            $scope.handlerRefresh = function () {
+            $scope.handlerRefresh = function() {
                 $scope.selectData = [];
                 $scope.GetTableData();
                 $scope.handlerRefreshClick && $scope.handlerRefreshClick();
             }
 
             // 选择图数据的时候
-            $scope.onSelect = function (arg) {
+            $scope.onSelect = function(arg) {
                 $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': arg });
             }
 
             // 改色
-            $scope.applyChangeColor = function () {
+            $scope.applyChangeColor = function() {
                 (function changeColor() {
                     groupedbarGetItem();
                     var index = '';
 
                     function groupedbarGetItem() {
-                        $scope.chart.getLegendItem(function (d, i) {
-                            reportService.selectColor(changeColorCallback,$scope.panelId);
+                        $scope.chart.getLegendItem(function(d, i) {
+                            reportService.selectColor(changeColorCallback, $scope.panelId);
                             index = i;
                         })
 
@@ -208,9 +216,17 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         var height = $scope.chart.getOptions().height;
                         $scope.chart.redraw(width);
                         //改标题
-                        $scope.chart.dbClickTitle(function () {
+                        $scope.chart.dbClickTitle(function() {
                             var textNode = d3.select(this).node();
                             toolService.popPrompt(textNode, textNode.textContent);
+                        })
+                        $scope.chart.mouseoverTitle(function() {
+                            d3.select(this).attr("fill", "#5378f8");
+                            d3.select(this).append("title").text("双击修改标题");
+                        })
+                        $scope.chart.mouseoutTitle(function() {
+                            d3.select(this).attr("fill", "#000000");
+                            d3.select(this).select("title").remove();
                         })
                         $scope.applyChangeColor();
                         if ($scope.isSelectChartData) $scope.handlerSingle();
@@ -225,7 +241,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             $scope.selectData = [];
 
             // 开启单选
-            $scope.handlerSingle = function () {
+            $scope.handlerSingle = function() {
                 $scope.single = true;
                 $scope.chart.selectOff()
                 $scope.chart.selectOn("single", function (d) {
@@ -235,11 +251,11 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             // 开启多选
-            $scope.handlerMultiple = function () {
+            $scope.handlerMultiple = function() {
                 $scope.single = false;
                 $scope.selectData = [];
                 $scope.chart.selectOff();
-                $scope.chart.selectOn("multiple", function (d) {
+                $scope.chart.selectOn("multiple", function(d) {
                     $scope.selectData = d;
                     $scope.$apply();
                 });
@@ -252,7 +268,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                 }
             }
 
-            $scope.$watch('selectData', function (newVal, oldVal) {
+            $scope.$watch('selectData', function(newVal, oldVal) {
                 // 单选才每次回调 多选只在结束时回调
                 if (newVal !== oldVal) {
                     if ($scope.single) {

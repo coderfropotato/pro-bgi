@@ -309,7 +309,7 @@ define(['toolsApp'], function(toolsApp) {
 
             $scope.bubbleEntity.list = golist;
             $scope.GetBubbleData();
-
+            $scope.multiplelist = [];
         }
 
         //获取气泡图表格数据
@@ -416,6 +416,7 @@ define(['toolsApp'], function(toolsApp) {
         // 开启多选
         $scope.handlerMultiple = function(chart) {
             $scope.single = false;
+            $scope.multiplelist = [];
             chart.selectOff();
             chart.selectOn("multiple", function(d) {
                 $scope.multiplelist = [];

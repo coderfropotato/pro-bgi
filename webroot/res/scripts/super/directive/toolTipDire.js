@@ -534,8 +534,6 @@ define("superApp.toolTipDire",
                     var leftPos = 0, topPos = 0;
 
                     $(element).on('mouseenter', function () {
-                        console.log($(element).width());
-                        console.log($(element).children(":eq(0)").outerWidth())
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');
@@ -822,7 +820,6 @@ define("superApp.toolTipDire",
                         var offset = $(element).parent().offset();
                         var elOffset = $(element).offset();
                         var left = $(element).offset().left;
-                        console.log(left)
                         obj.css({
                             'position': 'fixed',
                             'visibility': "hidden",

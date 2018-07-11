@@ -5006,3 +5006,9 @@ h6.nplr {
     border-top-color: #000;
     content: "";
 }
+.new-table-switch-btns.disabled{
+    background-color:#f9f9fa;
+    border-color:#ccc;
+    color:#999;
+    cursor:not-allowed;
+}

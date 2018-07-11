@@ -143,7 +143,7 @@ define(['toolsApp'], function(toolsApp) {
             //改标题
             $scope.barchart.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
-                toolService.popPrompt(textNode, textNode.textContent);
+                toolService.popPrompt(textNode);
             })
             $scope.barchart.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");

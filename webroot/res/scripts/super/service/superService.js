@@ -532,7 +532,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "修改标题" : popTitle;
-                value = (angular.isUndefined(value) || value == "") ? "请输入" : value;
+                value = textNode.firstChild.nodeValue;
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,

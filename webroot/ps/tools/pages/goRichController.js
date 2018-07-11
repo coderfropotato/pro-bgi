@@ -392,7 +392,7 @@ define(['toolsApp'], function(toolsApp) {
                 //改标题
                 chart.dbClickTitle(function() {
                     var textNode = d3.select(this).node();
-                    toolService.popPrompt(textNode, textNode.textContent);
+                    toolService.popPrompt(textNode);
                 })
                 chart.mouseoverTitle(function() {
                     d3.select(this).attr("fill", "#5378f8");
@@ -453,7 +453,7 @@ define(['toolsApp'], function(toolsApp) {
         //             //改标题
         //             $scope.curChart.dbClickTitle(function() {
         //                 var textNode = d3.select(this).node();
-        //                 toolService.popPrompt(textNode, textNode.textContent);
+        //                 toolService.popPrompt(textNode);
         //             })
         //             if ($scope.chartType != "column") {
         //                 $scope.changeColor($scope.curChart, "reAnalysis_goRich_bubble", 0.8);
@@ -520,7 +520,7 @@ define(['toolsApp'], function(toolsApp) {
             //改标题
             $scope.bubble.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
-                toolService.popPrompt(textNode, textNode.textContent);
+                toolService.popPrompt(textNode);
             })
             $scope.bubble.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");
@@ -604,7 +604,7 @@ define(['toolsApp'], function(toolsApp) {
             //改标题
             $scope.barchart.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
-                toolService.popPrompt(textNode, textNode.textContent);
+                toolService.popPrompt(textNode);
             })
             $scope.barchart.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");

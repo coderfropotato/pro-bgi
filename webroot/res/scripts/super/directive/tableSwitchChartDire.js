@@ -151,7 +151,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                                 //改标题
                                 $scope.chart.dbClickTitle(function() {
                                     var textNode = d3.select(this).node();
-                                    toolService.popPrompt(textNode, textNode.textContent);
+                                    toolService.popPrompt(textNode);
                                 })
                                 $scope.chart.mouseoverTitle(function() {
                                     d3.select(this).attr("fill", "#5378f8");
@@ -218,7 +218,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         //改标题
                         $scope.chart.dbClickTitle(function() {
                             var textNode = d3.select(this).node();
-                            toolService.popPrompt(textNode, textNode.textContent);
+                            toolService.popPrompt(textNode);
                         })
                         $scope.chart.mouseoverTitle(function() {
                             d3.select(this).attr("fill", "#5378f8");
@@ -244,7 +244,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             $scope.handlerSingle = function() {
                 $scope.single = true;
                 $scope.chart.selectOff()
-                $scope.chart.selectOn("single", function (d) {
+                $scope.chart.selectOn("single", function(d) {
                     $scope.selectData = d;
                     $scope.$apply();
                 });
@@ -262,7 +262,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             }
 
             // 多选确定
-            $scope.handlerConfirm = function () {
+            $scope.handlerConfirm = function() {
                 if (!$scope.single && $scope.selectData.length) {
                     $scope.chartSelectFn && $scope.chartSelectFn({ 'arg': $scope.selectData });
                 }
@@ -293,7 +293,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
             //             //改标题
             //             $scope.chart.dbClickTitle(function () {
             //                 var textNode = d3.select(this).node();
-            //                 toolService.popPrompt(textNode, textNode.textContent);
+            //                 toolService.popPrompt(textNode);
             //             })
             //             $scope.applyChangeColor();
             //             if ($scope.isSelectChartData) $scope.handlerSingle();

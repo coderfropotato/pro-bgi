@@ -251,7 +251,7 @@ define(["toolsApp"], function(toolsApp) {
                 .style("cursor", "pointer")
                 .on("dblclick", function() {
                     var textNode = d3.select(this).node();
-                    toolService.popPrompt(textNode, textNode.textContent);
+                    toolService.popPrompt(textNode);
                 })
                 .on("mouseover", function() {
                     d3.select(this).attr("fill", "#5378f8");

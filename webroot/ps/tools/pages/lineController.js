@@ -212,7 +212,7 @@ define(['toolsApp'], function(toolsApp) {
                     //改标题
                     $scope.linechart.dbClickTitle(function() {
                         var textNode = d3.select(this).node();
-                        toolService.popPrompt(textNode, textNode.textContent);
+                        toolService.popPrompt(textNode);
                     })
                     $scope.linechart.mouseoverTitle(function() {
                         d3.select(this).attr("fill", "#5378f8");
@@ -229,7 +229,7 @@ define(['toolsApp'], function(toolsApp) {
             //改标题
             $scope.linechart.dbClickTitle(function() {
                 var textNode = d3.select(this).node();
-                toolService.popPrompt(textNode, textNode.textContent);
+                toolService.popPrompt(textNode);
             })
             $scope.linechart.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");

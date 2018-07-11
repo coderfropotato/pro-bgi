@@ -15,7 +15,7 @@ define(['toolsApp'], function (toolsApp) {
                 if(location.href.split('?')[1]){
                     $timeout(function(){
                         $scope.scrollTo("#"+location.href.split('?')[1].split('=')[1])
-                    },0)
+                    },100)
                 }
             }
         }
@@ -26,7 +26,7 @@ define(['toolsApp'], function (toolsApp) {
 
         $scope.scrollTo = function(id){
             $('.help-anchor li').removeClass('active');
-            $(id).addClass('active');
+            $("li[data-target="+id+"]").addClass('active');
             var dis = $(id).offset().top;
             $('#div_ViewProduct').off();
             $('#div_ViewProduct').animate({ scrollTop: $('#div_ViewProduct').scrollTop() + dis }, function () {

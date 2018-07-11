@@ -7,26 +7,27 @@ define(['toolsApp'], function (toolsApp) {
         $scope.InitPage = function () {
             $timeout(function () {
                 toolService.pageLoading.close();
+
+                var moduleId = null;
+                if (location.href.indexOf('?') != -1) {
+                    if (location.href.split('?')[1]) {
+                        $scope.scrollTo("#" + location.href.split('?')[1].split('=')[1])
+                    }
+                }
             }, 300)
 
             $scope.title = '帮助';
-            var moduleId = null;
-            if (location.href.indexOf('?') != -1) {
-                if(location.href.split('?')[1]){
-                    $timeout(function(){
-                        $scope.scrollTo("#"+location.href.split('?')[1].split('=')[1])
-                    },100)
-                }
-            }
         }
+
+
 
         $scope.handlerAnchorClick = function (event) {
             $scope.scrollTo(event.target.getAttribute('data-target'));
         }
 
-        $scope.scrollTo = function(id){
+        $scope.scrollTo = function (id) {
             $('.help-anchor li').removeClass('active');
-            $("li[data-target="+id+"]").addClass('active');
+            $("li[data-target=" + id + "]").addClass('active');
             var dis = $(id).offset().top;
             $('#div_ViewProduct').off();
             $('#div_ViewProduct').animate({ scrollTop: $('#div_ViewProduct').scrollTop() + dis }, function () {

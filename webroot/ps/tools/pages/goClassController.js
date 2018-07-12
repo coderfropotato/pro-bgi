@@ -149,7 +149,7 @@ define(["toolsApp"], function(toolsApp) {
             })
             $scope.barchart.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");
-                d3.select(this).append("title").text("双击修改标题");
+                d3.select(this).append("title").text("双击修改");
             })
             $scope.barchart.mouseoutTitle(function() {
                 d3.select(this).attr("fill", "#000000");

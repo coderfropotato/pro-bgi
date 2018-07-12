@@ -254,7 +254,7 @@ define(["toolsApp"], function(toolsApp) {
                 })
                 .on("mouseover", function() {
                     d3.select(this).attr("fill", "#5378f8");
-                    d3.select(this).append("title").text("双击修改标题");
+                    d3.select(this).append("title").text("双击修改");
                 })
                 .on("mouseout", function() {
                     d3.select(this).attr("fill", "#000");
@@ -600,7 +600,14 @@ define(["toolsApp"], function(toolsApp) {
             //点击图例改图颜色
             var legendClickRect_h = legend_height / $scope.colorArr.length;
             var legendClick_g = svg.append("g")
-                .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")");
+                .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")")
+                .style("cursor", "pointer")
+                .on("mouseover", function() {
+                    d3.select(this).append("title").text("单击修改颜色");
+                })
+                .on("mouseout", function() {
+                    d3.select(this).select("title").remove();
+                });
             legendClick_g.selectAll(".legendClick_Rect")
                 .data($scope.colorArr)
                 .enter()

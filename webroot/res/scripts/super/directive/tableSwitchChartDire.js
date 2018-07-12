@@ -155,7 +155,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                                 })
                                 $scope.chart.mouseoverTitle(function() {
                                     d3.select(this).attr("fill", "#5378f8");
-                                    d3.select(this).append("title").text("双击修改标题");
+                                    d3.select(this).append("title").text("双击修改");
                                 })
                                 $scope.chart.mouseoutTitle(function() {
                                     d3.select(this).attr("fill", "#000000");
@@ -222,7 +222,7 @@ define("superApp.tableSwitchChartDire", ["angular", "super.superMessage", "selec
                         })
                         $scope.chart.mouseoverTitle(function() {
                             d3.select(this).attr("fill", "#5378f8");
-                            d3.select(this).append("title").text("双击修改标题");
+                            d3.select(this).append("title").text("双击修改");
                         })
                         $scope.chart.mouseoutTitle(function() {
                             d3.select(this).attr("fill", "#000000");

@@ -216,7 +216,7 @@ define(['toolsApp'], function(toolsApp) {
                     })
                     $scope.linechart.mouseoverTitle(function() {
                         d3.select(this).attr("fill", "#5378f8");
-                        d3.select(this).append("title").text("双击修改标题");
+                        d3.select(this).append("title").text("双击修改");
                     })
                     $scope.linechart.mouseoutTitle(function() {
                         d3.select(this).attr("fill", "#000000");
@@ -233,7 +233,7 @@ define(['toolsApp'], function(toolsApp) {
             })
             $scope.linechart.mouseoverTitle(function() {
                 d3.select(this).attr("fill", "#5378f8");
-                d3.select(this).append("title").text("双击修改标题");
+                d3.select(this).append("title").text("双击修改");
             })
             $scope.linechart.mouseoutTitle(function() {
                 d3.select(this).attr("fill", "#000000");

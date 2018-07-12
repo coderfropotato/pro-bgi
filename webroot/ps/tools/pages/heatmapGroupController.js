@@ -125,9 +125,14 @@ define(["toolsApp"], function(toolsApp) {
             //定义数据
             var cluster_data = resdata.leftClusterData,
                 topCluster_data = resdata.topClusterData,
-                heatmap_data = setOption.sortNames,
-                valuemax = resdata.maxValue,
-                valuemin = resdata.minValue;
+                heatmap_data = setOption.sortNames;
+
+            var absMinVal = Math.abs(resdata.minValue),
+                absMaxVal = Math.abs(resdata.maxValue);
+            var absMax = Math.max(absMinVal, absMaxVal);
+
+            var valuemax = absMax,
+                valuemin = -absMax;
 
             var sampleLen = heatmap_data.length;
             var YgeneDataLen = heatmap_data[0].heatmap.length;
@@ -219,7 +224,7 @@ define(["toolsApp"], function(toolsApp) {
 
             //定义图例比例尺
             var legend_yScale = d3.scaleLinear().range([legend_height, 0])
-                .domain([valuemin, valuemax]).clamp(true);
+                .domain([valuemin, valuemax]).clamp(true).nice();
 
             var yAxis = d3.axisRight(legend_yScale).tickSizeOuter(0).ticks(5); //设置Y轴
 
@@ -255,7 +260,7 @@ define(["toolsApp"], function(toolsApp) {
                 })
                 .on("mouseover", function() {
                     d3.select(this).attr("fill", "#5378f8");
-                    d3.select(this).append("title").text("双击修改标题");
+                    d3.select(this).append("title").text("双击修改");
                 })
                 .on("mouseout", function() {
                     d3.select(this).attr("fill", "#000");
@@ -612,7 +617,14 @@ define(["toolsApp"], function(toolsApp) {
             //点击图例改图颜色
             var legendClickRect_h = legend_height / $scope.colorArr.length;
             var legendClick_g = svg.append("g")
-                .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")");
+                .attr("transform", "translate(" + legendTrans_x + "," + legendTrans_y + ")")
+                .style("cursor", "pointer")
+                .on("mouseover", function() {
+                    d3.select(this).append("title").text("单击修改颜色");
+                })
+                .on("mouseout", function() {
+                    d3.select(this).select("title").remove();
+                });
             legendClick_g.selectAll(".legendClick_Rect")
                 .data($scope.colorArr)
                 .enter()

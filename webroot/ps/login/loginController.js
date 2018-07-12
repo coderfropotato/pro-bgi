@@ -1,4 +1,6 @@
-define(['loginApp'], function(loginApp) {
+
+
+define(['loginApp'], function (loginApp) {
 
     loginApp.controller('loginController', loginController);
     loginController.$inject = ['$rootScope', '$scope', '$log', '$window', 'toolLoginService'];
@@ -20,7 +22,7 @@ define(['loginApp'], function(loginApp) {
         $scope.loadingComplete = false; //是否加载完成
 
         //初始化页面参数
-        $scope.InitPage = function() {
+        $scope.InitPage = function () {
             $scope.tabIndex = 0;
             $scope.isLCSubmit = false;
             $scope.isMangerSubmit = false;
@@ -57,12 +59,12 @@ define(['loginApp'], function(loginApp) {
             return uuid;
         }
 
-        $scope.code = function() {
+        $scope.code = function () {
             $scope.uuid = getUUID();
             $scope.formEntity.UUID = $scope.uuid;
         }
 
-        $scope.renovate = function() {
+        $scope.renovate = function () {
             $scope.uuid = getUUID();
             var img = document.getElementById("imgcode");
             img.src = options.api.java_url + "/checkImg?uuid" + $scope.uuid;
@@ -71,7 +73,7 @@ define(['loginApp'], function(loginApp) {
 
 
 
-        $scope.jump = function() {
+        $scope.jump = function () {
             //校验是否存在查询条件
             var query = window.location.search;
             if (!query) {
@@ -115,7 +117,7 @@ define(['loginApp'], function(loginApp) {
                 contentType: "application/json; charset=utf-8",
                 withCredentials: true,
                 cache: false,
-                success: function(responseData) {
+                success: function (responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
                         toolLoginService.localStorage.set('token', responseData.Token);
@@ -128,7 +130,7 @@ define(['loginApp'], function(loginApp) {
                         window.location.href = window.location.href.replace(/login\/login\.html.*/, responseData.LCTYPE + '/index.html');
                     }
                 },
-                error: function(data) {
+                error: function (data) {
                     window.location.href = window.location.href.replace(/login\/login\.html.*/, "login/login.html");
                 }
             });
@@ -136,7 +138,7 @@ define(['loginApp'], function(loginApp) {
         }
 
         //验证浏览器兼容性
-        $scope.validateBrowser = function() {
+        $scope.validateBrowser = function () {
             toolLoginService.BrowserDetect.init(); //alert(BrowserDetect.browser);
             //如果浏览器为ie且版本低于10，或者浏览器为Safari，则弹出提示框                                                                                                                                                                                                                                                                                                          
             if (toolLoginService.BrowserDetect.browser == 'Explorer' && parseInt(toolLoginService.BrowserDetect.version) < 10 || toolLoginService.BrowserDetect.browser == 'Safari') {
@@ -145,16 +147,16 @@ define(['loginApp'], function(loginApp) {
             }
         };
 
-        $scope.ShowGlobalMesgPanel = function() {
+        $scope.ShowGlobalMesgPanel = function () {
             $('.globalMesg').slideDown();
             $('.top_space').slideUp();
         };
-        $scope.HideGlobalMesgPanel = function() {
+        $scope.HideGlobalMesgPanel = function () {
             $('.globalMesg').slideUp();
             $('.top_space').slideDown();
         };
 
-        $scope.tbx_password_OnKeyUp = function(e, flag) {
+        $scope.tbx_password_OnKeyUp = function (e, flag) {
             var keycode = window.event ? e.keyCode : e.which;
             if (keycode == 13) {
                 if (flag == 'lc') {
@@ -165,7 +167,7 @@ define(['loginApp'], function(loginApp) {
             }
         };
 
-        $scope.btn_lcLogin_OnClick = function() {
+        $scope.btn_lcLogin_OnClick = function () {
             if (!$scope.isLCSubmit) {
                 // 判断登录按钮是否提交，如果正在提交则不执行
                 $scope.isLCSubmit = true;
@@ -174,7 +176,7 @@ define(['loginApp'], function(loginApp) {
             }
         }
 
-        $scope.btn_mangerLogin_OnClick = function() {
+        $scope.btn_mangerLogin_OnClick = function () {
             if (!$scope.isMangerSubmit) {
                 // 判断登录按钮是否提交，如果正在提交则不执行
                 $scope.isMangerSubmit = true;
@@ -192,7 +194,7 @@ define(['loginApp'], function(loginApp) {
                 contentType: "application/json; charset=utf-8",
                 withCredentials: true,
                 cache: false,
-                success: function(responseData) {
+                success: function (responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
                         toolLoginService.localStorage.set('token', responseData.Token);
@@ -202,14 +204,14 @@ define(['loginApp'], function(loginApp) {
                         window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
                     } else {
                         var myPromise = toolLoginService.popMesgWindow(responseData.Error);
-                        myPromise.then(function(value) {
+                        myPromise.then(function (value) {
                             $scope.isLCSubmit = false;
                             $scope.lcLoginText = '登录';
                         });
                         $scope.renovate();
                     }
                 },
-                error: function(data) {
+                error: function (data) {
                     // 处理错误 .reject  
                     $log.debug('处理错误' + data);
                     $scope.isLCSubmit = false;
@@ -231,7 +233,7 @@ define(['loginApp'], function(loginApp) {
                 contentType: "application/json;charset=utf-8",
                 withCredentials: true,
                 cache: false,
-                success: function(res) {
+                success: function (res) {
                     if (res.exec == 0) {
                         toolLoginService.localStorage.set('token', res.fields[0].Token);
                         toolLoginService.sessionStorage.set("managerMail", res.fields[0].adminMail);
@@ -243,13 +245,13 @@ define(['loginApp'], function(loginApp) {
                         } else {
                             var myPromise = toolLoginService.popMesgWindow(res.execInfo);
                         }
-                        myPromise.then(function(value) {
+                        myPromise.then(function (value) {
                             $scope.isMangerSubmit = false;
                             $scope.mangerLoginText = '管理控制台登录';
                         });
                     }
                 },
-                error: function(data) {
+                error: function (data) {
                     // 处理错误 .reject  
                     $log.debug('处理错误' + data);
                     $scope.isMangerSubmit = false;
@@ -263,13 +265,13 @@ define(['loginApp'], function(loginApp) {
 
         //判断是否为测试版 
         $scope.isTest = false;
-        $scope.GetIsTest = function() {
+        $scope.GetIsTest = function () {
             $.ajax({
                 url: options.api.base_url + '/GetServerVersion/GetVersion',
                 type: 'GET',
                 cache: false,
-                success: function(data) {
-                    $scope.$apply(function() {
+                success: function (data) {
+                    $scope.$apply(function () {
                         $scope.isTest = data.isTest;
                         toolLoginService.sessionStorage.set('isTest', $scope.isTest);
 
@@ -285,26 +287,30 @@ define(['loginApp'], function(loginApp) {
 
 
                 },
-                error: function() {
+                error: function () {
                     toolLoginService.sessionStorage.set('isTest', false);
                     $scope.loadingComplete = true;
                 }
             });
         }
 
-        $scope.handlerKeyUp = function(event) {
+        $scope.handlerKeyUp = function (event) {
             if (event.keyCode === 13) {
                 $scope.btn_lcLogin_OnClick();
             }
         }
 
-        $scope.initJquery = function() {
+        $scope.initJquery = function () {
+            // 锚点滚动
+            scrollto('.nav-concat','.concat-wrap');
+            // 全屏滚动
             var type = true; //控制动画的开关
             var bodyW = document.documentElement.clientWidth || document.body.clientWidth || window.innerWidth;
             var bodyH = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
             var main = $(".main")[0];
             var conUl = $(".main_ul")[0];
             var liLen = $(".main_ul .content"); //获取li
+            var autoPlayTimer = null;
             //设置Li的高度
             for (var i = 0; i < liLen.length; i++) {
                 liLen[i].style.height = bodyH + "px";
@@ -312,7 +318,7 @@ define(['loginApp'], function(loginApp) {
             conUl.style.height = bodyH * liLen.length + "px"; //设置ul的高
 
             //鼠标的滚轮事件(兼容 ie and chrome);
-            main.onmousewheel = function(event) {
+            main.onmousewheel = function (event) {
                 var event = event || window.event;
                 var direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
                 //向上滚动
@@ -326,7 +332,7 @@ define(['loginApp'], function(loginApp) {
             }
 
             //鼠标滚轮事件(兼容 firefox)
-            document.body.addEventListener("DOMMouseScroll", function(event) {
+            document.body.addEventListener("DOMMouseScroll", function (event) {
                 var direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
                 //向下滚动
                 if (direction == "mousedown") {
@@ -339,13 +345,14 @@ define(['loginApp'], function(loginApp) {
                 }
             });
 
+            
             //向上滚动代码函数
             function mouseTop() {
                 //第二屏
                 if (main.scrollTop >= liLen[2].offsetTop && type == true) {
                     type = false;
                     //延时滚动。要不然会先执行代码再执行滚轮，那样会多滚动出一截子。
-                    setTimeout(function() {
+                    setTimeout(function () {
                         AnimationTop(1);
                     }, 10);
                     return;
@@ -355,7 +362,7 @@ define(['loginApp'], function(loginApp) {
                 if (main.scrollTop >= liLen[1].offsetTop && type == true) {
                     type = false;
                     //延时滚动。要不然会先执行代码再执行滚轮，那样会多滚动出一截子。
-                    setTimeout(function() {
+                    setTimeout(function () {
                         AnimationTop(0);
                     }, 10);
                     return;
@@ -363,13 +370,17 @@ define(['loginApp'], function(loginApp) {
             }
 
             //向下滚动代码函数
+            var firstFlag = true;
             function mouseBottom() {
                 //第二屏
                 if (main.scrollTop == liLen[0].offsetTop && type == true) {
-                    timeFunt();
+                    if (firstFlag) {
+                        timeFunt();
+                        firstFlag = false;
+                    }
                     type = false;
                     //延时滚动。要不然会先执行代码再执行滚轮，那样会多滚动出一截子。
-                    setTimeout(function() {
+                    setTimeout(function () {
                         AnimationBottom(1);
                     }, 10);
                     return;
@@ -379,7 +390,7 @@ define(['loginApp'], function(loginApp) {
                 if (main.scrollTop <= liLen[1].offsetTop && type == true) {
                     type = false;
                     //延时滚动。要不然会先执行代码再执行滚轮，那样会多滚动出一截子。
-                    setTimeout(function() {
+                    setTimeout(function () {
                         AnimationBottom(2);
                     }, 10);
                     return;
@@ -388,7 +399,7 @@ define(['loginApp'], function(loginApp) {
 
             //向上滚轮动画函数
             function AnimationTop(num) {
-                var t = setInterval(function() {
+                var t = setInterval(function () {
                     if (main.scrollTop > liLen[num].offsetTop) {
                         //控制移动速度（慢--快--慢）
                         // -- 慢
@@ -411,7 +422,7 @@ define(['loginApp'], function(loginApp) {
 
             //向下滚轮动画函数
             function AnimationBottom(num) {
-                var t = setInterval(function() {
+                var t = setInterval(function () {
                     if (main.scrollTop < liLen[num].offsetTop) {
                         //控制移动速度（先快后慢）
                         // -- 慢
@@ -432,48 +443,45 @@ define(['loginApp'], function(loginApp) {
                 }, 1);
             }
 
-            /*************第二页幻灯片*************/
             //幻灯片
             function timeFunt() {
-                var index = 1;
-                var maximg = 2;
+                var count = $('.banner_teb').length, i = 0, t = 5000
+                if (count > 1) {
+                    // anchor click 
+                    $('#productNav li').on('click', function () {
+                        clearInterval(autoPlayTimer);
+                        var index = $(this).index();
+                        if (index !== i) toggleBanner(index);
+                        i = index;
+                        autoPlay();
+                    })
+                    autoPlay();
+                }
 
-                //自动播放
-                var MyTime = setInterval(function() {
-                    ShowjQueryFlash(index);
-                    index++;
-                    if (index == maximg) { index = 0; }
-                }, 5000);
+                // auto play
+                function autoPlay() {
+                    autoPlayTimer = setInterval(function () {
+                        toggleBanner((++i) % count);
+                    }, t)
+                }
 
-                //滑动导航改变内容
-                $("#productNav li").hover(function() {
-                    if (MyTime) {
-                        clearInterval(MyTime);
-                    }
-                    index = $("#productNav li").index(this);
-                    MyTime = setTimeout(function() {
-                        ShowjQueryFlash(index);
-                        $('#productContent').stop();
-                    }, 400);
-                }, function() {
-                    clearInterval(MyTime);
-                    MyTime = setInterval(function() {
-                        ShowjQueryFlash(index);
-                        index++;
-                        if (index == maximg) { index = 0; }
-                    }, 5000);
-                });
+                // toggle   
+                function toggleBanner(index) {
+                    $('.banner_teb').fadeOut().eq(index).fadeIn();
+                    $('#productNav li').removeClass('current').eq(index).addClass('current');
+                }
             }
 
-            function ShowjQueryFlash(i) {
-                $("#productContent .banner_teb").hide(1000).stop(true, true).eq(i).fadeIn(1000);
-                $("#productNav li").eq(i).addClass("current").siblings().removeClass("current");
+            
+            function scrollto(anchor,wrap){
+                $(anchor).on('click',function(){
+                    $('.main').animate({ scrollTop: $(wrap).offset().top });
+                })
             }
-
 
             /**********登录弹窗显示隐藏*************/
             //点击登录按钮显示登录弹窗
-            $(".loginBtn").click(function() {
+            $(".loginBtn").click(function () {
                 var userAgent = navigator.userAgent;
                 var isChrome = userAgent.indexOf("Chrome") > -1
                 $(".main_ul").css("filter", "blur(5px)");
@@ -486,7 +494,7 @@ define(['loginApp'], function(loginApp) {
                 type = false;
             })
 
-            $("#continueLogin").click(function() {
+            $("#continueLogin").click(function () {
                 $("#noChrome").hide();
                 $(".main_ul").css("filter", "blur(5px)");
                 $(".mengc").show();
@@ -495,7 +503,7 @@ define(['loginApp'], function(loginApp) {
             })
 
             //点击登录弹窗关闭按钮隐藏登录弹窗
-            $(".login_close").click(function() {
+            $(".login_close").click(function () {
                 type = true;
                 $(".main_ul").css("filter", "none")
                 $("#login").hide();

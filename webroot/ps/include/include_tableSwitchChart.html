@@ -4,8 +4,7 @@
             <div class="graph_header">
                 <ul class="fLeft">
                     <li>
-                        <div class="graph-view-btn" parentid="{{panelId}}" charpanelid="{{chartId}}" is-table="true" is-table-show="isTableShow"
-                            btn-one-callback="" btn-two-callback=""></div>
+                        <div class="graph-view-btn" parentid="{{panelId}}" charpanelid="{{chartId}}" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
                     </li>
                     <li ng-if="showSelect && selectList.length">
                         <div class="selector_area">
@@ -31,10 +30,8 @@
                     </li>
                     <li ng-show="!isTableShow && isSelectChartData && !onlySingle && !error">
                         <button ng-click="handlerSingle()" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip" title="单选">单选</button>
-                        <button style="margin-left:-5px;margin-right:7px;" ng-class="{'active':!single}" ng-click="handlerMultiple()" class="new-table-switch-btns new-btns-big tool-tip "
-                            title="多选">多选</button>
-                        <button ng-click="handlerConfirm()" ng-class="{'disabled':single || !selectData.length}" class="new-table-switch-btns new-btns-blue  new-btns-big tool-tip"
-                            title="确定所有选择">确定</button>
+                        <button style="margin-left:-5px;margin-right:7px;" ng-class="{'active':!single}" ng-click="handlerMultiple()" class="new-table-switch-btns new-btns-big tool-tip " title="多选">多选</button>
+                        <button ng-click="handlerConfirm()" ng-class="{'disabled':single || !selectData.length}" class="new-table-switch-btns new-btns-blue  new-btns-big tool-tip" title="确定所有选择">确定</button>
                     </li>
                     <!-- 精度 -->
                     <li ng-show="isTableShow && showAccuracy">
@@ -84,8 +81,7 @@
                         <tbody>
                             <tr ng-repeat="row in tableData.rows track by $index">
                                 <td class="center">{{::($index+1)}}</td>
-                                <td class="center nowrap" title="{{(val.searchType==='string' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}"
-                                    ng-repeat="val in tableData.baseThead track by $index">
+                                <td class="center nowrap" title="{{(val.searchType!=='double' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}" ng-repeat="val in tableData.baseThead track by $index">
                                     <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>

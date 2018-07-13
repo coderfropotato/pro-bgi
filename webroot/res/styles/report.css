@@ -3511,6 +3511,7 @@ div.tipsContainer {
     text-align: center;
     line-height: 120px;
     color: #999999;
+    text-indent:0;
 }
 
 .analysis-panel .analysis-title {

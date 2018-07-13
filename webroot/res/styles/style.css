@@ -7538,6 +7538,9 @@ Thanks :)*/
 
 .table_noData .fjnodata_p {
     padding: 50px;
+    width: 100%;
+    color: red;
+    font-size: 16px;
 }
 
 

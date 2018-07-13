@@ -93,7 +93,6 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
         addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
 
         function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
-            toolService.pageLoading.open();
             $scope.InitPage = function() {
                 $scope.isBeginFilter = false;
                 // 重置时使用

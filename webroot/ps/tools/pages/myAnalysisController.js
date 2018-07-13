@@ -295,11 +295,13 @@ define(['toolsApp'], function (toolsApp) {
                 }
                 var promise = ajaxService.GetDeferData(ajaxConfig);
                 promise.then(function (res) {
+                    console.log(res);
                     if (res.status != 200) {
                         item.remark = $scope.beforeList.rows[index].remark;
                         item.isEditRemark = false;
                     } else {
                         // 更新之前的状态到最新的值
+                        debugger;
                         $scope.beforeList.rows[index].remark = value;
                         item.isEditRemark = false;
                     }

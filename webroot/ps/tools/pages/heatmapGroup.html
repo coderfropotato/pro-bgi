@@ -12,7 +12,7 @@
                             <div class="links btn-links" style="color:#333;">
                                 <ul ng-if="links.length" class="link-lists">
                                     <li ng-click="handlerSeeClick(item)" ng-repeat="item in links">
-                                        <p>类型：{{item.chartType}}</p>
+                                        <p>类型：{{item.chartType | reverseChartType}}</p>
                                         <p>项目名称：{{item.projectName}}</p>
                                     </li>
                                 </ul>

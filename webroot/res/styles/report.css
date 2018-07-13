@@ -477,6 +477,7 @@ ul {
     background-color: #fff;
     border-left: 0;
     font-size: 14px!important;
+    line-height:40px;
     color: #3B485B;
     border-left: 1px solid #ddd;
 }

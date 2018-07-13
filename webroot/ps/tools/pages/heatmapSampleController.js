@@ -99,6 +99,12 @@ define(["toolsApp"], function(toolsApp) {
                         $scope.isTopCluster = true;
                     }
 
+                    if (JSON.stringify(res.leftClusterData) === "{}") {
+                        $scope.isLeftCluster = false;
+                    } else {
+                        $scope.isLeftCluster = true;
+                    }
+
                     $scope.drawClusterHeatmap(res, $scope.setOption);
 
                     if (flag && flag === 'refresh') {
@@ -264,7 +270,9 @@ define(["toolsApp"], function(toolsApp) {
             if (setOption.isShowTopLine && $scope.isTopCluster) {
                 drawTopCluster();
             }
-            drawCluster();
+            if ($scope.isLeftCluster) {
+                drawCluster();
+            }
             drawHeatmap($scope.colorArr);
             if (setOption.isShowName) {
                 drawYText();

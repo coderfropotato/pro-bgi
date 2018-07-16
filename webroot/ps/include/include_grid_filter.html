@@ -1,5 +1,6 @@
-﻿<div class="tsg_btns"><!--style="visibility:hidden;"-->
-    <button class="btn btn-default btn-sm btn_filter" title="筛选条件" >
+﻿<div class="tsg_btns">
+    <!--style="visibility:hidden;"-->
+    <button class="btn btn-default btn-sm btn_filter" title="筛选条件">
         <span class="sort_icn"></span>
     </button>
 </div>
@@ -17,7 +18,7 @@
         <li class="bottom_line"></li>
         <li class="noHover" style="cursor:default;">
             <!-- class="active" -->
-            <span class="iconglyph icon-filter" style="cursor:default;display: inline-block;margin-left: 6px;margin-right: 11px;color: #5cb85c;"></span>
+            <span class="iconglyph icon-filter" style="cursor:default;display: inline-block;margin-left: 6px;margin-right: 11px;"></span>
             <span class="txt filter_text" style="cursor:default;">数字筛选：</span>
         </li>
         <li class="noHover">
@@ -33,20 +34,28 @@
                 <option value="$lte" ng-hide="(filtertype == 'string')">小于等于（ < = ）</option>
             </select>
             <div ng-if="filtertype=='all'">
-                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()" />
-                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
-                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
-                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
+                />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')"
+                    type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')"
+                    type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                />
             </div>
             <div ng-if="filtertype!='all' && filtertype != 'boolean'">
                 <!-- $in -->
-                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()" />
+                <textarea id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
+                />
                 <!-- !=$in string datetime -->
-                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
+                    search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- !=$in type double || int -->
-                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterOne" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-if="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
+                    search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- range -->
-                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input id="tbx_filterTwo" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                />
             </div>
             <div ng-if="filtertype =='boolean'">
                 <select class="super-select" style="width:180px; float:right;" ng-model="filterFindEntity.searchOne">
@@ -54,7 +63,7 @@
                     <option value="false">false</option>
                 </select>
             </div>
-</li>
+        </li>
         <li class="bottom_line"></li>
         <li class="noHover">
             <div class="btnPanel">

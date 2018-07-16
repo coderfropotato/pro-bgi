@@ -88,33 +88,39 @@ define(["toolsApp"], function(toolsApp) {
                 } else if (JSON.stringify(res) === '{}') { // js: JSON.stringify(res)==='{}' ;  jquery: $.isEmptyObject(res) ; es6: Object.keys(res).length === 0
                     $scope.clusterError = "nodata";
                 } else {
-                    $scope.clusterError = "";
-                    res.heatmapData.reverse();
-                    $scope.setOption.sortNames = res.heatmapData;
+                    if (res.heatmapData.length) {
+                        $scope.clusterError = "";
+                        res.heatmapData.reverse();
+                        $scope.setOption.sortNames = res.heatmapData;
 
-                    //场景：res.topClusterData可能为{}
-                    if (JSON.stringify(res.topClusterData) === "{}") {
-                        $scope.isTopCluster = false;
+                        //场景：res.topClusterData可能为{}
+                        if (JSON.stringify(res.topClusterData) === "{}") {
+                            $scope.isTopCluster = false;
+                        } else {
+                            $scope.isTopCluster = true;
+                        }
+
+                        if (JSON.stringify(res.leftClusterData) === "{}") {
+                            $scope.isLeftCluster = false;
+                        } else {
+                            $scope.isLeftCluster = true;
+                        }
+
+                        $scope.drawClusterHeatmap(res, $scope.setOption);
+
+                        if (flag && flag === 'refresh') {
+                            $scope.isRefresh = true;
+                            $timeout(function() {
+                                $scope.isRefresh = false;
+                            }, 30)
+                        }
+
+                        $scope.chartData = res;
                     } else {
-                        $scope.isTopCluster = true;
+                        $scope.clusterError = "excessdata";
                     }
 
-                    if (JSON.stringify(res.leftClusterData) === "{}") {
-                        $scope.isLeftCluster = false;
-                    } else {
-                        $scope.isLeftCluster = true;
-                    }
 
-                    $scope.drawClusterHeatmap(res, $scope.setOption);
-
-                    if (flag && flag === 'refresh') {
-                        $scope.isRefresh = true;
-                        $timeout(function() {
-                            $scope.isRefresh = false;
-                        }, 30)
-                    }
-
-                    $scope.chartData = res;
                 }
 
                 toolService.gridFilterLoading.close("analysis-heatmapClusterPanel");

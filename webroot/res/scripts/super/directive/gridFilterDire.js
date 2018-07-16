@@ -6,32 +6,32 @@
 
 */
 
-define("superApp.gridFilterDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.gridFilterDire", []);
 
         /*
-        ** 创建人：高洪涛
-        ** 创建日期：2016年5月29日01:45:27
-        ** 功能说明：Grid查询指令
-        ** 返回类型：无
-        ** 调用方法：<div class="grid-filter" icon="sort-asc"></div>   icon="sort-asc"  初始化小箭头按钮的样式名称
-        ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
-        */
+         ** 创建人：高洪涛
+         ** 创建日期：2016年5月29日01:45:27
+         ** 功能说明：Grid查询指令
+         ** 返回类型：无
+         ** 调用方法：<div class="grid-filter" icon="sort-asc"></div>   icon="sort-asc"  初始化小箭头按钮的样式名称
+         ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
+         */
         superApp.directive('gridFilter', gridFilter);
         gridFilter.$inject = ["$log"];
+
         function gridFilter($log) {
             return {
                 restrict: "ACE",
                 scope: {
-                    callback: "&",           // 开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
+                    callback: "&", // 开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
                 },
                 templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.girdFilterPath,
                 replace: false,
                 transclude: true,
                 controller: "gridFilterController",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     //定义当前指令的element存放变量，由link传入，由Controller接收使用
                     scope.thisElement = element;
                     //由link获取指令属性，并传入
@@ -42,22 +42,22 @@ define("superApp.gridFilterDire",
                     //filtertype：datetime、 string、double [default]、int
                     scope.filtertype = attrs.filtertype;
                     scope.parentId = attrs.parentid
-                    // 接受外部查询参数
+                        // 接受外部查询参数
                     scope.searchType = attrs.searchtype;
                     scope.searchOne = attrs.searchone;
                     scope.geneidtruekey = attrs.geneidtruekey;
 
                     scope.filterFindEntity = {
-                        filterName: scope.filterName,           //查询字段名字
-                        filternamezh: scope.filternamezh,       //查询字段中文
-                        filtertype: scope.filtertype,           //查询字段类型 filtertype：datetime、 string、double [default]、int、boolean（新增的布尔筛选）
-                        isSort: false,                          //是否排序标识
-                        sortName: "",                            //排序字段名称
-                        sortType: "",                           //排序类型
-                        searchType: "equal",                    //查询类型
-                        searchOne: "",                          //查询内容1
-                        searchTwo: "",                          //查询内容2
-                        isTopFilter: false                       //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
+                        filterName: scope.filterName, //查询字段名字
+                        filternamezh: scope.filternamezh, //查询字段中文
+                        filtertype: scope.filtertype, //查询字段类型 filtertype：datetime、 string、double [default]、int、boolean（新增的布尔筛选）
+                        isSort: false, //是否排序标识
+                        sortName: "", //排序字段名称
+                        sortType: "", //排序类型
+                        searchType: "equal", //查询类型
+                        searchOne: "", //查询内容1
+                        searchTwo: "", //查询内容2
+                        isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
                     };
                     scope.directiveID = attrs.id;
 
@@ -68,7 +68,7 @@ define("superApp.gridFilterDire",
                     $(element).find(".tsg_btns .btn .sort_icn:eq(0)").addClass(attrs.icon);
 
                     //给所有的li编id
-                    $(tableObj).find(".tsg_panel").each(function (index) {
+                    $(tableObj).find(".tsg_panel").each(function(index) {
                         scope.liSortID1 = "li_1" + "_" + scope.directiveID;
                         scope.liSortID2 = "li_2" + "_" + scope.directiveID;
                     });
@@ -83,8 +83,7 @@ define("superApp.gridFilterDire",
                         scope.filterFindEntity.searchOne = "true";
                         $(element).find(".filter_input").attr("type", "boolean")
                         $(tsgPanel).find(".filter_text").html("布尔检索");
-                    }
-                    else {
+                    } else {
                         scope.filterFindEntity.searchType = "regExp";
                         $(element).find(".filter_input").attr("type", "text")
                         $(tsgPanel).find(".filter_text").html("文本检索");
@@ -96,9 +95,9 @@ define("superApp.gridFilterDire",
                         scope.filterFindEntity.searchType = scope.searchType;
                     }
                     //点击小箭头过滤面版
-                    $(element).find(".tsg_btns .btn:eq(0)").click(function (event) {
+                    $(element).find(".tsg_btns .btn:eq(0)").click(function(event) {
                         //先把页面上所有的过滤面板隐藏掉
-                        $(".grid_filter_panel .tsg_panel").each(function () {
+                        $(".grid_filter_panel .tsg_panel").each(function() {
                             $(this).hide();
                         });
                         //var tsgPanel = $(this).parent().parent().find(".tsg_panel:eq(0)");
@@ -150,15 +149,15 @@ define("superApp.gridFilterDire",
                         $(element).find(".filter_input:eq(0)").focus();
 
                         //给过滤面板绑定事件，防止事件冒泡
-                        $(tsgPanel).bind("click", function (event) {
+                        $(tsgPanel).bind("click", function(event) {
                             //  阻止事件冒泡
                             event.stopPropagation();
                         });
 
                         //给document添加事件，执行取消面板操作
-                        $(document).one("click", function () {
+                        $(document).one("click", function() {
                             //
-                            scope.$apply(function () {
+                            scope.$apply(function() {
                                 scope.btn_QuXiao_OnClick();
                             });
                         });
@@ -175,6 +174,7 @@ define("superApp.gridFilterDire",
 
         superApp.controller("gridFilterController", gridFilterController);
         gridFilterController.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+
         function gridFilterController($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
             $scope.placeholderOne = "请输入您要查询的关键字";
             $scope.placeholderTwo = "请输入您要查询的关键字";
@@ -184,7 +184,7 @@ define("superApp.gridFilterDire",
             var tsgPanel = null;
             //获取当前指令的element对象，由指令的link赋值
             //延迟获取
-            setTimeout(function () {
+            setTimeout(function() {
                 //$log.log($scope.iconName);
                 element = $scope.thisElement;
                 //获取对应列表对象
@@ -196,24 +196,24 @@ define("superApp.gridFilterDire",
 
 
             $scope.tempFindEntity = {
-                filterName: "",                         //查询字段名字
-                filternamezh: "",                       //查询字段中文
-                filtertype: "",                         //查询字段类型
-                searchType: "",                         //查询类型
-                searchOne: "",                          //查询内容1
-                searchTwo: "",                          //查询内容2
-                isTopFilter: false                      //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
+                filterName: "", //查询字段名字
+                filternamezh: "", //查询字段中文
+                filtertype: "", //查询字段类型
+                searchType: "", //查询类型
+                searchOne: "", //查询内容1
+                searchTwo: "", //查询内容2
+                isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
             }
 
             // 触发自定义查询参数的点击事件
-            $timeout(function () {
+            $timeout(function() {
                 if ($scope.searchOne && $scope.filterFindEntity.filterName == $scope.geneidtruekey) {
                     $scope.btn_QueDing_OnClick();
                 }
             }, 30);
 
             //确定按钮点击事件
-            $scope.btn_QueDing_OnClick = function () {
+            $scope.btn_QueDing_OnClick = function() {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
 
@@ -221,7 +221,7 @@ define("superApp.gridFilterDire",
             };
 
             //调用外部事件方法，用于设置当前查询实体信息
-            $scope.QueDing_CallEvent = function () {
+            $scope.QueDing_CallEvent = function() {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
                 $scope.filterFindEntity.filterName = $scope.filterName;
@@ -246,8 +246,7 @@ define("superApp.gridFilterDire",
                 //如果输入了查询信息，则证明要进行条件查询
                 if ($scope.filterFindEntity.searchOne != "" || $scope.filterFindEntity.searchTwo != "") {
                     QueDing_ChangeFilterBtnCss("sort_filter");
-                }
-                else {
+                } else {
                     QueDing_ChangeFilterBtnCss("sort_arrow");
                 }
 
@@ -260,8 +259,7 @@ define("superApp.gridFilterDire",
                     $scope.filterFindEntity.sortName = $scope.filterName;
                     $scope.filterFindEntity.sortnamezh = $scope.filternamezh;
                     //$scope.filterFindEntity.sortType  不用赋值，已经在排序按钮点击时赋值了
-                }
-                else {
+                } else {
                     $scope.filterFindEntity.isSort = false;
                     $scope.filterFindEntity.sortName = "";
                     $scope.filterFindEntity.sortType = "";
@@ -286,15 +284,13 @@ define("superApp.gridFilterDire",
                     $(nowFilterBtn).removeClass();
                     isChangeCss = true;
                     $(nowFilterBtn).addClass("sort_icn " + cssStr + "_asc");
-                }
-                else {
+                } else {
                     $(nowFilterBtn).removeClass();
                     isChangeCss = true;
                     sortRegExp = new RegExp("(desc)");
                     if (sortRegExp.test(nowFilterBtn_Css)) {
                         $(nowFilterBtn).addClass("sort_icn " + cssStr + "_desc");
-                    }
-                    else {
+                    } else {
                         $(nowFilterBtn).addClass("sort_icn " + cssStr);
                     }
                 }
@@ -311,7 +307,7 @@ define("superApp.gridFilterDire",
             }
 
             //取消按钮点击事件
-            $scope.btn_QuXiao_OnClick = function () {
+            $scope.btn_QuXiao_OnClick = function() {
                 if ($scope.tempFindEntity.searchType == "") $scope.tempFindEntity.searchType = "equal";
                 $scope.filterFindEntity.searchType = $scope.tempFindEntity.searchType;
                 $scope.filterFindEntity.searchOne = $scope.tempFindEntity.searchOne;
@@ -324,7 +320,7 @@ define("superApp.gridFilterDire",
             };
 
             //清空查询条件按钮点击事件
-            $scope.btn_QingKong_OnClick = function () {
+            $scope.btn_QingKong_OnClick = function() {
                 //清空中间存储区数据
                 //$scope.tempFindEntity.searchType = "equal";
                 $scope.tempFindEntity.searchOne = "";
@@ -334,8 +330,8 @@ define("superApp.gridFilterDire",
                 //$scope.tempFindEntity.filtertype = "";
                 $scope.tempFindEntity.isTopFilter = "";
                 //清空查询实体数据
-                //if ($scope.tempFindEntity.searchType == "") $scope.tempFindEntity.searchType = "equal";
-                $scope.filterFindEntity.searchType = $scope.tempFindEntity.searchType;
+                // if ($scope.tempFindEntity.searchType == "") $scope.tempFindEntity.searchType = "equal";
+                // $scope.filterFindEntity.searchType = $scope.tempFindEntity.searchType;
                 $scope.filterFindEntity.searchOne = $scope.tempFindEntity.searchOne;
                 $scope.filterFindEntity.searchTwo = $scope.tempFindEntity.searchTwo;
                 $scope.filterFindEntity.filterName = $scope.tempFindEntity.filterName;
@@ -347,7 +343,7 @@ define("superApp.gridFilterDire",
             };
 
             //查询类型OnChange事件
-            $scope.ddl_SearchType_OnChange = function () {
+            $scope.ddl_SearchType_OnChange = function() {
                 //$log.log($scope.filterFindEntity.searchType);
                 //var tbxOneObj = $($scope.element).find(".filterOne:eq(0)");
                 //var tbxTwoObj = $($scope.element).find(".filterTwo:eq(0)");
@@ -388,13 +384,13 @@ define("superApp.gridFilterDire",
             };
 
             //排序按钮点击事件
-            $scope.li_Sort_OnClick = function (e, sortType, objId) {
+            $scope.li_Sort_OnClick = function(e, sortType, objId) {
                 //正在表达式
                 var sortRegExp = null;
                 //第一步：
                 //首先将tableObj下，清除其他过滤面板下的对应样式
                 //那就判断所有的排序按钮用包含排序样式的图标，去掉排序
-                $(tableObj).find(".btn_filter").each(function () {
+                $(tableObj).find(".btn_filter").each(function() {
                     var sortSpanObj = $(this).find(".sort_icn:eq(0)");
                     sortRegExp = new RegExp("(asc|desc)");
                     var sortSpan_Css = $(sortSpanObj).attr("class");
@@ -463,54 +459,55 @@ define("superApp.gridFilterDire",
         }
 
         /*
-        ** 创建人：高洪涛
-        ** 创建日期：2016年5月29日01:45:27
-        ** 功能说明：开始调用 Grid查询指令
-        ** 返回类型：无
-        ** 调用方法：<div class="grid-filter-begin" tableid="table_cyjy" callback="GetDiffList(arg1)" callbackname="GetDiffList"></div>
-        ** 参数：tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体     callbackname：回调方法名
-        ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
-        **
-        **
-        **
-        **Update:2018年5月23日15:55:46
-        **
-        ** tips:如果涉及到的searchOne比较大 建议用自定义事件传参:见用法3
-        ** targetController   <div class="grid-filter-begin" tableid... event-name="eventName"></div> 
-        ** directiveController $scope.$on($scope.eventName,function(event,params){console.log(params)})
-        **
-        **用法（基础）1
-        **<div class="grid-filter-begin"  tableid="table_jybdl" callback="InitFindEntity(arg1)" parentid="panel_jybdl"></div>
-        **
-        **用法2:根据geneidtruekey(需要从指令外部触发筛选的表头true_key) 目前只改变搜索条件的searchOne searchType
-        **<div class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)" parentid="{{contentId}}" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" search-one="geneidCustomSearchOne" filter-status-callback="handlerFilterStatusChange(status)"></div>
-        ** 如果searchOne默认undefined或者null 运行逻辑跟基础用法一样
-        **
-        **用法3:在2的基础上优化searchOne过大的情况,用自定义事件来传递searchOne
-        **<div class="grid-filter-begin" event-name="eventName" tablehead="bigTableData.baseThead" tableid="gene-annotation001001-2_bigTable" callback="InitFindEntity1(arg1)" parentid="panel_gene-annotation001001-2_table" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" filter-status-callback="handlerFilterStatusChange(status)"></div>
-        ** 默认传了eventName 自定义事件的参数 用来改变指令内部searchOne的值
-        */
+         ** 创建人：高洪涛
+         ** 创建日期：2016年5月29日01:45:27
+         ** 功能说明：开始调用 Grid查询指令
+         ** 返回类型：无
+         ** 调用方法：<div class="grid-filter-begin" tableid="table_cyjy" callback="GetDiffList(arg1)" callbackname="GetDiffList"></div>
+         ** 参数：tableid：对应列表的ID名称   callback：回调浏览页页面的方法信息，返回查询实体     callbackname：回调方法名
+         ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
+         **
+         **
+         **
+         **Update:2018年5月23日15:55:46
+         **
+         ** tips:如果涉及到的searchOne比较大 建议用自定义事件传参:见用法3
+         ** targetController   <div class="grid-filter-begin" tableid... event-name="eventName"></div> 
+         ** directiveController $scope.$on($scope.eventName,function(event,params){console.log(params)})
+         **
+         **用法（基础）1
+         **<div class="grid-filter-begin"  tableid="table_jybdl" callback="InitFindEntity(arg1)" parentid="panel_jybdl"></div>
+         **
+         **用法2:根据geneidtruekey(需要从指令外部触发筛选的表头true_key) 目前只改变搜索条件的searchOne searchType
+         **<div class="grid-filter-begin" tablehead="bigTableData.baseThead" tableid="{{tableId}}" callback="InitFindEntity1(arg1)" parentid="{{contentId}}" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" search-one="geneidCustomSearchOne" filter-status-callback="handlerFilterStatusChange(status)"></div>
+         ** 如果searchOne默认undefined或者null 运行逻辑跟基础用法一样
+         **
+         **用法3:在2的基础上优化searchOne过大的情况,用自定义事件来传递searchOne
+         **<div class="grid-filter-begin" event-name="eventName" tablehead="bigTableData.baseThead" tableid="gene-annotation001001-2_bigTable" callback="InitFindEntity1(arg1)" parentid="panel_gene-annotation001001-2_table" search-type="geneidCustomSearchType" geneidtruekey="geneid_truekey" filter-status-callback="handlerFilterStatusChange(status)"></div>
+         ** 默认传了eventName 自定义事件的参数 用来改变指令内部searchOne的值
+         */
         superApp.directive('gridFilterBegin', gridFilterBegin);
         gridFilterBegin.$inject = ["$log"];
+
         function gridFilterBegin($log) {
             return {
                 restrict: "ACE",
                 scope: {
-                    callback: "&",           //开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
-                    clearFilter: "=",         //关闭筛选
+                    callback: "&", //开始筛选按钮回调方法，一般为父页面的获取对应表格的方法，将传回查询实体
+                    clearFilter: "=", //关闭筛选
                     searchOne: "=",
                     searchType: "=",
-                    tablehead: '=',            // 表格数据，用来动态watch表格增删  修改筛选状态
+                    tablehead: '=', // 表格数据，用来动态watch表格增删  修改筛选状态
                     geneidtruekey: "=",
-                    eventName: "=",             // 手动接受改变的searchOne的自定义事件名
-                    filterStatusCallback: "&"        // 是否筛选中，定义外部布局样式
+                    eventName: "=", // 手动接受改变的searchOne的自定义事件名
+                    filterStatusCallback: "&" // 是否筛选中，定义外部布局样式
                 },
-                template: " <button class=\"new-table-switch-btns noborder tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">"
-                    + "                    <span class=\"iconfont icon-shaixuan\"></span></button>",
+                template: " <button class=\"new-table-switch-btns noborder tool-tip\"  ng-click=\"btn_ShaXuan_OnClick()\" ng-class=\"{active:shaiXuanIsActive}\" title=\"筛选\">" +
+                    "                    <span class=\"iconfont icon-shaixuan\"></span></button>",
                 replace: false,
                 transclude: true,
                 controller: "gridFilterBeginController",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     scope.parentId = attrs.parentid
                     scope.tableid = attrs.tableid;
                     //回调方法名称，供动态输出筛选面板diretive使用
@@ -523,8 +520,9 @@ define("superApp.gridFilterDire",
 
         superApp.controller("gridFilterBeginController", gridFilterBeginController);
         gridFilterBeginController.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+
         function gridFilterBeginController($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
-            $scope.clearFilter = function () {
+            $scope.clearFilter = function() {
                 //清空
                 $scope.shaiXuanIsActive = true;
                 $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
@@ -533,9 +531,9 @@ define("superApp.gridFilterDire",
 
             // 检查table数据变动，改变新数据的筛选状态
             // Add:2018年3月23日14:27:04
-            $scope.$watch('tablehead', function (newValue, oldValue) {
+            $scope.$watch('tablehead', function(newValue, oldValue) {
                 // dom渲染完再渲染
-                $timeout(function () {
+                $timeout(function() {
                     if (!newValue) return;
                     if (!angular.equals(newValue, oldValue)) {
                         var flag = !oldValue ? true : newValue.length > oldValue.length;
@@ -555,25 +553,25 @@ define("superApp.gridFilterDire",
 
             // watch searchOne default ''
             if ($scope.searchOne != undefined && $scope.searchOne != null) {
-                $scope.$watch('searchOne', function (newVal, oldVal) {
+                $scope.$watch('searchOne', function(newVal, oldVal) {
                     if (!angular.equals(newVal, oldVal)) {
                         if (newVal) {
-                            $timeout(function () {
+                            $timeout(function() {
                                 var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                                 $scope.compileTemplate(curPanel, 0);
                             }, 30);
-                        } 
+                        }
                     }
                 }, true);
             }
 
             // 没有searchOne 就手动emit  eventName限制
             if ($scope.eventName != undefined && $scope.eventName != null) {
-                $scope.$on($scope.eventName, function (event, listStr) {
+                $scope.$on($scope.eventName, function(event, listStr) {
                     // 如果liststr为空  那就不需要重新编译
                     if (listStr) {
                         $scope.searchOne = listStr;
-                        $timeout(function () {
+                        $timeout(function() {
                             var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                             $scope.compileTemplate(curPanel, 0);
                         }, 30);
@@ -585,7 +583,7 @@ define("superApp.gridFilterDire",
 
             // 编译模板
             // Modified:2018年3月23日14:27:40
-            $scope.compileTemplate = function (el, index) {
+            $scope.compileTemplate = function(el, index) {
                 var tempDirHtmlStr = "";
                 var $directiveObj = null;
                 //查询字段名称
@@ -600,20 +598,20 @@ define("superApp.gridFilterDire",
                 var searchOne = el.attr('searchone');
                 if (filtertype == undefined) filtertype = "double";
                 var filterDireID = "div_filterDire_" + $scope.tableid + "_" + index;
-                tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" "
-                    + " filtername=\"" + filtername + "\" "
-                    + " filternamezh=\"" + filternamezh + "\" "
-                    + " filtertype=\"" + filtertype + "\" ";
+                tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" " +
+                    " filtername=\"" + filtername + "\" " +
+                    " filternamezh=\"" + filternamezh + "\" " +
+                    " filtertype=\"" + filtertype + "\" ";
 
                 if ($scope.searchOne != undefined && $scope.searchOne != null) {
-                    tempDirHtmlStr += " searchtype=\"" + $scope.searchType + "\" "
-                        + " searchone=\"" + $scope.searchOne + "\" ";
+                    tempDirHtmlStr += " searchtype=\"" + $scope.searchType + "\" " +
+                        " searchone=\"" + $scope.searchOne + "\" ";
                 }
 
-                tempDirHtmlStr += " geneidtruekey=\"" + $scope.geneidtruekey + "\" "
-                    + " callback=\"" + $scope.callbackname + "(arg1)\" "
-                    + " parentid=\"" + $scope.parentId + "\" "
-                    + " icon=\"sort_arrow\" tableid=\"" + $scope.tableid + "\"></div>";
+                tempDirHtmlStr += " geneidtruekey=\"" + $scope.geneidtruekey + "\" " +
+                    " callback=\"" + $scope.callbackname + "(arg1)\" " +
+                    " parentid=\"" + $scope.parentId + "\" " +
+                    " icon=\"sort_arrow\" tableid=\"" + $scope.tableid + "\"></div>";
                 $directiveObj = $(tempDirHtmlStr);
 
                 // 清除原来的结构 加了表格监听以后隐藏列的时候没有清空，所以新增的时候清空一下，避免出错。
@@ -621,7 +619,7 @@ define("superApp.gridFilterDire",
                 el.html('');
 
                 el.append($directiveObj);
-                angular.element(document).injector().invoke(["$compile", function ($compile) {
+                angular.element(document).injector().invoke(["$compile", function($compile) {
                     var as = angular.element($directiveObj).scope();
                     $compile($directiveObj)(as);
                 }]);
@@ -629,7 +627,7 @@ define("superApp.gridFilterDire",
 
 
             //筛选按钮点击事件
-            $scope.btn_ShaXuan_OnClick = function () {
+            $scope.btn_ShaXuan_OnClick = function() {
                 $scope.shaiXuanIsActive = !$scope.shaiXuanIsActive;
                 $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
 
@@ -637,22 +635,20 @@ define("superApp.gridFilterDire",
                 var gridPanel = $("#" + $scope.tableid);
                 if ($scope.shaiXuanIsActive) {
                     //动态循环grid里面的指令面板，并动态输出指令
-                    $(gridPanel).find(".grid_filter_panel").each(function (index) {
+                    $(gridPanel).find(".grid_filter_panel").each(function(index) {
                         $scope.compileTemplate($(this), index);
                         //$log.log(filtername);
                     });
                     //$("#" + $scope.tableid).find(".btn_filter").css("visibility", "visible");
-                }
-                else {
-                    $(gridPanel).find(".grid_filter_panel").each(function (index) {
+                } else {
+                    $(gridPanel).find(".grid_filter_panel").each(function(index) {
                         $(this).html("");
                     });
                     try {
                         //调用父类查询事件
                         //$scope.$parent.GetDiffList(null);
                         $scope.callback({ arg1: null });
-                    }
-                    catch (e) { }
+                    } catch (e) {}
                     //$("#" + $scope.tableid).find(".btn_filter").css("visibility", "hidden");
                 }
             };
@@ -660,4 +656,3 @@ define("superApp.gridFilterDire",
 
 
     });
-

@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 
 模块名称：toolTipDire
 整理时间：2016-06-20
@@ -9,9 +8,8 @@
 
 
 
-define("superApp.toolTipDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.toolTipDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.toolTipDire", []);
 
 
@@ -30,17 +28,18 @@ define("superApp.toolTipDire",
         */
         superApp.directive('toolTip', toolTipDirective);
         toolTipDirective.$inject = ["$log"];
+
         function toolTipDirective($log) {
             return {
                 restrict: "ACE",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var margin = 32; //提示框偏移 px
                     var $element = $(element);
                     $element.data("direct", (attrs.toolTipDirect) ? attrs.toolTipDirect : "top");
                     $element.data("toolTipID", "toolTipID_" + $element.attr("title"));
                     $element.data("title", $element.attr("title"));
                     $element.removeAttr("title"); //把title属性删掉，否则会显示浏览器自带的提示
-                    $element.hover(function () {
+                    $element.hover(function() {
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
                         if ($divToolTip.length < 1) {
@@ -87,17 +86,17 @@ define("superApp.toolTipDire",
 
                         $divToolTip.css({ "left": tX + "px", "top": tY + "px" });
                         $divToolTip.addClass("in");
-                    }, function () {
+                    }, function() {
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
                         $divToolTip.removeClass("in");
-                        setTimeout(function () { $divToolTip.remove(); }, 100);
+                        setTimeout(function() { $divToolTip.remove(); }, 100);
                     });
-                    $element.click(function () {
+                    $element.click(function() {
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
                         $divToolTip.removeClass("in");
-                        setTimeout(function () { $divToolTip.remove(); }, 100);
+                        setTimeout(function() { $divToolTip.remove(); }, 100);
                     })
                 }
             }
@@ -128,17 +127,18 @@ define("superApp.toolTipDire",
         */
         superApp.directive('dropMenu', dropMenuDirective);
         dropMenuDirective.$inject = ["$log"];
+
         function dropMenuDirective($log) {
             return {
                 restrict: "ACE",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var $element = $(element);
                     $element.find(".dropdown-menu:eq(0)").hide();
                     //它下面的第一个子元素点击事件 （约定第一个就是按钮，或者其它开关元素）
-                    $element.find(":eq(0)").click(function (event) {
+                    $element.find(":eq(0)").click(function(event) {
                         var $this = $(this);
                         var $dropdownMenu = $this.parent().find(".dropdown-menu:eq(0)");
-                        setTimeout(function () {
+                        setTimeout(function() {
                             var dWidth = $dropdownMenu.width();
                             var dLeft = $dropdownMenu.offset().left;
                             if ($(window).width() < (dWidth + dLeft)) {
@@ -150,15 +150,15 @@ define("superApp.toolTipDire",
                         event.stopPropagation();
 
                         //给document添加事件，执行取消面板操作
-                        $(document).one("click", function () {
-                            scope.$apply(function () {
+                        $(document).one("click", function() {
+                            scope.$apply(function() {
                                 $element.removeClass("drop-menu-show");
                                 $element.find(".dropdown-menu:eq(0)").stop().fadeOut();
                             });
                         });
                     });
 
-                    $element.find(".dropdown-menu:eq(0)").click(function () {
+                    $element.find(".dropdown-menu:eq(0)").click(function() {
                         var $this = $(this);
                         $this.parent().removeClass("drop-menu-show");
                         $this.parent().find(".dropdown-menu:eq(0)").stop().fadeOut();
@@ -179,10 +179,11 @@ define("superApp.toolTipDire",
         */
         superApp.directive('formMinicolors', formMinicolorsDirective);
         formMinicolorsDirective.$inject = ["$log"];
+
         function formMinicolorsDirective($log) {
             return {
                 restrict: "ACE",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var $element = $(element);
                     $element.minicolors();
                 }
@@ -204,13 +205,14 @@ define("superApp.toolTipDire",
         */
         superApp.directive('popTip', popTipDirective);
         popTipDirective.$inject = ["$log"];
+
         function popTipDirective($log) {
             return {
                 restrict: "ACE",
                 scope: {
                     myTitle: "="
                 },
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     //$log.log(scope.myAttr);
                     //$log.log(attrs.id);
                     if (scope.myTitle == "") return;
@@ -220,7 +222,7 @@ define("superApp.toolTipDire",
                     $element.data("toolTipID", "toolTipID_" + attrs.id);
                     $element.data("title", scope.myTitle);
                     $element.removeAttr("title"); //把title属性删掉，否则会显示浏览器自带的提示
-                    $element.hover(function () {
+                    $element.hover(function() {
                         var $this = $(this);
                         $this.data("direct", ($this.attr('toolTipDirect')) ? $this.attr('toolTipDirect') : "right");
                         /* 判断元素是否位于极左 或 极右，如是，反向之 */
@@ -290,7 +292,7 @@ define("superApp.toolTipDire",
 
                         $divToolTip.css({ "left": tX + "px", "top": tY + "px" });
                         $divToolTip.addClass("in");
-                    }, function () {
+                    }, function() {
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
                         $divToolTip.removeClass("in");
@@ -317,13 +319,14 @@ define("superApp.toolTipDire",
         */
         superApp.directive('popTipGo', popTipGoDirective);
         popTipGoDirective.$inject = ["$log"];
+
         function popTipGoDirective($log) {
             return {
                 restrict: "ACE",
                 scope: {
                     myTitle: "="
                 },
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     //$log.log(scope.myAttr);
                     //$log.log(attrs.id);
                     if (scope.myTitle == "") return;
@@ -333,7 +336,7 @@ define("superApp.toolTipDire",
                     $element.data("toolTipID", "toolTipID_" + attrs.name);
                     $element.data("title", scope.myTitle);
                     $element.removeAttr("title"); //把title属性删掉，否则会显示浏览器自带的提示
-                    $element.hover(function () {
+                    $element.hover(function() {
                         //移除掉之前hover的div
                         $(".GOKOToolTip").remove();
 
@@ -410,17 +413,17 @@ define("superApp.toolTipDire",
 
                         $divToolTip.css({ "left": tX + "px", "top": tY + "px" });
                         $divToolTip.addClass("in");
-                    }, function () {
+                    }, function() {
                         var $this = $(this);
                         var $divToolTip = $("#" + $this.data("toolTipID"));
-                        var timer = setTimeout(function () {
+                        var timer = setTimeout(function() {
                             $divToolTip.removeClass("in");
                             $divToolTip.remove();
                         }, 100);
 
-                        $divToolTip.hover(function () {
+                        $divToolTip.hover(function() {
                             clearTimeout(timer)
-                        }, function () {
+                        }, function() {
                             $divToolTip.removeClass("in");
                             $divToolTip.remove();
                         })
@@ -447,10 +450,11 @@ define("superApp.toolTipDire",
         */
         superApp.directive('dropAlert', dropAlertDirective);
         dropAlertDirective.$inject = ["$log"];
+
         function dropAlertDirective($log) {
             return {
                 restrict: "ACE",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     //保存 div 对象
                     scope.$element = $(element);
                     scope.$ddsm = scope.$element.find(".ddsm:eq(0)");
@@ -461,8 +465,9 @@ define("superApp.toolTipDire",
 
         superApp.controller("dropAlertCtr", dropAlertCtr);
         dropAlertCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+
         function dropAlertCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
-            $scope.ShowContent = function () {
+            $scope.ShowContent = function() {
                 if ($scope.$ddsm.is(":hidden")) {
                     $scope.$ddsm.stop().slideDown();
                 } else {
@@ -484,26 +489,27 @@ define("superApp.toolTipDire",
         */
         superApp.directive('tableNodata', tableNodataDirective);
         tableNodataDirective.$inject = ["$log"];
+
         function tableNodataDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<div class='table_noData' ng-show='errorType == \"nodata\"'>"
-                    + "<div class='divCont'>"
-                    + "<p>对不起，没有可显示的数据！</p>"
-                    + "</div>"
-                    + "</div>"
-                    + "<div class='table_noData' ng-show='errorType == \"syserror\"'>"
-                    + "<div class='divCont'>"
-                    + "<p>对不起，系统异常！</p>"
-                    + "</div>"
-                    + "</div>"
-                    + "<div class='table_noData' ng-show='errorType == \"fjnodata\"'>"
-                    + "<p class='fjnodata_p'>没有结果！</p>"
-                    + "</div>",
+                template: "<div class='table_noData' ng-show='errorType == \"nodata\"'>" +
+                    "<div class='divCont'>" +
+                    "<p>对不起，没有可显示的数据！</p>" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='table_noData' ng-show='errorType == \"syserror\"'>" +
+                    "<div class='divCont'>" +
+                    "<p>对不起，系统异常！</p>" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='table_noData' ng-show='errorType == \"excessdata\"'>" +
+                    "<p class='fjnodata_p'>当前比较组数据量过大，无法正常显示！</p>" +
+                    "</div>",
                 scope: {
                     errorType: "="
                 },
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
 
                 }
             }
@@ -514,6 +520,7 @@ define("superApp.toolTipDire",
         // pop over
         superApp.directive('popoverTable', popoverTable);
         popoverTable.$inject = ["$log"];
+
         function popoverTable($log) {
             return {
                 restrict: "ACE",
@@ -526,14 +533,15 @@ define("superApp.toolTipDire",
                     reanalysisId: "="
                 },
                 // controller: "popoverTableCtr",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     scope.element = element;
                     $(element).css('position', 'relative');
                     var obj, timer;
                     var direc = 'left';
-                    var leftPos = 0, topPos = 0;
+                    var leftPos = 0,
+                        topPos = 0;
 
-                    $(element).on('mouseenter', function () {
+                    $(element).on('mouseenter', function() {
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');
@@ -545,85 +553,85 @@ define("superApp.toolTipDire",
                             if (scope.theadKey == 'kegg_subject_annotation' || scope.theadKey == 'desc_kegg' || scope.theadKey === 'kegg_desc') {
                                 // 用； 切出大段
                                 var list = text.split(';');
-                                list.forEach(function (d, i) {
-                                    if (d.length && d) {
-                                        if (/\+/g.test(d)) {
-                                            // 有小段
-                                            var index = 0;
-                                            var l = d.split('+');
-                                            l.forEach(function (m, z) {
-                                                if (/K\d+/g.test(m)) {
-                                                    if (index) {
-                                                        str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
-                                                    } else {
-                                                        str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
-                                                    }
-                                                    index++;
-                                                } else {
-                                                    // 没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
-                                                    str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + m.split('//')[0] + '">' + m + '</a><br>'
-                                                }
-                                            })
-                                        } else {
-                                            // 没有小段  有K     只有:  K09100//single-minded; 
-                                            if (/^K/.test($.trim(d))) {
-                                                str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a><br>';
-                                            } else if (/ko/g.test($.trim(d))) {
-                                                // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
-                                                str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
-                                            } else {
-                                                str += '<span>' + d + '</span>';
-                                            }
-                                        }
-                                    }
-                                })
-                                /*
-                                    else if (scope.theadKey === 'desc_kegg') {
-                                    // 找出K号 找出ko 用;切 有+的 把[]单独放一行
-                                    var list = text.split(';');
-                                    // [
-                                    //    K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]+ko00310//Lysine degradation,
-                                    //    K09228//KRAB domain-containing zinc finger protein
-                                    // ]
-                                    list.forEach(function (val, index) {
-                                        if (val.length && $.trim(val)) {
-                                            // k号下有ko
-                                            if (/\+/g.test(val)) {
-                                                // +切
-                                                var k = val.split('+');
-                                                // ['K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]','ko00310//Lysine degradation']
-                                                k.forEach(function (d, i) {
-                                                    if (/^K/.test($.trim(d))) {
-                                                        // K号
-                                                        // 当前K号下有没有[]
-                                                        if (/\[([\s\S]*)\]/g.test(d)) {
-                                                            // [EC:2.1.1.43]
-                                                            var flag = d.match(/\[([\s\S]*)\]/g)[0];
-                                                            var s = d.split(flag);
-                                                            str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + s[0] + '</a><br>';
-                                                            str += '<span>' + flag + '</span><br>';
+                                list.forEach(function(d, i) {
+                                        if (d.length && d) {
+                                            if (/\+/g.test(d)) {
+                                                // 有小段
+                                                var index = 0;
+                                                var l = d.split('+');
+                                                l.forEach(function(m, z) {
+                                                    if (/K\d+/g.test(m)) {
+                                                        if (index) {
+                                                            str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
                                                         } else {
-                                                            // k号下没有[]  直接//切
-                                                            str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + d + '</a><br>';
+                                                            str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + m.split('//')[0] + '">' + m + '</a><br>';
                                                         }
+                                                        index++;
                                                     } else {
-                                                        // 没有K号  只有ko13115
-                                                        str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d[0].split('//')[0] + '">' + d + '</a><br>';
+                                                        // 没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
+                                                        str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + m.split('//')[0] + '">' + m + '</a><br>'
                                                     }
                                                 })
                                             } else {
-                                                // k号下没有ko
-                                                str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + val.split('//')[0] + '">' + d + '</a><br>';
+                                                // 没有小段  有K     只有:  K09100//single-minded; 
+                                                if (/^K/.test($.trim(d))) {
+                                                    str += '<br><a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + d.match(/K\d+/g) + '">' + d + '</a><br>';
+                                                } else if (/ko/g.test($.trim(d))) {
+                                                    // 没有小段没有k号  就找出ko  https://www.kegg.jp/kegg-bin/show_pathway?ko04320
+                                                    str += '&emsp;<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d.split('//')[0] + '">' + d + '</a><br>'
+                                                } else {
+                                                    str += '<span>' + d + '</span>';
+                                                }
                                             }
                                         }
                                     })
-                                } 
-                                */
+                                    /*
+                                        else if (scope.theadKey === 'desc_kegg') {
+                                        // 找出K号 找出ko 用;切 有+的 把[]单独放一行
+                                        var list = text.split(';');
+                                        // [
+                                        //    K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]+ko00310//Lysine degradation,
+                                        //    K09228//KRAB domain-containing zinc finger protein
+                                        // ]
+                                        list.forEach(function (val, index) {
+                                            if (val.length && $.trim(val)) {
+                                                // k号下有ko
+                                                if (/\+/g.test(val)) {
+                                                    // +切
+                                                    var k = val.split('+');
+                                                    // ['K20796//histone-lysine N-methyltransferase PRDM7/9 [EC:2.1.1.43]','ko00310//Lysine degradation']
+                                                    k.forEach(function (d, i) {
+                                                        if (/^K/.test($.trim(d))) {
+                                                            // K号
+                                                            // 当前K号下有没有[]
+                                                            if (/\[([\s\S]*)\]/g.test(d)) {
+                                                                // [EC:2.1.1.43]
+                                                                var flag = d.match(/\[([\s\S]*)\]/g)[0];
+                                                                var s = d.split(flag);
+                                                                str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + s[0] + '</a><br>';
+                                                                str += '<span>' + flag + '</span><br>';
+                                                            } else {
+                                                                // k号下没有[]  直接//切
+                                                                str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + s[0].split('//')[0] + '">' + d + '</a><br>';
+                                                            }
+                                                        } else {
+                                                            // 没有K号  只有ko13115
+                                                            str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + d[0].split('//')[0] + '">' + d + '</a><br>';
+                                                        }
+                                                    })
+                                                } else {
+                                                    // k号下没有ko
+                                                    str += '<a class="k-number" target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?ko:' + val.split('//')[0] + '">' + d + '</a><br>';
+                                                }
+                                            }
+                                        })
+                                    } 
+                                    */
                             } else if (scope.theadKey === 'kegg_term_mix') {
                                 // 根据LCID、ko、比较组、软件信息，跳转报告自带html
                                 // ko03022//Basal transcription factors;ko05016//Huntington's disease;ko05168//Herpes simplex infection;ko04550//Signaling pathways regulating pluripotency of stem cells
                                 var list = text.split(';');
-                                list.forEach(function (val, index) {
+                                list.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         // ../tools/index.html#/home/mapId?map={{item.id}}&comparegroup={{pageFindEntity.compareGroup}}&method={{method}}
                                         str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&comparegroup=' + scope.compareGroup + '&method=' + scope.method + '" >' + val + '</a><br>';
@@ -632,7 +640,7 @@ define("superApp.toolTipDire",
                             } else if (scope.theadKey === 'kegg_term_mix_tools') {
                                 // 跳转官网固定链接  
                                 var list = text.split(';');
-                                list.forEach(function (val, index) {
+                                list.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         str += '<a class="ko-number" target="_blank" href="https://www.kegg.jp/kegg-bin/show_pathway?' + val.split('//')[0] + '">' + val + '</a><br>';
                                     }
@@ -652,7 +660,7 @@ define("superApp.toolTipDire",
                                 // kegg_term_mix_dsaq131s5a4fq1
                                 // 根据LCID、ko、任务ID，跳转重分析生成的html
                                 var list = text.split(';');
-                                list.forEach(function (val, index) {
+                                list.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         str += '<a class="mapid" target="_blank" href="../../../../ps/tools/index.html#/home/mapId?map=' + val.split('//')[0].substring(2) + '&taskId=' + scope.reanalysisId + '"  title="' + val.split('//')[0].substring(2) + '">' + val + '</a><br>';
                                     }
@@ -665,7 +673,7 @@ define("superApp.toolTipDire",
                                 // 没有 []
                                 var list = text.split(';');
                                 var index = 0;
-                                list.forEach(function (val, index) {
+                                list.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         // val.split('//')[0]
                                         str += '<a href="http://amigo.geneontology.org/amigo/term/' + (val.match(/GO:\w+/))[0] + '" target="_blank">' + val + '</a><br>';
@@ -676,7 +684,7 @@ define("superApp.toolTipDire",
                                 // ['[p]GO:55156//DASDSADASDA','GO:1515Q//12312'] 
                                 var list = text.split(';');
                                 var index = 0;
-                                list.forEach(function (val, index) {
+                                list.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         // 有 []
                                         if (/\[([\s\S]*)\]/g.test(val)) {
@@ -702,7 +710,7 @@ define("superApp.toolTipDire",
                                 // 不需要特殊处理的
                                 // 有；按；切  没有默认
                                 var l = text.split(';');
-                                l.forEach(function (val, index) {
+                                l.forEach(function(val, index) {
                                     if (val.length && $.trim(val)) {
                                         str += '<span>' + val + ';</span><br>';
                                     }
@@ -723,18 +731,18 @@ define("superApp.toolTipDire",
                             obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
 
-                            obj.on('mouseenter', function () {
+                            obj.on('mouseenter', function() {
                                 if (timer) clearTimeout(timer);
-                            }).on('mouseleave', function () {
+                            }).on('mouseleave', function() {
                                 obj.remove();
                             })
                         } else {
                             return;
                         }
 
-                    }).on('mouseleave', function () {
+                    }).on('mouseleave', function() {
                         if (timer) clearTimeout(timer);
-                        timer = setTimeout(function () {
+                        timer = setTimeout(function() {
                             if (obj) obj.remove();
                         }, 80)
                     })
@@ -745,18 +753,20 @@ define("superApp.toolTipDire",
         // pop over
         superApp.directive('popoverTableTools', popoverTableTools);
         popoverTableTools.$inject = ["$log"];
+
         function popoverTableTools($log) {
             return {
                 restrict: "ACE",
                 // controller: "popoverTableCtr",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     scope.element = element;
                     $(element).css('position', 'relative');
                     var obj, timer;
                     var direc = 'left';
-                    var leftPos = 0, topPos = 0;
+                    var leftPos = 0,
+                        topPos = 0;
 
-                    $(element).on('mouseenter', function () {
+                    $(element).on('mouseenter', function() {
                         if (obj) obj.remove();
                         topPos = $(element).offset().top;
                         var text = $(element).attr('data-title');
@@ -766,7 +776,7 @@ define("superApp.toolTipDire",
                         if (($(element).children(":eq(0)").width() - $(element).outerWidth()) > 2) {
 
                             var l = text.split(';');
-                            l.forEach(function (val, index) {
+                            l.forEach(function(val, index) {
                                 if (val.length && $.trim(val)) {
                                     str += '<span>' + val + ';</span><br>';
                                 }
@@ -786,18 +796,18 @@ define("superApp.toolTipDire",
                             obj.css('top', topPos - (obj.height() - $(element).outerHeight()) / 2);
                             obj.css('visibility', 'visible');
 
-                            obj.on('mouseenter', function () {
+                            obj.on('mouseenter', function() {
                                 if (timer) clearTimeout(timer);
-                            }).on('mouseleave', function () {
+                            }).on('mouseleave', function() {
                                 obj.remove();
                             })
                         } else {
                             return;
                         }
 
-                    }).on('mouseleave', function () {
+                    }).on('mouseleave', function() {
                         if (timer) clearTimeout(timer);
-                        timer = setTimeout(function () {
+                        timer = setTimeout(function() {
                             if (obj) obj.remove();
                         }, 80)
                     })
@@ -808,13 +818,14 @@ define("superApp.toolTipDire",
 
         // long tooltip
         superApp.directive('longTooltip', longTooltip);
-        longTooltip.$inject = ["$log",];
+        longTooltip.$inject = ["$log", ];
+
         function longTooltip($log) {
             return {
                 restrict: "ACE",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var obj = $('<div class="long-tool-tip"><div class="long-tool-tip-arrow"></div><div class="long-tool-tip-text"></div></div>')
-                    $(element).on('mouseover', function () {
+                    $(element).on('mouseover', function() {
                         var text = $(element).attr('tooltip');
                         obj.find('.long-tool-tip-text').text(text);
                         var offset = $(element).parent().offset();
@@ -830,7 +841,7 @@ define("superApp.toolTipDire",
                         var height = obj.outerHeight();
                         obj.css('top', offset.top - height);
                         obj.css('visibility', 'visible');
-                    }).on('mouseout', function () {
+                    }).on('mouseout', function() {
                         if (($(element).parent().find('.long-tool-tip')).length) {
                             obj.remove();
                         }
@@ -839,4 +850,3 @@ define("superApp.toolTipDire",
             }
         }
     });
-

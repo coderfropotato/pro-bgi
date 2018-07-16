@@ -10,7 +10,7 @@
             </p>
         </div>
         <!-- <div class="table-nodata" error-type="geneInfoError" style="border: 0"></div> -->
-        <div ng-show="geneInfoError">无</div>
+        <p ng-show="geneInfoError">无</p>
 
         <h4>表达量信息</h4>
 
@@ -35,7 +35,7 @@
                 </tbody>
             </table>
             <!-- <div class="table-nodata" error-type="sampleExpError" style="border: 0"></div> -->
-            <div ng-show="sampleExpError">无</div>
+            <p ng-show="sampleExpError">无</p>
         </div>
 
         <!-- 表达量折线图 -->
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <!-- <div class="table-nodata" error-type="lineError" style="border: 0"></div> -->
-                <div ng-show="lineError">无</div>
+                <p ng-show="lineError">无</p>
             </div>
         </div>
 
@@ -75,7 +75,7 @@
                         </tbody>
                     </table>
                     <!-- <div class="table-nodata" error-type="groupDiffError" style="border: 0"></div> -->
-                    <div ng-show="groupDiffError">无</div>
+                    <p ng-show="groupDiffError">无</p>
                 </div>
             </div>
             <!-- 样本间差异 -->
@@ -100,7 +100,7 @@
                         </tbody>
                     </table>
                     <!-- <div class="table-nodata" error-type="sampleDiffError" style="border: 0"></div> -->
-                    <div ng-show="sampleDiffError">无</div>
+                    <p ng-show="sampleDiffError">无</p>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                 <p ng-repeat="time in timeCourseList track by $index">{{time}}</p>
             </div>
             <!-- <div class="table-nodata" error-type="timeCourseError" style="border: 0"></div> -->
-            <div ng-show="timeCourseError">无</div>
+            <p ng-show="timeCourseError">无</p>
         </div>
 
         <!-- 功能注释信息 -->
@@ -149,7 +149,7 @@
                         </tbody>
                     </table>
                     <!-- <div class="table-nodata" error-type="keggError" style="border: 0"></div> -->
-                    <div ng-show="keggError">无</div>
+                    <p ng-show="keggError">无</p>
                 </div>
             </div>
 
@@ -168,7 +168,7 @@
                     </div>
                 </div>
                 <!-- <div class="table-nodata" error-type="goError" style="border: 0"></div> -->
-                <div ng-show="goError">无</div>
+                <p ng-show="goError">无</p>
             </div>
 
             <div ng-show="isHasPhi">
@@ -200,7 +200,7 @@
                     </div>
                 </div>
                 <!-- <div class="table-nodata" error-type="phiError" style="border: 0"></div> -->
-                <div ng-show="phiError">无</div>
+                <p ng-show="phiError">无</p>
             </div>
 
             <div ng-show="isHasPrg">
@@ -213,7 +213,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="prgError" style="border: 0"></div> -->
-                <div ng-show="prgError">无</div>
+                <p ng-show="prgError">无</p>
             </div>
 
             <div ng-show="isHasTf">
@@ -227,7 +227,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="tfError" style="border: 0"></div> -->
-                <div ng-show="tfError">无</div>
+                <p ng-show="tfError">无</p>
             </div>
 
             <div ng-show="isHasNr">
@@ -240,7 +240,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="nrError" style="border: 0"></div> -->
-                <div ng-show="nrError">无</div>
+                <p ng-show="nrError">无</p>
             </div>
 
             <div ng-show="isHasNt">
@@ -253,7 +253,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="nrError" style="border: 0"></div> -->
-                <div ng-show="nrError">无</div>
+                <p ng-show="nrError">无</p>
             </div>
 
             <div ng-show="isHasSwissprot">
@@ -266,7 +266,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="swissprotError" style="border: 0"></div> -->
-                <div ng-show="swissprotError">无</div>
+                <p ng-show="swissprotError">无</p>
             </div>
 
             <div ng-show="isHasPfam">
@@ -279,7 +279,7 @@
                     </p>
                 </div>
                 <!-- <div class="table-nodata" error-type="pfamError" style="border: 0"></div> -->
-                <div ng-show="pfamError">无</div>
+                <p ng-show="pfamError">无</p>
             </div>
         </div>
 
@@ -308,7 +308,7 @@
                         </tbody>
                     </table>
                     <!-- <div class="table-nodata" error-type="snpError" style="border: 0"></div> -->
-                    <div ng-show="snpError">无</div>
+                    <p ng-show="snpError">无</p>
                 </div>
             </div>
 
@@ -333,7 +333,7 @@
                         </tbody>
                     </table>
                     <!-- <div class="table-nodata" error-type="indelError" style="border: 0"></div> -->
-                    <div ng-show="indelError">无</div>
+                    <p ng-show="indelError">无</p>
                 </div>
             </div>
 
@@ -360,7 +360,7 @@
                     </tbody>
                 </table>
                 <!-- <div class="table-nodata" error-type="fusionError" style="border: 0"></div> -->
-                <div ng-show="fusionError">无</div>
+                <p ng-show="fusionError">无</p>
             </div>
         </div>
 
@@ -376,7 +376,7 @@
                 </div>
             </div>
             <!-- <div class="table-nodata" error-type="sequenceError" style="border: 0"></div> -->
-            <div ng-show="sequenceError">无</div>
+            <p ng-show="sequenceError">无</p>
         </div>
 
         <div id="literature_panel" ng-hide="pubmedError">

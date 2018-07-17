@@ -98,7 +98,7 @@
                                     <span ng-show="!item.isEditRemark">{{item.remark}}</span>
                                 </span>
                                 <!-- ng-keyup="handlerKeyUp($event,$index,item,item.projectName)" -->
-                                <input ng-blur="handlerBlur2($index,item,item.remark)" ng-keyup="handlerKeyUp2($event,$index,item,item.remark)" ng-show="item.isEditRemark" type="text" ng-model="item.remark">
+                                <input ng-blur="handlerBlur2($index,item,item.remark)" ng-keyup="handlerKeyUp2($event,$index,item,item.remark)" ng-show="item.isEditRemark" type="text" placeholder="字数限制100"  ng-model="item.remark">
                                 <i class="iconfont icon-xiugai" ng-click="handlerEditClick2($index,item)"></i>
                             </td>
                             <td class="text-center">

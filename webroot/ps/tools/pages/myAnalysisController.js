@@ -235,8 +235,14 @@ define(['toolsApp'], function (toolsApp) {
             if (/\s/g.test(value)) {
                 value = value.replace(/\s/g, '');
             }
+            if (!value) {
+                item.projectName = $scope.beforeList.rows[index].projectName;
+                item.isEdit = false;
+                $scope.projectIsSave = false;
+                return;
+            }
             // 相比之前修改了
-            if (!angular.equals(value, $scope.beforeList.rows[index].projectName)) {
+            if (!angular.equals(value, $scope.beforeList.rows[index].projectName) && value.length || value == 0) {
                 //配置请求参数
                 var ajaxConfig = {
                     data: {
@@ -271,6 +277,8 @@ define(['toolsApp'], function (toolsApp) {
             if (event.keyCode === 13) {
                 if ($scope.projectIsSave) return;
                 $scope.handlerBlur(index, item, value);
+            } else {
+                item.projectName = value.length > 50 ? value.substring(0, 50) : value;
             }
         }
 
@@ -284,7 +292,7 @@ define(['toolsApp'], function (toolsApp) {
                 value = value.replace(/\s/g, '');
             }
             // 相比之前修改了
-            if (!angular.equals(value, $scope.beforeList.rows[index].remark)) {
+            if (!angular.equals(value, $scope.beforeList.rows[index].remark) && value.length || value == 0) {
                 //配置请求参数
                 var ajaxConfig = {
                     data: {
@@ -295,13 +303,11 @@ define(['toolsApp'], function (toolsApp) {
                 }
                 var promise = ajaxService.GetDeferData(ajaxConfig);
                 promise.then(function (res) {
-                    console.log(res);
                     if (res.status != 200) {
                         item.remark = $scope.beforeList.rows[index].remark;
                         item.isEditRemark = false;
                     } else {
                         // 更新之前的状态到最新的值
-                        debugger;
                         $scope.beforeList.rows[index].remark = value;
                         item.isEditRemark = false;
                     }
@@ -322,6 +328,8 @@ define(['toolsApp'], function (toolsApp) {
             if (event.keyCode === 13) {
                 if ($scope.labelIsSave) return;
                 $scope.handlerBlur2(index, item, value);
+            } else {
+                item.remark = value.length > 100 ? value.substring(0, 100) : value;
             }
         }
 

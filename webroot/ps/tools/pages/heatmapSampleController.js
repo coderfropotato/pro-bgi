@@ -106,15 +106,20 @@ define(["toolsApp"], function(toolsApp) {
                             $scope.isLeftCluster = true;
                         }
 
-                        $scope.drawClusterHeatmap(res, $scope.setOption);
 
                         if (flag && flag === 'refresh') {
                             $scope.isRefresh = true;
+                            $scope.setOption.isShowName = false;
+                            $scope.setOption.isShowTopLine = true;
+                            $scope.setOption.width = 0;
+                            $scope.setOption.height = 0;
+
                             $timeout(function() {
                                 $scope.isRefresh = false;
                             }, 30)
                         }
 
+                        $scope.drawClusterHeatmap(res, $scope.setOption);
                         $scope.chartData = res;
                     } else {
                         $scope.clusterError = "excessdata";

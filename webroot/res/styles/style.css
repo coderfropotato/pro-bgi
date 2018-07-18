@@ -8493,10 +8493,10 @@ div.tipsContainer,
 }
 
 .heatsetPanel .tipTextInfo {
-    text-align: center;
+    text-align: left;
     font-size: 12px;
     color: #ff0000;
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 

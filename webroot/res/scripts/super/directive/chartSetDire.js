@@ -31,7 +31,7 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>{{setTitle}}：</span></p>" +
                     "<div ng-hide='isInput' class='onoffswitch' ng-click='showHideValue()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
-                    "<div ng-show='isInput' class='setInput'><input id='setValueInput' type='number' ng-value='setValue' class='form-control' /><button class='btn btn-default btn-sm list_btn btn-silver' ng-click='getSetValue()'>确定</button></div>" +
+                    "<div ng-show='isInput' class='setInput'><input id='setValueInput' type='number' ng-value='setValue' class='form-control' ng-keyup='inputKeyup($event)' /><button class='btn btn-default btn-sm list_btn btn-silver' ng-click='getSetValue()'>确定</button></div>" +
                     "</div>" +
                     "</div>",
                 scope: {
@@ -63,6 +63,13 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                 $scope.setValue = Number($("#setValueInput").val());
                 $scope.isShow = false;
                 $scope.getSetOption({ value: $scope.setValue })
+            }
+
+            $scope.inputKeyup = function(e) {
+                var keycode = window.event ? e.keyCode : e.which;
+                if (keycode == 13) {
+                    $scope.getSetValue();
+                }
             }
 
         }

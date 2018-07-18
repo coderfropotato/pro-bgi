@@ -467,6 +467,17 @@ define(["toolsApp"], function(toolsApp) {
                     clearEventBubble(moveEvent);
                 });
 
+                select_rect.on("mousemove", function(ev) {
+                    var moveSelectEvent = ev || d3.event;
+                    var y_select_dis = moveSelectEvent.offsetY - margin.top - topCluster_height;
+
+                    if (isMousedown) {
+                        select_rh = Math.abs(y_select_dis - down_y);
+                        trans_y = d3.min([y_select_dis, down_y]);
+                        select_rect.attr("width", select_rw).attr("height", select_rh).attr("x", trans_x).attr("y", trans_y);
+                    }
+                })
+
                 select_rect.on("mouseup", function(ev) {
                     isMousedown = false;
                     var upEvent = ev || d3.event;

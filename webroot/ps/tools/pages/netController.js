@@ -132,8 +132,11 @@ define(['toolsApp'], function (toolsApp) {
 
         //设置回调
         $scope.getSetOption = function (val) {
-            $scope.netData = angular.copy($scope.netDataInit)
+            $scope.forceValue = val;
+            $scope.netData = angular.copy($scope.netDataInit);
             $scope.drawNet($scope.netData, val);
+            $scope.changeFlag($scope.myOptions);
+            $scope.changeFlag($scope.myOptions);
         }
 
         // 画net图

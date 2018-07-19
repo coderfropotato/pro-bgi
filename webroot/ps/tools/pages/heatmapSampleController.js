@@ -406,6 +406,7 @@ define(["toolsApp"], function(toolsApp) {
                 var big_rect = interact_g.append("rect")
                     .attr("width", heatmap_width)
                     .attr("height", heatmap_height)
+                    .style("cursor", "pointer")
                     .attr("fill", "transparent");
 
                 var select_rect = interact_g.append("rect")
@@ -535,11 +536,11 @@ define(["toolsApp"], function(toolsApp) {
 
                 for (var i = 0; i < heatmapData_len; i++) {
                     if (i == heatmapData_len - 1) {
-                        if (x > xScale(heatmap_data[i].name) && x < heatmap_width) {
+                        if (x >= xScale(heatmap_data[i].name) && x <= heatmap_width) {
                             rect_i = heatmapData_len - 1;
                         }
                     } else {
-                        if (x > xScale(heatmap_data[i].name) && x < xScale(heatmap_data[i + 1].name)) {
+                        if (x >= xScale(heatmap_data[i].name) && x <= xScale(heatmap_data[i + 1].name)) {
                             rect_i = i;
                         }
                     }
@@ -549,11 +550,11 @@ define(["toolsApp"], function(toolsApp) {
 
                     for (var j = 0; j < heatmap_len; j++) {
                         if (j == heatmap_len - 1) {
-                            if (y > yScale(heatmap[j].x) && y < heatmap_height) {
+                            if (y >= yScale(heatmap[j].x) && y <= heatmap_height) {
                                 rect_j = heatmap_len - 1;
                             }
                         } else {
-                            if (y > yScale(heatmap[j].x) && y < yScale(heatmap[j + 1].x)) {
+                            if (y >= yScale(heatmap[j].x) && y <= yScale(heatmap[j + 1].x)) {
                                 rect_j = j;
                             }
                         }

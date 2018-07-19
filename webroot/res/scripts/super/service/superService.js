@@ -536,7 +536,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popPrompt'><input placeholder='点击图片右上方刷新按钮可还原标题' type='text' id='TextInput' value='" + value + "' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popPrompt'><input ng-keyup='inputKeyup($event)' placeholder='点击图片右上方刷新按钮可还原标题' type='text' id='TextInput' value='" + value + "' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     // title: popTitle,
@@ -555,6 +555,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             ngDialog.close();
                             textNode.textContent = value;
                         };
+
+                        $scope.inputKeyup = function(e) {
+                            var keycode = window.event ? e.keyCode : e.which;
+                            if (keycode == 13) {
+                                $scope.confirm();
+                            }
+                        }
+
                     }]
                 });
             };

@@ -1,4 +1,6 @@
-﻿/*
+﻿
+
+/*
 
 模块名称：gridFilterDire
 整理时间：2016-06-20
@@ -7,7 +9,7 @@
 */
 
 define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.gridFilterDire", []);
 
         /*
@@ -31,7 +33,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 replace: false,
                 transclude: true,
                 controller: "gridFilterController",
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     //定义当前指令的element存放变量，由link传入，由Controller接收使用
                     scope.thisElement = element;
                     //由link获取指令属性，并传入
@@ -42,7 +44,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     //filtertype：datetime、 string、double [default]、int
                     scope.filtertype = attrs.filtertype;
                     scope.parentId = attrs.parentid
-                        // 接受外部查询参数
+                    // 接受外部查询参数
                     scope.searchType = attrs.searchtype;
                     scope.searchOne = attrs.searchone;
                     scope.geneidtruekey = attrs.geneidtruekey;
@@ -59,6 +61,18 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         searchTwo: "", //查询内容2
                         isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
                     };
+
+                    scope.tempFindEntity = {
+                        filterName: "", //查询字段名字
+                        filternamezh: "", //查询字段中文
+                        filtertype: "", //查询字段类型
+                        searchType: "equal", //查询类型
+                        searchOne: "", //查询内容1
+                        searchTwo: "", //查询内容2
+                        isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
+                    }
+
+
                     scope.directiveID = attrs.id;
 
                     var tableObj = $("#" + scope.tableid);
@@ -68,26 +82,32 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     $(element).find(".tsg_btns .btn .sort_icn:eq(0)").addClass(attrs.icon);
 
                     //给所有的li编id
-                    $(tableObj).find(".tsg_panel").each(function(index) {
+                    $(tableObj).find(".tsg_panel").each(function (index) {
                         scope.liSortID1 = "li_1" + "_" + scope.directiveID;
                         scope.liSortID2 = "li_2" + "_" + scope.directiveID;
                     });
 
                     //根据检索值预制类型，设置输入框是否能输入数字
-                    if (scope.filtertype == "double" || scope.filtertype == "int") {
-                        scope.filterFindEntity.searchType = "range";
-                        $(element).find(".filter_input").attr("type", "number")
-                        $(tsgPanel).find(".filter_text").html("数字检索");
-                    } else if (scope.filtertype == "boolean") {
-                        scope.filterFindEntity.searchType = "equal";
-                        scope.filterFindEntity.searchOne = "true";
-                        $(element).find(".filter_input").attr("type", "boolean")
-                        $(tsgPanel).find(".filter_text").html("布尔检索");
-                    } else {
-                        scope.filterFindEntity.searchType = "regExp";
-                        $(element).find(".filter_input").attr("type", "text")
-                        $(tsgPanel).find(".filter_text").html("文本检索");
+                    scope.isFirst = true;
+                    computedPanelText();
+                    function computedPanelText() {
+                        if (scope.filtertype == "double" || scope.filtertype == "int") {
+                            scope.filterFindEntity.searchType = "range";
+                            $(element).find(".filter_input").attr("type", "number")
+                            $(tsgPanel).find(".filter_text").html("数字检索");
+                        } else if (scope.filtertype == "boolean") {
+                            scope.filterFindEntity.searchType = "equal";
+                            scope.filterFindEntity.searchOne = "true";
+                            $(element).find(".filter_input").attr("type", "boolean")
+                            $(tsgPanel).find(".filter_text").html("布尔检索");
+                        } else {
+                            scope.filterFindEntity.searchType = "regExp";
+                            $(element).find(".filter_input").attr("type", "text")
+                            $(tsgPanel).find(".filter_text").html("文本检索");
+                        }
+
                     }
+
 
                     // 应用自定义查询条件
                     if (scope.searchOne && scope.filterFindEntity.filterName === scope.geneidtruekey) {
@@ -95,9 +115,19 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         scope.filterFindEntity.searchType = scope.searchType;
                     }
                     //点击小箭头过滤面版
-                    $(element).find(".tsg_btns .btn:eq(0)").click(function(event) {
+                    $(element).find(".tsg_btns .btn:eq(0)").click(function (event) {
+                        // 重新获取所有筛选面板的数据类型，避免增删列导致的
+                        var filtType = $(this).parents('.grid_filter_panel').attr('filtertype');
+                        scope.filtertype = filtType
+                        scope.tempFindEntity.filtertype = scope.filterFindEntity.filtertype = filtType;
+                        if (scope.isFirst) {
+                            computedPanelText();
+                            scope.tempFindEntity.searchType = scope.filterFindEntity.searchType;
+                            scope.isFirst = false;
+                        }
+                        scope.$apply();
                         //先把页面上所有的过滤面板隐藏掉
-                        $(".grid_filter_panel .tsg_panel").each(function() {
+                        $(".grid_filter_panel .tsg_panel").each(function () {
                             $(this).hide();
                         });
                         //var tsgPanel = $(this).parent().parent().find(".tsg_panel:eq(0)");
@@ -149,15 +179,15 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         $(element).find(".filter_input:eq(0)").focus();
 
                         //给过滤面板绑定事件，防止事件冒泡
-                        $(tsgPanel).bind("click", function(event) {
+                        $(tsgPanel).bind("click", function (event) {
                             //  阻止事件冒泡
                             event.stopPropagation();
                         });
 
                         //给document添加事件，执行取消面板操作
-                        $(document).one("click", function() {
+                        $(document).one("click", function () {
                             //
-                            scope.$apply(function() {
+                            scope.$apply(function () {
                                 scope.btn_QuXiao_OnClick();
                             });
                         });
@@ -184,7 +214,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             var tsgPanel = null;
             //获取当前指令的element对象，由指令的link赋值
             //延迟获取
-            setTimeout(function() {
+            setTimeout(function () {
                 //$log.log($scope.iconName);
                 element = $scope.thisElement;
                 //获取对应列表对象
@@ -195,25 +225,25 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             }, 10);
 
 
-            $scope.tempFindEntity = {
-                filterName: "", //查询字段名字
-                filternamezh: "", //查询字段中文
-                filtertype: "", //查询字段类型
-                searchType: "", //查询类型
-                searchOne: "", //查询内容1
-                searchTwo: "", //查询内容2
-                isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
-            }
+            // $scope.tempFindEntity = {
+            //     filterName: "", //查询字段名字
+            //     filternamezh: "", //查询字段中文
+            //     filtertype: "", //查询字段类型
+            //     searchType: "", //查询类型
+            //     searchOne: "", //查询内容1
+            //     searchTwo: "", //查询内容2
+            //     isTopFilter: false //是否上层查询条件，直接影响页面翻译查询条件内容，当为True时不翻译
+            // }
 
             // 触发自定义查询参数的点击事件
-            $timeout(function() {
+            $timeout(function () {
                 if ($scope.searchOne && $scope.filterFindEntity.filterName == $scope.geneidtruekey) {
                     $scope.btn_QueDing_OnClick();
                 }
             }, 30);
 
             //确定按钮点击事件
-            $scope.btn_QueDing_OnClick = function() {
+            $scope.btn_QueDing_OnClick = function () {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
 
@@ -221,7 +251,8 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             };
 
             //调用外部事件方法，用于设置当前查询实体信息
-            $scope.QueDing_CallEvent = function() {
+            $scope.QueDing_CallEvent = function () {
+                debugger;
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
                 $scope.filterFindEntity.filterName = $scope.filterName;
@@ -307,7 +338,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             }
 
             //取消按钮点击事件
-            $scope.btn_QuXiao_OnClick = function() {
+            $scope.btn_QuXiao_OnClick = function () {
                 if ($scope.tempFindEntity.searchType == "") $scope.tempFindEntity.searchType = "equal";
                 $scope.filterFindEntity.searchType = $scope.tempFindEntity.searchType;
                 $scope.filterFindEntity.searchOne = $scope.tempFindEntity.searchOne;
@@ -320,7 +351,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             };
 
             //清空查询条件按钮点击事件
-            $scope.btn_QingKong_OnClick = function() {
+            $scope.btn_QingKong_OnClick = function () {
                 //清空中间存储区数据
                 //$scope.tempFindEntity.searchType = "equal";
                 $scope.tempFindEntity.searchOne = "";
@@ -343,7 +374,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             };
 
             //查询类型OnChange事件
-            $scope.ddl_SearchType_OnChange = function() {
+            $scope.ddl_SearchType_OnChange = function () {
                 //$log.log($scope.filterFindEntity.searchType);
                 //var tbxOneObj = $($scope.element).find(".filterOne:eq(0)");
                 //var tbxTwoObj = $($scope.element).find(".filterTwo:eq(0)");
@@ -384,13 +415,13 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             };
 
             //排序按钮点击事件
-            $scope.li_Sort_OnClick = function(e, sortType, objId) {
+            $scope.li_Sort_OnClick = function (e, sortType, objId) {
                 //正在表达式
                 var sortRegExp = null;
                 //第一步：
                 //首先将tableObj下，清除其他过滤面板下的对应样式
                 //那就判断所有的排序按钮用包含排序样式的图标，去掉排序
-                $(tableObj).find(".btn_filter").each(function() {
+                $(tableObj).find(".btn_filter").each(function () {
                     var sortSpanObj = $(this).find(".sort_icn:eq(0)");
                     sortRegExp = new RegExp("(asc|desc)");
                     var sortSpan_Css = $(sortSpanObj).attr("class");
@@ -507,7 +538,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 replace: false,
                 transclude: true,
                 controller: "gridFilterBeginController",
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     scope.parentId = attrs.parentid
                     scope.tableid = attrs.tableid;
                     //回调方法名称，供动态输出筛选面板diretive使用
@@ -522,7 +553,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
         gridFilterBeginController.$inject = ["$scope", "$timeout", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
 
         function gridFilterBeginController($scope, $timeout, $log, $state, $window, $compile, ajaxService, toolService) {
-            $scope.clearFilter = function() {
+            $scope.clearFilter = function () {
                 //清空
                 $scope.shaiXuanIsActive = true;
                 $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
@@ -531,15 +562,16 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
             // 检查table数据变动，改变新数据的筛选状态
             // Add:2018年3月23日14:27:04
-            $scope.$watch('tablehead', function(newValue, oldValue) {
+            $scope.$watch('tablehead', function (newValue, oldValue) {
                 // dom渲染完再渲染
-                $timeout(function() {
+                $timeout(function () {
                     if (!newValue) return;
                     if (!angular.equals(newValue, oldValue)) {
                         var flag = !oldValue ? true : newValue.length > oldValue.length;
                         if ($scope.shaiXuanIsActive) {
                             if (flag) {
                                 var count = oldValue ? oldValue.length : 0;
+                                var dis = newValue.length-count;
                                 var gridPanel = $("#" + $scope.tableid);
                                 for (var i = count; i < newValue.length; i++) {
                                     var el = $(gridPanel).find(".grid_filter_panel").eq(i);
@@ -553,10 +585,10 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
             // watch searchOne default ''
             if ($scope.searchOne != undefined && $scope.searchOne != null) {
-                $scope.$watch('searchOne', function(newVal, oldVal) {
+                $scope.$watch('searchOne', function (newVal, oldVal) {
                     if (!angular.equals(newVal, oldVal)) {
                         if (newVal) {
-                            $timeout(function() {
+                            $timeout(function () {
                                 var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                                 $scope.compileTemplate(curPanel, 0);
                             }, 30);
@@ -567,11 +599,11 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
             // 没有searchOne 就手动emit  eventName限制
             if ($scope.eventName != undefined && $scope.eventName != null) {
-                $scope.$on($scope.eventName, function(event, listStr) {
+                $scope.$on($scope.eventName, function (event, listStr) {
                     // 如果liststr为空  那就不需要重新编译
                     if (listStr) {
                         $scope.searchOne = listStr;
-                        $timeout(function() {
+                        $timeout(function () {
                             var curPanel = $("#" + $scope.tableid).find(".grid_filter_panel").eq(0);
                             $scope.compileTemplate(curPanel, 0);
                         }, 30);
@@ -583,7 +615,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
             // 编译模板
             // Modified:2018年3月23日14:27:40
-            $scope.compileTemplate = function(el, index) {
+            $scope.compileTemplate = function (el, index) {
                 var tempDirHtmlStr = "";
                 var $directiveObj = null;
                 //查询字段名称
@@ -619,7 +651,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 el.html('');
 
                 el.append($directiveObj);
-                angular.element(document).injector().invoke(["$compile", function($compile) {
+                angular.element(document).injector().invoke(["$compile", function ($compile) {
                     var as = angular.element($directiveObj).scope();
                     $compile($directiveObj)(as);
                 }]);
@@ -627,7 +659,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
 
             //筛选按钮点击事件
-            $scope.btn_ShaXuan_OnClick = function() {
+            $scope.btn_ShaXuan_OnClick = function () {
                 $scope.shaiXuanIsActive = !$scope.shaiXuanIsActive;
                 $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
 
@@ -635,20 +667,20 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 var gridPanel = $("#" + $scope.tableid);
                 if ($scope.shaiXuanIsActive) {
                     //动态循环grid里面的指令面板，并动态输出指令
-                    $(gridPanel).find(".grid_filter_panel").each(function(index) {
+                    $(gridPanel).find(".grid_filter_panel").each(function (index) {
                         $scope.compileTemplate($(this), index);
                         //$log.log(filtername);
                     });
                     //$("#" + $scope.tableid).find(".btn_filter").css("visibility", "visible");
                 } else {
-                    $(gridPanel).find(".grid_filter_panel").each(function(index) {
+                    $(gridPanel).find(".grid_filter_panel").each(function (index) {
                         $(this).html("");
                     });
                     try {
                         //调用父类查询事件
                         //$scope.$parent.GetDiffList(null);
                         $scope.callback({ arg1: null });
-                    } catch (e) {}
+                    } catch (e) { }
                     //$("#" + $scope.tableid).find(".btn_filter").css("visibility", "hidden");
                 }
             };

@@ -1,7 +1,6 @@
 <div class="heatmap-page" ng-controller="heatmapGroupController" ng-init="InitPage()">
     <div class="report-page-title" custom-title="title"></div>
     <h6>差异聚类</h6>
-    <p class="table-chart-desc">横轴表示取log2后的差异倍数，即log2FoldChange。纵轴表示基因，默认配色下，色块的颜色越红表达量越高，颜色越蓝，表达量越低。</p>
     <div id="div_heatmap_page" class="table-switch-chart-wrap npb">
         <div class="graph_group" id="analysis-heatmapClusterPanel">
             <div class="graph_header">
@@ -44,6 +43,7 @@
             </div>
             <div class="color-selector" is-show="isShowColorPanel" get-cur-color="colorChange(color)"></div>
         </div>
+        <div class="chart-desc" ng-hide="clusterError" text="横轴表示取log2后的差异倍数，即log2FoldChange。纵轴表示基因，默认配色下，色块的颜色越红表达量越高，颜色越蓝，表达量越低。"></div>
     </div>
 
     <!-- Geneid add delete big table -->

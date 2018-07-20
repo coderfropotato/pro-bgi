@@ -20,7 +20,7 @@
             <table class="table table-bordered table-hover table-striped table_grid" ng-hide="sampleExpError">
                 <thead>
                     <tr>
-                        <th ng-repeat="item in sampleExpData.baseThead track by $index" style="max-width:500px;white-space:nowrap !important;">
+                        <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in sampleExpData.baseThead track by $index">
                             <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                         </th>
                     </tr>
@@ -60,7 +60,7 @@
                     <table class="table table-bordered table-hover table-striped table_grid" ng-hide="groupDiffError">
                         <thead>
                             <tr>
-                                <th ng-repeat="item in groupDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in groupDiffData.baseThead track by $index">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                                 </th>
                             </tr>
@@ -85,7 +85,7 @@
                     <table class="table table-bordered table-hover table-striped table_grid" ng-hide="sampleDiffError">
                         <thead>
                             <tr>
-                                <th ng-repeat="item in sampleDiffData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in sampleDiffData.baseThead track by $index">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                                 </th>
                             </tr>
@@ -293,7 +293,7 @@
                     <table class="table table-bordered table-hover table-striped table_grid" ng-hide="snpError">
                         <thead>
                             <tr>
-                                <th ng-repeat="item in snpData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in snpData.baseThead track by $index">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                                 </th>
                             </tr>
@@ -318,7 +318,7 @@
                     <table class="table table-bordered table-hover table-striped table_grid" ng-hide="indelError">
                         <thead>
                             <tr>
-                                <th ng-repeat="item in indelData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in indelData.baseThead track by $index">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                                 </th>
                             </tr>
@@ -345,7 +345,7 @@
                 <table class="table table-bordered table-hover table-striped table_grid" ng-hide="fusionError">
                     <thead>
                         <tr>
-                            <th ng-repeat="item in fusionData.baseThead track by $index" style="max-width:500px;white-space:nowrap;">
+                            <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-repeat="item in fusionData.baseThead track by $index">
                                 <div uib-tooltip="{{item.hover}}" class="grid_head thead-center">{{::item.name}}</div>
                             </th>
                         </tr>

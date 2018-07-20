@@ -4535,7 +4535,7 @@ div.titleDetail {
 #div_geneDetail_page .table_scroll_wrap table tr th {
     background: #F5F7FE !important;
     color: #5378F8;
-    white-space: normal !important;
+    white-space: nowrap;
 }
 
 #div_geneDetail_page .table_scroll_wrap table tr td {

@@ -124,8 +124,16 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                             computedPanelText();
                             scope.tempFindEntity.searchType = scope.filterFindEntity.searchType;
                             scope.isFirst = false;
+
+                            // 如果是外部触发就用外面的类型 只有第0个（geneid）才需要应用外面的类型
+                            // 搜索参数存在 并且是第零个
+                            var index = scope.thisElement.index('#'+scope.tableid+' .grid-filter');
+                            if (scope.searchOne != undefined && scope.searchOne != null && scope.searchOne!='' && !index) {
+                                scope.tempFindEntity.searchType = scope.filterFindEntity.searchType = scope.searchType;
+                            }
                         }
                         scope.$apply();
+
                         //先把页面上所有的过滤面板隐藏掉
                         $(".grid_filter_panel .tsg_panel").each(function () {
                             $(this).hide();
@@ -252,7 +260,6 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
 
             //调用外部事件方法，用于设置当前查询实体信息
             $scope.QueDing_CallEvent = function () {
-                debugger;
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";
                 if ($scope.filterFindEntity.searchTwo == null) $scope.filterFindEntity.searchTwo = "";
                 $scope.filterFindEntity.filterName = $scope.filterName;
@@ -571,7 +578,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         if ($scope.shaiXuanIsActive) {
                             if (flag) {
                                 var count = oldValue ? oldValue.length : 0;
-                                var dis = newValue.length-count;
+                                var dis = newValue.length - count;
                                 var gridPanel = $("#" + $scope.tableid);
                                 for (var i = count; i < newValue.length; i++) {
                                     var el = $(gridPanel).find(".grid_filter_panel").eq(i);
@@ -630,6 +637,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 var searchOne = el.attr('searchone');
                 if (filtertype == undefined) filtertype = "double";
                 var filterDireID = "div_filterDire_" + $scope.tableid + "_" + index;
+
                 tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" " +
                     " filtername=\"" + filtername + "\" " +
                     " filternamezh=\"" + filternamezh + "\" " +

@@ -8210,6 +8210,14 @@ div.tipsContainer,
     margin-bottom: 20px
 }
 
+.ngdialog-buttons {
+    text-align: right;
+}
+
+.ngdialog-buttons button {
+    float: none;
+}
+
 
 /* 颜色选择器样式--reportService */
 
@@ -8459,7 +8467,6 @@ div.tipsContainer,
 }
 
 .heatsetPanel .opreatBtns {
-    float: right;
     border-radius: 2px;
     width: 80px;
     height: 32px;

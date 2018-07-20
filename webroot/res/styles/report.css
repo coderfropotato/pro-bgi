@@ -2711,7 +2711,8 @@ pre {
 }
 
 .div_field_filter ul li .label-success {
-    border: 1px solid #5CB85C;
+    border: 1px solid #5378F8;
+    background-color: #5378F8;
 }
 
 .div_field_filter ul li .btn_small {
@@ -3010,7 +3011,10 @@ pre {
     border-top: 1px solid #ddd;
 }
 
-.num_list {}
+.oneline_foot button.btn-success {
+    background: #5378F8;
+    border-color: #5378F8;
+}
 
 .num_list li {
     float: left;
@@ -5036,4 +5040,9 @@ h6.nplr {
     border-color: #ccc;
     color: #999;
     cursor: not-allowed;
+}
+
+.heatsetPanel .clearfix button.btn-success {
+    background: #5378F8;
+    border-color: #5378F8;
 }

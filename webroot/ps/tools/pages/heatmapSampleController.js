@@ -458,6 +458,7 @@ define(["toolsApp"], function(toolsApp) {
 
                 select_rect.on("mousemove", function(ev) {
                     var moveSelectEvent = ev || d3.event;
+                    clearEventBubble(moveSelectEvent);
                     var y_select_dis = moveSelectEvent.offsetY - margin.top - topCluster_height;
 
                     if (isMousedown) {

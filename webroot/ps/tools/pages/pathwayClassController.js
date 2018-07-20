@@ -120,7 +120,7 @@ define(['toolsApp'], function(toolsApp) {
                 }
             },
             "dataBox": {
-                "normalColor": angular.copy($rootScope.colorArr),
+                "normalColor": angular.copy($rootScope.barColorArr),
                 "direction": "horizontal"
             }
         }

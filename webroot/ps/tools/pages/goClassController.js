@@ -20,7 +20,7 @@ define(["toolsApp"], function(toolsApp) {
             $scope.panelId = "panel_reanalysis_goClass";
             $scope.chartId = 'reanalysis_goClass_chart';
             $scope.isTableShow = false;
-            $scope.showAccuracy = true;
+            $scope.showAccuracy = false;
             $scope.showSelect = true;
             $scope.tableDownloadName = "GO 分类";
             $scope.chartDownloadName = "GO 分类";

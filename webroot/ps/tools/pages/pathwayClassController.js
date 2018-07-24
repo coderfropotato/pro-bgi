@@ -20,7 +20,7 @@ define(['toolsApp'], function(toolsApp) {
             $scope.panelId = "panel_reanalysis_pathwayClass";
             $scope.chartId = 'reanalysis_pathwayClass_chart';
             $scope.isTableShow = false;
-            $scope.showAccuracy = true;
+            $scope.showAccuracy = false;
             $scope.showSelect = true;
             $scope.tableDownloadName = "KEGG Pathway 分类";
             $scope.chartDownloadName = "KEGG Pathway 分类";

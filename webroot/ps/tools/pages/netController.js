@@ -32,7 +32,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.netEntity = {
                 "LCID": toolService.sessionStorage.get('LCID'),
                 "id": $scope.id,
-                "score": 500
+                "score": 300
             }
 
 

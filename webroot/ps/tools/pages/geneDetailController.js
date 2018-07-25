@@ -41,17 +41,17 @@ define(["toolsApp"], function(toolsApp) {
             var sampleDiff = toolService.sessionStorage.get('sampleDiff'),
                 groupDiff = toolService.sessionStorage.get('GroupDiff');
             var timeCourse = toolService.sessionStorage.get('timeCourse');
-            if (sampleDiff) {
+            if (sampleDiff && sampleDiff != "undefined") {
                 $scope.isHasSampleDiff = true;
             } else {
                 $scope.isHasSampleDiff = false;
             }
-            if (groupDiff) {
+            if (groupDiff && groupDiff != "undefined") {
                 $scope.isHasGroupDiff = true;
             } else {
                 $scope.isHasGroupDiff = false;
             }
-            if (timeCourse) {
+            if (timeCourse && timeCourse != "undefined") {
                 $scope.isHasTimeCourse = true;
             } else {
                 $scope.isHasTimeCourse = false;

@@ -1,11 +1,11 @@
-define(['toolsApp'], function (toolsApp) {
+define(['toolsApp'], function(toolsApp) {
     toolsApp.controller('netController', netController);
     netController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function netController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
         toolService.pageLoading.open();
-        $scope.InitPage = function () {
-            $timeout(function () {
+        $scope.InitPage = function() {
+            $timeout(function() {
                 toolService.pageLoading.close();
             }, 300)
             $scope.id = $state.params.id;
@@ -70,7 +70,7 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         //获取net图的切换表格数据
-        $scope.GetTableData = function () {
+        $scope.GetTableData = function() {
             toolService.gridFilterLoading.open("panel_reAnalysis_net");
             $scope.exportLocationTable = options.api.mrnaseq_url + "/Tools/PPIGeneralTable";
             var ajaxConfig = {
@@ -78,60 +78,60 @@ define(['toolsApp'], function (toolsApp) {
                 url: $scope.exportLocationTable
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (responseData) {
-                if (responseData.Error) {
-                    //系统异常
-                    $scope.tableError = "syserror";
-                } else if (responseData.length == 0) {
-                    //无数据异常
-                    $scope.tableError = "nodata";
-                    $scope.imgError = "nodata";
-                } else {
-                    //正常
-                    $scope.tableError = "";
-                    $scope.tableData = responseData;
-                }
-                toolService.gridFilterLoading.close("panel_reAnalysis_net");
-            },
-                function (errorMesg) {
+            promise.then(function(responseData) {
+                    if (responseData.Error) {
+                        //系统异常
+                        $scope.tableError = "syserror";
+                    } else if (responseData.length == 0) {
+                        //无数据异常
+                        $scope.tableError = "nodata";
+                        $scope.imgError = "nodata";
+                    } else {
+                        //正常
+                        $scope.tableError = "";
+                        $scope.tableData = responseData;
+                    }
+                    toolService.gridFilterLoading.close("panel_reAnalysis_net");
+                },
+                function(errorMesg) {
                     $scope.tableError = "syserror";
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 });
         }
 
         //获取net图数据
-        $scope.GetNetData = function () {
+        $scope.GetNetData = function() {
             toolService.gridFilterLoading.open("panel_reAnalysis_net");
             var ajaxConfig = {
                 data: $scope.netEntity,
                 url: options.api.mrnaseq_url + "/net/GetNetData"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function (responseData) {
-                if (responseData.Error) {
-                    //系统异常
-                    $scope.error = "syserror";
-                } else if (responseData.length == 0) {
-                    //无数据异常
-                    $scope.error = "nodata";
-                } else {
-                    //正常
-                    $scope.error = "";
-                    $scope.netData = responseData;
-                    $scope.netDataInit = angular.copy(responseData)
-                    $scope.drawNet(responseData, $scope.forceValue);
+            promise.then(function(responseData) {
+                    if (responseData.Error) {
+                        //系统异常
+                        $scope.error = "syserror";
+                    } else if (responseData.length == 0) {
+                        //无数据异常
+                        $scope.error = "nodata";
+                    } else {
+                        //正常
+                        $scope.error = "";
+                        $scope.netData = responseData;
+                        $scope.netDataInit = angular.copy(responseData)
+                        $scope.drawNet(responseData, $scope.forceValue);
 
-                }
-                toolService.gridFilterLoading.close("panel_reAnalysis_net");
-            },
-                function (errorMesg) {
+                    }
+                    toolService.gridFilterLoading.close("panel_reAnalysis_net");
+                },
+                function(errorMesg) {
                     $scope.error = "syserror";
                     toolService.gridFilterLoading.close("panel_reAnalysis_net");
                 });
         }
 
         //设置回调
-        $scope.getSetOption = function (val) {
+        $scope.getSetOption = function(val) {
             $scope.forceValue = val;
             $scope.netData = angular.copy($scope.netDataInit);
             $scope.drawNet($scope.netData, val);
@@ -140,7 +140,7 @@ define(['toolsApp'], function (toolsApp) {
         }
 
         // 画net图
-        $scope.drawNet = function (data, setforce) {
+        $scope.drawNet = function(data, setforce) {
             var core_gene = "";
 
             $scope.myOptions.force = setforce;
@@ -148,7 +148,7 @@ define(['toolsApp'], function (toolsApp) {
             drawNetChart(data, $scope.myOptions)
 
             //获取当前选中基因列表
-            $scope.getChooseGeneList = function (networkData) {
+            $scope.getChooseGeneList = function(networkData) {
                 var tempArray = [];
                 for (var i = 0; i < networkData.nodes.length; i++) {
                     if (networkData.nodes[i].isNodeSelected) {
@@ -160,10 +160,10 @@ define(['toolsApp'], function (toolsApp) {
                 $scope.geneListChangeFlag = true;
             }
 
-            $scope.changeFlag = function (options) {
+            $scope.changeFlag = function(options) {
                 options.isMultiChoose = !options.isMultiChoose;
                 core_gene = "";
-                d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                d3.select("#" + options.id).selectAll(".node").each(function(d) {
                     d.isNodeSelected = false;
                     d3.select(this)
                         .attr('stroke-width', 0)
@@ -183,7 +183,7 @@ define(['toolsApp'], function (toolsApp) {
                 function noMultiChooseZoom() {
                     var transform = d3.zoomIdentity;;
                     d3.select("#" + options.id).call(
-                        d3.zoom()
+                            d3.zoom()
                             .scaleExtent([0.1, 8])
                             .on("zoom", zoomed))
                         .on("dblclick.zoom", null);
@@ -202,14 +202,14 @@ define(['toolsApp'], function (toolsApp) {
                     var endLoc = [];
 
 
-                    d3.select("#" + options.id).on("mousedown", function () {
+                    d3.select("#" + options.id).on("mousedown", function() {
                         isMouseDown = "true";
 
                         d3.select('#squareSelect').attr("transform", "translate(" + d3.event.offsetX + "," + d3.event.offsetY + ")");
                         startLoc = [d3.event.offsetX, d3.event.offsetY];
                     });
 
-                    d3.select("#" + options.id).on("mousemove", function () {
+                    d3.select("#" + options.id).on("mousemove", function() {
                         if (isMouseDown == "true") {
                             isMouseMove = "true";
 
@@ -229,7 +229,7 @@ define(['toolsApp'], function (toolsApp) {
 
                     })
 
-                    d3.select("#" + options.id).on("mouseup", function () {
+                    d3.select("#" + options.id).on("mouseup", function() {
                         if (isMouseDown == "true" && isMouseMove == "true") {
                             isMouseDown = "false";
                             isMouseMove = "false";
@@ -256,7 +256,7 @@ define(['toolsApp'], function (toolsApp) {
                             // {scale,x,y}
                             var currentTransJson = getTranslation(d3.select(".main_group").attr("transform"))
 
-                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
                                 var tempX = d.x * currentTransJson.scale + currentTransJson.transX;
                                 var tempY = d.y * currentTransJson.scale + currentTransJson.transY;
                                 if (tempX < rightBottom[0] && tempX > leftTop[0] && tempY > leftTop[1] && tempY < rightBottom[1]) {
@@ -265,7 +265,7 @@ define(['toolsApp'], function (toolsApp) {
                                 }
 
                                 d3.select(this)
-                                    .attr('stroke-width', function (d) {
+                                    .attr('stroke-width', function(d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -280,10 +280,10 @@ define(['toolsApp'], function (toolsApp) {
                             isMouseDown = "false";
                             isMouseMove = "false";
                             $scope.multiCount = {};
-                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
                                 d.isNodeSelected = false;
                                 d3.select(this)
-                                    .attr('stroke-width', function (d) {
+                                    .attr('stroke-width', function(d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -315,7 +315,7 @@ define(['toolsApp'], function (toolsApp) {
 
                     })
 
-                    d3.select("#" + options.id).on("mouseleave", function () {
+                    d3.select("#" + options.id).on("mouseleave", function() {
                         isMouseDown = "false";
                         isMouseMove = "false";
                         d3.select('#squareSelect').attr("width", 0).attr("height", 0);
@@ -338,11 +338,11 @@ define(['toolsApp'], function (toolsApp) {
                     d3.select("#" + options.id).on("mousemove", null);
                     d3.select("#" + options.id).on("mouseup", null);
                     d3.select("#" + options.id).on("mouseleave", null);
-                    d3.select("#" + options.id).on("click", function () {
-                        d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                    d3.select("#" + options.id).on("click", function() {
+                        d3.select("#" + options.id).selectAll(".node").each(function(d) {
                             d.isNodeSelected = false;
                             d3.select(this)
-                                .attr('stroke-width', function (d) {
+                                .attr('stroke-width', function(d) {
                                     if (d.isNodeSelected == true) {
                                         return 1
                                     }
@@ -377,7 +377,7 @@ define(['toolsApp'], function (toolsApp) {
 
                 var colorArr = options.colorArr;
 
-                var maxValue = d3.max(networkData.nodes, function (d) {
+                var maxValue = d3.max(networkData.nodes, function(d) {
                     return d.value;
                 })
 
@@ -390,7 +390,7 @@ define(['toolsApp'], function (toolsApp) {
 
                 //生成力导图模型
                 var simulation = d3.forceSimulation()
-                    .force("link", d3.forceLink().iterations(4).id(function (d) {
+                    .force("link", d3.forceLink().iterations(4).id(function(d) {
                         return d.id;
                     }))
                     .force("charge", d3.forceManyBody().strength(-options.force || -20))
@@ -405,11 +405,9 @@ define(['toolsApp'], function (toolsApp) {
                     .data(networkData.links)
                     .enter()
                     .append('line')
-                    .attr('stroke-width', function (d) {
+                    .attr('stroke-width', 1)
+                    .attr('stroke', function(d) {
                         return linkWidthScale(d.score);
-                    })
-                    .attr('stroke', function (d) {
-                        return '#a9a9a9'
                     })
 
                 //生成节点node
@@ -419,15 +417,15 @@ define(['toolsApp'], function (toolsApp) {
                     .data(networkData.nodes)
                     .enter()
                     .append('circle').attr("class", "node")
-                    .attr('r', function (d) {
+                    .attr('r', function(d) {
                         return nodeRScale(d.value);
                     })
-                    .attr('fill', function (d) {
+                    .attr('fill', function(d) {
                         return colorScale(d.value);
                     })
                     .attr('stroke', "#000")
                     .attr('stroke-width', 0)
-                    .on("mouseover", function (d) {
+                    .on("mouseover", function(d) {
                         var tipText = [];
                         if (d.gene_symbol) {
                             tipText = ["Gene ID：" + d.gene_id, "Symbol/Other Gene ID：" + d.gene_symbol, "PPI Protein ID：" + d.ppi_protein_cluster1];
@@ -436,10 +434,10 @@ define(['toolsApp'], function (toolsApp) {
                         }
                         reportService.GenericTip.Show(d3.event, tipText);
                     })
-                    .on("mouseout", function () {
+                    .on("mouseout", function() {
                         reportService.GenericTip.Hide();
                     })
-                    .on("click", function (d) {
+                    .on("click", function(d) {
                         d.isNodeSelected = true;
                         //遍历links 获取相邻ID的数组
                         var tempNodeArray = [];
@@ -457,7 +455,7 @@ define(['toolsApp'], function (toolsApp) {
                             $scope.multiCount = {};
                             core_gene = d.id;
                             //遍历node，清除其余目标node，
-                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
                                 if (tempNodeArray.indexOf(d.id) != -1) {
                                     d.isNodeSelected = true;
                                     $scope.multiCount[d.id] = 1;
@@ -465,7 +463,7 @@ define(['toolsApp'], function (toolsApp) {
                                     d.isNodeSelected = false;
                                 }
                                 d3.select(this)
-                                    .attr('stroke-width', function (d) {
+                                    .attr('stroke-width', function(d) {
                                         if (d.isNodeSelected == true) {
                                             return 1
                                         }
@@ -475,12 +473,12 @@ define(['toolsApp'], function (toolsApp) {
                             $scope.getChooseGeneList(networkData);
                         } else {
                             //遍历node，但是不清除其余目标node，
-                            d3.select("#" + options.id).selectAll(".node").each(function (d) {
+                            d3.select("#" + options.id).selectAll(".node").each(function(d) {
                                 if (tempNodeArray.indexOf(d.id) > 0) {
                                     d.isNodeSelected = true;
                                 }
                                 d3.select(this)
-                                    .attr('stroke-width', function (d) {
+                                    .attr('stroke-width', function(d) {
                                         if (d.isNodeSelected == true) {
                                             $scope.multiCount[d.id] = 1;
                                             return 1
@@ -506,23 +504,23 @@ define(['toolsApp'], function (toolsApp) {
 
                 function ticked() {
                     node
-                        .attr("cx", function (d) {
+                        .attr("cx", function(d) {
                             return d.x;
                         })
-                        .attr("cy", function (d) {
+                        .attr("cy", function(d) {
                             return d.y;
                         });
                     link
-                        .attr("x1", function (d) {
+                        .attr("x1", function(d) {
                             return d.source.x;
                         })
-                        .attr("y1", function (d) {
+                        .attr("y1", function(d) {
                             return d.source.y;
                         })
-                        .attr("x2", function (d) {
+                        .attr("x2", function(d) {
                             return d.target.x;
                         })
-                        .attr("y2", function (d) {
+                        .attr("y2", function(d) {
                             return d.target.y;
                         });
                 }
@@ -559,7 +557,7 @@ define(['toolsApp'], function (toolsApp) {
                 function noMultiChooseZoom() {
                     var transform = d3.zoomIdentity;;
                     d3.select("#" + options.id).call(
-                        d3.zoom()
+                            d3.zoom()
                             .scaleExtent([0.1, 8])
                             .on("zoom", zoomed))
                         .on("dblclick.zoom", null);
@@ -574,7 +572,7 @@ define(['toolsApp'], function (toolsApp) {
 
         // genera count
         $scope.geneCount = 0;
-        $scope.$watch('multiCount',function(newVal,oldVal){
+        $scope.$watch('multiCount', function(newVal, oldVal) {
             if (newVal != oldVal) {
                 $scope.geneCount = 0;
                 if (!$.isEmptyObject(newVal)) {
@@ -583,29 +581,29 @@ define(['toolsApp'], function (toolsApp) {
                     }
                 }
             }
-        },true)
+        }, true)
 
         //get links 
         $scope.linksError = false;
-        $scope.GetLinks = function () {
+        $scope.GetLinks = function() {
             var promise = ajaxService.GetDeferData({
                 data: {},
                 url: options.api.java_url + "/analysis/parent/" + $scope.id
             })
-            promise.then(function (res) {
+            promise.then(function(res) {
                 if (res.status != 200) {
                     $scope.linksError = "syserror";
                 } else {
                     $scope.linksError = false;
                     $scope.links = res.data.links;
                 }
-            }, function (err) {
+            }, function(err) {
                 console.log(err);
             })
         }
 
         // 查看links
-        $scope.handlerSeeClick = function (item) {
+        $scope.handlerSeeClick = function(item) {
             var type = item.chartType || item.charType;
             if (item.process == 0) {
                 $window.open('../tools/index.html#/home/error/' + item.id);

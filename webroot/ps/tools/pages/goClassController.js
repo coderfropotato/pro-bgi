@@ -31,7 +31,7 @@ define(["toolsApp"], function(toolsApp) {
                 "LCID": toolService.sessionStorage.get('LCID'),
                 "id": $scope.id
             }
-            $scope.url = options.api.mrnaseq_url + "/ReGeneClass/goClass`";
+            $scope.url = options.api.mrnaseq_url + "/ReGeneClass/goClass";
             $scope.scale = 0.9;
             // table-switch-chart-params end
 

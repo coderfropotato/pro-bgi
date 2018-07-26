@@ -14,6 +14,7 @@ define(['toolsApp'], function(toolsApp) {
                 }, 300);
 
             $scope.accuracy = -1;
+            $scope.bubbleAccuracy = -1;
 
             $scope.chartType = "bubble";
 

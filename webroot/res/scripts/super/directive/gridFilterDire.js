@@ -139,7 +139,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                     scope.placeholderOne = "请输入您要查询的关键字";
                                     break;
                                 case "regExp":
-                                    scope.placeholderOne = "模糊查询，只需要输入您要检索的部分内容";
+                                    scope.placeholderOne = "请输入您要检索的部分内容";
                                     break;
                                 case "$in":
                                     scope.placeholderOne = "查询多个值，请用“英文逗号”或“回车”分开\n温馨提示：当您已经确认要筛选的基因点时，可将Excel中基因点的列值圈中拷贝即可进行检索！";
@@ -427,7 +427,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         $scope.placeholderOne = "请输入您要查询的关键字";
                         break;
                     case "regExp":
-                        $scope.placeholderOne = "模糊查询，只需要输入您要检索的部分内容";
+                        $scope.placeholderOne = "请输入您要检索的部分内容";
                         break;
                     case "$in":
                         $scope.placeholderOne = "查询多个值，请用“英文逗号”或“回车”分开\n温馨提示：当您已经确认要筛选的基因点时，可将Excel中基因点的列值圈中拷贝即可进行检索！";

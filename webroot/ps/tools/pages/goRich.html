@@ -172,6 +172,20 @@
                         </button>
                     </ul>
                     <ul class="fRight">
+                        <li ng-show="!bubbleError && isTableShow">
+                            <div class="selector_normal" style="width: 120px;">
+                                <select super-select ng-model="bubbleAccuracy" class="form-control" is-search="false">
+                                                    <option value=1>精度:1位小数</option>
+                                                    <option value=2>精度:2位小数</option>
+                                                    <option value=3>精度:3位小数</option>
+                                                    <option value=4>精度:4位小数</option>
+                                                    <option value=5>精度:5位小数</option>
+                                                    <option value=6>精度:6位小数</option>
+                                                    <option value=7>精度:7位小数</option>
+                                                    <option value=-1>精度:全数据</option>
+                                                </select>
+                            </div>
+                        </li>
                         <li ng-hide="bubbleError || isTableShow" ng-if="chartType=='bubble'">
                             <button ng-click="handlerSingle(bubble)" ng-class="{'active':single}" class="new-table-switch-btns new-btns-big tool-tip" title="单选">单选</button>
                             <button ng-click="handlerMultiple(bubble)" ng-class="{'active':!single}" class="new-table-switch-btns new-btns-big tool-tip" title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
@@ -215,7 +229,7 @@
                                 <tr ng-repeat="row in bubbleTableData.rows track by $index">
                                     <td class="center">{{$index+1}}</td>
                                     <td class="center nowrap popover-table" ng-repeat="val in bubbleTableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                        <span>{{row[val.true_key]}}</span>
+                                        <span>{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: bubbleAccuracy):row[val.true_key]}}</span>
                                     </td>
                                 </tr>
                             </tbody>

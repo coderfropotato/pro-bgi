@@ -180,13 +180,16 @@ ul {
 .report_view_leftside .sidebar_nav .sidebar_title span {
     cursor: pointer;
 }
+
 .report_view_leftside .sidebar_nav .sidebar_title span.menuicon {
-    transition: all 0.5s ease-out; 
+    transition: all 0.5s ease-out;
 }
 
-.report_view_leftside .sidebar_nav .sidebar_title span.menuicon:hover{
+.report_view_leftside .sidebar_nav .sidebar_title span.menuicon:hover {
     transform: rotate(-360deg);
 }
+
+
 /* .page_report .alert-default span.titleicon{
     transition: all 0.5s ease-out; 
 }
@@ -4486,6 +4489,26 @@ geneExpression
     min-width: 880px
 }
 
+#div_geneDetail_page h4::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 20px;
+    background-color: #5378F8;
+    margin-right: 10px;
+    vertical-align: bottom;
+}
+
+#div_geneDetail_page h5::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background-color: #5378F8;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
 .geneinfoDiv {
     border: 1px solid #DFE3F2;
     border-radius: 2px;
@@ -4523,6 +4546,7 @@ div.titleDetail {
     color: #333333;
     letter-spacing: 0;
     margin-top: 10px;
+    padding-left: 25px;
 }
 
 #div_geneDetail_page h4 {
@@ -4896,16 +4920,18 @@ div.titleDetail {
     margin: 0;
     margin-top: 12px;
     text-indent: 0;
-    padding:8px 0;
+    padding: 8px 0;
     border: 1px solid #eee;
     border-left: 0;
     border-right: 0;
     cursor: pointer;
 }
-.userinfo-pop p:hover span{
+
+.userinfo-pop p:hover span {
     color: #333;
 }
-.userinfo-pop p:hover{
+
+.userinfo-pop p:hover {
     background-color: #f5f5f5;
 }
 

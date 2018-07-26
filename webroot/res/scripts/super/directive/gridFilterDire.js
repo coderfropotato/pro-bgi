@@ -123,18 +123,47 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                             computedPanelText();
                             scope.tempFindEntity.searchType = scope.filterFindEntity.searchType;
                             scope.isFirst = false;
-                            
+
                             // 如果是外部触发就用外面的类型 只有第0个（geneid）才需要应用外面的类型
                             // 搜索参数存在 并且是第零个
                             var index = scope.thisElement.index('#' + scope.tableid + ' .grid-filter');
                             if (scope.searchOne != undefined && scope.searchOne != null && scope.searchOne != '' && !index) {
                                 scope.tempFindEntity.searchType = scope.filterFindEntity.searchType = scope.searchType;
                             }
-                           
-                            if(scope.filterFindEntity.filtertype=="double" && scope.filterFindEntity.searchType=="range"){
-                                scope.placeholderOne = "请输入最小值";
-                                scope.placeholderTwo = "请输入最大值";
-                            }
+
+                            switch (scope.filterFindEntity.searchType) {
+                                case "equal":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "$ne":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "regExp":
+                                    scope.placeholderOne = "模糊查询，只需要输入您要检索的部分内容";
+                                    break;
+                                case "$in":
+                                    scope.placeholderOne = "查询多个值，请用“英文逗号”或“回车”分开\n温馨提示：当您已经确认要筛选的基因点时，可将Excel中基因点的列值圈中拷贝即可进行检索！";
+                                    break;
+                                case "$gt":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "$lt":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "$lte":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "$gte":
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                                case "range":
+                                    scope.placeholderOne = "请输入最小值";
+                                    scope.placeholderTwo = "请输入最大值";
+                                    break;
+                                default:
+                                    scope.placeholderOne = "请输入您要查询的关键字";
+                                    break;
+                            };
                         }
                         scope.$apply();
 

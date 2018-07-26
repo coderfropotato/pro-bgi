@@ -180,10 +180,23 @@ ul {
 .report_view_leftside .sidebar_nav .sidebar_title span {
     cursor: pointer;
 }
+.report_view_leftside .sidebar_nav .sidebar_title span.menuicon {
+    transition: all 0.5s ease-out; 
+}
+
+.report_view_leftside .sidebar_nav .sidebar_title span.menuicon:hover{
+    transform: rotate(-360deg);
+}
+/* .page_report .alert-default span.titleicon{
+    transition: all 0.5s ease-out; 
+}
+.page_report .alert-default span.titleicon:hover{
+    transform: rotate(-360deg);
+} */
 
 .report_view_leftside .sidebar_nav .sidebar_title .glyphicon {
     margin: 17px 8px 0 9px;
-    transition: all 0.1s linear;
+    transition: all 0.3s ease;
     float: right;
     transform: rotate(-90deg);
 }

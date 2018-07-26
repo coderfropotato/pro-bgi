@@ -180,10 +180,23 @@ ul {
 .report_view_leftside .sidebar_nav .sidebar_title span {
     cursor: pointer;
 }
+.report_view_leftside .sidebar_nav .sidebar_title span.menuicon {
+    transition: all 0.5s ease-out; 
+}
+
+.report_view_leftside .sidebar_nav .sidebar_title span.menuicon:hover{
+    transform: rotate(-360deg);
+}
+/* .page_report .alert-default span.titleicon{
+    transition: all 0.5s ease-out; 
+}
+.page_report .alert-default span.titleicon:hover{
+    transform: rotate(-360deg);
+} */
 
 .report_view_leftside .sidebar_nav .sidebar_title .glyphicon {
     margin: 17px 8px 0 9px;
-    transition: all 0.1s linear;
+    transition: all 0.3s ease;
     float: right;
     transform: rotate(-90deg);
 }
@@ -4836,7 +4849,7 @@ div.titleDetail {
 }
 
 .userinfo-pop {
-    padding: 12px;
+    padding: 12px 0;
     max-width: 400px;
     position: absolute;
     right: calc(100% - 72px);
@@ -4865,11 +4878,11 @@ div.titleDetail {
     font-size: 14px;
     color: #9ba3c1;
     white-space: nowrap;
+    padding: 0 12px;
 }
 
 .userinfo-pop .logout {
     padding: 4px;
-    color: #f40;
     cursor: pointer;
     opacity: 0.8;
 }
@@ -4881,7 +4894,19 @@ div.titleDetail {
 .userinfo-pop p {
     font-size: 14px;
     margin: 0;
-    margin-top: 20px;
+    margin-top: 12px;
+    text-indent: 0;
+    padding:8px 0;
+    border: 1px solid #eee;
+    border-left: 0;
+    border-right: 0;
+    cursor: pointer;
+}
+.userinfo-pop p:hover span{
+    color: #333;
+}
+.userinfo-pop p:hover{
+    background-color: #f5f5f5;
 }
 
 .noshadow>div {

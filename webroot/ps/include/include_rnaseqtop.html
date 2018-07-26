@@ -34,9 +34,9 @@
                 <div class="topbar_nav fLeft" ng-mouseenter="loginOutShow = true" ng-mouseleave="loginOutShow = false" style="position: relative; padding-bottom:30px;">
                     <a style="text-decoration: none;font-size:18px;" class="topbar_btn iconfont icon-zhuxiao"></a>
                     <div class="userinfo-pop" ng-show="loginOutShow">
-                        <span>项目名称：{{LCID}}</span>
-                        <p style="text-align: right;">
-                            <span class="logout" ng-click="handlerLogout()">注销</span>
+                        <span>项目编号：{{LCID}}</span>
+                        <p ng-click="handlerLogout()" style="text-align: center;">
+                            <span class="logout" >退出</span>
                         </p>
                     </div>
                 </div>

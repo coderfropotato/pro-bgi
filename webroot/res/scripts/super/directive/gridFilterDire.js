@@ -142,7 +142,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                     scope.placeholderOne = "请输入您要检索的部分内容";
                                     break;
                                 case "$in":
-                                    scope.placeholderOne = "查询多个值，请用“英文逗号”或“回车”分开\n温馨提示：当您已经确认要筛选的基因点时，可将Excel中基因点的列值圈中拷贝即可进行检索！";
+                                    scope.placeholderOne = "查询多个值，每行一个值或用英文“,”分开，举例如下：\n例1：\nGeneID1\nGeneID2\nGeneID3\n例2：\nGeneID1,GeneID2,GeneID3";
                                     break;
                                 case "$gt":
                                     scope.placeholderOne = "请输入您要查询的关键字";
@@ -430,7 +430,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                         $scope.placeholderOne = "请输入您要检索的部分内容";
                         break;
                     case "$in":
-                        $scope.placeholderOne = "查询多个值，请用“英文逗号”或“回车”分开\n温馨提示：当您已经确认要筛选的基因点时，可将Excel中基因点的列值圈中拷贝即可进行检索！";
+                        $scope.placeholderOne = "查询多个值，每行一个值或用英文“,”分开，举例如下：\n例1：\nGeneID1\nGeneID2\nGeneID3\n例2：\nGeneID1,GeneID2,GeneID3";
                         break;
                     case "$gt":
                         $scope.placeholderOne = "请输入您要查询的关键字";

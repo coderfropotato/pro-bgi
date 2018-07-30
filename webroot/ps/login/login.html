@@ -234,6 +234,9 @@
                             <input type="text" name="uuid" value="{{uuid}}" ng-model="formEntity.UUID" style="display: none;" />
                         </div>
                     </div>
+                    <div class="login_error" ng-show="resError" ng-class="{'shake':resError}">
+                        {{resError}}
+                    </div>
                     <div class="signIn">
                         <button id="btn_memberLogin" type="button" ng-click="btn_lcLogin_OnClick()" class="btn btn-info btn-block btn_submit" ng-disabled="myForm1.lcid.$error.required || myForm1.lcpwd.$error.required || myForm1.code.$error.required" ng-bind="lcLoginText">
                             请稍后，正在加载...

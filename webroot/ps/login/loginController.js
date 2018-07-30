@@ -185,6 +185,7 @@ define(['loginApp'], function (loginApp) {
             }
         }
 
+        $scope.resError = false;
         function LoginOn() {
             $.ajax({
                 url: options.api.base_url + '/login',
@@ -202,17 +203,24 @@ define(['loginApp'], function (loginApp) {
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
                         // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
                         window.location.href = window.location.href.replace('login/login.html', "mrna" + '/index.html');
+                        $scope.resError = false;
                     } else {
-                        var myPromise = toolLoginService.popMesgWindow(responseData.Error);
-                        myPromise.then(function (value) {
-                            $scope.isLCSubmit = false;
-                            $scope.lcLoginText = '登录';
-                        });
+                        $scope.isLCSubmit = false;
+                        $scope.lcLoginText = '登录';
+                        $scope.resError = responseData.Error;
                         $scope.renovate();
+                        $scope.$apply();
+                        // var myPromise = toolLoginService.popMesgWindow(responseData.Error);
+                        // myPromise.then(function (value) {
+                        //     $scope.isLCSubmit = false;
+                        //     $scope.lcLoginText = '登录';
+                        // });
+                        // $scope.renovate();
                     }
                 },
                 error: function (data) {
                     // 处理错误 .reject  
+                    $scope.resError = false;
                     $log.debug('处理错误' + data);
                     $scope.isLCSubmit = false;
                     if ($scope.tabIndex == 0) {
@@ -295,6 +303,7 @@ define(['loginApp'], function (loginApp) {
         }
 
         $scope.handlerKeyUp = function (event) {
+            $scope.resError = false;
             if (event.keyCode === 13) {
                 $scope.btn_lcLogin_OnClick();
             }
@@ -302,7 +311,7 @@ define(['loginApp'], function (loginApp) {
 
         $scope.initJquery = function () {
             // 锚点滚动
-            scrollto('.nav-concat','.concat-wrap');
+            scrollto('.nav-concat', '.concat-wrap');
             // 全屏滚动
             var type = true; //控制动画的开关
             var bodyW = document.documentElement.clientWidth || document.body.clientWidth || window.innerWidth;
@@ -345,7 +354,7 @@ define(['loginApp'], function (loginApp) {
                 }
             });
 
-            
+
             //向上滚动代码函数
             function mouseTop() {
                 //第二屏
@@ -472,9 +481,9 @@ define(['loginApp'], function (loginApp) {
                 }
             }
 
-            
-            function scrollto(anchor,wrap){
-                $(anchor).on('click',function(){
+
+            function scrollto(anchor, wrap) {
+                $(anchor).on('click', function () {
                     $('.main').animate({ scrollTop: $(wrap).offset().top });
                 })
             }

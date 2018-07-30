@@ -136,7 +136,6 @@ define(['toolsApp'], function(toolsApp) {
             $scope.netData = angular.copy($scope.netDataInit);
             $scope.drawNet($scope.netData, val);
             $scope.changeFlag($scope.myOptions);
-            $scope.changeFlag($scope.myOptions);
         }
 
         // 画net图

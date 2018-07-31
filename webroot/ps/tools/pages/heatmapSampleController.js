@@ -56,14 +56,7 @@ define(["toolsApp"], function(toolsApp) {
 
             $scope.accuracy = -1; // 精度默认 全数据
 
-            $scope.setOption = {
-                    isShowName: false,
-                    isShowTopLine: true,
-                    sortNames: [],
-                    width: 0,
-                    height: 0
-                }
-                // 获取增删列dire数据
+            // 获取增删列dire数据
             $scope.allTableHeader = JSON.parse(toolService.sessionStorage.get('allThead'));
             // 获取聚类图数据
             $scope.GetHeatmapData();
@@ -91,6 +84,23 @@ define(["toolsApp"], function(toolsApp) {
                     if (res.heatmapData.length) {
                         $scope.clusterError = "";
                         res.heatmapData.reverse();
+
+                        var sampleLength = res.heatmapData.length;
+                        $scope.setOption = {
+                            isShowName: false,
+                            isShowTopLine: true,
+                            sortNames: [],
+                            width: 0,
+                            height: 480
+                        }
+
+                        if (sampleLength <= 8) {
+                            $scope.setOption.width = 480;
+                        } else {
+                            var single_rect_width = 60;
+                            $scope.setOption.width = single_rect_width * sampleLength;
+                        }
+
                         $scope.setOption.sortNames = res.heatmapData;
 
                         //场景：res.topClusterData可能为{}
@@ -109,11 +119,6 @@ define(["toolsApp"], function(toolsApp) {
 
                         if (flag && flag === 'refresh') {
                             $scope.isRefresh = true;
-                            $scope.setOption.isShowName = false;
-                            $scope.setOption.isShowTopLine = true;
-                            $scope.setOption.width = 0;
-                            $scope.setOption.height = 0;
-
                             $timeout(function() {
                                 $scope.isRefresh = false;
                             }, 30)
@@ -194,28 +199,10 @@ define(["toolsApp"], function(toolsApp) {
             var single_rect_width = 0;
             var single_rect_height = 0;
 
-            if (sampleLen <= 8) {
-                if (setOption.width != 0) {
-                    heatmap_width = setOption.width;
-                } else {
-                    heatmap_width = 480;
-                }
-                single_rect_width = heatmap_width / sampleLen;
-            } else {
-                if (setOption.width == 0) {
-                    single_rect_width = 60;
-                    heatmap_width = single_rect_width * sampleLen;
-                } else {
-                    heatmap_width = setOption.width;
-                    single_rect_width = heatmap_width / sampleLen;
-                }
-            }
+            heatmap_width = setOption.width;
+            single_rect_width = heatmap_width / sampleLen;
 
-            if (setOption.height == 0) {
-                heatmap_height = 480;
-            } else {
-                heatmap_height = setOption.height;
-            }
+            heatmap_height = setOption.height;
             single_rect_height = heatmap_height / YgeneDataLen;
 
             //定义折线宽高

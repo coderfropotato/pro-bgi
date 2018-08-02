@@ -2,20 +2,25 @@
     <div class="report-page-title" custom-title="title"></div>
     <h6>蛋白网络图</h6>
     <p class="table-chart-desc">图中的每个点代表一个基因，连线表示这两个基因间有互作关系。点的大小和颜色都表示互作连接数，点越大，连接数越多。颜色由蓝色到红色渐变，越红表示连接数越多。</p>
-    <p class="table-chart-desc">详细信息请参考<a href="../tools/index.html#/home/help?module=danbwlt" target="_blank">帮助页</a>说明。</p>
+    <p class="table-chart-desc">详细信息请参考
+        <a href="../tools/index.html#/home/help?module=danbwlt" target="_blank">帮助页</a>说明。</p>
     <div class="table-switch-chart-wrap noshadow npb">
         <div class="graph_group" id="panel_reAnalysis_net" style="min-width: 800px">
             <div class="graph_header">
                 <ul class="fLeft">
                     <li>
-                        <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow" btn-one-callback="" btn-two-callback=""></div>
+                        <div class="graph-view-btn" parentid="panel_reAnalysis_net" charpanelid="div_reAnalysis_net_panel" is-table="true" is-table-show="isTableShow"
+                            btn-one-callback="" btn-two-callback=""></div>
                     </li>
                 </ul>
                 <ul class="fRight">
                     <li ng-hide="error || isTableShow">
-                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="单选">单选</button>
-                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip" title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
-                        <button ng-click="getChooseGeneList(netData)" ng-class="{'disabled':!myOptions.isMultiChoose || !geneCount}" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip" title="确定所有选择">确定</button>
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':!myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip"
+                            title="单选">单选</button>
+                        <button ng-click="changeFlag(myOptions)" ng-class="{'active':myOptions.isMultiChoose}" class="new-table-switch-btns new-btns-big tool-tip tool-tip"
+                            title="多选" style="margin-right:7px; margin-left:-5px;">多选</button>
+                        <button ng-click="getChooseGeneList(netData)" ng-class="{'disabled':!myOptions.isMultiChoose || !geneCount}" class="new-table-switch-btns new-btns-blue new-btns-big tool-tip"
+                            title="确定所有选择">确定</button>
                     </li>
                     <li ng-if="!error">
                         <button style="position:relative;" class="btn-sm list_btn">前置任务
@@ -35,13 +40,13 @@
                     </li>
                     <li ng-hide="isTableShow">
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetNetData()">
-                                        <span class="iconfont icon-shuaxin"></span>
-                                    </button>
+                            <span class="iconfont icon-shuaxin"></span>
+                        </button>
                     </li>
                     <li ng-show="isTableShow">
                         <button class="new-table-switch-btns noborder tool-tip" title="刷新" ng-click="GetTableData()">
-                                        <span class="iconfont icon-shuaxin"></span>
-                                    </button>
+                            <span class="iconfont icon-shuaxin"></span>
+                        </button>
                     </li>
                     <li ng-hide="error || isTableShow">
                         <div class="svg-new-export" chartid="div_reAnalysis_net_panel" saveimgname="蛋白网络图"></div>
@@ -67,7 +72,7 @@
                         <tbody>
                             <tr ng-repeat="row in tableData.rows track by $index">
                                 <td class="center" ng-repeat="val in tableData.baseThead track by $index">
-                                    {{row[val.true_key]}}
+                                    {{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}
                                 </td>
                             </tr>
                         </tbody>
@@ -89,9 +94,10 @@
         </div>
     </div>
 
-    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId" table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="geneListChangeFlag"
-        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList" params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis"
-        reanalysis-id="reanalysisId"></div>
+    <div class="add-delete-big-table" thead-control-id="theadControlId" page-entity="geneIdTableEntity" url="url" content-id="panelId"
+        table-id="tableId" unselect-gene-panel-id="unselectId" table-download-name="filename" gene-list="geneList" gene-list-change-flag="geneListChangeFlag"
+        is-reset-thead-control="isResetTheadControl" is-reset-table-status="isResetTableStatus" handler-thead-change="" params-key-list="paramsKeyList"
+        params-value-list="paramsValueList" is-show-thead-control="isShowTheadControl" is-reanalysis="isReanalysis" reanalysis-id="reanalysisId"></div>
 
     <!-- analysis pop -->
     <div class="analysis-pop" is-expand="isExpand" error="analysisError" analysis-list="analysis" handler-analysis-detail="asalysisClick(arg)"></div>

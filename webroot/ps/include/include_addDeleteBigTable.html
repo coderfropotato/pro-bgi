@@ -137,7 +137,7 @@
                                     <!-- 其他 -->
                                     <span ng-if="val.true_key!=='kegg_subject_annotation' && val.true_key!=='desc_kegg' && val.true_key!=='kegg_desc' && val.true_key!=='kegg_term_mix' && val.true_key!=='kegg_term_mix_tools' && val.true_key!=='kegg_term_id' && val.true_key.indexOf('kegg_term_mix_')==-1 && val.true_key!=='desc_go' && val.true_key!=='go_desc' && val.true_key!=='go_subject_annotation' && val.true_key!=='go_term_mix' && val.true_key!=='go_term_mix_tools' && val.true_key.indexOf('go_term_mix_')==-1 && val.true_key!=='go_term_id' && val.true_key!=='tf_family'">
                                         <span ng-if="(row[val.true_key] || row[val.true_key]==0)">
-                                            {{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}
+                                            {{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):(val.searchType==='int'?(row[val.true_key] | number):row[val.true_key])}}
                                         </span>
                                         <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                     </span>

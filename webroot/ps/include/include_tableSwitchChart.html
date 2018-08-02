@@ -82,7 +82,7 @@
                             <tr ng-repeat="row in tableData.rows track by $index">
                                 <td class="center">{{::($index+1)}}</td>
                                 <td class="center nowrap" title="{{(val.searchType!=='double' || !showAccuracy )?(row[val.true_key]):(row[val.true_key] | accuracyFilter: accuracy)}}" ng-repeat="val in tableData.baseThead track by $index">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}</span>
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):(val.searchType==='int'?(row[val.true_key] | number):row[val.true_key])}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                             </tr>

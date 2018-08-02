@@ -72,12 +72,12 @@
                     <tbody ng-hide="error">
                         <tr ng-repeat="row in tableData.rows track by $index">
                             <td class="center">{{(pageEntity.pageNum-1)*pageEntity.pageSize+($index+1)}}</td>
-                            <!-- title="{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}" -->
+                            <!-- title="{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):(val.searchType==='int'?(row[val.true_key] | number):row[val.true_key])}}" -->
                             <td class="center nowrap popover-table" ng-repeat="val in tableData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
                                 <span ng-if="row[val.true_key] || row[val.true_key]==0">
                                     <a ng-if="val.true_key==='gene_id' || val.true_key.indexOf('_query_id')!=-1 " ng-href="../tools/index.html#/home/geneDetail/{{row[val.true_key]}}"
                                         target="_blank">{{row[val.true_key]}}</a>
-                                    <span ng-if="val.true_key!=='gene_id' && val.true_key.indexOf('_query_id')==-1 ">{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):row[val.true_key]}}</span>
+                                    <span ng-if="val.true_key!=='gene_id' && val.true_key.indexOf('_query_id')==-1 ">{{val.searchType==='double'?(row[val.true_key] | accuracyFilter: accuracy):(val.searchType==='int'?(row[val.true_key] | number):row[val.true_key])}}</span>
                                 </span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>

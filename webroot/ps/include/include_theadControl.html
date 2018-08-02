@@ -9,12 +9,14 @@
             <span ng-show="allActive.length">已选择：</span>
             <div class="item-wrap">
                 <ul class="clearfix">
-                    <li ng-repeat="item in allActive track by $index" ng-init="computedWrapWidth()" >{{item._id}}&emsp;<i class="iconfont icon-guanbi addthead-guanbi" style="cursor:pointer;" ng-click="handlerItemClick(item,item.index)"></i></li>
+                    <li ng-repeat="item in allActive track by $index" ng-init="computedWrapWidth()" >
+                        <em>{{item._id}}</em>
+                        &emsp;<i class="iconfont icon-guanbi addthead-guanbi" style="cursor:pointer;" ng-click="handlerItemClick(item,item.index)"></i></li>
                 </ul>
             </div>
         </div>
     </div>
-    <div ng-show="show" style="padding-top: 10px;">
+    <div ng-show="show">
         <ul class="tab">
             <li ng-show="group.list.length" ng-repeat="(index,group) in data track by $index" ng-class="{active:currentIndex==$index}" 
                 ng-click="handlerTabClick($index)">{{group.groupName}}<span ng-if="allActiveItems[index].length" class="circle">{{allActiveItems[index].length}}</span></li>

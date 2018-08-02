@@ -4280,10 +4280,6 @@ geneExpression
     font-size: 14px!important;
 }
 
-.thead-control-top {
-    height: 32px;
-    line-height: 32px;
-}
 
 .add-column-btn {
     opacity: .8;
@@ -4306,7 +4302,8 @@ geneExpression
 
 .thead-control-top {
     display: flex;
-    height: 32px;
+    height: 40px;
+    line-height: 32px;
 }
 
 .thead-control-top>div {

@@ -39,8 +39,8 @@
                 <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')"
                     type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
                 <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')"
-                    type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
-                <input ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                    type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
+                <input ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
                 />
             </div>
             <div ng-if="filtertype!='all' && filtertype != 'boolean'">
@@ -51,10 +51,10 @@
                 <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
                     search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- !=$in type double || int -->
-                <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="number" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
+                <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
                     search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- range -->
-                <input ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="number" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                <input ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
                 />
             </div>
             <div ng-if="filtertype =='boolean'">

@@ -487,6 +487,13 @@ define(['toolsApp'], function(toolsApp) {
                             })
 
                         }
+
+                        if ($scope.myOptions.isMultiChoose) {
+                            $scope.selectGeneId = "";
+                        } else {
+                            $scope.selectGeneId = d.id;
+                        }
+
                         event.stopPropagation();
                     })
                     .call(d3.drag()

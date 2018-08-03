@@ -4280,7 +4280,6 @@ geneExpression
     font-size: 14px!important;
 }
 
-
 .add-column-btn {
     opacity: .8;
     width: 112px;
@@ -4294,6 +4293,12 @@ geneExpression
     margin-right: 24px;
     height: 32px;
     font-size: 14px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.add-column-btn span {
+    cursor: pointer;
 }
 
 .add-column-btn:hover {
@@ -5005,11 +5010,6 @@ h6.nplr {
 .icon-tools {
     font-size: 20px!important;
     color: #5378F8;
-}
-
-.add-column-btn {
-    user-select: none;
-    cursor: pointer;
 }
 
 

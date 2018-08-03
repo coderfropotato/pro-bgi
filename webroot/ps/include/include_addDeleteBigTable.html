@@ -124,7 +124,7 @@
                         <thead>
                             <tr>
                                 <!-- <th style="width: 60px; text-align: center;">NO.</th> -->
-                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item && item.true_key!=='tf_db_link'" ng-repeat="item in bigTableData.baseThead track by item.true_key">
+                                <th ng-style="{width:(item.name.length*10+84)+'px'}" ng-if="$index!=0 && item && item.true_key!=='tf_db_link'" ng-repeat="item in bigTableData.baseThead track by item.trackById">
                                     <div uib-tooltip="{{item.hover}}" class="grid_head" ng-class="{'thead-center':!isBeginFilter,'filter-thead-center':isBeginFilter}">{{item.name}}</div>
                                     <div class="grid_filter_panel" filtername="{{item.true_key}}" filternamezh="{{item.name}}" filtertype="{{item.searchType}}"></div>
                                 </th>

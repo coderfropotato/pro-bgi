@@ -314,14 +314,8 @@ define(["toolsApp"], function(toolsApp) {
             var content = "";
             var oDate = new Date();
             var date = oDate.getFullYear() + addZero(oDate.getMonth() + 1) + addZero(oDate.getDate()) + addZero(oDate.getHours()) + addZero(oDate.getMinutes());
-            if ($scope.transcript) {
-                content = $scope.transcript;
-            }
-            if ($scope.cds) {
-                content = $scope.cds;
-            }
-            if ($scope.protein) {
-                content = $scope.protein;
+            if ($scope.transcript || $scope.cds || $scope.protein) {
+                content = $scope.transcript + $scope.cds + $scope.protein;
             }
             var data = new Blob([content], {
                 type: "text/plain;charset=UTF-8"

@@ -370,9 +370,9 @@
                 <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="显示序列" ng-click="isShowSequence = true">显示序列</button>
                 <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="下载序列" style="margin-left: 20px;" ng-click="downloadSequence()">下载序列</button>
                 <div ng-show="isShowSequence" class="sequenceInfo">
-                    <p ng-show="transcript" ng-repeat="transcript in transcriptList track by $index">{{transcript}}</p>
-                    <p ng-show="cds" ng-repeat="cds in cdsList track by $index">{{cds}}</p>
-                    <p ng-show="protein" ng-repeat="protein in proteinList track by $index">{{protein}}</p>
+                    <p ng-show="transcript" ng-repeat="transcriptItem in transcriptList track by $index">{{transcriptItem}}</p>
+                    <p ng-show="cds" ng-repeat="cdsItem in cdsList track by $index">{{cdsItem}}</p>
+                    <p ng-show="protein" ng-repeat="proteinItem in proteinList track by $index">{{proteinItem}}</p>
                 </div>
             </div>
             <!-- <div class="table-nodata" error-type="sequenceError" style="border: 0"></div> -->

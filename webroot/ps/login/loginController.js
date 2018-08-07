@@ -1,11 +1,9 @@
-
-
 define(['loginApp'], function (loginApp) {
 
     loginApp.controller('loginController', loginController);
-    loginController.$inject = ['$rootScope', '$scope', '$log', '$window', 'toolLoginService'];
+    loginController.$inject = ['$rootScope', '$scope', '$log', '$window', '$timeout', 'toolLoginService'];
 
-    function loginController($rootScope, $scope, $log, $window, toolLoginService) {
+    function loginController($rootScope, $scope, $log, $window, $timeout, toolLoginService) {
         $scope.formEntity = {
             'LCID': null,
             'Password': null,
@@ -18,9 +16,7 @@ define(['loginApp'], function (loginApp) {
                 "pw": null
             }
         }
-
         $scope.loadingComplete = false; //是否加载完成
-
         //初始化页面参数
         $scope.InitPage = function () {
             $scope.tabIndex = 0;
@@ -37,14 +33,20 @@ define(['loginApp'], function (loginApp) {
             $scope.pageTitle = $scope.isTest ? options.testTitle : options.officialTitle;
             toolLoginService.sessionStorage.set('isTest', $scope.isTest);
             $scope.loadingComplete = true;
-            $rootScope.sk = "YANGWENDIAN19930";
             $scope.code();
             // $scope.jump()
             // $scope.GetIsTest();
-            $scope.initJquery();
+            $scope.env = options.env;
+            if ($scope.env === 'bgi') {
+                $timeout(function () {
+                    $scope.initBgiJquery();
+                }, 100)
+            } else {
+                $('.bgi-banner').remove();
+                $scope.initGooalJquery();
+            }
             // console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
         };
-
 
         function getUUID() {
             var s = [];
@@ -70,7 +72,6 @@ define(['loginApp'], function (loginApp) {
             img.src = options.api.java_url + "/checkImg?uuid" + $scope.uuid;
             $scope.formEntity.UUID = $scope.uuid
         }
-
 
 
         $scope.jump = function () {
@@ -123,7 +124,9 @@ define(['loginApp'], function (loginApp) {
                         toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', jumpLCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
-                        if (responseData.LCTYPE == "radseq") { responseData.LCTYPE = "RADseq" }
+                        if (responseData.LCTYPE == "radseq") {
+                            responseData.LCTYPE = "RADseq"
+                        }
                         // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
                         window.location.href = window.location.href.replace(/login\/login\.html.*/, responseData.LCTYPE + '/index.html');
                     } else {
@@ -186,6 +189,7 @@ define(['loginApp'], function (loginApp) {
         }
 
         $scope.resError = false;
+
         function LoginOn() {
             $.ajax({
                 url: options.api.base_url + '/login',
@@ -309,7 +313,56 @@ define(['loginApp'], function (loginApp) {
             }
         }
 
-        $scope.initJquery = function () {
+        $scope.initGooalJquery = function () {
+            // 全屏滚动
+            var type = true; //控制动画的开关
+            var bodyW = document.documentElement.clientWidth || document.body.clientWidth || window.innerWidth;
+            var bodyH = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
+            var main = $(".main")[0];
+            var conUl = $(".main_ul")[0];
+            var liLen = $(".main_ul .content"); //获取li
+            var autoPlayTimer = null;
+
+            //设置Li的高度
+            for (var i = 0; i < liLen.length; i++) {
+                liLen[i].style.height = bodyH + "px";
+            }
+            conUl.style.height = bodyH * liLen.length + "px"; //设置ul的高
+
+
+            $(".loginBtn").click(function () {
+                var userAgent = navigator.userAgent;
+                var isChrome = userAgent.indexOf("Chrome") > -1
+                $(".main_ul").css("filter", "blur(5px)");
+                $(".mengc").show();
+                if (isChrome) {
+                    $("#login").show();
+                } else {
+                    $("#noChrome").show();
+                }
+                type = false;
+            })
+
+            $("#continueLogin").click(function () {
+                $("#noChrome").hide();
+                $(".main_ul").css("filter", "blur(5px)");
+                $(".mengc").show();
+                $("#login").show();
+                type = false;
+            })
+
+            //点击登录弹窗关闭按钮隐藏登录弹窗
+            $(".login_close").click(function () {
+                type = true;
+                $(".main_ul").css("filter", "none")
+                $("#login").hide();
+                $("#noChrome").hide();
+                $(".mengc").hide();
+            })
+        }
+
+
+        $scope.initBgiJquery = function () {
             // 锚点滚动
             scrollto('.nav-concat', '.concat-wrap');
             // 全屏滚动
@@ -320,6 +373,7 @@ define(['loginApp'], function (loginApp) {
             var conUl = $(".main_ul")[0];
             var liLen = $(".main_ul .content"); //获取li
             var autoPlayTimer = null;
+
             //设置Li的高度
             for (var i = 0; i < liLen.length; i++) {
                 liLen[i].style.height = bodyH + "px";
@@ -380,6 +434,7 @@ define(['loginApp'], function (loginApp) {
 
             //向下滚动代码函数
             var firstFlag = true;
+
             function mouseBottom() {
                 //第二屏
                 if (main.scrollTop == liLen[0].offsetTop && type == true) {
@@ -454,7 +509,9 @@ define(['loginApp'], function (loginApp) {
 
             //幻灯片
             function timeFunt() {
-                var count = $('.banner_teb').length, i = 0, t = 5000
+                var count = $('.banner_teb').length,
+                    i = 0,
+                    t = 5000
                 if (count > 1) {
                     // anchor click 
                     $('#productNav li').on('click', function () {
@@ -484,7 +541,9 @@ define(['loginApp'], function (loginApp) {
 
             function scrollto(anchor, wrap) {
                 $(anchor).on('click', function () {
-                    $('.main').animate({ scrollTop: $(wrap).offset().top });
+                    $('.main').animate({
+                        scrollTop: $(wrap).offset().top
+                    });
                 })
             }
 
@@ -528,7 +587,10 @@ define(['loginApp'], function (loginApp) {
             var ftConH = $(".ftCon").innerHeight();
             var padHeight = (bodyH - titH - liH - QRCodeH - ftConH - 120) / 4;
             //设置padding自适应高度
-            $(".contactUs_ul li,.friendshipLink_ul li").css({ "padding-top": padHeight, "padding-bottom": padHeight })
+            $(".contactUs_ul li,.friendshipLink_ul li").css({
+                "padding-top": padHeight,
+                "padding-bottom": padHeight
+            })
         }
     }
 });

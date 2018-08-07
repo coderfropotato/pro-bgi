@@ -60,9 +60,9 @@
                         </li>
                     </ul>
                     <ul class="setUp">
-                        <li>帮助</li>
-                        <li class="nav-concat">联系我们</li>
-                        <li>
+                        <li ng-if="env==='bgi'" >帮助</li>
+                        <li ng-if="env==='bgi'" class="nav-concat">联系我们</li>
+                        <li ng-style="{'float':'{{env!='bgi'?'right':'left'}}'}">
                             <button class="loginBtn">登录</button>
                         </li>
                     </ul>
@@ -85,7 +85,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="content">
+            <li ng-if="env==='bgi'" class="content">
                 <div id="productContent">
                     <!--banner 第一页-->
                     <div class="banner_teb content_two content_two_a">
@@ -149,7 +149,7 @@
                     <li></li>
                 </ul>
             </li>
-            <li class="content concat-wrap" style="background:#fff;">
+            <li ng-if="env==='bgi'" class="content concat-wrap" style="background:#fff;">
                 <div class="login_footer">
                     <div class="contactUs">
                         <p class="contactUs_tit">

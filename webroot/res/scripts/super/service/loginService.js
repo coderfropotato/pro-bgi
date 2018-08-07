@@ -20,7 +20,8 @@ define("superApp.loginService", ["super.superMessage", "ngDialog", "ngCookies"],
             messageUrl: SUPER_CONSOLE_MESSAGE.messageUrl,
             testTitle: SUPER_CONSOLE_MESSAGE.testTitle,
             officialTitle: SUPER_CONSOLE_MESSAGE.officialTitle,
-            popBDWindowPath: SUPER_CONSOLE_MESSAGE.popBDWindowPath
+            popBDWindowPath: SUPER_CONSOLE_MESSAGE.popBDWindowPath,
+            env:SUPER_CONSOLE_MESSAGE.env
         };
 
 

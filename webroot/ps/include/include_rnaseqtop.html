@@ -1,15 +1,16 @@
-﻿<style type="text/css">
+﻿<!-- <style type="text/css">
     .logo_big_bg {
         background-image: url(../../../res/images/logo_big_bg.jpg);
     }
-</style>
+</style> -->
 
 <div class="view_topbar view_topbar">
     <div class="topbar_nav" ng-hide="isMangerSys">
         <!-- logo -->
-        <a href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo"></a>
-        <span style="height:50px; display: inline-block;line-height: 50px; font-size: 24px; opacity: .4;" class="pull-left">|</span>
-        <a href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo logo2 pull-left"></a>
+        <a ng-if="env==='bgi'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo"></a>
+        <span ng-if="env==='bgi'" style="height:50px; display: inline-block;line-height: 50px; font-size: 24px; opacity: .4;" class="pull-left">|</span>
+        <a ng-if="env==='bgi'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo logo2 pull-left"></a>
+        <a ng-if="env==='gooal'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo gooal_logo"></a>
         <!-- welcome btns -->
         <div class="top-right">
             <div class="fRight hidden-xs" style="margin-left:20px; margin-top: 6px;">

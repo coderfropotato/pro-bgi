@@ -30,8 +30,9 @@ define("superApp.reportDire", ["angular", "super.superMessage", "select2"],
 
         function OnLineReportFrameTopCtr($rootScope, $scope, $log, $state, $timeout, $window, ajaxService, toolService, reportService) {
 
-            $scope.isTest = $rootScope.isTest; //是否测试版
+            // $scope.isTest = $rootScope.isTest; //是否测试版
             $scope.isMangerSys = $rootScope.isMangerSystem;
+            $scope.env = options.env;
 
             $scope.loginOutShow = false;
             //获取用户实体信息
@@ -58,7 +59,7 @@ define("superApp.reportDire", ["angular", "super.superMessage", "select2"],
                 toolService.sessionStorage.set('type', 'myAnalysis');
                 $window.open('../tools/index.html#/home/myAnalysis');
             }
-
+            
             $scope.GoHome = function() {
                 $timeout(function() {
                     var oUl = document.getElementsByClassName('sidebar_nav_pop')[0];

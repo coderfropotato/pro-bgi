@@ -12,6 +12,9 @@ define(['toolsApp'], function (toolsApp) {
             }, 300);
         }
 
+        $scope.env= options.env;
+        $scope.pageTitle = options.env === 'bgi'?options.officialTitle:options.gooalTitle;
+
         // 接受我的面板显示事件
         $rootScope.isExpand = false;
         $scope.$on('openAnalysisPop', function () {

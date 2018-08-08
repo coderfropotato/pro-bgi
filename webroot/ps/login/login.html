@@ -15,7 +15,8 @@
     <link href="../../res/scripts/lib/angular/ng-dialog/0.5.0/ngDialog.css" rel="stylesheet" type="text/css" />
     <link href="../../res/styles/website.css" rel="stylesheet" type="text/css" />
     <link href="./res/login.css" rel="stylesheet" type="text/css" />
-    <link rel="icon" href="../../res/images/favicon.ico" type="image/x-icon">
+    <link ng-if="env==='bgi'" rel="icon" href="../../res/images/favicon.ico" type="image/x-icon">
+    <link ng-if="env==='gooal'" rel="icon" href="../../res/images/favicon-gooal.ico" type="image/x-icon">
     <script src="../../res/scripts/lib/requirejs/2.1.20/require.min.js" defer data-main="loginMain.js"></script>
     <script>
         document.addEventListener('DOMMouseScroll', function(event) {
@@ -48,7 +49,12 @@
         <ul class="main_ul">
             <li class="content content1">
                 <div class="bgi_top">
-                    <ul class="logo_ul">
+                    <ul ng-if="env==='gooal'" class="logo_ul">
+                        <li>
+                            <img style="height:100%;" src="./res/images/index_logo_gooal.png" />
+                        </li>
+                    </ul>
+                    <ul ng-if="env==='bgi'" class="logo_ul">
                         <li>
                             <img src="./res/images/index_logo.png" class="index" />
                         </li>
@@ -203,7 +209,8 @@
             <div class="login_close">
                 <img src="./res/images/login_close.png" />
             </div>
-            <div class="login_logo">
+            <h4 class="login-title" ng-if="env==='gooal'">账号密码登陆</h4>
+            <div ng-if="env==='bgi'" class="login_logo">
                 <img src="./res/images/dr.tom.png" />
             </div>
             <form name="myForm1" novalidate="novalidate">

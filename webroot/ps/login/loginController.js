@@ -28,10 +28,10 @@ define(['loginApp'], function (loginApp) {
             $scope.UUIDurl = options.api.java_url;
             $window.sessionStorage.clear();
             $scope.validateBrowser();
-            //古奥基因 0   理工大 -1    其他 1
-            $scope.isTest = 0;
-            $scope.pageTitle = $scope.isTest ? options.testTitle : options.officialTitle;
-            toolLoginService.sessionStorage.set('isTest', $scope.isTest);
+            //env bgi gooal
+            // $scope.isTest = 0;
+            $scope.pageTitle = options.env === 'bgi' ? options.officialTitle : options.gooalTitle;
+            // toolLoginService.sessionStorage.set('isTest', $scope.isTest);
             $scope.loadingComplete = true;
             $scope.code();
             // $scope.jump()
@@ -277,34 +277,34 @@ define(['loginApp'], function (loginApp) {
 
         //判断是否为测试版 
         $scope.isTest = false;
-        $scope.GetIsTest = function () {
-            $.ajax({
-                url: options.api.base_url + '/GetServerVersion/GetVersion',
-                type: 'GET',
-                cache: false,
-                success: function (data) {
-                    $scope.$apply(function () {
-                        $scope.isTest = data.isTest;
-                        toolLoginService.sessionStorage.set('isTest', $scope.isTest);
+        // $scope.GetIsTest = function () {
+        //     $.ajax({
+        //         url: options.api.base_url + '/GetServerVersion/GetVersion',
+        //         type: 'GET',
+        //         cache: false,
+        //         success: function (data) {
+        //             $scope.$apply(function () {
+        //                 $scope.isTest = data.isTest;
+        //                 toolLoginService.sessionStorage.set('isTest', $scope.isTest);
+        //                 console.log(data);
+        //                 if ($scope.isTest) {
+        //                     $scope.pageTitle = options.testTitle;
+        //                 } else {
+        //                     $scope.pageTitle = options.officialTitle;
+        //                     var goStr = '<div class=\'top_nav_normal\'  ><ul><li><a href=\'./login.html\'>返回首页</a></li></ul></div>';
+        //                     $('#div_goIndex').html(goStr);
+        //                 }
+        //                 $scope.loadingComplete = true;
+        //             });
 
-                        if ($scope.isTest) {
-                            $scope.pageTitle = options.testTitle;
-                        } else {
-                            $scope.pageTitle = options.officialTitle;
-                            var goStr = '<div class=\'top_nav_normal\'  ><ul><li><a href=\'./login.html\'>返回首页</a></li></ul></div>';
-                            $('#div_goIndex').html(goStr);
-                        }
-                        $scope.loadingComplete = true;
-                    });
 
-
-                },
-                error: function () {
-                    toolLoginService.sessionStorage.set('isTest', false);
-                    $scope.loadingComplete = true;
-                }
-            });
-        }
+        //         },
+        //         error: function () {
+        //             toolLoginService.sessionStorage.set('isTest', false);
+        //             $scope.loadingComplete = true;
+        //         }
+        //     });
+        // }
 
         $scope.handlerKeyUp = function (event) {
             $scope.resError = false;

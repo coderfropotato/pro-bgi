@@ -76,7 +76,6 @@ ul {
     padding: 0;
 }
 
-
 /* 基本 */
 
 a:visited,
@@ -113,7 +112,7 @@ h3,
 }
 
 .onShow {
-    display: block!important
+    display: block !important
 }
 
 .onHide {
@@ -332,7 +331,6 @@ a:hover .glyphicon-trash {
     color: #fff;
 }
 
-
 /*
 .view_topbar { position: fixed; width: 100%; height: 50px; background: #4397D9; z-index: 101; line-height: #50px; color: #fff; 
                background-color: #F2F2F2; background: -webkit-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: -moz-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: -o-linear-gradient(top,#70c7ff 0,#2499f8 100%); background: linear-gradient(to bottom,#70c7ff 0,#2499f8 100%); background-repeat: repeat-x; color:white;
@@ -375,7 +373,6 @@ a:hover .glyphicon-trash {
     width: 180px
 }
 
-
 /*
 .view_mini .view_leftside {overflow:hidden;}
 .view_mini .view_leftside:hover {z-index:120;overflow:visible;}*/
@@ -409,7 +406,6 @@ a:hover .glyphicon-trash {
     transition: all 0.1s linear;
 }
 
-
 /*.view_rightbar {position:absolute;width:auto;top:0;left:180px;right:0;height:60px;overflow:hidden;background:#fff;}
 */
 
@@ -420,7 +416,6 @@ a:hover .glyphicon-trash {
 .fRight {
     float: right !important;
 }
-
 
 /* 顶部 */
 
@@ -436,6 +431,12 @@ a:hover .glyphicon-trash {
     padding-left: 47px;
     font-size: 19px;
     margin-right: 14px;
+}
+
+.topbar_logo.gooal_logo {
+    background: url(../images/topbar_logo_gooal.png) no-repeat 14px 12px;
+    background-size: 84%;
+    width: 160px;
 }
 
 .logo2 {
@@ -460,15 +461,13 @@ a:hover .glyphicon-trash {
     line-height: 48px;
 }
 
-
 /* .topbar_btn:hover, */
-
 
 /* .topbar_btn.active { background: #4A7DDA; color: #fff; text-decoration: none; } */
 
 .topbar_btn span,
 a.topbar_btn {
-    cursor: default!important;
+    cursor: default !important;
 }
 
 .topbar_btn .icon-arrow_triangle-down {
@@ -486,7 +485,6 @@ a.topbar_btn {
 .topbar_info {
     /*margin-right:20px;line-height: 50px;*/
 }
-
 
 /* .topbar_info a:hover { color: #C3DDF2; } */
 
@@ -520,7 +518,6 @@ a.topbar_btn {
     background: #f0f0f0;
     color: #333;
 }
-
 
 /* 打开状态 */
 
@@ -586,7 +583,6 @@ a.topbar_btn {
     height: auto;
 }
 
-
 /*
 .view_topbar .topbar_nav.open .dropdown_menu_right { right: 0; left: inherit; }
 */
@@ -612,7 +608,6 @@ a.topbar_btn {
     border-left: none;
     border-right: none;
 }
-
 
 /* 应用中心菜单 */
 
@@ -674,7 +669,6 @@ a.topbar_btn {
 .topbar_nav_item .icon-cube2 {
     margin-top: 7px;
 }
-
 
 /* 头部手机菜单 */
 
@@ -751,7 +745,6 @@ a.topbar_btn {
 .nav_list_mobile ul li a:hover {
     background: #529FDC;
 }
-
 
 /* 左侧菜单 */
 
@@ -837,7 +830,6 @@ a.topbar_btn {
     border-left: 3px solid #55658D;
 }
 
-
 /*60B1F1*/
 
 .view_leftside .sidebar_nav ul li.active a * {
@@ -873,7 +865,6 @@ a.topbar_btn {
     -o-transform: rotate(90deg);
 }
 
-
 /* 收起 */
 
 .view_leftside .sidebar_nav_fold .sidebar_title {
@@ -881,7 +872,6 @@ a.topbar_btn {
     border-right: 1px solid #E5EBF1;
     border-bottom-width: 0px;
 }
-
 
 /*.view_leftside .sidebar_nav_fold:last-child .sidebar_title { border-bottom: 1px solid #E5EBF1; }*/
 
@@ -906,7 +896,6 @@ a.topbar_btn {
     padding: 15px;
     width: 100%;
 }
-
 
 /* 迷你布局 */
 
@@ -938,11 +927,9 @@ a.topbar_btn {
     margin-left: 0;
 }
 
-
 /*
 .view_mini .view_leftside .sidebar_nav .sidebar_title .icon-arrow_triangle-down { margin-left: 18px; }
 */
-
 
 /* 客户要求收起来再加一个图标 */
 
@@ -962,9 +949,8 @@ a.topbar_btn {
 .view_mini .view_leftside .sidebar_nav .sidebar_title .icon-arrow_triangle-down {
     margin-left: 4px;
     margin-right: 0;
-    color: #4397D9!important;
+    color: #4397D9 !important;
 }
-
 
 /* 左侧的图标 */
 
@@ -987,7 +973,6 @@ a.topbar_btn {
 .left-title-icon {
     margin-left: 8px
 }
-
 
 /* 迷你布局提示文字弹出 */
 
@@ -1033,7 +1018,6 @@ a.topbar_btn {
     opacity: 1.0;
     transition: all 0.2s linear;
 }
-
 
 /* 右边出一列菜单 */
 
@@ -1144,7 +1128,6 @@ a.topbar_btn {
     color: #333;
 }
 
-
 /* 一列菜单收起按钮 */
 
 .view_parduct_navbar_collapse {
@@ -1198,7 +1181,6 @@ a.topbar_btn {
     right: 0;
 }
 
-
 /* 按钮移上效果 */
 
 .view_parduct_navbar_collapse .parduct_navbar_collapse_inner:hover .parduct_navbar_collapse_bg {
@@ -1208,7 +1190,6 @@ a.topbar_btn {
 .view_parduct_navbar_collapse .parduct_navbar_collapse_inner:hover .parduct_navbar_collapse_icon {
     right: -6px;
 }
-
 
 /* 收起时状态 */
 
@@ -1223,7 +1204,6 @@ a.topbar_btn {
     border-left: 13px solid #D9DEE4;
 }
 
-
 /* 按钮移上效果 */
 
 .parduct_navbar_collapse_closed .parduct_navbar_collapse_inner:hover .parduct_navbar_collapse_bg {
@@ -1233,7 +1213,6 @@ a.topbar_btn {
 .parduct_navbar_collapse_closed .parduct_navbar_collapse_inner:hover .parduct_navbar_collapse_icon {
     left: 6px;
 }
-
 
 /* 分组标题 */
 
@@ -1259,7 +1238,6 @@ a.topbar_btn {
     content: " ";
 }
 
-
 /* 栏目标题 */
 
 .console-title {
@@ -1272,17 +1250,14 @@ a.topbar_btn {
     font-size: 24px;
 }
 
-
 /*
     .console-title h5:before {height:7px;width:6px;margin-top:14px;overflow:hidden;float:left;background-color:#2F71A7;content:" "}*/
-
 
 /* 内容通栏布局（无左树） */
 
 .body_userconsole .view_product {
     left: 0;
 }
-
 
 /* 页签 */
 
@@ -1320,7 +1295,6 @@ a.topbar_btn {
     border-top: 2px solid #4397D9;
     border-bottom: 0px solid #fff;
 }
-
 
 /* selector */
 
@@ -1379,7 +1353,6 @@ a.topbar_btn {
     min-width: 80px;
 }
 
-
 /*.div_search > ul li:first-child > div{ text-align:left; }*/
 
 .div_search:after {
@@ -1393,9 +1366,7 @@ a.topbar_btn {
     margin-left: -5px;
 }
 
-
 /* CSS3 Loading */
-
 
 /**
  * Lines
@@ -1574,7 +1545,6 @@ a.topbar_btn {
     margin: 0 4px;
 }
 
-
 /* bootstrap 调整 */
 
 .form-control {
@@ -1654,9 +1624,7 @@ a.topbar_btn {
     background-color: #EF6848;
 }
 
-
 /* 验证 */
-
 
 /*.ng-pristine .ng-invalid,*/
 
@@ -1683,7 +1651,7 @@ a.topbar_btn {
 
 .form-control.my-form-invaild,
 .form-control.my-form-invaild:hover {
-    border-color: #ED8383!important;
+    border-color: #ED8383 !important;
 }
 
 .ng-invalid.ng-touched:focus,
@@ -1704,7 +1672,7 @@ a.topbar_btn {
 }
 
 div.my-form-invaild {
-    border: none!important;
+    border: none !important;
 }
 
 .ng-validateMesg {
@@ -1762,9 +1730,7 @@ div.my-form-invaild {
     z-index: 9999;
 }
 
-
 /*.myvalidate-wrap .myvalidate-wrap-tips.show { opacity:1.0;height:30px;}*/
-
 
 /*.myvalidate-wrap.show .myvalidate-wrap-tips { opacity:1.0;}*/
 
@@ -1781,7 +1747,6 @@ div.my-form-invaild {
     left: 7px;
     top: -6px;
 }
-
 
 /*底端页面*/
 
@@ -1840,7 +1805,7 @@ div.my-form-invaild {
 }
 
 .form-control:hover {
-    border-color: #5378f8!important;
+    border-color: #5378f8 !important;
 }
 
 .foot-page .dd {
@@ -1919,7 +1884,6 @@ div.my-form-invaild {
     font-size: 14px;
 }
 
-
 /* EasyUI Gird */
 
 .datagrid-header td,
@@ -1954,9 +1918,7 @@ div.my-form-invaild {
     text-align: right;
 }
 
-
 /*#E3F2FD;*/
-
 
 /*
 .datagrid table {
@@ -2005,7 +1967,6 @@ div.my-form-invaild {
 }
 */
 
-
 /* 面包屑 */
 
 .breadcrumb {
@@ -2040,7 +2001,6 @@ div.my-form-invaild {
 .breadcrumb li a:hover {
     color: #4397D9;
 }
-
 
 /* 页面等待蒙版 */
 
@@ -2489,7 +2449,6 @@ fieldset[disabled] .btn-info.active {
     min-width: 80px;
 }
 
-
 /*.pagePanel-body .panel-content > ul li:first-child > div{ text-align:left; }*/
 
 .pagePanel-body .panel-content:after {
@@ -2537,7 +2496,6 @@ fieldset[disabled] .btn-info.active {
 .list-group {
     margin-bottom: 0;
 }
-
 
 /* bootstrap table */
 
@@ -2599,7 +2557,6 @@ fieldset[disabled] .btn-info.active {
     font-weight: bold;
 }
 
-
 /* 栅格布局 */
 
 .row {
@@ -2657,9 +2614,7 @@ fieldset[disabled] .btn-info.active {
     padding: 0;
 }
 
-
 /* 我的项目 */
-
 
 /* 事件 */
 
@@ -2697,7 +2652,6 @@ fieldset[disabled] .btn-info.active {
 .event-module * {
     cursor: pointer;
 }
-
 
 /*
 .event-module .em-title .em-text,
@@ -2830,7 +2784,6 @@ fieldset[disabled] .btn-info.active {
     background: #FFF5F4
 }
 
-
 /* 我的储存 */
 
 .div_Disk {
@@ -2884,7 +2837,6 @@ fieldset[disabled] .btn-info.active {
         float: none;
     }
 }
-
 
 /* 我的流程 */
 
@@ -2960,7 +2912,6 @@ fieldset[disabled] .btn-info.active {
     }
 }
 
-
 /* 我的项目 */
 
 .topbar_btn {
@@ -2970,7 +2921,6 @@ fieldset[disabled] .btn-info.active {
 .pagePanel-heading>.glyphicon {
     color: #999;
 }
-
 
 /* 我的项目 */
 
@@ -3216,16 +3166,15 @@ fieldset[disabled] .btn-info.active {
         top: 45px;
     }
     .user_project_right_content .modular_list {
-        margin-top: 0!important
+        margin-top: 0 !important
     }
     .report_view_leftside {
-        top: 45px!important;
+        top: 45px !important;
     }
     .report_view_body {
-        top: 45px!important
+        top: 45px !important
     }
 }
-
 
 /* 我的项目 - 流程 */
 
@@ -3296,7 +3245,6 @@ fieldset[disabled] .btn-info.active {
 .flows_list_content .nav-tabs::after {
     clear: none;
 }
-
 
 /*.flows_list_content .btn_options_filelist { border-bottom: none; margin-bottom: 0; background: #fcfcfc; border-left: 4px solid #4397D9; }*/
 
@@ -3423,7 +3371,6 @@ dl.project_info.online dd {
     top: 8px;
 }
 
-
 /* 流程详细页 */
 
 .flows_right_content dl.project_info dd {
@@ -3491,7 +3438,6 @@ dl.project_info.online dd {
 .jumbotron_plan_down .table_grid {
     background: #fff;
 }
-
 
 /* 我的项目 - 模块 */
 
@@ -3683,7 +3629,6 @@ dl.modular_info dd {
     line-height: 24px;
 }
 
-
 /*页面最上方进度条*/
 
 .topProgress {
@@ -3713,7 +3658,6 @@ dl.modular_info dd {
     opacity: 0.2;
     z-index: 999998;
 }
-
 
 /* 树左右布局 */
 
@@ -3753,7 +3697,6 @@ dl.modular_info dd {
 .view_mini .treeAB-B {
     left: 330px
 }
-
 
 /* 上传窗口 */
 
@@ -3826,7 +3769,6 @@ dl.modular_info dd {
     vertical-align: -1px;
 }
 
-
 /* 文件图标 */
 
 .ico {
@@ -3877,7 +3819,6 @@ dl.modular_info dd {
     background-position: -270px 0;
 }
 
-
 /* 文字提示 */
 
 .super-tips-wrap {
@@ -3920,7 +3861,6 @@ dl.modular_info dd {
 .super-tips-wrap.show .super-tips-show {
     display: block;
 }
-
 
 /* 流程详情页导航 */
 
@@ -4100,7 +4040,6 @@ dl.modular_info dd {
     padding-left: 16px !important;
 }
 
-
 /* flows_right_content */
 
 .flows_right_content {
@@ -4119,7 +4058,6 @@ dl.modular_info dd {
         box-shadow: none;
     }
 }
-
 
 /*.flows_right_content .jumbotron h1, .flows_list_content .jumbotron .h1 { font-size: 30px; margin-top: 0; color: #026FCC; }*/
 
@@ -4224,7 +4162,6 @@ tbody.noBorderH td {
     font-weight: normal;
 }
 
-
 /* 流程模块 */
 
 .mkListItem {
@@ -4246,7 +4183,6 @@ tbody.noBorderH td {
     border-right: none;
 }
 
-
 /*.mkListItem .table-bordered {border-left:none!important;border-right:none!important;}*/
 
 .mkListItem .table-bordered {
@@ -4262,7 +4198,6 @@ tbody.noBorderH td {
 .mkListItem .table-bordered tr td:last-child {
     border-right: none !important;
 }
-
 
 /*
     .mkListItem .table-bordered tr:last-child th,
@@ -4299,7 +4234,6 @@ tbody.noBorderH td {
 .table_zhuanLuZu_groups .table_zhuanLuZu tr:first-child td {
     border-top: none;
 }
-
 
 /*
 .table_zhuanLuZu tr:first-child th,
@@ -4344,7 +4278,6 @@ tbody.noBorderH td {
     width: 100%;
 }
 
-
 /* 文件路径导航 */
 
 .fileList {
@@ -4368,7 +4301,6 @@ tbody.noBorderH td {
         margin: 0 auto;
     }
 }
-
 
 /* CSS Tree menu styles */
 
@@ -4528,7 +4460,7 @@ ol.tree_manage .olTreeA {
 }
 
 .tree .active {
-    color: #F7085E!important;
+    color: #F7085E !important;
     font-weight: bold;
 }
 
@@ -4589,7 +4521,6 @@ ol.tree li label {
     width: 33%;
     border-radius: 0 !important;
 }
-
 
 /* 新增流程 */
 
@@ -4805,7 +4736,6 @@ ol.tree li.file:hover .tree_del {
     color: #D80000;
 }
 
-
 /*.smp_select_side .list-group-item.validate {border-left:0px #D80000 solid }*/
 
 .smp_select_side .list-group-item.validate a {
@@ -4817,7 +4747,6 @@ ol.tree li.file:hover .tree_del {
 }
 
 .tr_validate {}
-
 
 /* 步骤图 */
 
@@ -5035,7 +4964,6 @@ ol.tree .olTreeLnks .olTreeA {
         width: 190px !important;
     }
 }
-
 
 /* .btn_options_filelist {
     background-color: #F7FBFD;
@@ -5264,7 +5192,6 @@ ol.tree .olTreeLnks .olTreeA {
     top: 5px;
 }
 
-
 /*.ico { display:inline-block; width:40px; height:40px; }
 .ico.ico-forder { background:url("../images/fileico/forder.png") no-repeat; }*/
 
@@ -5365,7 +5292,6 @@ ol.tree .olTreeLnks .olTreeA {
     color: #F79304;
 }
 
-
 /* 分组 checkbox  */
 
 .dl_Checkbox {
@@ -5401,7 +5327,6 @@ ol.tree .olTreeLnks .olTreeA {
         width: 98%;
     }
 }
-
 
 /* CSS LOADING */
 
@@ -5565,9 +5490,7 @@ ol.tree .olTreeLnks .olTreeA {
     opacity: 0.6;
 }
 
-
 /* 我的项目，新用户页 */
-
 
 /*
     <div class="pro_welcome">
@@ -5886,7 +5809,6 @@ ol.tree .olTreeLnks .olTreeA {
     border: 1px solid #87D1E7;
 }
 
-
 /* 弹出选择框 */
 
 .combo-selector {
@@ -5956,7 +5878,6 @@ ol.tree .olTreeLnks .olTreeA {
     border-color: #489ADA;
 }
 
-
 /* 胶囊式导航 */
 
 .nav-pills>li {
@@ -6023,7 +5944,6 @@ ol.tree .olTreeLnks .olTreeA {
     background: #337AB7;
     border: 1px solid #337AB7;
 }
-
 
 /* 文件选择目录树 */
 
@@ -6206,7 +6126,6 @@ ol.tree .olTreeLnks .olTreeA {
     background-image: url(../images/icon-tree-end.png) !important;
 }
 
-
 /* 日期选择控件 */
 
 .ui-widget {
@@ -6372,7 +6291,6 @@ ol.tree .olTreeLnks .olTreeA {
     float: left;
 }
 
-
 /* with multiple calendars */
 
 .ui-datepicker.ui-datepicker-multi {
@@ -6416,7 +6334,6 @@ ol.tree .olTreeLnks .olTreeA {
     clear: both;
     width: 100%;
 }
-
 
 /* RTL support */
 
@@ -6469,7 +6386,6 @@ ol.tree .olTreeLnks .olTreeA {
     border-right-width: 0;
     border-left-width: 1px;
 }
-
 
 /* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
 
@@ -6549,11 +6465,9 @@ fieldset[disabled] .form-control.hasDatepicker {
     font-weight: bold;
 }
 
-
 /* Dialog
 
 ----------------------------------*/
-
 
 /* JSON 格式化显示 （jquery.json.js）toolService.JSONtoHTML */
 
@@ -6607,7 +6521,6 @@ fieldset[disabled] .form-control.hasDatepicker {
 
 .json_array_brackets {}
 
-
 /* 流程监控弹出框 */
 
 .div_JianKong_wrap {
@@ -6652,7 +6565,6 @@ fieldset[disabled] .form-control.hasDatepicker {
     box-shadow: 0px -2px 3px rgba(119, 194, 253, 0.65);
 }
 
-
 /* 内页固定表头，例子：/mangerconsole/fileAttributeManager */
 
 .calalog_head_fixed {
@@ -6676,7 +6588,6 @@ fieldset[disabled] .form-control.hasDatepicker {
     overflow: auto;
     height: 300px
 }
-
 
 /* 手机表格自适应 */
 
@@ -6711,7 +6622,6 @@ pre.hasNumbering {
     list-style: none;
     line-height: 24px;
 }
-
 
 /*高洪涛 录入框边上的叉号，在index页面中的项目搜索框有用*/
 
@@ -6765,14 +6675,11 @@ pre.hasNumbering {
     margin-right: 10px;
 }
 
-
 /* 后台左侧树滚动样式 */
-
 
 /*
 .sidebar_frame {overflow:hidden;}
 .sidebar_group {transition:all 0.2s linear;}*/
-
 
 /* 自定义指令下拉菜单 */
 
@@ -6829,22 +6736,17 @@ pre.hasNumbering {
     min-width: 30px;
 }
 
-
 /* SVG 导出图片指令 */
 
 .svg-export {
     display: inline-block
 }
 
-
 /*******************/
-
 
 /* CSS Family Tree */
 
-
 /*******************/
-
 
 /*Now the CSS*/
 
@@ -6872,7 +6774,6 @@ pre.hasNumbering {
     -moz-transition: all 0.5s;
 }
 
-
 /*We will use ::before and ::after to draw the connectors*/
 
 .reportTree li::before,
@@ -6892,7 +6793,6 @@ pre.hasNumbering {
     border-left: 1px solid #ccc;
 }
 
-
 /*We need to remove left-right connectors from elements without 
 any siblings*/
 
@@ -6901,13 +6801,11 @@ any siblings*/
     display: none;
 }
 
-
 /*Remove space from the top of single children*/
 
 .reportTree li:only-child {
     padding-top: 20px;
 }
-
 
 /*Remove left connector from first child and 
 right connector from last child*/
@@ -6916,7 +6814,6 @@ right connector from last child*/
 .reportTree li:last-child::after {
     border: 0 none;
 }
-
 
 /*Adding back the vertical connector to the last nodes*/
 
@@ -6932,7 +6829,6 @@ right connector from last child*/
     -webkit-border-radius: 5px 0 0 0;
     -moz-border-radius: 5px 0 0 0;
 }
-
 
 /*Time to add downward connectors from parents*/
 
@@ -6967,9 +6863,7 @@ right connector from last child*/
     background: linear-gradient(180deg, #FBFCFF, #E9F2FF);
 }
 
-
 /*Time for some hover effects*/
-
 
 /*We will apply the hover effect the the lineage of the element also*/
 
@@ -6979,7 +6873,6 @@ right connector from last child*/
     color: #000;
     border: 1px solid #94a0b4;
 }
-
 
 /*Connector styles on hover*/
 
@@ -6991,25 +6884,24 @@ right connector from last child*/
 }
 
 .reportTree li.disable a {
-    background: #f6f6f6!important;
-    color: #ccc!important;
-    border-color: #ddd!important;
-    cursor: default!important;
+    background: #f6f6f6 !important;
+    color: #ccc !important;
+    border-color: #ddd !important;
+    cursor: default !important;
 }
 
 .reportTree li.disable li::before,
 .reportTree li.disable li:last-child::before,
 .reportTree li.disable ul::after,
 .reportTree li.disable li::after {
-    border-color: #eee!important;
+    border-color: #eee !important;
 }
 
 .reportTree li.disable li::after,
 .reportTree li.disable::after,
 .reportTree li.disable ul::before {
-    border-left-color: #eee!important;
+    border-left-color: #eee !important;
 }
-
 
 /* 第一层尺寸 */
 
@@ -7028,7 +6920,6 @@ right connector from last child*/
 .reportTree>ul>li>ul>li>ul>li>ul>li>a {
     height: 170px
 }
-
 
 /* 处理流程图中因文字纵排而导致的位置问题 */
 
@@ -7056,10 +6947,8 @@ right connector from last child*/
     writing-mode: tb-rl;
 }
 
-
 /*Thats all. I hope you enjoyed it.
 Thanks :)*/
-
 
 /* popTip
 .poptip.right .tooltip-arrow {
@@ -7083,7 +6972,7 @@ Thanks :)*/
 }
 
 .poptip .tooltip-inner {
-    font-size: 14px!important;
+    font-size: 14px !important;
     padding: 10px;
     line-height: 22px;
     text-align: left;
@@ -7101,7 +6990,6 @@ Thanks :)*/
     background: url(../images/logo_big_bg.jpg) right top no-repeat;
     min-height: 400px
 }
-
 
 /* 正在工作中 */
 
@@ -7128,7 +7016,6 @@ Thanks :)*/
     height: 352px;
     margin: 10px auto;
 }
-
 
 /*! =========================================================
  * bootstrap-slider.js
@@ -7426,7 +7313,6 @@ Thanks :)*/
     opacity: 1;
 }
 
-
 /* 页面顶部温馨提示 */
 
 .top_message_box {
@@ -7473,7 +7359,6 @@ Thanks :)*/
     display: block
 }
 
-
 /* 自定义修改 menu ，默认显示 */
 
 .dropdown-menu-open {
@@ -7500,7 +7385,7 @@ Thanks :)*/
 }
 
 .graph_group .fRight .btn-silver.active {
-    background: #e6e6e6!important;
+    background: #e6e6e6 !important;
 }
 
 .drop-menu .color_list {
@@ -7530,10 +7415,10 @@ Thanks :)*/
 .table_noData p {
     margin: 0 auto;
     width: 310px;
-    text-align: center!important;
+    text-align: center !important;
     padding-top: 190px;
     color: gray;
-    text-indent: 1em!important;
+    text-indent: 1em !important;
 }
 
 .table_noData .fjnodata_p {
@@ -7542,7 +7427,6 @@ Thanks :)*/
     color: red;
     font-size: 16px;
 }
-
 
 /* 错误页 */
 
@@ -7605,7 +7489,6 @@ Thanks :)*/
     background: url(../images/website/logo_test2.png) no-repeat 14px 3px;
     width: 225px
 }
-
 
 /* 齿轮动画 */
 
@@ -7897,7 +7780,6 @@ Thanks :)*/
     background: #F5F5F5;
 }
 
-
 /* Timer*/
 
 .timer {
@@ -8022,7 +7904,6 @@ Thanks :)*/
     background: #5685D0;
 }
 
-
 /* 图表loading text-shadow: 0px 0px 4px #FFF;*/
 
 .table_panel_loading {
@@ -8101,14 +7982,12 @@ Thanks :)*/
     }
 }
 
-
 /* 特殊处理select2中选项过长导致无法显示的问题 */
 
 ul.select2-results>li.select2-result {
     word-wrap: break-word;
     word-break: break-all;
 }
-
 
 /*打印时隐藏href内容*/
 
@@ -8117,7 +7996,6 @@ ul.select2-results>li.select2-result {
         content: none !important;
     }
 }
-
 
 /*悬浮框样式*/
 
@@ -8138,7 +8016,7 @@ div.tipsContainer,
 }
 
 .tipsContent {
-    font-size: 13px!important;
+    font-size: 13px !important;
     text-align: left;
     border: 1px solid #ddd;
     width: 100%;
@@ -8190,7 +8068,6 @@ div.tipsContainer,
     border-right: 10px white solid;
 }
 
-
 /* 修改标题弹窗 */
 
 .popPrompt {
@@ -8218,7 +8095,6 @@ div.tipsContainer,
     float: none;
 }
 
-
 /* 颜色选择器样式--reportService */
 
 .backDiv {
@@ -8240,7 +8116,7 @@ div.tipsContainer,
 }
 
 .colorSelectService {
-    background-color: #ffffff!important;
+    background-color: #ffffff !important;
     padding: 4px;
 }
 
@@ -8265,7 +8141,7 @@ div.tipsContainer,
 
 .colorSelectinvaild {
     background: url(../images/ng_invalid.png) #FCEAEA no-repeat right center !important;
-    background-size: 10%!important;
+    background-size: 10% !important;
 }
 
 .colorSelector {
@@ -8294,7 +8170,6 @@ div.tipsContainer,
     float: left;
     cursor: pointer;
 }
-
 
 /* 色盘面板---colorSelectorDire */
 
@@ -8364,7 +8239,6 @@ div.tipsContainer,
     clear: both;
 }
 
-
 /* thead control css */
 
 .thead-tree i {
@@ -8376,17 +8250,16 @@ div.tipsContainer,
 }
 
 .thead-tree .treecontrol li i.tree-branch-head {
-    vertical-align: middle!important;
+    vertical-align: middle !important;
 }
 
 .thead-tree .tree-label.tree-selected span {
-    font-weight: normal!important;
+    font-weight: normal !important;
 }
 
 .thead-tree .tree-label {
     /* line-height:1.5; */
 }
-
 
 /* 聚类图设置面板样式 */
 
@@ -8506,7 +8379,6 @@ div.tipsContainer,
     margin: 20px;
 }
 
-
 /* 聚类图设置面板-switch开关 */
 
 .onoffswitch {
@@ -8609,7 +8481,6 @@ div.tipsContainer,
     margin-left: 10px;
 }
 
-
 /* 重分析弹窗样式 */
 
 .ngdialog-theme-default .ngdialog-content {
@@ -8617,7 +8488,7 @@ div.tipsContainer,
 }
 
 .popAnalysis span {
-    font-size: 14px!important;
+    font-size: 14px !important;
 }
 
 .popAnalysis .popTitle {
@@ -8704,7 +8575,6 @@ div.tipsContainer,
 .popAnalysis .taskName {
     margin-top: 0;
 }
-
 
 /* 弹窗按钮 */
 
@@ -8797,7 +8667,6 @@ div.tipsContainer,
     color: #000;
 }
 
-
 /* reaccess dialog styles */
 
 .reaccess-pop-dialog.ngdialog {
@@ -8808,10 +8677,10 @@ div.tipsContainer,
     position: absolute;
     top: 30%;
     left: 50%;
-    margin-left: -200px!important;
-    background-color: #333!important;
+    margin-left: -200px !important;
+    background-color: #333 !important;
     opacity: 0.8;
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .reaccess-pop-dialog .my-ngdialog-title {
@@ -8857,7 +8726,7 @@ div.tipsContainer,
 }
 
 .reaccess-pop-dialog input:hover {
-    border-color: #999!important;
+    border-color: #999 !important;
 }
 
 .reaccess-pop-dialog .access-btn {
@@ -8893,16 +8762,16 @@ div.tipsContainer,
 }
 
 .ngdialog-message {
-    min-height: 45px!important;
+    min-height: 45px !important;
 }
 
 .ngdialog-buttons button.btn-success {
-    color: #FFFFFF!important;
-    background: #5378F8!important;
-    border: 1px solid #5378F8!important;
+    color: #FFFFFF !important;
+    background: #5378F8 !important;
+    border: 1px solid #5378F8 !important;
 }
 
 .ngdialog-buttons button.btn-success:hover {
-    background: #4666d3!important;
-    border: 1px solid #5378F8!important;
+    background: #4666d3 !important;
+    border: 1px solid #5378F8 !important;
 }

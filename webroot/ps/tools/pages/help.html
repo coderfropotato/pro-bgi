@@ -13,14 +13,16 @@
     <p id="denglbg" class="help-title">登录报告</p>
     <p class="help-sub-title">请用
         <b>Google Chrome</b>浏览器打开报告网址
-        <a href="http://report.bgi.com:9001" target="_balnk">http://report.bgi.com:9001</a>，输入您的账号密码，登录后查看报告。</p>
+        <a ng-if="env==='bgi'" href="http://report.bgi.com:9001" target="_balnk">http://report.bgi.com:9001</a><a ng-if="env==='gooal'" href="http://ngrok.gooalgene.com:22258" target="_balnk">http://ngrok.gooalgene.com:22258</a>，输入您的账号密码，登录后查看报告。</p>
+        </p>
     <p class="help-sub-title">注：</p>
     <p>1.本报告目前仅对Google Chrome浏览器做兼容性适配，若用其它浏览器打开，在使用过程中可能会有异常。</p>
     <p>2.如遇无法登录，请确认用户名、密码和验证码是否正确。若仍有问题，可根据邮件中的提示联系项目管理，或发送邮件到bgi-report@genomics.cn。</p>
     <!-- 页面布局和功能 -->
     <p id="yembjhgn" class="help-title">页面布局和功能</p>
     <p class="help-sub-title">报告页面主要分成：目录、页面切换、图、表格扩展、表、小工具和导航等七个区域。如下图：</p>
-    <img src="res/images/help1.png" alt="页面布局和功能">
+    <img ng-if="env==='bgi'" src="res/images/help1.png" alt="页面布局和功能">
+    <img ng-if="env==='gooal'" src="res/images/help1-gooal.png" alt="页面布局和功能">
     <!-- 目录区 -->
     <p id="mulq" class="help-title">目录区</p>
     <p class="help-sub-title">目录有三个层级，每个第二层级下有分析结果、分析方法和FAQ三部分，其中分析结果有一到多个页面。第三层级标题与页面切换区的标题相同，指向相同页面。点击目录边缘的“&lt&lt”图标可收起或展开目录。
@@ -157,7 +159,7 @@
 
     <!-- tips -->
     <div class="help-tip">
-        在使用过程中有任何疑问或建议，请拨打0755-36307094，或发送邮件到bgi-report@bgi.com。联系时请附项目编号，期待您的反馈。
+        在使用过程中有任何疑问或建议，请拨打<span ng-if="env==='bgi'">0755-36307094</span><span ng-if="env==='gooal'">400-863-0058</span>，或发送邮件到<span  ng-if="env==='bgi'">bgi-report@bgi.com</span><span  ng-if="env==='gooal'">service@gooalgene.com</span>。联系时请附项目编号，期待您的反馈。
     </div>
 
     <!-- anchor -->

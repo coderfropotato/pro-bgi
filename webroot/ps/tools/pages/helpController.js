@@ -19,8 +19,6 @@ define(['toolsApp'], function (toolsApp) {
             $scope.title = '帮助';
         }
 
-
-
         $scope.handlerAnchorClick = function (event) {
             $scope.scrollTo(event.target.getAttribute('data-target'));
         }

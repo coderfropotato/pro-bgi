@@ -39,12 +39,16 @@ define(['loginApp'], function (loginApp) {
             $scope.env = options.env;
             if ($scope.env === 'bgi') {
                 $timeout(function () {
+                    $('.bgi_top .logo_bgi,.bgi_top .setUp').show();
+                    $('.bgi_content').show();
                     $scope.initBgiJquery();
                 }, 100)
             } else {
+                $('.bgi_top .logo_gooal,.bgi_top .setUp').show();
                 $('.bgi-banner').remove();
                 $scope.initGooalJquery();
             }
+            
             // console.log("版权所有: 古奥基因(GOOALGENE) http://www.gooalgene.com  2016-2017 鄂ICP备16015451号-1");
         };
 

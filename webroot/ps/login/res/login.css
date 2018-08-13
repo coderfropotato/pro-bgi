@@ -833,3 +833,10 @@ height: 100%;*/
     text-align: center;
     font-weight: bold;
 }
+
+.bgi_top>ul {
+    display: none;
+}
+.bgi_content{
+    display: none;
+}

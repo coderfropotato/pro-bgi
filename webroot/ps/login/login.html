@@ -44,17 +44,17 @@
 
 </head>
 
-<body>
+<body ng-cloak>
     <div class="main">
         <ul class="main_ul">
             <li class="content content1">
                 <div class="bgi_top">
-                    <ul ng-if="env==='gooal'" class="logo_ul">
+                    <ul class="logo_ul logo_gooal">
                         <li>
                             <img style="height:100%;" src="./res/images/index_logo_gooal.png" />
                         </li>
                     </ul>
-                    <ul ng-if="env==='bgi'" class="logo_ul">
+                    <ul class="logo_ul logo_bgi">
                         <li>
                             <img src="./res/images/index_logo.png" class="index" />
                         </li>
@@ -91,7 +91,7 @@
                     </ul>
                 </div>
             </li>
-            <li ng-if="env==='bgi'" class="content">
+            <li class="content bgi_content">
                 <div id="productContent">
                     <!--banner 第一页-->
                     <div class="banner_teb content_two content_two_a">
@@ -155,7 +155,7 @@
                     <li></li>
                 </ul>
             </li>
-            <li ng-if="env==='bgi'" class="content concat-wrap" style="background:#fff;">
+            <li class="content concat-wrap bgi_content" style="background:#fff;">
                 <div class="login_footer">
                     <div class="contactUs">
                         <p class="contactUs_tit">

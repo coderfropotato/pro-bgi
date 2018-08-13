@@ -123,11 +123,7 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                 $scope.setOptions.isShowTopLine = !$scope.setOptions.isShowTopLine;
             }
 
-            $("#setoptionWidth").on("click", function(ev) {
-                clearEventBubble(ev);
-            })
-
-            $("#setoptionHeight").on("click", function(ev) {
+            $(".switchpanel.heatsetPanel").on("click", function(ev) {
                 clearEventBubble(ev);
             })
 

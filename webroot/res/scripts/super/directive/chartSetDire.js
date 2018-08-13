@@ -73,7 +73,7 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                 $("#setValueInput").val($scope.setValue);
             })
 
-            $("#setValueInput").on("click", function(ev) {
+            $(".switchpanel.heatsetPanel").on("click", function(ev) {
                 clearEventBubble(ev);
             })
 

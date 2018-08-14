@@ -163,32 +163,12 @@ define(['loginApp'], function(loginApp) {
             $('.top_space').slideDown();
         };
 
-        $scope.tbx_password_OnKeyUp = function(e, flag) {
-            var keycode = window.event ? e.keyCode : e.which;
-            if (keycode == 13) {
-                if (flag == 'lc') {
-                    $scope.btn_lcLogin_OnClick();
-                } else {
-                    $scope.btn_mangerLogin_OnClick();
-                }
-            }
-        };
-
         $scope.btn_lcLogin_OnClick = function() {
             if (!$scope.isLCSubmit) {
                 // 判断登录按钮是否提交，如果正在提交则不执行
                 $scope.isLCSubmit = true;
                 $scope.lcLoginText = '正在登录...';
                 LoginOn();
-            }
-        }
-
-        $scope.btn_mangerLogin_OnClick = function() {
-            if (!$scope.isMangerSubmit) {
-                // 判断登录按钮是否提交，如果正在提交则不执行
-                $scope.isMangerSubmit = true;
-                $scope.mangerLoginText = '正在登录...';
-                mangerLoginOn();
             }
         }
 
@@ -218,12 +198,6 @@ define(['loginApp'], function(loginApp) {
                         $scope.resError = responseData.Error;
                         $scope.renovate();
                         $scope.$apply();
-                        // var myPromise = toolLoginService.popMesgWindow(responseData.Error);
-                        // myPromise.then(function (value) {
-                        //     $scope.isLCSubmit = false;
-                        //     $scope.lcLoginText = '登录';
-                        // });
-                        // $scope.renovate();
                     }
                 },
                 error: function(data) {
@@ -236,79 +210,13 @@ define(['loginApp'], function(loginApp) {
                         $scope.lcLoginText = '登录';
                     }
                     $scope.renovate();
+                    $scope.$apply();
                 }
             });
         }
 
-        function mangerLoginOn() {
-            $.ajax({
-                url: options.api.manager_base_url + '/admin/login',
-                type: "POST",
-                data: JSON.stringify($scope.mangerLoginEntity),
-                dataType: "json",
-                contentType: "application/json;charset=utf-8",
-                withCredentials: true,
-                cache: false,
-                success: function(res) {
-                    if (res.exec == 0) {
-                        toolLoginService.localStorage.set('token', res.fields[0].Token);
-                        toolLoginService.sessionStorage.set("managerMail", res.fields[0].adminMail);
-                        $rootScope.isMangerSystem = true;
-                        window.location.href = window.location.href.replace('login/login.html', 'mangerSystem' + '/index.html');
-                    } else {
-                        if (res.execInfo == "系统错误，请联系管理员") {
-                            var myPromise = toolLoginService.popMesgWindow('对不起，您输入的密码错误！');
-                        } else {
-                            var myPromise = toolLoginService.popMesgWindow(res.execInfo);
-                        }
-                        myPromise.then(function(value) {
-                            $scope.isMangerSubmit = false;
-                            $scope.mangerLoginText = '管理控制台登录';
-                        });
-                    }
-                },
-                error: function(data) {
-                    // 处理错误 .reject  
-                    $log.debug('处理错误' + data);
-                    $scope.isMangerSubmit = false;
-                    if ($scope.tabIndex == 1) {
-                        $scope.isMangerSubmit = false;
-                        $scope.mangerLoginText = '管理控制台登录';
-                    }
-                }
-            })
-        }
-
         //判断是否为测试版 
         $scope.isTest = false;
-        // $scope.GetIsTest = function () {
-        //     $.ajax({
-        //         url: options.api.base_url + '/GetServerVersion/GetVersion',
-        //         type: 'GET',
-        //         cache: false,
-        //         success: function (data) {
-        //             $scope.$apply(function () {
-        //                 $scope.isTest = data.isTest;
-        //                 toolLoginService.sessionStorage.set('isTest', $scope.isTest);
-        //                 console.log(data);
-        //                 if ($scope.isTest) {
-        //                     $scope.pageTitle = options.testTitle;
-        //                 } else {
-        //                     $scope.pageTitle = options.officialTitle;
-        //                     var goStr = '<div class=\'top_nav_normal\'  ><ul><li><a href=\'./login.html\'>返回首页</a></li></ul></div>';
-        //                     $('#div_goIndex').html(goStr);
-        //                 }
-        //                 $scope.loadingComplete = true;
-        //             });
-
-
-        //         },
-        //         error: function () {
-        //             toolLoginService.sessionStorage.set('isTest', false);
-        //             $scope.loadingComplete = true;
-        //         }
-        //     });
-        // }
 
         $scope.handlerKeyUp = function(event) {
             $scope.resError = false;
@@ -543,6 +451,7 @@ define(['loginApp'], function(loginApp) {
             }
             type = false;
             $scope.renovate();
+            $scope.$apply();
         })
 
         $("#continueLogin").click(function() {

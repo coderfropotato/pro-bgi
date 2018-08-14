@@ -542,6 +542,7 @@ define(['loginApp'], function(loginApp) {
                 $("#noChrome").show();
             }
             type = false;
+            $scope.renovate();
         })
 
         $("#continueLogin").click(function() {

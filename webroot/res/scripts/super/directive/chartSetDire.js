@@ -25,13 +25,13 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
                 restrict: "ACE",
                 replace: true,
                 template: "<div class='dropdown'>" +
-                    "<button class='new-table-switch-btns noborder tool-tip' ng-click='isShow=!isShow' ng-class='{active:isShow}' title='设置'>" +
+                    "<button class='new-table-switch-btns noborder tool-tip' ng-click='setBtnClick($event)' ng-class='{active:isShow}' title='设置'>" +
                     " <span class='iconfont icon-shezhi'></span>" +
                     "</button>" +
                     " <div class='switchpanel dropdown-menu-open drop_set heatsetPanel' ng-show='isShow'>" +
                     "<p><span>{{setTitle}}：</span></p>" +
-                    "<div ng-hide='isInput' class='onoffswitch' ng-click='showHideValue()'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
-                    "<div ng-show='isInput' class='setInput'><input id='setValueInput' type='number' ng-value='setValue' class='form-control' ng-keyup='inputKeyup($event)' /><button class='btn btn-default btn-sm list_btn btn-silver' ng-click='getSetValue()'>确定</button></div>" +
+                    "<div ng-hide='isInput' class='onoffswitch' ng-click='showHideValue($event)'><input type='checkbox' id='oneOnoffswitch' name='onoffswitch' class='onoffswitch-checkbox' ng-model='isShowValue'><label class='onoffswitch-label' for='oneOnoffswitch'><div class='onoffswitch-inner'></div><div class='onoffswitch-switch'></div></label></div>" +
+                    "<div ng-show='isInput' class='setInput'><input id='setValueInput' type='number' ng-value='setValue' class='form-control' ng-keyup='inputKeyup($event)' /><button class='btn btn-default btn-sm list_btn btn-silver' ng-click='getSetValue($event)'>确定</button></div>" +
                     "</div>" +
                     "</div>",
                 scope: {
@@ -48,18 +48,50 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
         }
 
         superApp.controller("chartSetCtr", chartSetCtr);
-        chartSetCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+        chartSetCtr.$inject = ["$scope"];
 
-        function chartSetCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        function chartSetCtr($scope) {
             $scope.isShow = false;
 
-            $scope.showHideValue = function() {
+            //阻止冒泡
+            function clearEventBubble(evt) {
+                if (evt.stopPropagation) {
+                    evt.stopPropagation();
+                } else {
+                    evt.cancelBubble = true;
+                }
+
+                if (evt.preventDefault) {
+                    evt.preventDefault();
+                } else {
+                    evt.returnValue = false;
+                }
+            }
+
+            $(document).on("click", function() {
+                $scope.isShow = false;
+                $("#setValueInput").val($scope.setValue);
+            })
+
+            $(".switchpanel.heatsetPanel").on("click", function(ev) {
+                clearEventBubble(ev);
+            })
+
+            $scope.setBtnClick = function(ev) {
+                clearEventBubble(ev);
+                $scope.isShow = !$scope.isShow;
+                $("#setValueInput").val($scope.setValue);
+            }
+
+            $scope.showHideValue = function(ev) {
+                clearEventBubble(ev);
                 $scope.isShowValue = !$scope.isShowValue;
                 $scope.isShow = false;
                 $scope.getSetOption({ set: $scope.isShowValue })
             }
 
-            $scope.getSetValue = function() {
+            $scope.getSetValue = function(ev) {
+                clearEventBubble(ev);
                 $scope.setValue = Number($("#setValueInput").val());
                 $scope.isShow = false;
                 $scope.getSetOption({ value: $scope.setValue })
@@ -68,7 +100,7 @@ define("superApp.chartSetDire", ["angular", "super.superMessage", "select2"],
             $scope.inputKeyup = function(e) {
                 var keycode = window.event ? e.keyCode : e.which;
                 if (keycode == 13) {
-                    $scope.getSetValue();
+                    $scope.getSetValue(e);
                 }
             }
 

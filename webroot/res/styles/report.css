@@ -5094,3 +5094,9 @@ h6.nplr {
     background: #5378F8;
     border-color: #5378F8;
 }
+span.gray-it{
+    display: inline-block;
+    margin-top: 6px;
+    font-style: italic;
+    color: rgba(102, 101, 101, 0.548);
+}

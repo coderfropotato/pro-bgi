@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统升级中...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei';
+            outline: none;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        div.sysContent {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: url('./images/sysUpBack.png') no-repeat left top;
+            background-size: 100%;
+            filter: blur(5px);
+        }
+        
+        div.sysUpgrade {
+            width: 900px;
+            height: 480px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            background: #FFFFFF;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+        }
+        
+        .contentOpacity {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .sysUpgrades {
+            float: left;
+        }
+        
+        .sysUpgradeImg {
+            margin: 140px 80px;
+        }
+        
+        .sysUpgradeText {
+            margin-top: 180px;
+        }
+        
+        .sysUpgradeText p:first-child {
+            font-family: 'Microsoft YaHei';
+            font-weight: bold;
+            font-size: 32px;
+            color: #5378F8;
+            letter-spacing: 1.6px;
+            line-height: 32px;
+            margin-bottom: 30px;
+        }
+        
+        .sysUpgradeText p:last-child {
+            font-family: 'Microsoft YaHei';
+            font-size: 24px;
+            color: #333333;
+            letter-spacing: 1.2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sysContent"></div>
+    <div class="contentOpacity"></div>
+    <div class="sysUpgrade">
+        <div class="sysUpgrades sysUpgradeImg">
+            <img src="./images/sysUpgrade.png" alt="">
+        </div>
+        <div class="sysUpgrades sysUpgradeText">
+            <p>系统升级中...</p>
+            <p>请第二天再试，给您带来<br>不便敬请谅解。</p>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+
+</html>

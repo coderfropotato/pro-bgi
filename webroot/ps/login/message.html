@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>错误提示</title>
@@ -15,14 +16,14 @@
     <link href="../../res/scripts/lib/bootstrap/3.3.2/css/bootstrap.css" rel="stylesheet">
     <link href="../../res/styles/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body style="background-color:#fcfcfc">
 
     <div class="page_error">
         <div class="pe_img"></div>
         <div class="pe_info">对不起，您没有合法的授权信息，请重新登录获取授权！</div>
         <div class="pe_options">
-            <a href="login.html"><span class="glyphicon glyphicon-home"></span>网站首页</a>
-            <a href="login.html"><span class="glyphicon glyphicon-lock"></span> 会员登录</a>
+            <a href="login.html"><span class="glyphicon glyphicon-lock"></span>&nbsp;登录</a>
         </div>
         <div class="pe_countdown">
             系统将在<span class="pe_number" id="countDownNumber">5</span>秒后自动跳转到登录页
@@ -32,19 +33,19 @@
     <script type="text/javascript">
         var cdNum = 5;
         var gotoUrl = "login.html";
-        function CountDown()
-        {
-            if (cdNum < 0)
-            {
-                window.location.href="../login/login.html";
+
+        function CountDown() {
+            if (cdNum < 0) {
+                window.location.href = "../login/login.html";
                 return;
             }
             document.getElementById("countDownNumber").innerHTML = cdNum;
             cdNum--;
-            setTimeout(CountDown,1000);
+            setTimeout(CountDown, 1000);
         }
         CountDown();
     </script>
 
 </body>
+
 </html>

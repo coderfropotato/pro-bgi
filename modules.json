@@ -6,6 +6,8 @@
             "webroot/res/styles/*/*",
             "webroot/ps/testdata/**",
             "webroot/index.html",
+            "webroot/sysUpgrade.html",
+            "webroot/images/**",
             "!webroot/res/scripts/**/*.css"
         ],
         "base": "webroot",

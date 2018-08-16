@@ -2,12 +2,12 @@
     <div class="report-page-title" custom-title="title"></div>
     <!-- 快速教程 -->
     <p id="kuaisjc" class="help-title">快速教程</p>
-    <p class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/Ujqeu2">观看视频</a>，快速了解交互报告使用方法。</p>
+    <p class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/VFv6V3">观看视频</a>，快速了解交互报告使用方法。</p>
     <!-- 简介 -->
     <p id="jianj" class="help-title">简介</p>
     <p class="help-sub-title">全新的交互报告系统有以下几个特点：</p>
     <p>1.表格可任意添加基因信息（个别表格暂不支持），包括基因属性、表达量、注释等信息；</p>
-    <p>2.可使用小工具进行聚类热图、GO富集、KEGG富集和蛋白网络互作等分析；</p>
+    <p>2.可使用分析工具进行聚类热图、GO富集、KEGG富集和蛋白网络互作等分析；</p>
     <P>3.图表交互，在图上单击即可完成对表格的筛选；</P>
     <p>4.单击图例色块自定义图片配色；</p>
     <p>5.表格本身支持丰富的条件筛选；</p>
@@ -23,7 +23,7 @@
     <p>2.如遇无法登录，请确认用户名、密码和验证码是否正确。若仍有问题，可根据邮件中的提示联系项目管理，或发送邮件到bgi-report@genomics.cn。</p>
     <!-- 页面布局和功能 -->
     <p id="yembjhgn" class="help-title">页面布局和功能</p>
-    <p class="help-sub-title">报告页面主要分成：目录、页面切换、图、表格扩展、表、小工具和导航等七个区域。如下图：</p>
+    <p class="help-sub-title">报告页面主要分成：目录、页面切换、图、表格扩展、表、分析工具和导航等七个区域。如下图：</p>
     <img ng-if="env==='bgi'" src="res/images/help1.png" alt="页面布局和功能">
     <img ng-if="env==='gooal'" src="res/images/help1-gooal.png" alt="页面布局和功能">
     <!-- 目录区 -->
@@ -91,17 +91,17 @@
     <p class="indent6">b.包含：可输入多个值，筛选与这些值完全相同的内容；</p>
     <p class="indent6">c.其它还包括：等于、不等于、大于、小于、大于等于和小于等于等。</p>
     <p>2.精度切换：更改数值的显示精度</p>
-    <p>3.基因列表：在使用小工具时，可能需要剔除掉个别基因，单击Gene ID前的“眼睛”图案可以剔除该基因，这部分被剔除的Gene ID存入“未选中GeneList”。可以单击Gene ID前的“X”重新把这个基因放回表格中。</p>
+    <p>3.基因列表：在使用分析工具时，可能需要剔除掉个别基因，单击Gene ID前的“眼睛”图案可以剔除该基因，这部分被剔除的Gene ID存入“未选中GeneList”。可以单击Gene ID前的“X”重新把这个基因放回表格中。</p>
     <p>4.刷新：重新加载表格。</p>
     <p>5.下载：导出CSV格式的表格数据。</p>
-    <!-- 小工具区 -->
-    <p id="xiaogjq" class="help-title">小工具区</p>
-    <p class="help-sub-title">所有第一列是Gene ID的表格，右下角可能最多有7个小工具图标，分别是聚类热图、GO富集、KEGG富集、GO分类、KEGG分类、散点图、蛋白网络互作分析。如下图：</p>
-    <img src="res/images/help6.png" alt="小工具">
+    <!-- 分析工具区 -->
+    <p id="xiaogjq" class="help-title">分析工具区</p>
+    <p class="help-sub-title">所有第一列是Gene ID的表格，右下角可能最多有7个分析工具图标，分别是聚类热图、GO富集、KEGG富集、GO分类、KEGG分类、散点图、蛋白网络互作分析。如下图：</p>
+    <img src="res/images/help6.png" alt="分析工具">
     <p>1.
-        <b>进行小工具分析的数据以当前表格的Gene ID为基础，与表格其它列无关。</b>若需要Gene ID以外的信息，将在点击小工具图标后弹框提示选择。</p>
+        <b>进行分析工具分析的数据以当前表格的Gene ID为基础，与表格其它列无关。</b>若需要Gene ID以外的信息，将在点击分析工具图标后弹框提示选择。</p>
     <p>2.对于聚类热图、GO富集、KEGG富集分析时间稍长，单击图标后分析记录将添加到“我的分析”列表中，可以在右侧“我的分析”中查看最新10条分析，或者在页面顶部“我的分析”查看所有分析记录。</p>
-    <p>3.小工具的使用对基因个数进行限制，若当前表格中的基因个数超出限制，小工具图标将置灰为不可用状态。</p>
+    <p>3.分析工具的使用对基因个数进行限制，若当前表格中的基因个数超出限制，分析工具图标将置灰为不可用状态。</p>
 
     <!-- 聚类热图 -->
     <p id="julrt" class="help-title">聚类热图</p>
@@ -152,7 +152,7 @@
     <!-- 导航区 -->
     <p id="daohq" class="help-title">导航区</p>
     <p id="wodfx" class="help-sub-title">1.我的分析</p>
-    <p>我的分析中记录了所有使用小工具的分析结果。导出的报告内容中不包括这部分内容。</p>
+    <p>我的分析中记录了所有使用分析工具的分析结果。导出的报告内容中不包括这部分内容。</p>
     <p id="daocbg" class="help-sub-title">2.导出报告</p>
     <p>支持导出pdf格式的报告，导出需要几分钟时间，请耐心等待。</p>
     <p id="xiazsj" class="help-sub-title">3.下载数据</p>
@@ -177,7 +177,7 @@
             <li data-target="#tuq">图区</li>
             <li data-target="#biaogkzq">表格扩展区</li>
             <li data-target="#biaogq">表格区</li>
-            <li data-target="#xiaogjq">小工具区</li>
+            <li data-target="#xiaogjq">分析工具区</li>
             <li data-target="#julrt" class="indent">聚类热图</li>
             <li data-target="#GOfuj" class="indent">GO富集</li>
             <li data-target="#KEGGfuj" class="indent">KEGG富集</li>

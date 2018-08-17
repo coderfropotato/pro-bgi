@@ -335,7 +335,9 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     $scope.filterFindEntity.sortName = "";
                     $scope.filterFindEntity.sortType = "";
                 }
-                $scope.callback({ arg1: $scope.filterFindEntity });
+                $scope.callback({
+                    arg1: $scope.filterFindEntity
+                });
 
                 $(tsgPanel).fadeOut();
             }
@@ -570,6 +572,8 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     searchType: "=",
                     tablehead: '=', // 表格数据，用来动态watch表格增删  修改筛选状态
                     geneidtruekey: "=",
+                    // 只有增删列指令 没有增加和删除的项的时候 才需要更新基础表头length
+                    isUpdateTheadBaseLength: "=", // 对于基础表格数据 表格头会变动的情况，需要更新基础头长度  
                     eventName: "=", // 手动接受改变的searchOne的自定义事件名
                     filterStatusCallback: "&" // 是否筛选中，定义外部布局样式
                 },
@@ -596,30 +600,55 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             $scope.clearFilter = function () {
                 //清空
                 $scope.shaiXuanIsActive = true;
-                $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
+                $scope.filterStatusCallback && $scope.filterStatusCallback({
+                    status: $scope.shaiXuanIsActive
+                });
                 $scope.btn_ShaXuan_OnClick();
+            }
+
+
+            // watch searchOne default ''
+            if ($scope.isUpdateTheadBaseLength != undefined && $scope.isUpdateTheadBaseLength != null) {
+                $scope.$watch('searchOne', function (newVal, oldVal) {
+                    $scope.isUpdateTheadBaseLength = !!newVal;
+                    console.log($scope.isUpdateTheadBaseLength)
+                    $timeout(function () {
+                        $scope.isUpdateTheadBaseLength = false;
+                    }, 30)
+                }, true);
             }
 
             // 检查table数据变动，改变新数据的筛选状态
             // Add:2018年3月23日14:27:04
-            var isFirst = true, baseLength = 0;
+            // var isFirst = true, baseLength = 0;
+            var isFirst = true
+            $scope.baseLength = 0;
             $scope.$watch('tablehead', function (newValue, oldValue) {
                 // dom渲染完再渲染
                 // update 2018年8月3日14:28:36 重写编译逻辑（只编译新增的列,保留之前列的筛选状态）；
                 $timeout(function () {
                     if (!newValue) return;
                     if (!angular.equals(newValue, oldValue)) {
-                        if (isFirst) {
-                            baseLength = newValue.length;
+                        console.log($scope.isUpdateTheadBaseLength);
+                        if(isFirst) {
+                            $scope.baseLength = newValue.length;
                             isFirst = false;
+                        }
+                        if ($scope.isUpdateTheadBaseLength) {
+                            $scope.baseLength = newValue.length;
+                            $scope.isUpdateTheadBaseLength = false;
                         }
                         var flag = !oldValue ? true : newValue.length >= oldValue.length;
                         if ($scope.shaiXuanIsActive) {
                             if (flag) {
-                                var newValArr = [], newValIndexArr = [];
-                                var otherNew = angular.copy(newValue).slice(baseLength);
-                                var otherOld = oldValue ? angular.copy(oldValue).slice(baseLength) : [];
+                                var newValArr = [],
+                                    newValIndexArr = [];
+                                console.log(newValue);
+                                console.log($scope.baseLength);
+                                var otherNew = angular.copy(newValue).slice($scope.baseLength);
+                                var otherOld = oldValue ? angular.copy(oldValue).slice($scope.baseLength) : [];
 
+                                console.log(otherNew);
                                 otherNew.forEach(function (val, index) {
                                     var isSame = false;
                                     for (var i = 0; i < otherOld.length; i++) {
@@ -633,16 +662,16 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                         newValArr.push(val);
                                     }
                                 })
-
+                                console.log(newValArr);
                                 newValArr.forEach(function (val, index) {
-                                    for (var k = baseLength; k < newValue.length; k++) {
+                                    for (var k = $scope.baseLength; k < newValue.length; k++) {
                                         if (val.true_key === newValue[k].true_key) {
                                             newValIndexArr.push(k);
                                             break;
                                         }
                                     }
                                 })
-
+                                console.log(newValIndexArr);
                                 var gridPanel = $("#" + $scope.tableid);
                                 if (newValIndexArr.length) {
                                     for (var i = 0; i < newValIndexArr.length; i++) {
@@ -653,7 +682,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                             }
                         }
                     }
-                }, 30)
+                }, 60)
             }, true);
 
             // watch searchOne default ''
@@ -735,7 +764,9 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             //筛选按钮点击事件
             $scope.btn_ShaXuan_OnClick = function () {
                 $scope.shaiXuanIsActive = !$scope.shaiXuanIsActive;
-                $scope.filterStatusCallback && $scope.filterStatusCallback({ status: $scope.shaiXuanIsActive });
+                $scope.filterStatusCallback && $scope.filterStatusCallback({
+                    status: $scope.shaiXuanIsActive
+                });
 
                 //获取grid对象
                 var gridPanel = $("#" + $scope.tableid);
@@ -753,8 +784,10 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     try {
                         //调用父类查询事件
                         //$scope.$parent.GetDiffList(null);
-                        $scope.callback({ arg1: null });
-                    } catch (e) { }
+                        $scope.callback({
+                            arg1: null
+                        });
+                    } catch (e) {}
                     //$("#" + $scope.tableid).find(".btn_filter").css("visibility", "hidden");
                 }
             };

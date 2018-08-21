@@ -584,11 +584,12 @@ define(["toolsApp"], function(toolsApp) {
                     .append("text")
                     .style("font-family", "Consolas, Monaco, monospace")
                     .style("font-size", "12px")
+                    .style("dominant-baseline", "middle")
                     .text(function(d) {
                         return d.x;
                     })
                     .attr("y", function(d, i) {
-                        return i * single_rect_height + single_rect_height / 2 + 4;
+                        return i * single_rect_height + single_rect_height / 2;
                     })
             }
 

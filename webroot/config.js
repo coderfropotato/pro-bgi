@@ -1,7 +1,7 @@
 ﻿define([], function() {
-    var base_url = "http://report.bgi.com:9002/api/1"; //远程
-    var java_url = "http://report.bgi.com:9002/reportweb";
-    var staticImg_url = "http://report.bgi.com:9002/"; //静态图片
+    var base_url = "http://report.bgi.com:9001/api/1"; //远程
+    var java_url = "http://report.bgi.com:9001/reportweb";
+    var staticImg_url = "http://report.bgi.com:9001/"; //静态图片
     var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
     var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
 

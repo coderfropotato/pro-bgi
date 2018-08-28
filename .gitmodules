@@ -1,3 +1,6 @@
 [submodule "webroot/ps/mrna"]
 	path = webroot/ps/mrna
 	url = http://54.223.70.246:9000/report-child-web/mrna.git
+[submodule "webroot/ps/dna"]
+	path = webroot/ps/dna
+	url = git@git.soyomics.com:report-child-web/dna.git

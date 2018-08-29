@@ -34,7 +34,7 @@ define(['loginApp'], function(loginApp) {
             // toolLoginService.sessionStorage.set('isTest', $scope.isTest);
             $scope.loadingComplete = true;
             $scope.code();
-            // $scope.jump()
+            $scope.jump();
             // $scope.GetIsTest();
             $scope.env = options.env;
             if ($scope.env === 'bgi') {
@@ -82,7 +82,7 @@ define(['loginApp'], function(loginApp) {
             //校验是否存在查询条件
             var query = window.location.search;
             if (!query) {
-                return
+                return;
             }
             //校验查询条件关键字;校验值不符合要求直接删除掉
             var queryArr = query.substring(1, query.length).split("&");
@@ -92,17 +92,16 @@ define(['loginApp'], function(loginApp) {
                 return;
             }
 
+            var jumpUrl = "";
             //Token跳转
             if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
                 var jumpLCID = query.split("&")[0].split("=")[1];
                 var Token = query.split("&")[1].split("=")[1];
                 $scope.jumpEntity = {
-                    "fields": [{
-                        "Token": Token,
-                        "LCID": jumpLCID,
-                    }]
+                    "Token": Token,
+                    "LCID": jumpLCID,
                 }
-                var jumpUrl = options.api.base_url + '/toReport'
+                jumpUrl = options.api.base_url + '/routeReport';
             }
             //明码跳转
             if (queryArr[0].split("=")[0] == "lcid" && queryArr[1].split("=")[0] == "password") {
@@ -112,8 +111,13 @@ define(['loginApp'], function(loginApp) {
                     "LCID": jumpLCID,
                     "Password": Password
                 }
-                var jumpUrl = options.api.base_url + '/login'
+                jumpUrl = options.api.base_url + '/login';
             }
+
+            function setHeader(xhr) {
+                xhr.setRequestHeader('Authorization', $scope.jumpEntity.token);
+            }
+
             $.ajax({
                 url: jumpUrl,
                 type: 'POST',
@@ -122,19 +126,17 @@ define(['loginApp'], function(loginApp) {
                 contentType: "application/json; charset=utf-8",
                 withCredentials: true,
                 cache: false,
+                beforeSend: setHeader,
                 success: function(responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
                         toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', jumpLCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
-                        if (responseData.LCTYPE == "radseq") {
-                            responseData.LCTYPE = "RADseq"
-                        }
                         // window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
-                        window.location.href = window.location.href.replace(/login\/login\.html.*/, responseData.LCTYPE + '/index.html');
+                        window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
                     } else {
-                        window.location.href = window.location.href.replace(/login\/login\.html.*/, responseData.LCTYPE + '/index.html');
+                        window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
                     }
                 },
                 error: function(data) {

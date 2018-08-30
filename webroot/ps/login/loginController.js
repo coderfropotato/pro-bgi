@@ -19,6 +19,7 @@ define(['loginApp'], function(loginApp) {
         $scope.loadingComplete = false; //是否加载完成
         //初始化页面参数
         $scope.InitPage = function() {
+            alert(11111);
             $scope.tabIndex = 0;
             $scope.isLCSubmit = false;
             $scope.isMangerSubmit = false;
@@ -79,6 +80,7 @@ define(['loginApp'], function(loginApp) {
 
 
         $scope.jump = function() {
+            alert(222222);
             //校验是否存在查询条件
             var query = window.location.search;
             if (!query) {
@@ -97,11 +99,11 @@ define(['loginApp'], function(loginApp) {
             if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
                 var jumpLCID = query.split("&")[0].split("=")[1];
                 var Token = query.split("&")[1].split("=")[1];
-                $scope.jumpEntity = {
-                    "Token": Token,
-                    "LCID": jumpLCID,
-                }
-                jumpUrl = options.api.base_url + '/routeReport';
+                alert(jumpLCID);
+                alert(Token);
+                toolLoginService.localStorage.set('token', Token);
+                toolLoginService.sessionStorage.set('LCID', jumpLCID);
+                window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
             }
             //明码跳转
             if (queryArr[0].split("=")[0] == "lcid" && queryArr[1].split("=")[0] == "password") {
@@ -114,10 +116,6 @@ define(['loginApp'], function(loginApp) {
                 jumpUrl = options.api.base_url + '/login';
             }
 
-            function setHeader(xhr) {
-                xhr.setRequestHeader('Authorization', $scope.jumpEntity.Token);
-            }
-
             $.ajax({
                 url: jumpUrl,
                 type: 'POST',
@@ -126,7 +124,6 @@ define(['loginApp'], function(loginApp) {
                 contentType: "application/json; charset=utf-8",
                 withCredentials: true,
                 cache: false,
-                beforeSend: setHeader,
                 success: function(responseData) {
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证

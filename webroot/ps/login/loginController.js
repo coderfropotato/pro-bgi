@@ -115,7 +115,7 @@ define(['loginApp'], function(loginApp) {
             }
 
             function setHeader(xhr) {
-                xhr.setRequestHeader('Authorization', $scope.jumpEntity.token);
+                xhr.setRequestHeader('Authorization', $scope.jumpEntity.Token);
             }
 
             $.ajax({

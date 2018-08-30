@@ -81,24 +81,28 @@ define(['loginApp'], function(loginApp) {
         $scope.jump = function() {
             //校验是否存在查询条件
             var query = window.location.search;
+            alert(query);
+            alert(!query);
             if (!query) {
-                return;
+                console.log(query);
+            } else {
+                //校验查询条件关键字;校验值不符合要求直接删除掉
+                var queryArr = query.substring(1, query.length).split("&");
+                alert(queryArr);
+                //Token跳转
+                if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
+                    var jumpLCID = query.split("&")[0].split("=")[1];
+                    var Token = query.split("&")[1].split("=")[1];
+                    alert(jumpLCID);
+                    alert(Token);
+                    $scope.isLCSubmit = true;
+                    toolLoginService.localStorage.set('token', Token);
+                    toolLoginService.sessionStorage.set('LCID', jumpLCID);
+                    window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
+                    alert(window.location.href);
+                }
             }
-            //校验查询条件关键字;校验值不符合要求直接删除掉
-            var queryArr = query.substring(1, query.length).split("&");
 
-            //Token跳转
-            if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
-                var jumpLCID = query.split("&")[0].split("=")[1];
-                var Token = query.split("&")[1].split("=")[1];
-                alert(jumpLCID);
-                alert(Token);
-                $scope.isLCSubmit = true;
-                toolLoginService.localStorage.set('token', Token);
-                toolLoginService.sessionStorage.set('LCID', jumpLCID);
-                window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
-                alert(window.location.href);
-            }
 
         }
 

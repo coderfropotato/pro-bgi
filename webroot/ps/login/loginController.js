@@ -80,10 +80,8 @@ define(['loginApp'], function(loginApp) {
         $scope.jump = function() {
             //校验是否存在查询条件
             var query = window.location.search;
-            if (!query) {
-                console.log(query);
-            } else {
-                //校验查询条件关键字;校验值不符合要求直接删除掉
+            if (query) {
+                //校验查询条件关键字
                 var queryArr = query.substring(1, query.length).split("&");
                 //Token跳转
                 if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
@@ -95,8 +93,6 @@ define(['loginApp'], function(loginApp) {
                     window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
                 }
             }
-
-
         }
 
         //验证浏览器兼容性

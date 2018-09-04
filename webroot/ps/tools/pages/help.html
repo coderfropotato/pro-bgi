@@ -2,7 +2,7 @@
     <div class="report-page-title" custom-title="title"></div>
     <!-- 快速教程 -->
     <p id="kuaisjc" class="help-title">快速教程</p>
-    <p class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/VFv6V3">观看视频</a>，快速了解交互报告使用方法。</p>
+    <p ng-if="env === 'bgi'" class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/VFv6V3">观看视频</a>，快速了解交互报告使用方法。</p>
     <!-- 简介 -->
     <p id="jianj" class="help-title">简介</p>
     <p class="help-sub-title">全新的交互报告系统有以下几个特点：</p>
@@ -20,7 +20,7 @@
         </p>
     <p class="help-sub-title">注：</p>
     <p>1.本报告目前仅对Google Chrome浏览器做兼容性适配，若用其它浏览器打开，在使用过程中可能会有异常。</p>
-    <p>2.如遇无法登录，请确认用户名、密码和验证码是否正确。若仍有问题，可根据邮件中的提示联系项目管理，或发送邮件到bgi-report@genomics.cn。</p>
+    <p ng-if="env==='bgi'">2.如遇无法登录，请确认用户名、密码和验证码是否正确。若仍有问题，可根据邮件中的提示联系项目管理，或发送邮件到bgi-report@genomics.cn。</p>
     <!-- 页面布局和功能 -->
     <p id="yembjhgn" class="help-title">页面布局和功能</p>
     <p class="help-sub-title">报告页面主要分成：目录、页面切换、图、表格扩展、表、分析工具和导航等七个区域。如下图：</p>

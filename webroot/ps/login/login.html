@@ -18,7 +18,7 @@
     <link ng-if="env==='bgi'" rel="icon" href="../../res/images/favicon.ico" type="image/x-icon">
     <link ng-if="env==='gooal'" rel="icon" href="../../res/images/favicon-gooal.ico" type="image/x-icon">
     <script src="../../res/scripts/lib/requirejs/2.1.20/require.min.js" defer data-main="loginMain.js"></script>
-    <script src="../../res/scripts/super/baiDuTongJi.js"></script>
+    <script ng-if="env==='bgi'" src="../../res/scripts/super/baiDuTongJi.js"></script>
     <script>
         document.addEventListener('DOMMouseScroll', function(event) {
             if (event.ctrlKey === true || event.metaKey) {

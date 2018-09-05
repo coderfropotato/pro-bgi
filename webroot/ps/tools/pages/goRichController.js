@@ -478,7 +478,8 @@ define(['toolsApp'], function(toolsApp) {
             },
             "axisBox": {
                 "xAxis": {
-                    "title": "Rich Ratio"
+                    "title": "Rich Ratio",
+                    "minScale": 0
                 }
             },
             "legendBox": {
@@ -502,6 +503,8 @@ define(['toolsApp'], function(toolsApp) {
             var width = $("#reAnalysis_goRich_bubble .graph_header").eq(0).width();
 
             $scope.bubbleOptions.data = bubbleData;
+            var xminScale = Math.floor(d3.min(bubbleData, function(d) { return d.value }));
+            $scope.bubbleOptions.axisBox.xAxis.minScale = xminScale;
             $scope.bubbleOptions.width = 800;
             $scope.bubbleOptions.height = dataLen * 20 + 100;
             if ($scope.bubbleOptions.height < 420) {

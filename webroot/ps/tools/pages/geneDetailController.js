@@ -99,15 +99,15 @@ define(["toolsApp"], function(toolsApp) {
                     } else {
                         //gene info
                         $scope.geneInfoList = resData.gene_info;
-                        for (var i = 0; i < $scope.geneInfoList.length; i++) {
-                            if ($scope.geneInfoList[i].name == 'Gene ID' && $scope.geneInfoList[i].value != 'NA' && $scope.geneInfoList[i].gene_url) {
-                                $scope.isgeneLink = true;
-                            } else {
-                                $scope.isgeneLink = false;
-                            }
-                        }
                         if ($scope.geneInfoList.length) {
                             $scope.geneInfoError = "";
+                            for (var i = 0; i < $scope.geneInfoList.length; i++) {
+                                if ($scope.geneInfoList[i].name == 'Gene ID' && $scope.geneInfoList[i].value != 'NA' && $scope.geneInfoList[i].gene_url) {
+                                    $scope.isgeneLink = true;
+                                } else {
+                                    $scope.isgeneLink = false;
+                                }
+                            }
                         } else {
                             $scope.geneInfoError = "nodata";
                         }
@@ -122,16 +122,15 @@ define(["toolsApp"], function(toolsApp) {
 
                         //line
                         $scope.lineData = resData.line;
-                        if ($scope.lineData.baseThead.length > 1) {
-                            $scope.isHasLine = true;
-                        } else {
-                            $scope.isHasLine = false;
-                        }
-
                         if (JSON.stringify($scope.lineData) == "{}") {
                             $scope.lineError = "nodata";
                         } else {
                             $scope.lineError = "";
+                            if ($scope.lineData.baseThead.length > 1) {
+                                $scope.isHasLine = true;
+                            } else {
+                                $scope.isHasLine = false;
+                            }
                         }
 
                         //group differences
@@ -192,16 +191,15 @@ define(["toolsApp"], function(toolsApp) {
 
                         //tf
                         $scope.tfList = resData.tf;
-                        for (var i = 0; i < $scope.tfList.length; i++) {
-                            if ($scope.tfList[i].name == 'Family' && $scope.tfList[i].value != 'NA' && $scope.tfList[i].tf_db_link) {
-                                $scope.istfLink = true;
-                            } else {
-                                $scope.istfLink = false;
-                            }
-                        }
-
                         if ($scope.tfList.length) {
                             $scope.tfError = "";
+                            for (var i = 0; i < $scope.tfList.length; i++) {
+                                if ($scope.tfList[i].name == 'Family' && $scope.tfList[i].value != 'NA' && $scope.tfList[i].tf_db_link) {
+                                    $scope.istfLink = true;
+                                } else {
+                                    $scope.istfLink = false;
+                                }
+                            }
                         } else {
                             $scope.tfError = "nodata";
                         }
@@ -271,27 +269,33 @@ define(["toolsApp"], function(toolsApp) {
                             $scope.sequenceError = "nodata";
                         } else {
                             $scope.sequenceError = "";
-                        }
+                            $scope.transcriptList = [];
+                            $scope.cdsList = [];
+                            $scope.proteinList = [];
 
-                        $scope.transcriptList = [];
-                        $scope.cdsList = [];
-                        $scope.proteinList = [];
-                        if ($scope.transcript.indexOf("\n") != -1) {
-                            $scope.transcriptList = resData.transcript.split("\n");
-                        } else if ($scope.transcript) {
-                            $scope.transcriptList.push($scope.transcript);
-                        }
+                            if ($scope.transcript) {
+                                if ($scope.transcript.indexOf("\n") != -1) {
+                                    $scope.transcriptList = resData.transcript.split("\n");
+                                } else {
+                                    $scope.transcriptList.push($scope.transcript);
+                                }
+                            }
 
-                        if ($scope.cds.indexOf("\n") != -1) {
-                            $scope.cdsList = resData.cds.split("\n");
-                        } else if ($scope.cds) {
-                            $scope.cdsList.push($scope.cds);
-                        }
+                            if ($scope.cds) {
+                                if ($scope.cds.indexOf("\n") != -1) {
+                                    $scope.cdsList = resData.cds.split("\n");
+                                } else {
+                                    $scope.cdsList.push($scope.cds);
+                                }
+                            }
 
-                        if ($scope.protein.indexOf("\n") != -1) {
-                            $scope.proteinList = resData.protein.split("\n");
-                        } else if ($scope.protein) {
-                            $scope.proteinList.push($scope.protein);
+                            if ($scope.protein) {
+                                if ($scope.protein.indexOf("\n") != -1) {
+                                    $scope.proteinList = resData.protein.split("\n");
+                                } else {
+                                    $scope.proteinList.push($scope.protein);
+                                }
+                            }
                         }
 
                         //画折线图

@@ -19,6 +19,7 @@ define(['toolsApp'], function (toolsApp) {
             $scope.title = '帮助';
         }
 
+        $scope.env = options.env;
         $scope.handlerAnchorClick = function (event) {
             $scope.scrollTo(event.target.getAttribute('data-target'));
         }

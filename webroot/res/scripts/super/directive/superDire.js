@@ -39,7 +39,7 @@ define("superApp.superDire",
 
             /* 控制顶部用户下拉菜单显示 */
             //$scope.topUserInfo_IsOpen = true;
-
+            $scope.env = options.env;
             $scope.isTest = $rootScope.isTest;
 
             $scope.topNav_UserInfo_OnMouseEnter = function () {

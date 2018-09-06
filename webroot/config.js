@@ -9,7 +9,7 @@
         testTitle: "生物云计算平台",
         gooalTitle: "古奥基因云计算平台",
         officialTitle: "华大基因交互式报告系统",
-        env: "bgi", // gooal bgi
+        env: "gooal", // gooal bgi
         localUrl: {
             topPath: "./include/include_top.html",
             leftPath: "./include/include_left.html",

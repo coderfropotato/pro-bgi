@@ -26,7 +26,7 @@ gulp.task('env', function() {
     } else {
         return gulp.src(config.src)
             .pipe(gulpif(env === 'develop', replace(/var base_url.*;/g, 'var base_url = "http://120.26.51.59:5006/api/1";'))) // 开发环境
-            .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://ngrok.gooalgene.com:22258/api/1";'))) // 正式环境
+            .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://report.bgi.com:9001/api/1";'))) // 正式环境
             .pipe(gulpif(env === 'inner', replace(/var base_url.*;/g, 'var base_url = "http://120.26.51.59:5006/api/1";'))) // 内部环境
             .pipe(gulp.dest(argv.build + config.dest));
     }

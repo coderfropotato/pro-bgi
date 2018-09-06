@@ -1,7 +1,7 @@
 ﻿define([], function() {
-    var base_url = "http://ngrok.gooalgene.com:22258/api/1"; //远程
-    var java_url = "http://ngrok.gooalgene.com:22258/reportweb";
-    var staticImg_url = "http://ngrok.gooalgene.com:22258/"; //静态图片
+    var base_url = "http://report.bgi.com:9001/api/1"; //远程
+    var java_url = "http://report.bgi.com:9001/reportweb";
+    var staticImg_url = "http://report.bgi.com:9001/"; //静态图片
     var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
     var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
 
@@ -9,7 +9,7 @@
         testTitle: "生物云计算平台",
         gooalTitle: "古奥基因云计算平台",
         officialTitle: "华大基因交互式报告系统",
-        env: "gooal", // gooal bgi
+        env: "bgi", // gooal bgi
         localUrl: {
             topPath: "./include/include_top.html",
             leftPath: "./include/include_left.html",

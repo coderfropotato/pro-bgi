@@ -1,14 +1,14 @@
 <div id="help" class="help-page" ng-init="InitPage()" ng-controller="helpController">
     <div class="report-page-title" custom-title="title"></div>
     <!-- 快速教程 -->
-    <p id="kuaisjc" class="help-title">快速教程</p>
+    <p ng-if="env === 'bgi'" id="kuaisjc" class="help-title">快速教程</p>
     <p ng-if="env === 'bgi'" class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/VFv6V3">观看视频</a>，快速了解交互报告使用方法。</p>
-     <!-- 详细教程 -->
-     <p id="xiangxjc" class="help-title">详细教程</p>
-     <p ng-if="env === 'bgi'" class="help-sub-title">这里有详细的短视频链接，选择需要了解的文件夹，进入点击观看即可，下载到电脑中会更清晰</p>
-     <p ng-if="env === 'bgi'" class="help-sub-title">RNA seq：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/YVb63y">https://pan.genomics.cn/ucdisk/s/YVb63y</a></p>
-     <p ng-if="env === 'bgi'" class="help-sub-title">RNA ref：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/qE736v">https://pan.genomics.cn/ucdisk/s/qE736v</a></p>
-     <p ng-if="env === 'bgi'" class="help-sub-title">RNA de novo：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/Zjyeaq">https://pan.genomics.cn/ucdisk/s/Zjyeaq</a></p>
+    <!-- 详细教程 -->
+    <p ng-if="env === 'bgi'" id="xiangxjc" class="help-title">详细教程</p>
+    <p ng-if="env === 'bgi'" class="help-sub-title">这里有详细的短视频链接，选择需要了解的文件夹，进入点击观看即可，下载到电脑中会更清晰</p>
+    <p ng-if="env === 'bgi'" class="help-sub-title">RNA seq：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/YVb63y">https://pan.genomics.cn/ucdisk/s/YVb63y</a></p>
+    <p ng-if="env === 'bgi'" class="help-sub-title">RNA ref：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/qE736v">https://pan.genomics.cn/ucdisk/s/qE736v</a></p>
+    <p ng-if="env === 'bgi'" class="help-sub-title">RNA de novo：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/Zjyeaq">https://pan.genomics.cn/ucdisk/s/Zjyeaq</a></p>
     <!-- 简介 -->
     <p id="jianj" class="help-title">简介</p>
     <p class="help-sub-title">全新的交互报告系统有以下几个特点：</p>
@@ -23,7 +23,7 @@
     <p class="help-sub-title">请用
         <b>Google Chrome</b>浏览器打开报告网址
         <a ng-if="env==='bgi'" href="http://report.bgi.com:9001" target="_balnk">http://report.bgi.com:9001</a><a ng-if="env==='gooal'" href="http://ngrok.gooalgene.com:22258" target="_balnk">http://ngrok.gooalgene.com:22258</a>，输入您的账号密码，登录后查看报告。</p>
-        </p>
+    </p>
     <p class="help-sub-title">注：</p>
     <p>1.本报告目前仅对Google Chrome浏览器做兼容性适配，若用其它浏览器打开，在使用过程中可能会有异常。</p>
     <p ng-if="env==='bgi'">2.如遇无法登录，请确认用户名、密码和验证码是否正确。若仍有问题，可根据邮件中的提示联系项目管理，或发送邮件到bgi-report@genomics.cn。</p>
@@ -168,15 +168,15 @@
 
     <!-- tips -->
     <div class="help-tip">
-        在使用过程中有任何疑问或建议，请拨打<span ng-if="env==='bgi'">0755-36307094</span><span ng-if="env==='gooal'">400-863-0058</span>，或发送邮件到<span  ng-if="env==='bgi'">bgi-report@bgi.com</span><span  ng-if="env==='gooal'">service@gooalgene.com</span>。联系时请附项目编号，期待您的反馈。
+        在使用过程中有任何疑问或建议，请拨打<span ng-if="env==='bgi'">0755-36307094</span><span ng-if="env==='gooal'">400-863-0058</span>，或发送邮件到<span ng-if="env==='bgi'">bgi-report@bgi.com</span><span ng-if="env==='gooal'">service@gooalgene.com</span>。联系时请附项目编号，期待您的反馈。
     </div>
 
     <!-- anchor -->
     <div class="help-anchor">
         <ul ng-click="handlerAnchorClick($event)">
-            <li data-target="#kuaisjc" class="active">快速教程</li>
-            <li data-target="#xiangxjc">详细教程</li>
-            <li data-target="#jianj">简介</li>
+            <li data-target="#kuaisjc" ng-class="{'active':env === 'bgi'}" ng-if="env === 'bgi'">快速教程</li>
+            <li data-target="#xiangxjc" ng-if="env === 'bgi'">详细教程</li>
+            <li data-target="#jianj" ng-class="{'active':env === 'gooal'}">简介</li>
             <li data-target="#denglbg">登录报告</li>
             <li data-target="#yembjhgn">页面布局和功能</li>
             <li data-target="#mulq">目录区</li>

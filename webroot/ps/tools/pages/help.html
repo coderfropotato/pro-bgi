@@ -3,6 +3,12 @@
     <!-- 快速教程 -->
     <p id="kuaisjc" class="help-title">快速教程</p>
     <p ng-if="env === 'bgi'" class="help-sub-title">点击<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/VFv6V3">观看视频</a>，快速了解交互报告使用方法。</p>
+     <!-- 详细教程 -->
+     <p id="xiangxjc" class="help-title">详细教程</p>
+     <p ng-if="env === 'bgi'" class="help-sub-title">这里有详细的短视频链接，选择需要了解的文件夹，进入点击观看即可，下载到电脑中会更清晰</p>
+     <p ng-if="env === 'bgi'" class="help-sub-title">RNA seq：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/YVb63y">https://pan.genomics.cn/ucdisk/s/YVb63y</a></p>
+     <p ng-if="env === 'bgi'" class="help-sub-title">RNA ref：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/qE736v">https://pan.genomics.cn/ucdisk/s/qE736v</a></p>
+     <p ng-if="env === 'bgi'" class="help-sub-title">RNA de novo：<a target="_blank" href="https://pan.genomics.cn/ucdisk/s/Zjyeaq">https://pan.genomics.cn/ucdisk/s/Zjyeaq</a></p>
     <!-- 简介 -->
     <p id="jianj" class="help-title">简介</p>
     <p class="help-sub-title">全新的交互报告系统有以下几个特点：</p>
@@ -169,6 +175,7 @@
     <div class="help-anchor">
         <ul ng-click="handlerAnchorClick($event)">
             <li data-target="#kuaisjc" class="active">快速教程</li>
+            <li data-target="#xiangxjc">详细教程</li>
             <li data-target="#jianj">简介</li>
             <li data-target="#denglbg">登录报告</li>
             <li data-target="#yembjhgn">页面布局和功能</li>

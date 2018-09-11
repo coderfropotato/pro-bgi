@@ -395,6 +395,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         $scope.curDelete = [];
 
                         $scope.bigTableData.baseThead.forEach(function (val, index) {
+                            if (!$scope.idArray[index]) $scope.idArray[index] = Math.random();
                             val.trackById = $scope.idArray[index];
                         })
 

@@ -5,7 +5,7 @@
  */
 
 define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
-    function(angular, SUPER_CONSOLE_MESSAGE) {
+    function (angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.bigTableDire", []);
         superApp.directive('bigTableDire', bigTableDirective);
         bigTableDirective.$inject = ["$log"];
@@ -37,6 +37,8 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                     showAccuracy: "=",
                     // 外部更新触发 不需要外部更新null 需要默认传false
                     outerUpdate: "=",
+                    // 是否需要重置 不需要重置null 需要默认传false
+                    reset: "=",
                     // 是否需要重分析
                     isReanalysis: "="
                 },
@@ -50,7 +52,9 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
         bigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
 
         function bigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
-            $scope.InitPage = function() {
+            $scope.InitPage = function () {
+                // 存之前的参数
+                $scope.beforeEntity = angular.copy($scope.pageEntity);
                 // 是否在筛选
                 $scope.isBeginFilter = false;
                 // 精度默认 全数据
@@ -62,14 +66,14 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
             };
 
             //过滤查询参数 
-            $scope.InitFindEntity = function(filterFindEntity) {
+            $scope.InitFindEntity = function (filterFindEntity) {
                 $scope.pageEntity = toolService.GetGridFilterFindEntity($scope.pageEntity, filterFindEntity);
                 $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                 $scope.GetTableData(1);
             };
 
             //获取注释表数据
-            $scope.GetTableData = function(pageNumber) {
+            $scope.GetTableData = function (pageNumber) {
                 toolService.gridFilterLoading.open($scope.panelId);
                 $scope.pageEntity = toolService.SetGridFilterFindEntity($scope.pageEntity, "LCID", "string", "equal", toolService.sessionStorage.get("LCID"));
 
@@ -80,7 +84,7 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                 };
 
                 var promise = ajaxService.GetDeferData(ajaxConfig);
-                promise.then(function(responseData) {
+                promise.then(function (responseData) {
                     if (responseData.Error) {
                         $scope.error = "syserror";
                         $scope.geneCount = 0;
@@ -93,14 +97,14 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.geneCount = responseData.total;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
-                }, function(errorMesg) {
+                }, function (errorMesg) {
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
                 });
             };
 
             // 点击删除筛选条件
-            $scope.handleDelete = function(event) {
+            $scope.handleDelete = function (event) {
                 var thead = angular.element(event.target).siblings('span').find('em').text();
                 var clearBtn;
                 for (var i = 0; i < $('#' + $scope.panelId + ' table th .grid_head').length; i++) {
@@ -109,21 +113,23 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                         break;
                     }
                 }
-                $timeout(function() {
+                $timeout(function () {
                     clearBtn.triggerHandler("click");
                 }, 0)
             }
 
             // 筛选状态改变
-            $scope.handlerFilterStatusChange = function(status) {
+            $scope.handlerFilterStatusChange = function (status) {
                 $scope.isBeginFilter = status;
             }
 
             $scope.reanalysisError = false;
-            $scope.handlerReanalysis = function(params) {
+            $scope.handlerReanalysis = function (params) {
                 // params {'type': type, 'check': checkedItems,'chartType':chartType }
 
-                $scope.reAnalysisEntity = { entity: '' };
+                $scope.reAnalysisEntity = {
+                    entity: ''
+                };
                 $scope.reAnalysisEntity.entity = angular.copy($scope.pageEntity);
                 $scope.reAnalysisEntity.geneUnselectList = [];
                 $scope.reAnalysisEntity.url = angular.copy($scope.url).split('mrna')[1];
@@ -152,7 +158,7 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                     url: options.api.mrnaseq_url + "/analysis/ReAnalysis"
                 })
                 toolService.pageLoading.open('正在提交重分析申请，请稍后...');
-                promise.then(function(res) {
+                promise.then(function (res) {
                     toolService.pageLoading.close();
                     if (res.Error) {
                         newFrame.close();
@@ -176,7 +182,7 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                         var y2 = $targetOffset.top;
                         reportService.flyDiv("<span class='glyphicon glyphicon-plus mkcheck flyCheck'></span>", x1, y1, x2, y2);
                     }
-                }, function(err) {
+                }, function (err) {
                     newFrame.close();
                     toolService.popMesgWindow(err);
                 })
@@ -185,11 +191,24 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
 
             // 是否外部触发更新
             if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
-                $scope.$watch('outerUpdate', function(newVal, oldVal) {
+                $scope.$watch('outerUpdate', function (newVal, oldVal) {
                     if (newVal) {
                         $scope.GetTableData(1);
-                        $timeout(function() {
+                        $timeout(function () {
                             $scope.outerUpdate = false;
+                        }, 30)
+                    }
+                })
+            }
+
+            // 是否需要重置
+            if ($scope.reset != undefined && $scope.reset != null) {
+                $scope.$watch('reset', function (newVal, oldVal) {
+                    if (newVal) {
+                        $scope.pageEntity = angular.copy($scope.beforeEntity);
+                        $scope.GetTableData(1);
+                        $timeout(function () {
+                            $scope.reset = false;
                         }, 30)
                     }
                 })

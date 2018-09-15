@@ -358,7 +358,8 @@ define(["toolsApp"], function (toolsApp) {
                     custom:['key','value'],
                     radius:2,
                     width:width,
-                    data: data
+                    data: data,
+                    colors:['#5378F8']
                 },
                 axis: {
                     x: {

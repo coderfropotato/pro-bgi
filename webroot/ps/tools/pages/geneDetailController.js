@@ -1,13 +1,13 @@
-define(["toolsApp"], function(toolsApp) {
+define(["toolsApp"], function (toolsApp) {
     toolsApp.controller("geneDetailController", geneDetailController);
     geneDetailController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
 
     function geneDetailController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
-        $scope.InitPage = function() {
+        $scope.InitPage = function () {
 
             toolService.pageLoading.open();
             //定时关闭等待框
-            setTimeout(function() {
+            setTimeout(function () {
                 toolService.pageLoading.close();
             }, 300);
 
@@ -86,14 +86,14 @@ define(["toolsApp"], function(toolsApp) {
         };
 
         // 获取gene数据
-        $scope.getGeneData = function() {
+        $scope.getGeneData = function () {
             toolService.gridFilterLoading.open("div_geneDetail_page");
             var ajaxConfig = {
                 data: $scope.geneEntity,
                 url: options.api.mrnaseq_url + "/GeneDetail"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(resData) {
+            promise.then(function (resData) {
                     if (resData.Error) {
                         toolService.popMesgWindow(resData.Error);
                     } else {
@@ -303,7 +303,7 @@ define(["toolsApp"], function(toolsApp) {
                     }
                     toolService.gridFilterLoading.close("div_geneDetail_page");
                 },
-                function(errorMesg) {
+                function (errorMesg) {
                     toolService.popMesgWindow(resData.Error);
                     toolService.gridFilterLoading.close("div_geneDetail_page");
                 });
@@ -314,7 +314,7 @@ define(["toolsApp"], function(toolsApp) {
         }
 
         //下载序列
-        $scope.downloadSequence = function() {
+        $scope.downloadSequence = function () {
             var content = "";
             var oDate = new Date();
             var date = oDate.getFullYear() + addZero(oDate.getMonth() + 1) + addZero(oDate.getDate()) + addZero(oDate.getHours()) + addZero(oDate.getMinutes());
@@ -334,60 +334,83 @@ define(["toolsApp"], function(toolsApp) {
         }
 
         //表达量折线图
-        $scope.drawLine = function(resData) {
+        $scope.drawLine = function (resData) {
             var width = (resData.baseThead.length * 20 + 80) < 600 ? 600 : resData.baseThead.length * 20 + 80;
             var rows = resData.rows;
             var baseThead = resData.baseThead;
             var data = [];
 
-            for (var i = 0; i < baseThead.length; i++) {
-                for (var key in baseThead[i]) {
+            baseThead.forEach(function (val, index) {
+                for (var key in val) {
                     data.push({
                         key: key,
-                        value: Math.log10(rows[0][baseThead[i][key]] + 1),
-                        hoverValue: rows[0][baseThead[i][key]]
+                        value: Math.log10(rows[0][val[key]] + 1),
+                        hoverValue: rows[0][val[key]]
                     })
                 }
+            })
 
-            }
-            $('#geneDetail_line_chart').html('');
             var options = {
-                "id": "geneDetail_line_chart",
-                "type": "linechart",
-                "data": data,
-                "width": width,
-                "titleBox": {
-                    "show": true,
-                    "position": "top",
-                    "title": "FPKM value of gene in samples",
-                    "editable": true
+                chart: {
+                    title: "FPKM value of gene in samples",
+                    el: "#geneDetail_line_chart",
+                    type: "line",
+                    custom:['key','value'],
+                    radius:2,
+                    width:width,
+                    data: data
                 },
-                "axisBox": {
-                    "xAxis": {
-                        "title": "Sample name",
-                        "type": "discrete"
+                axis: {
+                    x: {
+                        title: "Sample name",
+                        rotate:60
                     },
-                    "yAxis": {
-                        "title": "log10(FPKM+1)"
+                    y: {
+                        title: "log10(FPKM+1)",
                     }
                 },
-                "legendBox": {
-                    "show": false,
-                },
-                "dataBox": {
-                    "showLabel": false,
-                    "normalColor": ["#5378F8"],
-                    "curve": false,
+                "tooltip": function (d) {
+                    return "Sample:" + d.key + "</br>" + "FPKM: " + d.hoverValue
                 }
             }
+            
+            // var options = {
+            //     "id": "geneDetail_line_chart",
+            //     "type": "linechart",
+            //     "data": data,
+            //     "width": width,
+            //     "titleBox": {
+            //         "show": true,
+            //         "position": "top",
+            //         "title": "FPKM value of gene in samples",
+            //         "editable": true
+            //     },
+            //     "axisBox": {
+            //         "xAxis": {
+            //             "title": "Sample name",
+            //             "type": "discrete"
+            //         },
+            //         "yAxis": {
+            //             "title": "log10(FPKM+1)"
+            //         }
+            //     },
+            //     "legendBox": {
+            //         "show": false,
+            //     },
+            //     "dataBox": {
+            //         "showLabel": false,
+            //         "normalColor": ["#5378F8"],
+            //         "curve": false,
+            //     }
+            // }
 
-            $scope.linechart = new gooal.lineInit("#" + options.id, options);
+             new d4().init(options);
 
-            var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
+            // var linecharttooltip = $scope.linechart.addTooltip(linetooltipConfig);
 
-            function linetooltipConfig(d) {
-                linecharttooltip.html("Sample:" + d.key + "</br>" + "FPKM: " + d.hoverValue)
-            }
+            // function linetooltipConfig(d) {
+            //     linecharttooltip.html("Sample:" + d.key + "</br>" + "FPKM: " + d.hoverValue)
+            // }
         }
 
         //resize redraw
@@ -406,13 +429,13 @@ define(["toolsApp"], function(toolsApp) {
         // }
 
         //获取文献
-        $scope.getLiterature = function() {
+        $scope.getLiterature = function () {
             var ajaxConfig = {
                 data: $scope.literatureEntity,
                 url: options.api.mrnaseq_url + "/pubmed"
             };
             var promise = ajaxService.GetDeferData(ajaxConfig);
-            promise.then(function(resData) {
+            promise.then(function (resData) {
                     if (resData.Error) {
                         //系统异常
                         $scope.pubmedError = "syserror";
@@ -425,7 +448,7 @@ define(["toolsApp"], function(toolsApp) {
                         $scope.literature = resData.rows;
                     }
                 },
-                function(errorMesg) {
+                function (errorMesg) {
                     $scope.pubmedError = "syserror";
                 });
         }

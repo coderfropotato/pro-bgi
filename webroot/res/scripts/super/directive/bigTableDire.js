@@ -38,9 +38,11 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                     // 外部更新触发 不需要外部更新null 需要默认传false
                     outerUpdate: "=",
                     // 是否需要重置 不需要重置null 需要默认传false
-                    reset: "=",
+                    showResetButton: "=",
                     // 是否需要重分析
-                    isReanalysis: "="
+                    isReanalysis: "=",
+                    // isFilter  不需要外部更新null 需要默认传false
+                    isFilter: "="
                 },
                 replace: false,
                 transclude: true,
@@ -62,6 +64,9 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                 // 获取表格数据
                 // genecount
                 $scope.geneCount = 0;
+
+                $scope.showReset = $scope.showResetButton != null;
+
                 $scope.GetTableData(1);
             };
 
@@ -189,10 +194,19 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
             }
 
 
+            // 点击重置按钮 
+            $scope.resetTable = function () {
+                $scope.pageEntity = angular.copy($scope.beforeEntity);
+                $scope.filterText1 = toolService.GetFilterContentText($scope.beforeEntity);
+                $scope.isBeginFilter = false;
+                $scope.GetTableData(1);
+            }
+
             // 是否外部触发更新
             if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
                 $scope.$watch('outerUpdate', function (newVal, oldVal) {
                     if (newVal) {
+                        $scope.filterText1 = toolService.GetFilterContentText($scope.pageEntity);
                         $scope.GetTableData(1);
                         $timeout(function () {
                             $scope.outerUpdate = false;
@@ -201,14 +215,19 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
                 })
             }
 
-            // 是否需要重置
-            if ($scope.reset != undefined && $scope.reset != null) {
-                $scope.$watch('reset', function (newVal, oldVal) {
+            // 外部控制筛选是否打开筛选状态
+            if ($scope.isFilter != undefined && $scope.isFilter != null) {
+                $scope.$watch('isFilter', function (newVal, oldVal) {
                     if (newVal) {
-                        $scope.pageEntity = angular.copy($scope.beforeEntity);
-                        $scope.GetTableData(1);
+                        var filterBtn = $('#' + $scope.panelId + " .grid-filter-begin button");
+                        if (!filterBtn.hasClass('active')) {
+                            $timeout(function(){
+                                angular.element(document.querySelector('#' + $scope.panelId + " .grid-filter-begin button")).triggerHandler('click');
+                            },0)
+                        }
+                        
                         $timeout(function () {
-                            $scope.reset = false;
+                            $scope.isFilter = false;
                         }, 30)
                     }
                 })

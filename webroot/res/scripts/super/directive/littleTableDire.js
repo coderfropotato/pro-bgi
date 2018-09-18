@@ -38,7 +38,9 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     // tableTitle: "@",
                     isNoDataHide: "=",
                     // 请求完成回调  根据数据来判断是否显示外部的信息
-                    reqDoneCallback:"&"
+                    reqDoneCallback: "&",
+                    // 是否需要重置表格数据  不需要null 需要默认false重置时true
+                    reset: "="
                 },
                 replace: false,
                 transclude: true,
@@ -58,9 +60,26 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.pageEntity[entityKey] = $scope.selectList[0];
                     }
                 }
+                // 重置的时候用
+                $scope.beforeEntity = angular.copy($scope.pageEntity);
+
                 $scope.accuracy = -1;
                 $scope.isNoDataHide = !!$scope.isNoDataHide;
                 $scope.GetTableData();
+            }
+
+            // 是否重置
+            if ($scope.reset != undefined && $scope.reset != null) {
+                $scope.$watch('reset', function (newVal, oldVal) {
+                    if (newVal) {
+                        // 还原查询参数
+                        $scope.pageEntity = angular.copy($scope.beforeEntity);
+                        $scope.GetTableData();
+                        $timeout(function () {
+                            $scope.reset = false;
+                        }, 30)
+                    }
+                })
             }
 
             $scope.GetTableData = function () {
@@ -81,11 +100,15 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         $scope.tableData = responseData;
                     }
                     toolService.gridFilterLoading.close($scope.panelId);
-                    $scope.reqDoneCallback && $scope.reqDoneCallback({arg:$scope.error});
+                    $scope.reqDoneCallback && $scope.reqDoneCallback({
+                        arg: $scope.error
+                    });
                 }, function (errorMesg) {
                     toolService.gridFilterLoading.close($scope.panelId);
                     $scope.error = "syserror";
-                    $scope.reqDoneCallback && $scope.reqDoneCallback({arg:$scope.error});
+                    $scope.reqDoneCallback && $scope.reqDoneCallback({
+                        arg: $scope.error
+                    });
                 });
             }
         }

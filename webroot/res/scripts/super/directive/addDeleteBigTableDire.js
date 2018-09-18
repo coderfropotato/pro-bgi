@@ -82,6 +82,8 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
 
                     // 是否清除geneUnselectList
                     isClearGeneUnselectList: "=",
+                    // 外部更新表格
+                    outerUpdate: "="
                 },
                 replace: false,
                 transclude: true,
@@ -99,9 +101,9 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.initPageEntity = $scope.pageEntity;
                 // 找出compareGrtoup method
                 $scope.compareGroup = $scope.pageEntity.compareGroup;
-                if ($scope.compareGroup) {
-                    $scope.method = $scope.getMethods($scope.compareGroup);
-                }
+                // if ($scope.compareGroup) {
+                //     $scope.method = $scope.getMethods($scope.compareGroup);
+                // }
                 // 找到默认的方法
                 $scope.method = $scope.method || null;
                 // 精度默认 全数据
@@ -179,12 +181,29 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             if ($scope.geneListChangeFlag != undefined && $scope.geneListChangeFlag != null) {
                 $scope.$watch('geneListChangeFlag', function (newVal, oldVal) {
                     if (newVal !== oldVal)
+                    console.log(newVal)
                         if (newVal) {
                             // 有数据才更新
+                            console.log($scope.geneList);
                             $scope.handlerGeneListChangeCommon($scope.geneList);
                             $timeout(function () {
                                 // 自动重置为初始状态 为了触发下一次change
                                 $scope.geneListChangeFlag = false;
+                            }, 0)
+                        }
+                })
+            }
+
+            // watcho uterUpdate的改变
+            if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
+                $scope.$watch('outerUpdate', function (newVal, oldVal) {
+                    if (newVal !== oldVal)
+                        if (newVal) {
+                            // 有数据才更新
+                            $scope.GetBigTableData(1);
+                            $timeout(function () {
+                                // 自动重置为初始状态 为了触发下一次change
+                                $scope.outerUpdate = false;
                             }, 0)
                         }
                 })
@@ -652,12 +671,12 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             }, true)
 
 
-            $scope.$watch('pageEntity.compareGroup', function (newVal, oldVal) {
-                if (newVal !== oldVal) {
-                    $scope.compareGroup = newVal;
-                    $scope.method = $scope.getMethods($scope.compareGroup);
-                }
-            })
+            // $scope.$watch('pageEntity.compareGroup', function (newVal, oldVal) {
+            //     if (newVal !== oldVal) {
+            //         $scope.compareGroup = newVal;
+            //         $scope.method = $scope.getMethods($scope.compareGroup);
+            //     }
+            // })
 
             $scope.getMethods = function (compare) {
                 var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));

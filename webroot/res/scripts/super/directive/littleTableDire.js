@@ -39,8 +39,8 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     isNoDataHide: "=",
                     // 请求完成回调  根据数据来判断是否显示外部的信息
                     reqDoneCallback: "&",
-                    // 是否需要重置表格数据  不需要null 需要默认false重置时true
-                    reset: "="
+                    // 是都需要显示重置按钮
+                    showResetBtn: "="
                 },
                 replace: false,
                 transclude: true,
@@ -62,24 +62,10 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                 }
                 // 重置的时候用
                 $scope.beforeEntity = angular.copy($scope.pageEntity);
-
+                $scope.showResetBtn = !!$scope.showResetBtn;
                 $scope.accuracy = -1;
                 $scope.isNoDataHide = !!$scope.isNoDataHide;
                 $scope.GetTableData();
-            }
-
-            // 是否重置
-            if ($scope.reset != undefined && $scope.reset != null) {
-                $scope.$watch('reset', function (newVal, oldVal) {
-                    if (newVal) {
-                        // 还原查询参数
-                        $scope.pageEntity = angular.copy($scope.beforeEntity);
-                        $scope.GetTableData();
-                        $timeout(function () {
-                            $scope.reset = false;
-                        }, 30)
-                    }
-                })
             }
 
             $scope.GetTableData = function () {
@@ -110,6 +96,11 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                         arg: $scope.error
                     });
                 });
+            }
+
+            $scope.resetTable = function () {
+                $scope.pageEntity = angular.copy($scope.beforeEntity);
+                $scope.GetTableData();
             }
         }
     })

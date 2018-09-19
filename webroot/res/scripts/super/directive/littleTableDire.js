@@ -40,7 +40,9 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                     // 请求完成回调  根据数据来判断是否显示外部的信息
                     reqDoneCallback: "&",
                     // 是都需要显示重置按钮
-                    showResetBtn: "="
+                    showResetBtn: "=",
+                    // 外部更新 不需要null 默认false 需要更新的时候true
+                    outerUpdate: "="
                 },
                 replace: false,
                 transclude: true,
@@ -49,9 +51,9 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
         }
 
         superApp.controller("littleTableCtr", littleTableCtr);
-        littleTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "ajaxService", "toolService", "reportService"];
+        littleTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window","$timeout", "ajaxService", "toolService", "reportService"];
 
-        function littleTableCtr($rootScope, $scope, $log, $state, $window, ajaxService, toolService, reportService) {
+        function littleTableCtr($rootScope, $scope, $log, $state, $window,$timeout, ajaxService, toolService, reportService) {
             $scope.InitPage = function () {
                 if ($scope.isHasSelectOption) {
                     if ($scope.key) {
@@ -102,5 +104,18 @@ define("superApp.littleTableDire", ["angular", "super.superMessage", "select2"],
                 $scope.pageEntity = angular.copy($scope.beforeEntity);
                 $scope.GetTableData();
             }
+
+            // 是否外部触发更新
+            if ($scope.outerUpdate != undefined && $scope.outerUpdate != null) {
+                $scope.$watch('outerUpdate', function (newVal, oldVal) {
+                    if (newVal) {
+                        $scope.GetTableData();
+                        $timeout(function () {
+                            $scope.outerUpdate = false;
+                        }, 30)
+                    }
+                })
+            }
+
         }
     })

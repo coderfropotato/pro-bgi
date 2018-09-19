@@ -198,7 +198,6 @@ define("superApp.bigTableDire", ["angular", "super.superMessage", "select2"],
             $scope.resetTable = function () {
                 $scope.pageEntity = angular.copy($scope.beforeEntity);
                 $scope.filterText1 = toolService.GetFilterContentText($scope.beforeEntity);
-                $scope.isBeginFilter = false;
                 $scope.GetTableData(1);
             }
 

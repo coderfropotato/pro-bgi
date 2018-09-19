@@ -7103,7 +7103,7 @@ Thanks :)*/
 }
 
 .logo_big_bg {
-    background: url(../images/logo_big_bg.jpg) right top no-repeat;
+    /* background: url(../images/logo_big_bg.jpg) right top no-repeat; */
     min-height: 400px
 }
 

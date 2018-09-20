@@ -10,7 +10,7 @@ define("superApp.chartDescDire", ["angular", "super.superMessage", "select2"],
         function chartDescDirective($log) {
             return {
                 restrict: "ACE",
-                template: "<div class=\"chart-desc-wrap\"><div  ng-class=\"{'active':show}\" ng-click=\"show = !show\"><i style=\"margin-right:4px;\" class=\"iconfont icon-shuoming\"></i><span>图说明</span></div><p class=\"table-chart-desc\" ng-show=\"show && text.length\">{{text}}</p><p ng-repeat=\"item in textArr\" class=\"table-chart-desc\" ng-show=\"show && textArr.length\">{{item}}</p></div>",
+                template: "<div class=\"chart-desc-wrap\"><div  ng-class=\"{'active':show}\" ng-click=\"show = !show\"><i style=\"margin-right:4px;\" class=\"iconfont icon-shuoming\"></i><span>图说明</span></div><p class=\"table-chart-desc\" ng-show=\"show && text.length\">{{text}}</p><p class=\"table-chart-desc\" ng-show=\"show && textArr.length\"><span ng-repeat=\"item in textArr\"><em>{{item}}</em><br></span></p></div>",
                 replace: false,
                 transclude: true,
                 controller: "chartDescCtr",

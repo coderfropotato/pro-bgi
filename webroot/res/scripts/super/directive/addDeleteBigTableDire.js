@@ -374,6 +374,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         $scope.geneCount = $scope.bigTableData.total - $scope.geneUnselectListLength;
                         $scope.bigTableData.thead = [];
 
+
                         // add track by id
                         if ($scope.isFirstData) {
                             $scope.baseLength = $scope.bigTableData.baseThead.length;
@@ -412,6 +413,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                         // angular track by 就会生成新的作用域  导致无法编译少选面板
                         $scope.curAdd = [];
                         $scope.curDelete = [];
+
 
                         $scope.bigTableData.baseThead.forEach(function (val, index) {
                             if (!$scope.idArray[index]) $scope.idArray[index] = Math.random();

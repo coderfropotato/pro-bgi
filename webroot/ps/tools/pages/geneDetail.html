@@ -27,8 +27,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in sampleExpData.rows track by $index">
-                        <td class="center nowrap popover-table" ng-repeat="val in sampleExpData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                        <td class="center nowrap popover-table" ng-repeat="val in sampleExpData.baseThead track by $index"
+                            thead-key="val.name" data-title="{{row[val.true_key]}}">
+                            <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                | number):row[val.true_key]}}</span>
                             <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                         </td>
                     </tr>
@@ -43,7 +45,7 @@
             <h5>表达量折线图</h5>
             <div class="tab-switch-chart">
                 <div class="chart_wrap" ng-hide="lineError">
-                    <div class="chart_graph" id="geneDetail_line_chart" style="text-align:center;width: 100%;">
+                    <div class="chart_graph" id="geneDetail_line_chart" style="text-align:center;width: 100%;height:460px;">
                     </div>
                 </div>
                 <!-- <div class="table-nodata" error-type="lineError" style="border: 0"></div> -->
@@ -67,8 +69,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in groupDiffData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in groupDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                                <td class="center nowrap popover-table" ng-repeat="val in groupDiffData.baseThead track by $index"
+                                    thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                        | number):row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                             </tr>
@@ -92,8 +96,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in sampleDiffData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                                <td class="center nowrap popover-table" ng-repeat="val in sampleDiffData.baseThead track by $index"
+                                    thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                        | number):row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                             </tr>
@@ -160,7 +166,8 @@
                         <p>{{go.go_level1}}</p>
                         <div class="geneDetailGoDiv">
                             <div ng-repeat="item in go.go_term_list track by $index" class="goInfo">
-                                <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a> &nbsp;
+                                <a href="http://amigo.geneontology.org/amigo/term/{{item.go_term_id}}" target="_blank">{{item.go_term_id}}</a>
+                                &nbsp;
                                 <span>{{item.go_term}}</span>
                             </div>
                         </div>
@@ -183,15 +190,18 @@
                     </div>
                     <div class="titleDetail">
                         <span>详细说明</span>
-                        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="收起" ng-show="isShowPHIText" ng-click="isShowPHIText = false">收起</button>
-                        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="展开" ng-show="!isShowPHIText" ng-click="isShowPHIText = true">展开</button>
+                        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="收起" ng-show="isShowPHIText"
+                            ng-click="isShowPHIText = false">收起</button>
+                        <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="展开" ng-show="!isShowPHIText"
+                            ng-click="isShowPHIText = true">展开</button>
                     </div>
                     <div ng-show="isShowPHIText">
                         <p style="margin-top: 20px">PHI库突变体表型，释义如下：</p>
                         <p>loss of pathogenicity：该基因的缺失突变体不能致病，说明该基因决定病原菌的致病性；</p>
                         <p>reduced virulence：该基因缺失突变体的致病力减弱，说明该基因决定病原菌的致病性；</p>
                         <p>increased virulence (Hypervirulence)：该基因决定病原菌的致病性；</p>
-                        <p>effector (plant avirulence determinant)：病原菌的效应子，也即无毒基因。对于感病寄主的发病，一些效应子基因是必需的。但对大部分效应子蛋白来说，它们会直接或间接地识别抗性植物的抗病蛋白，从而激发植物的防卫反应，使病原菌不能致病。所以，该基因只决定某些病原菌的致病性；</p>
+                        <p>effector (plant avirulence
+                            determinant)：病原菌的效应子，也即无毒基因。对于感病寄主的发病，一些效应子基因是必需的。但对大部分效应子蛋白来说，它们会直接或间接地识别抗性植物的抗病蛋白，从而激发植物的防卫反应，使病原菌不能致病。所以，该基因只决定某些病原菌的致病性；</p>
                         <p>enhanced antagonism：该基因影响病原菌和植物的互作，该基因的缺失突变体会使植物发病；</p>
                         <p>unaffected pathogenicity：该基因不影响病原菌的致病性；</p>
                         <p>lethal：该基因对菌株存活是必须的；</p>
@@ -300,8 +310,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in snpData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in snpData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                                <td class="center nowrap popover-table" ng-repeat="val in snpData.baseThead track by $index"
+                                    thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                        | number):row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                             </tr>
@@ -325,8 +337,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="row in indelData.rows track by $index">
-                                <td class="center nowrap popover-table" ng-repeat="val in indelData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                                <td class="center nowrap popover-table" ng-repeat="val in indelData.baseThead track by $index"
+                                    thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                    <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                        | number):row[val.true_key]}}</span>
                                     <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                                 </td>
                             </tr>
@@ -352,8 +366,10 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in fusionData.rows track by $index">
-                            <td class="center nowrap popover-table" ng-repeat="val in fusionData.baseThead track by $index" thead-key="val.name" data-title="{{row[val.true_key]}}">
-                                <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key] | number):row[val.true_key]}}</span>
+                            <td class="center nowrap popover-table" ng-repeat="val in fusionData.baseThead track by $index"
+                                thead-key="val.name" data-title="{{row[val.true_key]}}">
+                                <span ng-if="row[val.true_key] || row[val.true_key]==0">{{val.searchType==='int'?(row[val.true_key]
+                                    | number):row[val.true_key]}}</span>
                                 <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
@@ -368,7 +384,8 @@
             <h4>序列信息</h4>
             <div ng-hide="sequenceError">
                 <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="显示序列" ng-click="isShowSequence = true">显示序列</button>
-                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="下载序列" style="margin-left: 20px;" ng-click="downloadSequence()">下载序列</button>
+                <button class="btn btn-default btn-sm list_btn tool-tip btn-silver" title="下载序列" style="margin-left: 20px;"
+                    ng-click="downloadSequence()">下载序列</button>
                 <div ng-show="isShowSequence" class="sequenceInfo">
                     <p ng-show="transcript" ng-repeat="transcriptItem in transcriptList track by $index">{{transcriptItem}}</p>
                     <p ng-show="cds" ng-repeat="cdsItem in cdsList track by $index">{{cdsItem}}</p>

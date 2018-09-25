@@ -611,7 +611,6 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             if ($scope.isUpdateTheadBaseLength != undefined && $scope.isUpdateTheadBaseLength != null) {
                 $scope.$watch('searchOne', function (newVal, oldVal) {
                     $scope.isUpdateTheadBaseLength = !!newVal;
-                    console.log($scope.isUpdateTheadBaseLength)
                     $timeout(function () {
                         $scope.isUpdateTheadBaseLength = false;
                     }, 30)
@@ -629,7 +628,6 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 $timeout(function () {
                     if (!newValue) return;
                     if (!angular.equals(newValue, oldValue)) {
-                        console.log($scope.isUpdateTheadBaseLength);
                         if(isFirst) {
                             $scope.baseLength = newValue.length;
                             isFirst = false;
@@ -643,12 +641,9 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                             if (flag) {
                                 var newValArr = [],
                                     newValIndexArr = [];
-                                console.log(newValue);
-                                console.log($scope.baseLength);
                                 var otherNew = angular.copy(newValue).slice($scope.baseLength);
                                 var otherOld = oldValue ? angular.copy(oldValue).slice($scope.baseLength) : [];
 
-                                console.log(otherNew);
                                 otherNew.forEach(function (val, index) {
                                     var isSame = false;
                                     for (var i = 0; i < otherOld.length; i++) {
@@ -662,7 +657,6 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                         newValArr.push(val);
                                     }
                                 })
-                                console.log(newValArr);
                                 newValArr.forEach(function (val, index) {
                                     for (var k = $scope.baseLength; k < newValue.length; k++) {
                                         if (val.true_key === newValue[k].true_key) {
@@ -671,7 +665,6 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                         }
                                     }
                                 })
-                                console.log(newValIndexArr);
                                 var gridPanel = $("#" + $scope.tableid);
                                 if (newValIndexArr.length) {
                                     for (var i = 0; i < newValIndexArr.length; i++) {

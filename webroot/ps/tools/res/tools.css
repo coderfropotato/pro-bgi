@@ -1,3 +1,6 @@
+#d4-chart-tooltip-wrap{
+    z-index:9999999999;
+}
 .tools-body.page_report {
     padding: 40px 100px;
 }

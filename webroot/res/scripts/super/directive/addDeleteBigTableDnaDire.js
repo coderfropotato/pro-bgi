@@ -21,13 +21,13 @@
     
  */
 
-define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "select2"],
+define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "select2"],
     function (angular, SUPER_CONSOLE_MESSAGE) {
-        var superApp = angular.module("superApp.addDeleteBigTableDire", []);
-        superApp.directive('addDeleteBigTable', addDeleteBigTableDirective);
-        addDeleteBigTableDirective.$inject = ["$log"];
+        var superApp = angular.module("superApp.addDeleteBigTableDnaDire", []);
+        superApp.directive('addDeleteBigTableDna', addDeleteBigTableDnaDirective);
+        addDeleteBigTableDnaDirective.$inject = ["$log"];
 
-        function addDeleteBigTableDirective($log) {
+        function addDeleteBigTableDnaDirective($log) {
             return {
                 restrict: "ACE",
                 templateUrl: SUPER_CONSOLE_MESSAGE.localUrl.addDeleteTablePath,
@@ -101,9 +101,9 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                 $scope.initPageEntity = $scope.pageEntity;
                 // 找出compareGrtoup method
                 $scope.compareGroup = $scope.pageEntity.compareGroup;
-                if ($scope.compareGroup) {
-                    $scope.method = $scope.getMethods($scope.compareGroup);
-                }
+                // if ($scope.compareGroup) {
+                //     $scope.method = $scope.getMethods($scope.compareGroup);
+                // }
                 // 找到默认的方法
                 $scope.method = $scope.method || null;
                 // 精度默认 全数据
@@ -673,12 +673,12 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
             }, true)
 
 
-            $scope.$watch('pageEntity.compareGroup', function (newVal, oldVal) {
-                if (newVal !== oldVal) {
-                    $scope.compareGroup = newVal;
-                    $scope.method = $scope.getMethods($scope.compareGroup);
-                }
-            })
+            // $scope.$watch('pageEntity.compareGroup', function (newVal, oldVal) {
+            //     if (newVal !== oldVal) {
+            //         $scope.compareGroup = newVal;
+            //         $scope.method = $scope.getMethods($scope.compareGroup);
+            //     }
+            // })
 
             $scope.getMethods = function (compare) {
                 var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));

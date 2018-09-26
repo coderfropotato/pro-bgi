@@ -6,37 +6,38 @@
 
 */
 
-define("superApp.svgExportDire",
-    ["angular", "super.superMessage", "select2"],
-    function (angular, SUPER_CONSOLE_MESSAGE) {
+define("superApp.svgExportDire", ["angular", "super.superMessage", "select2"],
+    function(angular, SUPER_CONSOLE_MESSAGE) {
         var superApp = angular.module("superApp.svgExportDire", []);
 
 
 
         /*
-        ** 创建日期：2016-06-08
-        ** 功能简介：highchart 导出 图片
-        ** 依赖指令 drop-menu 下拉菜单  superDire.js
-        ** 形如：<div class="svg-export-image" chartid="div_ReadsQuYuFenBu_CharPanel" savefilename="基因组区域比对分布统计" ></div>
-        ** class="svg-export-image"：指令，必需
-        ** chartid="div_ReadsQuYuFenBu_CharPanel"： chartid
-        ** savefilename="基因组区域比对分布统计"： 要保存的文件名
-        */
+         ** 创建日期：2016-06-08
+         ** 功能简介：highchart 导出 图片
+         ** 依赖指令 drop-menu 下拉菜单  superDire.js
+         ** 形如：<div class="svg-export-image" chartid="div_ReadsQuYuFenBu_CharPanel" savefilename="基因组区域比对分布统计" ></div>
+         ** class="svg-export-image"：指令，必需
+         ** chartid="div_ReadsQuYuFenBu_CharPanel"： chartid
+         ** savefilename="基因组区域比对分布统计"： 要保存的文件名
+         */
         superApp.directive("svgExport", svgExport);
         svgExport.$inject = ["$log", "$compile"];
+
         function svgExport($log, $compile) {
             return {
                 restrict: "ACE",
-                template: "<div class='dropdown drop-menu'>"
-                + "<button class='new-table-switch-btns noborder tool-tip' title='导出'>"
-                + "<span class='glyphicon glyphicon-picture'></span> "
-                //+ "<span class='icon-caret-down'></span>"
-                + "</button>"
-                + "<ul class='dropdown-menu'>"
-                + "</ul>"
-                + "</div>",
+                template: "<div class='dropdown drop-menu'>" +
+                    "<button class='new-table-switch-btns noborder tool-tip' title='导出'>" +
+                    "<span class='glyphicon glyphicon-picture'></span> "
+                    //+ "<span class='icon-caret-down'></span>"
+                    +
+                    "</button>" +
+                    "<ul class='dropdown-menu'>" +
+                    "</ul>" +
+                    "</div>",
                 controller: "svgExportController",
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var $element = $(element);
                     var $dropdownMenu = $element.find(".dropdown-menu:eq(0)");
 
@@ -54,11 +55,12 @@ define("superApp.svgExportDire",
 
         superApp.controller("svgExportController", svgExportController);
         svgExportController.$inject = ["$scope", "$log", "$state", "$window", "$compile", "ajaxService", "toolService"];
+
         function svgExportController($scope, $log, $state, $window, $compile, ajaxService, toolService) {
             //创建时间：2016-06-08
             //功能：导出图片
             //参数：chartID ; type 可选 "image/png" 或 "image/jpeg" ; saveFileName:保存文件名称
-            $scope.SvgExportImage = function (chartID, saveFileName, type) {
+            $scope.SvgExportImage = function(chartID, saveFileName, type) {
                 if (!saveFileName) {
                     saveFileName = "图表";
                 }
@@ -78,27 +80,18 @@ define("superApp.svgExportDire",
             };
 
             /*
-            ** 创建日期：2016-06-06
-            ** 功能简介：SVG保存PNG
-            ** 参数：svg:<SVG>标签 , saveFileName:保存文件名 , type:类型 (默认 'image/png')
-            ** 返回：一个RGB数组
-            */  
+             ** 创建日期：2016-06-06
+             ** 功能简介：SVG保存PNG
+             ** 参数：svg:<SVG>标签 , saveFileName:保存文件名 , type:类型 (默认 'image/png')
+             ** 返回：一个RGB数组
+             */
             function DownLoadImage(chartID, saveFileName, type) {
-                (type = type) ? type : "image/png";
+                (type = type) ? type: "image/png";
                 var $chartDiv = $("#" + chartID);
                 var $chartObj = $chartDiv.find("svg:eq(0)");
-
-                if ("image/png" != type) {   //如果导出的非PNG，那么必需设置背景色为白色 （若是PNG则背景自动为透明）
-                    $chartObj.css("background-color", "#fff");
-                } else {
-                    //如果是PNG，则背景色取消
-                    $chartObj.css("background-color", "");
-                }
-                // *注：并非所有的 图表 都支持背景色透明，一般来说 highchart 的图表都有一个白色的背景
-
-                //调整正确的比例:1.获取用户设置的比例  2.往SVG标签上添加比例
-                //console.log($chartDiv);
-                var userScaleStr = 1; //缩放参数
+                $chartObj.attr('version', '1.1');
+                $chartObj.attr('xmlns', 'http://www.w3.org/2000/svg');
+                $chartObj.css('font-family', " 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei'");
 
                 var oldChartObjWidth = $chartObj.attr("width") ? parseInt($chartObj.attr("width")) : parseInt($chartObj.width());
                 var oldChartObjHeight = $chartObj.attr("height") ? parseInt($chartObj.attr("height")) : parseInt($chartObj.height());
@@ -134,24 +127,21 @@ define("superApp.svgExportDire",
                 var image = new Image();
                 image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
 
-                var canvas = document.createElement('canvas');  //准备空画布
+                var canvas = document.createElement('canvas'); //准备空画布
                 canvas.width = parseInt($chartObj.attr("width"));
                 canvas.height = parseInt($chartObj.attr("height"));
 
-                //console.log(canvas.width + ";" + canvas.height);
+                var context = canvas.getContext('2d'); //取得画布的2d绘图上下文
+                context.fillStyle = "#ffffff";
+                context.fillRect(0, 0, canvas.width, canvas.height);
 
-                var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
-
-
-
-
-                image.onload = function () {
+                image.onload = function() {
                     context.drawImage(image, 0, 0);
                     var a = document.createElement('a');
                     document.body.appendChild(a);
-                    a.href = canvas.toDataURL(type);  //将画布内的信息导出为png图片数据
+                    a.href = canvas.toDataURL(type); //将画布内的信息导出为png图片数据
                     if (!saveFileName) { saveFileName = "SaveImage" }
-                    a.download = saveFileName + ("image/png" === type ? ".png" : ".jpg");  //设定下载名称
+                    a.download = saveFileName + ("image/png" === type ? ".png" : ".jpg"); //设定下载名称
                     a.click(); //点击触发下载
                     a.remove();
 
@@ -180,27 +170,26 @@ define("superApp.svgExportDire",
 
 
             /*
-            ** 创建日期：2016-06-06
-            ** 功能简介：SVG保存SVG文件
-            ** 参数：svg:<SVG>标签 , saveFileName:保存文件名
-            ** 返回：一个RGB数组
-            */
-            $scope.SvgExportSvg = function (chartID, saveFileName) {
+             ** 创建日期：2016-06-06
+             ** 功能简介：SVG保存SVG文件
+             ** 参数：svg:<SVG>标签 , saveFileName:保存文件名
+             ** 返回：一个RGB数组
+             */
+            $scope.SvgExportSvg = function(chartID, saveFileName) {
                 toolService.pageLoading.open("正在生成");
                 var $chartObj = $("#" + chartID).find("svg:eq(0)");
                 var svgXml = $chartObj.parent().html();
-                svgXml = "<?xml version='1.0' encoding='utf-8'?>"
-                    + "<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>"
-                    + svgXml;
+                svgXml = "<?xml version='1.0' encoding='utf-8'?>" +
+                    "<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>" +
+                    svgXml;
 
                 //此处 变量 svgXml 为完整的 svg 代码
-                var findEntity =
-                    {
-                        YHID: "",
-                        DLM: "",
-                        imageName: "",
-                        svgData: ""
-                    };
+                var findEntity = {
+                    YHID: "",
+                    DLM: "",
+                    imageName: "",
+                    svgData: ""
+                };
 
                 //获取用户实体信息
                 var userInfoEntity = toolService.GetUserInfoEntity();
@@ -292,4 +281,3 @@ define("superApp.svgExportDire",
 
 
     });
-

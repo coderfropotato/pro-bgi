@@ -10,11 +10,11 @@
         <a ng-if="env==='bgi'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo"></a>
         <span ng-if="env==='bgi'" style="height:50px; display: inline-block;line-height: 50px; font-size: 24px; opacity: .4;" class="pull-left">|</span>
         <a ng-if="env==='bgi'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo logo2 pull-left"></a>
-        <a ng-if="env==='gooal'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo gooal_logo"></a>
+        <a ng-if="env!=='bgi'" href="JavaScript:;" ng-click="GoHome()" target="_self" class="topbar_logo gooal_logo"></a>
         <!-- welcome btns -->
         <div class="top-right">
             <div class="fRight hidden-xs" style="margin-left:20px; margin-top: 6px;">
-                <div class="topbar_nav fLeft">
+                <div ng-if="env!=='gooal-dna'" class="topbar_nav fLeft">
                     <a href="javascript:;" ng-click="myAnalysisClick()" class="topbar_btn">我的分析</a>
                 </div>
                 <!-- <div class="topbar_nav fLeft" style="border-right: 1px solid #E8E8E8;border-left: 1px solid #E8E8E8;">
@@ -29,7 +29,7 @@
                 <div class="topbar_nav fLeft" ng-if="env === 'bgi'">
                     <a ng-href="http://cdts-wh.genomics.cn/" target="_blank" class="topbar_btn">下载数据</a>
                 </div>
-                <div class="topbar_nav fLeft">
+                <div ng-if="env!=='gooal-dna'" class="topbar_nav fLeft">
                     <a class="topbar_btn" style="text-decoration: none;" href="../tools/index.html#/home/help" target="_blank">帮助</a>
                 </div>
                 <div class="topbar_nav fLeft" ng-mouseenter="loginOutShow = true" ng-mouseleave="loginOutShow = false" style="position: relative; padding-bottom:30px;">
@@ -37,7 +37,7 @@
                     <div class="userinfo-pop" ng-show="loginOutShow">
                         <span>项目编号：{{LCID}}</span>
                         <p ng-click="handlerLogout()" style="text-align: center;">
-                            <span class="logout" >退出</span>
+                            <span class="logout">退出</span>
                         </p>
                     </div>
                 </div>

@@ -41,6 +41,13 @@
             "dest": "/ps/mrna/res/images",
             "notify": "压缩在线报告图片成功！"
         },
+        "dna": {
+            "src": [
+                "webroot/ps/dna/res/images/**"
+            ],
+            "dest": "/ps/dna/res/images",
+            "notify": "压缩在线报告图片成功！"
+        },
         "tools": {
             "src": [
                 "webroot/ps/tools/res/images/**"
@@ -69,6 +76,13 @@
                 "webroot/ps/mrna/res/styles/*.css"
             ],
             "dest": "/ps/mrna/res/styles",
+            "notify": "压缩在线报告CSS样式成功！"
+        },
+        "dna": {
+            "src": [
+                "webroot/ps/dna/res/styles/*.css"
+            ],
+            "dest": "/ps/dna/res/styles",
             "notify": "压缩在线报告CSS样式成功！"
         },
         "tools": {
@@ -131,6 +145,29 @@
             "del": [
                 "/ps/mrna/**/*.html",
                 "/ps/mrna/**/*.js"
+            ]
+        }
+    },
+    "dna": {
+        "html": {
+            "src": [
+                "webroot/ps/dna/**/*.html",
+                "!webroot/ps/dna/index.html"
+            ],
+            "main": [
+                "webroot/ps/dna/index.html"
+            ],
+            "dest": "/ps/dna"
+        },
+        "js": {
+            "src": ["webroot/ps/dna/*.js"],
+            "main": "webroot/ps/dna/DNAreseqMain.js",
+            "module": "/ps/dna/DNAreseqMain",
+            "file": "DNAreseqMain.js",
+            "dest": "/ps/dna",
+            "del": [
+                "/ps/dna/**/*.html",
+                "/ps/dna/**/*.js"
             ]
         }
     },

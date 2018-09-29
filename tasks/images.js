@@ -56,6 +56,14 @@ gulp.task('images:all', ['clean:images'], function() {
         .pipe(rev.manifest({ merge: true }))
         .pipe(rename('rev-mrna-images.json'))
         .pipe(gulp.dest(modules.rev));
+    
+    var dnaImages = mergeImages(modules.images.dna.src, 'images/' + customer + '/**/*')
+        .pipe(cache(imagemin()))
+        .pipe(rev())
+        .pipe(gulp.dest(argv.build + modules.images.dna.dest))
+        .pipe(rev.manifest({ merge: true }))
+        .pipe(rename('rev-dna-images.json'))
+        .pipe(gulp.dest(modules.rev));
 
     var toolsImages = mergeImages(modules.images.tools.src, 'images/' + customer + '/**/*')
         .pipe(cache(imagemin()))
@@ -65,7 +73,7 @@ gulp.task('images:all', ['clean:images'], function() {
         .pipe(rename('rev-tools-images.json'))
         .pipe(gulp.dest(modules.rev));
 
-    return mergeStream(commonImages, loginImages, mrnaImages, toolsImages);
+    return mergeStream(commonImages, loginImages, mrnaImages, dnaImages, toolsImages);
 });
 
 var mergeImages = function(src, customer) {
@@ -79,5 +87,5 @@ var mergeImages = function(src, customer) {
  * 作用：删除原来压缩之后的图片
  */
 gulp.task('clean:images', function() {
-    return del([argv.build + modules.images.common.dest, argv.build + modules.images.login.dest, argv.build + modules.images.mrna.dest, argv.build + modules.images.tools.dest]);
+    return del([argv.build + modules.images.common.dest, argv.build + modules.images.login.dest, argv.build + modules.images.mrna.dest, argv.build + modules.images.dna.dest, argv.build + modules.images.tools.dest]);
 })

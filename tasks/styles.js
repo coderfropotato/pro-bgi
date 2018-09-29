@@ -34,6 +34,7 @@ gulp.task('css:all', ['clean:css'], function() {
     modules.css.common.src.unshift(modules.rev + "/rev-common-images.json");
     modules.css.login.src.unshift(modules.rev + "/rev-login-images.json");
     modules.css.mrna.src.unshift(modules.rev + "/rev-mrna-images.json");
+    modules.css.dna.src.unshift(modules.rev + "/rev-dna-images.json");
     modules.css.tools.src.unshift(modules.rev + "/rev-tools-images.json");
 
     var commonCss = gulp.src(modules.css.common.src)
@@ -62,6 +63,15 @@ gulp.task('css:all', ['clean:css'], function() {
         .pipe(rev.manifest({ merge: true }))
         .pipe(rename('rev-mrna-css.json'))
         .pipe(gulp.dest(modules.rev));
+    
+    var dnaCss = gulp.src(modules.css.dna.src)
+        .pipe(revCollector({ replaceReved: true }))
+        .pipe(cleanCss())
+        .pipe(rev())
+        .pipe(gulp.dest(argv.build + modules.css.dna.dest))
+        .pipe(rev.manifest({ merge: true }))
+        .pipe(rename('rev-dna-css.json'))
+        .pipe(gulp.dest(modules.rev));
 
     var toolsCss = gulp.src(modules.css.tools.src)
         .pipe(revCollector({ replaceReved: true }))
@@ -72,7 +82,7 @@ gulp.task('css:all', ['clean:css'], function() {
         .pipe(rename('rev-tools-css.json'))
         .pipe(gulp.dest(modules.rev));
 
-    return mergeStream(commonCss, loginCss, mrnaCss, toolsCss);
+    return mergeStream(commonCss, loginCss, mrnaCss, dnaCss,toolsCss);
 })
 
 /**
@@ -81,5 +91,5 @@ gulp.task('css:all', ['clean:css'], function() {
  * 依赖任务：images，CSS样式的压缩必须在图片压缩之前完成，因为其会引用图片路径
  */
 gulp.task('clean:css', ['images'], function() {
-    return del([argv.build + modules.css.common.dest + '/**/*.css', argv.build + modules.css.login.dest + '/*.css', argv.build + modules.css.mrna.dest + '/*.css', argv.build + modules.css.tools.dest + '/*.css']);
+    return del([argv.build + modules.css.common.dest + '/**/*.css', argv.build + modules.css.login.dest + '/*.css', argv.build + modules.css.mrna.dest + '/*.css',argv.build + modules.css.dna.dest + '/*.css', argv.build + modules.css.tools.dest + '/*.css']);
 })

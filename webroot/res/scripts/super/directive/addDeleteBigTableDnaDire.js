@@ -94,9 +94,9 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
         }
 
         superApp.controller("addDeletBigTableCtr", addDeletBigTableCtr);
-        addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+        addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService", "pageFactory"];
 
-        function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
+        function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService, pageFactory) {
             $scope.InitPage = function() {
                 $scope.isBeginFilter = false;
                 // 重置时使用
@@ -119,6 +119,8 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
                 $scope.isReanalysis = !!$scope.isReanalysis;
                 // 选择的基因数量
                 $scope.geneCount = 0;
+                // 当前环境env（gooal、 bgi 、gooal-dna）
+                $scope.env = SUPER_CONSOLE_MESSAGE.env;
                 // 获取表格数据
                 $scope.GetBigTableData(1);
             };
@@ -473,7 +475,7 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
                     geneID: GeneID
                 };
                 pageFactory.set(geneInfo);
-                toolService.popWindow("cyjyfx_2_pop.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
+                toolService.popWindow("geneInfo.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
             }
 
             // delete one filter content
@@ -682,16 +684,16 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
             //     }
             // })
 
-            $scope.getMethods = function(compare) {
-                var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));
-                var s = JSON.parse(toolService.sessionStorage.get('SampleDiffList'));
-                var l = g.concat(s);
-                for (var k = 0; k < l.length; k++) {
-                    if (l[k].name === compare) {
-                        return l[k].method;
-                    }
-                }
-                return null;
-            }
+            // $scope.getMethods = function (compare) {
+            //     var g = JSON.parse(toolService.sessionStorage.get('CompareGroupList'));
+            //     var s = JSON.parse(toolService.sessionStorage.get('SampleDiffList'));
+            //     var l = g.concat(s);
+            //     for (var k = 0; k < l.length; k++) {
+            //         if (l[k].name === compare) {
+            //             return l[k].method;
+            //         }
+            //     }
+            //     return null;
+            // }
         }
     });

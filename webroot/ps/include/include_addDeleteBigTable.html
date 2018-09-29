@@ -106,7 +106,8 @@
                                 <td class="center nowrap popover-table" thead-key="geneid.true_key" data-row="{{val}}" data-title="{{val[geneid.true_key]}}">
                                     <!-- gene_id || xxx_query_id -->
                                     <span ng-if="val.true_key==='gene_id' || val.true_key.indexOf('query_id')!=-1">
-                                        <a ng-href="../tools/index.html#/home/geneDetail/{{val[geneid.true_key]}}" target="_blank">{{val[geneid.true_key]}}</a>
+                                        <a ng-if="env!=='gooal-dna'" ng-href="../tools/index.html#/home/geneDetail/{{val[geneid.true_key]}}" target="_blank">{{val[geneid.true_key]}}</a>
+                                        <a ng-if="env==='gooal-dna'" ng-click="showGeneInfo(val[geneid.true_key])">{{val[geneid.true_key]}}</a>
                                     </span>
                                     <span ng-if="val.true_key!=='gene_id' && val.true_key.indexOf('query_id')==-1">{{val[geneid.true_key]}}</span>
                                 </td>

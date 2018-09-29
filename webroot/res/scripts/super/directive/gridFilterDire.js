@@ -47,6 +47,8 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     scope.searchOne = attrs.searchone;
                     scope.geneidtruekey = attrs.geneidtruekey;
 
+                    scope.filterInTableSwitch = !!attrs.filterintableswitch;
+
                     scope.filterFindEntity = {
                         filterName: scope.filterName, //查询字段名字
                         filternamezh: scope.filternamezh, //查询字段中文
@@ -212,6 +214,11 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                             //如果弹出层已超出窗口宽度，则反向
                             if (tsgPanelLeft + tsgPanel.width() > $(window).width()) {
                                 tsgPanelLeft -= tsgPanel.width();
+                            }
+
+                            if(scope.filterInTableSwitch){
+                                tsgPanelTop-=57;
+                                tsgPanelLeft-=27;
                             }
                         }
                         tsgPanel.css("top", tsgPanelTop + "px");
@@ -719,7 +726,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 var filternamezh = el.attr("filternamezh");
                 //查询字段类型 filtertype：datetime、 string、double、int、boolean（新增）
                 var filtertype = el.attr("filtertype");
-
+                var filterintableswitch = el.attr('filterintableswitch');
                 // 接受自定义参数
                 var searchType = el.attr('searchtype');
                 var searchOne = el.attr('searchone');
@@ -729,6 +736,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 tempDirHtmlStr += " <div id=\"" + filterDireID + "\" class=\"grid-filter\" " +
                     " filtername=\"" + filtername + "\" " +
                     " filternamezh=\"" + filternamezh + "\" " +
+                    " filterintableswitch=\"" + filterintableswitch + "\" " +
                     " filtertype=\"" + filtertype + "\" ";
 
                 if ($scope.searchOne != undefined && $scope.searchOne != null) {

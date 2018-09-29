@@ -16,7 +16,7 @@
     <link href="../../res/styles/website.css" rel="stylesheet" type="text/css" />
     <link href="./res/login.css" rel="stylesheet" type="text/css" />
     <link ng-if="env==='bgi'" rel="icon" href="../../res/images/favicon.ico" type="image/x-icon">
-    <link ng-if="env==='gooal'" rel="icon" href="../../res/images/favicon-gooal.ico" type="image/x-icon">
+    <link ng-if="env!=='bgi'" rel="icon" href="../../res/images/favicon-gooal.ico" type="image/x-icon">
     <script src="../../res/scripts/lib/requirejs/2.1.20/require.min.js" defer data-main="loginMain.js"></script>
     <script ng-if="env==='bgi'" src="../../res/scripts/super/baiDuTongJi.js"></script>
     <script>
@@ -210,7 +210,7 @@
             <div class="login_close">
                 <img src="./res/images/login_close.png" />
             </div>
-            <h4 class="login-title" ng-if="env==='gooal'">账号密码登陆</h4>
+            <h4 class="login-title" ng-if="env!=='bgi'">账号密码登陆</h4>
             <div ng-if="env==='bgi'" class="login_logo">
                 <img src="./res/images/dr.tom.png" />
             </div>

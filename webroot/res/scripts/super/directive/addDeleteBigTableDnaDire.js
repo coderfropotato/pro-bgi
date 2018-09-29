@@ -50,6 +50,8 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
                     // 是否需要增删列
                     isShowTheadControl: "=",
 
+                    // 是否显示精度  默认显示
+                    isHideAccuracy: "=",
                     // 选择的基因集
                     geneList: "=",
                     // 基因集改变的标志
@@ -108,6 +110,7 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
                 $scope.method = $scope.method || null;
                 // 精度默认 全数据
                 $scope.accuracy = -1;
+                $scope.isShowAccuracy = !$scope.isHideAccuracy;
                 // 是否显示增删列
                 $scope.isShowTheadControl = $scope.isShowTheadControl !== false;
                 // 获取增删列dire数据
@@ -182,16 +185,15 @@ define("superApp.addDeleteBigTableDnaDire", ["angular", "super.superMessage", "s
             // watch genelist flag的改变
             if ($scope.geneListChangeFlag != undefined && $scope.geneListChangeFlag != null) {
                 $scope.$watch('geneListChangeFlag', function(newVal, oldVal) {
-                    if (newVal !== oldVal)
-                        console.log(newVal)
-                    if (newVal) {
-                        // 有数据才更新
-                        console.log($scope.geneList);
-                        $scope.handlerGeneListChangeCommon($scope.geneList);
-                        $timeout(function() {
-                            // 自动重置为初始状态 为了触发下一次change
-                            $scope.geneListChangeFlag = false;
-                        }, 0)
+                    if (newVal !== oldVal) {
+                        if (newVal) {
+                            // 有数据才更新
+                            $scope.handlerGeneListChangeCommon($scope.geneList);
+                            $timeout(function() {
+                                // 自动重置为初始状态 为了触发下一次change
+                                $scope.geneListChangeFlag = false;
+                            }, 0)
+                        }
                     }
                 })
             }

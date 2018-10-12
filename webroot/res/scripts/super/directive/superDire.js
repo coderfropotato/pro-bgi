@@ -1345,6 +1345,7 @@ define("superApp.superDire",
                             if (page != undefined) {
                                 page = parseInt(Number(page));
                                 page = page ? page : 1;
+                                page = page<=0?1:page;
                                 var pageCount = Math.ceil($scope.gridData.total / $scope.gridData.pageSize);
                                 $scope.tbxPageNum = page = (page > pageCount) ? pageCount : page;
                                 if (parseInt(page) > $scope.options.pageCount) {

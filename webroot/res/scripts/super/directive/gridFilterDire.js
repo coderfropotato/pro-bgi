@@ -290,6 +290,14 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 }
             }, 30);
 
+            // 验证输入 非法字符\ / * ? : "<> | 
+            $scope.keyup = function(searchText){
+                var reg = /[\\,\/,\?,\*,:,<,>,|,_]/g;
+                if(reg.test($scope.filterFindEntity[searchText])){
+                    $scope.filterFindEntity[searchText] = '';
+                }
+            }
+
             //确定按钮点击事件
             $scope.btn_QueDing_OnClick = function () {
                 if ($scope.filterFindEntity.searchOne == null) $scope.filterFindEntity.searchOne = "";

@@ -8212,7 +8212,11 @@ div.tipsContainer,
 .popPrompt #TextInput {
     width: 80%;
     height: 32px;
-    margin-bottom: 20px
+    margin-bottom: 10px
+}
+
+.popPrompt p {
+    color: red;
 }
 
 .ngdialog-buttons {

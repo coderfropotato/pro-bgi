@@ -59,7 +59,7 @@ define("superApp.reportDire", ["angular", "super.superMessage", "select2"],
                 toolService.sessionStorage.set('type', 'myAnalysis');
                 $window.open('../tools/index.html#/home/myAnalysis');
             }
-            
+
             $scope.GoHome = function() {
                 $timeout(function() {
                     var oUl = document.getElementsByClassName('sidebar_nav_pop')[0];
@@ -122,7 +122,18 @@ define("superApp.reportDire", ["angular", "super.superMessage", "select2"],
                             continue;
                         }
                     }
-                    if (isINDomArray) {
+                    //判断是否属于大数据模块
+                    var isInBigDataList = false;
+                    var bigDataModuleList = ["005001001", "006001001", "006001002", "006004001"]
+                    $scope.project_type = toolService.sessionStorage.get('projectType');
+                    // if($scope.project_type == "RNAdenovo"){
+                    for (var t = 0; t < bigDataModuleList.length; t++) {
+                        if ($rootScope.leftData[i].GNSID == bigDataModuleList[t]) {
+                            isInBigDataList = true;
+                        }
+                    }
+                    // }
+                    if (isINDomArray || isInBigDataList) {
                         continue
                     };
                     //未加载过的页面重新加载

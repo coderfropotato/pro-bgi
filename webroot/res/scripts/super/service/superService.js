@@ -6,7 +6,7 @@
  */
 
 define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
-    function (SUPER_CONSOLE_MESSAGE) {
+    function(SUPER_CONSOLE_MESSAGE) {
         //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         var superApp = angular.module("superApp.superService", ["ngDialog", "ngCookies"]);
 
@@ -47,7 +47,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
         function AjaxS($log, $http, $q, $window, toolService) {
             //执行Ajax方法，执行前先验证token
             var globalTokenError = false;
-            this.GetDeferData = function (ajaxConfig) {
+            this.GetDeferData = function(ajaxConfig) {
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行 
                 if (!this.validateWindowToken()) {
                     deferred.reject("NoAuth");
@@ -68,7 +68,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         headers: {
                             "Content-Type": "application/json;charset=UTF-8"
                         }
-                    }).success(function (data, status, headers, config) {
+                    }).success(function(data, status, headers, config) {
                         if (data == "false") {
                             //没有授权了，返回登录窗口
                             window.location.href = '../../../../ps/login/login.html';
@@ -80,9 +80,9 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 url: selfAjaxConfig.url,
                                 data: selfAjaxConfig.data,
                                 headers: selfAjaxConfig.headers
-                            }).success(function (data, status, headers, config) {
+                            }).success(function(data, status, headers, config) {
                                 deferred.resolve(data); // 声明执行成功，即http请求数据成功，可以返回数据了  
-                            }).error(function (data, status, headers, config) {
+                            }).error(function(data, status, headers, config) {
                                 // 内部请求error  直接跳转登陆
                                 try {
                                     if (status == "401") {
@@ -101,7 +101,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 } catch (e) {}
                             });
                         }
-                    }).error(function (data, status, headers, config) {
+                    }).error(function(data, status, headers, config) {
                         // token error
                         try {
                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
@@ -121,7 +121,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     if (!globalTokenError) {
                         globalTokenError = true;
                         var dialog = toolService.reaccessPop.open();
-                        dialog.then(function (password) {
+                        dialog.then(function(password) {
                             $.ajax({
                                 headers: {
                                     "Authorization": "Token " + window.localStorage.token,
@@ -136,7 +136,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                 contentType: "application/json; charset=utf-8",
                                 withCredentials: true,
                                 cache: false,
-                                success: function (responseData) {
+                                success: function(responseData) {
                                     if (responseData.Status === 'success') {
                                         toolService.localStorage.set('token', responseData.Token);
                                         window.location.reload();
@@ -148,21 +148,21 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                                         //     var myPromise = toolService.popMesgWindow(responseData.Status);
                                         // }
                                         var myPromise = toolService.popMesgWindow(responseData.Error);
-                                        myPromise.then(function () {
+                                        myPromise.then(function() {
                                             globalTokenError = false;
                                             window.location.href = '../../../../ps/login/login.html';
-                                        }, function () {
+                                        }, function() {
                                             globalTokenError = false;
                                             window.location.href = '../../../../ps/login/login.html';
                                         });
                                     }
                                 },
-                                error: function (err) {
+                                error: function(err) {
                                     globalTokenError = false;
                                     window.location.href = '../../../../ps/login/login.html';
                                 }
                             })
-                        }, function (close) {
+                        }, function(close) {
                             globalTokenError = false;
                             window.location.href = '../../../../ps/login/login.html';
                         })
@@ -173,16 +173,16 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             };
 
             // 合并多个Ajax的Promise，以解决依赖多个请求的问题，方法接收多个Ajax配置组成的数组
-            this.GetMultiDeferData = function (ajaxConfigs) {
+            this.GetMultiDeferData = function(ajaxConfigs) {
                 if (!angular.isArray(ajaxConfigs)) return;
-                var promises = ajaxConfigs.map(function (ajaxConfig) {
+                var promises = ajaxConfigs.map(function(ajaxConfig) {
                     return this.GetDeferData(ajaxConfig);
                 }, this);
                 return $q.all(promises);
             };
 
             //执行Ajax方法，不验证token
-            this.GetDeferDataNoAuth = function (ajaxConfig) {
+            this.GetDeferDataNoAuth = function(ajaxConfig) {
                 //params
                 var selfAjaxConfig = {
                     method: "POST",
@@ -199,10 +199,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         data: selfAjaxConfig.data,
                         headers: selfAjaxConfig.headers
                     })
-                    .success(function (data, status, headers, config) {
+                    .success(function(data, status, headers, config) {
                         deferred.resolve(data); // 声明执行成功，即http请求数据成功，可以返回数据了  
                     })
-                    .error(function (data, status, headers, config) {
+                    .error(function(data, status, headers, config) {
                         try {
                             $log.error(data);
                             toolService.tableGridLoading.close(); //关闭浏览列表蒙版
@@ -217,7 +217,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             };
 
             // 不加token字段 不交换token
-            this.GetDeferDataNoToken = function (ajaxConfig) {
+            this.GetDeferDataNoToken = function(ajaxConfig) {
                 var selfAjaxConfig = {
                     method: "POST",
                     headers: {
@@ -233,10 +233,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         data: selfAjaxConfig.data,
                         headers: selfAjaxConfig.headers
                     })
-                    .success(function (data, status, headers, config) {
+                    .success(function(data, status, headers, config) {
                         deferred.resolve(data);
                     })
-                    .error(function (data, status, headers, config) {
+                    .error(function(data, status, headers, config) {
                         try {
                             $log.error(data);
                             toolService.tableGridLoading.close();
@@ -250,7 +250,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             }
 
             // 加token字段 不交换token
-            this.GetDeferDataAddToken = function (ajaxConfig) {
+            this.GetDeferDataAddToken = function(ajaxConfig) {
                 var selfAjaxConfig = {
                     method: "POST",
                     headers: {
@@ -268,10 +268,10 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         data: selfAjaxConfig.data,
                         headers: selfAjaxConfig.headers
                     })
-                    .success(function (data, status, headers, config) {
+                    .success(function(data, status, headers, config) {
                         deferred.resolve(data);
                     })
-                    .error(function (data, status, headers, config) {
+                    .error(function(data, status, headers, config) {
                         try {
                             $log.error(data);
                             toolService.tableGridLoading.close();
@@ -285,7 +285,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             }
 
             //去后端验证有没有授权，如果有效时间范围内，重新获得授权
-            this.validateToken = function () {
+            this.validateToken = function() {
                 var retulst = true;
                 //判断授权是否有值
                 if ($window.sessionStorage.token == "undefined" || $window.sessionStorage.token == undefined) {
@@ -301,7 +301,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             "X-Request-With": "null"
                         }
                     })
-                    .success(function (data, status, headers, config) {
+                    .success(function(data, status, headers, config) {
                         if (data == "false") {
                             //没有授权了，返回登录窗口
                             window.location.href = window.location.href.replace(/ps\/.*/, options.loginUrl);
@@ -310,14 +310,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             $window.sessionStorage.token = data;
                         }
                     })
-                    .error(function (data, status, headers, config) {
+                    .error(function(data, status, headers, config) {
                         $log.error(data);
                     });
                 return true;
             }
 
             //验证客户端当前授权是否已丢弃
-            this.validateWindowToken = function () {
+            this.validateWindowToken = function() {
                 if ($window.localStorage.token == "undefined" ||
                     $window.localStorage.token == undefined ||
                     $window.localStorage.token == "") {
@@ -340,25 +340,25 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      operateMsg:操作说明，譬如“用户添加”、“xx删除”等
              ** 返回类型：操作消息
              */
-            this.operateSuccess = function (operateMsg) {
-                return operateMsg + "成功！";
-            }
-            /*
-             ** 功能简介：操作失败后返回提示信息
-             ** 参数说明：
-             **      operateMsg:操作说明，譬如“用户添加”、“xx删除”等
-             ** 返回类型：操作消息
-             */
-            this.operateError = function (operateMsg) {
-                return "对不起" + operateMsg + "失败，请重试或及时联系系统管理员！";
-            }
-            /*
-             ** 功能简介：窗口跳转
-             ** 参数说明：
-             **      urlStr:跳转地址
-             ** 返回类型：无返回值
-             */
-            this.goUrl = function (urlStr) {
+            this.operateSuccess = function(operateMsg) {
+                    return operateMsg + "成功！";
+                }
+                /*
+                 ** 功能简介：操作失败后返回提示信息
+                 ** 参数说明：
+                 **      operateMsg:操作说明，譬如“用户添加”、“xx删除”等
+                 ** 返回类型：操作消息
+                 */
+            this.operateError = function(operateMsg) {
+                    return "对不起" + operateMsg + "失败，请重试或及时联系系统管理员！";
+                }
+                /*
+                 ** 功能简介：窗口跳转
+                 ** 参数说明：
+                 **      urlStr:跳转地址
+                 ** 返回类型：无返回值
+                 */
+            this.goUrl = function(urlStr) {
                 window.location.href = urlStr;
             };
 
@@ -366,7 +366,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 功能说明：设置跟作用域loading变量为true，将现实框架级别的蒙版等待
              ** 返回类型：无返回值
              */
-            this.ShowLoading = function () {
+            this.ShowLoading = function() {
                 $rootScope.loading = true;
             }
 
@@ -374,7 +374,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 功能说明：设置跟作用域loading变量为false，将现实框架级别的蒙版等待
              ** 返回类型：无返回值
              */
-            this.HideLoading = function () {
+            this.HideLoading = function() {
                 $rootScope.loading = false;
             }
 
@@ -383,7 +383,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 参数：value 供回调函数获取，请参考 popWindow
              ** 返回类型：无返回值
              */
-            this.popCloseAll = function (value) {
+            this.popCloseAll = function(value) {
                 ngDialog.closeAll(value);
             }
 
@@ -393,7 +393,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 参数：value 供回调函数获取，请参考 popWindow
              ** 返回类型：无返回值
              */
-            this.popCloseTop = function (value) {
+            this.popCloseTop = function(value) {
                 ngDialog.closeTop(value);
             }
 
@@ -402,7 +402,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 参数：value 供回调函数获取，请参考 popWindow
              ** 返回类型：无返回值
              */
-            this.popClose = function (id, value) {
+            this.popClose = function(id, value) {
                 ngDialog.close(id, value);
             }
 
@@ -411,12 +411,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：-
              */
             this.localStorage = {
-                set: function (key, value) {
+                set: function(key, value) {
                     if ($window.localStorage) {
                         $window.localStorage.setItem(key, value);
                     }
                 },
-                get: function (key) {
+                get: function(key) {
                     if ($window.localStorage) {
                         if (!angular.isUndefined($window.localStorage.getItem(key))) {
                             return $window.localStorage.getItem(key);
@@ -426,12 +426,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //return $window.localStorage.getItem(key);
                     }
                 },
-                remove: function (key) {
+                remove: function(key) {
                     if ($window.localStorage) {
                         $window.localStorage.removeItem(key);
                     }
                 },
-                clear: function () {
+                clear: function() {
                     if ($window.localStorage) {
                         $window.localStorage.clear();
                     }
@@ -443,12 +443,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：-
              */
             this.sessionStorage = {
-                set: function (key, value) {
+                set: function(key, value) {
                     if ($window.sessionStorage) {
                         $window.sessionStorage.setItem(key, value);
                     }
                 },
-                get: function (key) {
+                get: function(key) {
                     if ($window.sessionStorage) {
                         if (!angular.isUndefined($window.sessionStorage.getItem(key))) {
                             return $window.sessionStorage.getItem(key);
@@ -458,7 +458,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //return $window.sessionStorage.getItem(key);
                     }
                 },
-                getJsonEntity: function (key) {
+                getJsonEntity: function(key) {
                     if ($window.sessionStorage) {
                         if (!angular.isUndefined($window.sessionStorage.getItem(key))) {
                             return JSON.parse($window.sessionStorage.getItem(key));
@@ -468,12 +468,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //return $window.sessionStorage.getItem(key);
                     }
                 },
-                remove: function (key) {
+                remove: function(key) {
                     if ($window.sessionStorage) {
                         $window.sessionStorage.removeItem(key);
                     }
                 },
-                clear: function () {
+                clear: function() {
                     if ($window.sessionStorage) {
                         $window.sessionStorage.clear();
                     }
@@ -485,7 +485,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 功能说明：获取登录用户实体信息
              ** 返回类型：Object
              */
-            this.GetUserInfoEntity = function () {
+            this.GetUserInfoEntity = function() {
                 var userInfoEntity = this.sessionStorage.getJsonEntity("userInfoEntity");
                 if (userInfoEntity == null) {
                     try {
@@ -514,7 +514,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **          如果不传，默认为default
              ** 返回类型：可以回调 myPromise.then(),error();
              */
-            this.popConfirm = function (popMesg, popTitle, dialogClass, top, width, height) {
+            this.popConfirm = function(popMesg, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 100;
                 var _width = width ? width - 24 : 550;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -543,7 +543,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **          确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
              **          如果不传，默认为dialog-default
              */
-            this.popPrompt = function (textNode, textValue, popTitle, dialogClass, top, width, height) {
+            this.popPrompt = function(textNode, textValue, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 100;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -552,27 +552,31 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 dialogClass = (angular.isUndefined(dialogClass) || dialogClass == "") ? "dialog-default" : dialogClass;
                 ngDialog.open({
                     plain: true,
-                    template: "<div class='popPrompt'><input ng-keyup='inputKeyup($event)' placeholder='点击图片右上方刷新按钮可还原标题' type='text' id='TextInput' value='" + value + "' class='form-control'></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
+                    template: "<div class='popPrompt'><input ng-keyup='inputKeyup($event)' placeholder='点击图右上方刷新按钮可还原标题' type='text' id='TextInput' value='" + value + "' class='form-control'><p ng-show='isError' style='text-align:center'>最多输入25位字符</p></div><div class='ngdialog-buttons'><button type='button' class='ngdialog-button btn-success confirmBtn' ng-click='confirm()'>确定</button><button type='button' class='ngdialog-button  btn-default cancelBtn' ng-click='closeThisDialog(false)'>取消</button></div>",
                     className: "ngdialog-theme-default",
                     dialogClass: dialogClass,
                     // title: popTitle,
                     top: top,
                     width: _width,
                     height: _height,
-                    controller: ['$scope', function ($scope) {
-                        // $scope.isError = false;
+                    controller: ['$scope', function($scope) {
+                        $scope.isError = false;
                         // var allNullExp = /^[ ]+$/;
                         // if (val == null || val == "" || allNullExp.test(val)) {
                         //     $scope.isError = true;
                         // }
-                        $scope.confirm = function () {
-                            var val = $("#TextInput").val();
-                            value = val;
-                            ngDialog.close();
-                            textNode.textContent = value;
+                        $scope.confirm = function() {
+                            var val = $("#TextInput").val().replace(/\s/g, "");
+                            if (val.length > 25) {
+                                $scope.isError = true;
+                            } else {
+                                value = val;
+                                ngDialog.close();
+                                textNode.textContent = value;
+                            }
                         };
 
-                        $scope.inputKeyup = function (e) {
+                        $scope.inputKeyup = function(e) {
                             var keycode = window.event ? e.keyCode : e.which;
                             if (keycode == 13) {
                                 $scope.confirm();
@@ -593,7 +597,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **          如果不传，默认为dialog-default
              */
 
-            this.popAnalysis = function (taskInfo, callback, chartType, popTitle, dialogClass, top, width, height) {
+            this.popAnalysis = function(taskInfo, callback, chartType, popTitle, dialogClass, top, width, height) {
                 top = top ? top : 250;
                 var _width = width ? width - 24 : 450;
                 var _height = height ? height - 24 - 27 : 'auto';
@@ -621,7 +625,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     top: top,
                     width: _width,
                     height: _height,
-                    controller: ['$scope', function ($scope) {
+                    controller: ['$scope', function($scope) {
                         if (chartType === 'heatmap') {
                             $scope.isHeatmap = true;
                         } else {
@@ -653,7 +657,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $scope.checkedItems.push($scope.chooseList[0].name);
 
                         // 类型选择
-                        $scope.chooseType = function (item) {
+                        $scope.chooseType = function(item) {
                             chooseList = [];
                             $scope.chooseList = [];
 
@@ -677,12 +681,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
 
                         //数据选择
-                        $scope.chooseData = function (item) {
+                        $scope.chooseData = function(item) {
                             item.isChecked = !item.isChecked;
                             if (item.isChecked) {
                                 $scope.checkedItems.push(item.name);
                             } else {
-                                $scope.checkedItems.forEach(function (val, index) {
+                                $scope.checkedItems.forEach(function(val, index) {
                                     if (val === item.name) {
                                         $scope.checkedItems.splice(index, 1);
                                     }
@@ -691,7 +695,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         }
 
                         //确定
-                        $scope.confirm = function () {
+                        $scope.confirm = function() {
                             var checkedItems = angular.copy($scope.checkedItems);
                             var type = "";
                             if (checkedItems.length == 0) {
@@ -754,7 +758,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：无返回值
              */
             this.popLoading = {
-                open: function (popMesg, width, height) {
+                open: function(popMesg, width, height) {
                     popMesg = (angular.isUndefined(popMesg) || popMesg == "") ? "正在加载..." : popMesg;
                     var _width = width ? width : 110;
                     var _height = height ? height : 110;
@@ -768,7 +772,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         height: _height
                     });
                 },
-                close: function () {
+                close: function() {
                     ngDialog.close();
                 }
             };
@@ -782,7 +786,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      time：关闭时间，默认1秒
              ** 返回类型：无返回值
              */
-            this.popTips = function (popMesg, routeStr, urlStr, time, width, height, top) {
+            this.popTips = function(popMesg, routeStr, urlStr, time, width, height, top) {
                 if (angular.isUndefined(routeStr)) {
                     routeStr = "";
                 }
@@ -807,7 +811,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     height: height,
                     top: top
                 });
-                setTimeout(function () {
+                setTimeout(function() {
                     if (angular.isUndefined(urlStr) || urlStr == "" || urlStr == null) {
                         if (angular.isUndefined(routeStr) || routeStr == "" || routeStr == null) {
                             dialog.close();
@@ -822,7 +826,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                 }, time);
             }
 
-            this.popTipsTwo = function (popMesg, time, top) {
+            this.popTipsTwo = function(popMesg, time, top) {
                 if (angular.isUndefined(time)) {
                     time = 1000;
                 }
@@ -841,7 +845,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     height: 40,
                     top: top
                 });
-                setTimeout(function () {
+                setTimeout(function() {
                     dialog.close();
                     $("#" + dialog.id).remove();
                 }, time);
@@ -858,7 +862,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      dialogClass：确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
              ** 返回类型：无返回值
              */
-            this.popFrame = function (url, title, width, height, dialogClass, top) {
+            this.popFrame = function(url, title, width, height, dialogClass, top) {
                 top = top ? top : 100;
                 var frameWidth = width ? width - 24 : 400;
                 var frameHeight = height ? height - 24 - 27 : 'auto';
@@ -888,7 +892,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      dialogClass：确认框的样式  dialog-default、dialog-info、dialog-danger、dialog-waring、dialog-success
              ** 返回类型：可以回调 myPromise.then(),error();
              */
-            this.popConfirmWindow = function (urlStr, title, width, height, dialogClass, top) {
+            this.popConfirmWindow = function(urlStr, title, width, height, dialogClass, top) {
                 top = top ? top : 100;
                 title = (angular.isUndefined(title) || title == "") ? "系统消息" : title;
                 width = (angular.isUndefined(width) || width == "") ? "500" : width;
@@ -918,7 +922,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **          如果不传，默认为default
              ** 返回类型：可以回调 myPromise.then();
              */
-            this.popMesgWindow = function (popMesg, popTitle, width, height, dialogClass, top) {
+            this.popMesgWindow = function(popMesg, popTitle, width, height, dialogClass, top) {
                 top = top ? top : 100;
                 popTitle = (angular.isUndefined(popTitle) || popTitle == "") ? "系统消息" : popTitle;
                 popMesg = (angular.isUndefined(popMesg) || popMesg == "") ? "-" : popMesg;
@@ -962,7 +966,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             
             ** 返回类型：可以回调 myPromise.then() , 仅作为兼容 myPromise, 建议使用回调函数 callBack; 
             */
-            this.popWindow = function (urlStr, title, width, height, dialogClass, top, isShowClose, callBack, dialogID, closeByDocument) {
+            this.popWindow = function(urlStr, title, width, height, dialogClass, top, isShowClose, callBack, dialogID, closeByDocument) {
 
                 top = top ? top : 100;
                 var frameWidth = width ? width - 24 : 400;
@@ -996,7 +1000,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      valid: ture | false 
              ** 返回类型：String
              */
-            this.myCustomVerification = function (form, inputName, valid, msg) {
+            this.myCustomVerification = function(form, inputName, valid, msg) {
                 var $thisInput = $("[name=" + inputName + "]");
                 form.myErrList = removeNameFormStr(form.myErrList, inputName); /* 自定义一个错误队列 */
                 if (valid) {
@@ -1070,7 +1074,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             }
 
-            this.setFormInvalid = function (form, inputNames) {
+            this.setFormInvalid = function(form, inputNames) {
                 form.$invalid = true;
                 form.$valid = false;
                 form.myErrList = inputNames.join("|");
@@ -1085,7 +1089,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：无返回
              */
             this.inputValidateMesg = {
-                open: function (inputName, msg, isShowPanel) {
+                open: function(inputName, msg, isShowPanel) {
                     var $thisInput = $("[name=" + inputName + "]");
                     if ($thisInput.length < 1) {
                         $thisInput = $("#" + inputName);
@@ -1100,7 +1104,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $thisInput.parent().find(".ng-validateMesg:eq(0)").hide();
                     }
                 },
-                close: function (inputName) {
+                close: function(inputName) {
                     var $thisInput = $("[name=" + inputName + "]");
                     if ($thisInput.length < 1) {
                         $thisInput = $("#" + inputName);
@@ -1109,7 +1113,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     $thisInput.parent().find(".ng-validateMesg:eq(0)").html("");
                     $thisInput.parent().find(".ng-validateMesg:eq(0)").hide();
                 },
-                closeALL: function (inputName) {
+                closeALL: function(inputName) {
                     var $thisInput = $("[name=" + inputName + "]");
                     if ($thisInput.length < 1) {
                         $thisInput = $("#" + inputName);
@@ -1131,7 +1135,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      若有传入 msg ，则input验证置为无效； 否则为有效；
              ** 返回类型：无返回
              */
-            this.myValidate = function (inputName, msg) {
+            this.myValidate = function(inputName, msg) {
                 var $input = $("[name='" + inputName + "']");
                 if ($input.length > 1) {
                     alert("调用方法 'this.myValidate' 报错，请检查是否有重复的 name");
@@ -1153,7 +1157,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      val：传进来的字符串
              ** 返回类型：字符串长度
              */
-            this.getByteLen = function (val) {
+            this.getByteLen = function(val) {
                 var len = 0;
                 for (var i = 0; i < val.length; i++) {
                     var length = val.charCodeAt(i);
@@ -1173,7 +1177,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      formatStr：yyyy-MM-dd、yyyy-MM-dd HH-mm-dd，默认：yyyy-MM-dd
              ** 返回类型：String
              */
-            this.formatDate = function (value, formatStr) {
+            this.formatDate = function(value, formatStr) {
                 var dateFilter = $filter("date");
                 formatStr = (formatStr == undefined || formatStr == "") ? "yyyy-MM-dd" : formatStr;
                 return dateFilter(value, formatStr);
@@ -1190,7 +1194,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             {{ 12.55 | currency:undefined:0}} <!--将12.55格式化为货币， 不改变单位符号， 小数部分将四舍五入 -->
             ** 返回类型：String
             */
-            this.formatManey = function (value, formatStr) {
+            this.formatManey = function(value, formatStr) {
                 var _filter = $filter("currency");
                 formatStr = (formatStr == undefined || formatStr == "") ? "" : formatStr;
                 return _filter(value, formatStr);
@@ -1202,7 +1206,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      value：传进来的参数  {name:'Jack', age: 21}
              ** 返回类型：Json 对象
              */
-            this.formatJson = function (value) {
+            this.formatJson = function(value) {
                 //var _filter = $filter("json");
                 //return _filter(value);
                 return eval("(" + value + ")")
@@ -1222,7 +1226,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      </div>
              ** 返回类型：Object
              */
-            this.formatLimit = function (input, limit) {
+            this.formatLimit = function(input, limit) {
                 var _filter = $filter("limitTo");
                 return _filter(input, limit);
             }
@@ -1246,7 +1250,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             **      </div>
             ** 返回类型：Object
             */
-            this.formatOrderBy = function (array, sortPredicate, reverseOrder) {
+            this.formatOrderBy = function(array, sortPredicate, reverseOrder) {
                 var _filter = $filter("orderBy");
                 return _filter(array, sortPredicate, reverseOrder);
             }
@@ -1257,7 +1261,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              */
             var taskTimer = null;
             this.topLoading = {
-                open: function () {
+                open: function() {
 
                     var templateStr = "<div class='progressMask'></div><div class='progress topProgress ' role='progressbar'  aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' >" +
                         "     <div class='progress-bar' ></div>" +
@@ -1266,11 +1270,11 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                     var zxcs = 1;
                     var bc = 10; //步长
                     var nowWidth = 20;
-                    taskTimer = setInterval(function () {
+                    taskTimer = setInterval(function() {
                         nowWidth += Math.floor((100 - nowWidth) / 10);
                         if (nowWidth > 90) {
                             $(".topProgress:eq(0)").find(".progress-bar:eq(0)").width($(".topProgress:eq(0)").width());
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 if (taskTimer != null) {
                                     clearInterval(taskTimer);
                                 }
@@ -1283,8 +1287,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         }
                     }, 100);
                 },
-                close: function () {
-                    setTimeout(function () {
+                close: function() {
+                    setTimeout(function() {
                         $(".topProgress:eq(0)").find(".progress-bar:eq(0)").width($(".topProgress:eq(0)").width());
                         if (taskTimer != null) {
                             clearInterval(taskTimer);
@@ -1305,7 +1309,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：无
              */
             this.tableGridLoading = {
-                open: function (tableID, markerHeight, markerWidth) {
+                open: function(tableID, markerHeight, markerWidth) {
                     if ($("#pageLoading").length > 0) return;
                     //获取蒙版的高度
                     var _markerHeight = $(window).height() - $(tableID).offset().top;
@@ -1321,7 +1325,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         "</div>";
                     $("body").append(templateStr);
                 },
-                close: function () {
+                close: function() {
                     $(".gridModal").remove();
                 }
             };
@@ -1329,7 +1333,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
 
             this.pageLoading = {
-                open: function (mesg, width) {
+                open: function(mesg, width) {
                     if (!mesg) mesg = "正在加载...";
                     if (!width) width = "110";
                     $rootScope.pageIsLoad = false;
@@ -1355,7 +1359,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $("body").append(templateStr);
                     }
                 },
-                close: function () {
+                close: function() {
                     $rootScope.pageIsLoad = true;
                     $(".selfLoading").remove();
                 }
@@ -1380,8 +1384,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             */
             this.gridFilterLoading = {
 
-                open: function (tableID, text, inPopWindow, maskHeight, icnPaddingTop) {
-                    setTimeout(function () {
+                open: function(tableID, text, inPopWindow, maskHeight, icnPaddingTop) {
+                    setTimeout(function() {
                         var $graphGroup;
                         if (typeof tableID == "string") { //参数为 id 的情况
                             $graphGroup = $("#" + tableID);
@@ -1452,8 +1456,8 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
 
                 },
-                close: function (tableID) {
-                    setTimeout(function () {
+                close: function(tableID) {
+                    setTimeout(function() {
                         var $graphGroup;
                         if (typeof tableID == "string") { //参数为 id 的情况
                             $graphGroup = $("#" + tableID);
@@ -1487,7 +1491,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             */
             this.tableGridPanelLoading = {
 
-                open: function (divId, text) {
+                open: function(divId, text) {
 
                     var tObj;
                     if (typeof divId == "string") { //参数为 id 的情况
@@ -1510,12 +1514,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         $graphLoading.find(".loadingMessage:eq(0)").html(text);
                     }
                     //console.log($graphLoading.html());
-                    $graphLoading.fadeIn(function () {
+                    $graphLoading.fadeIn(function() {
                         $(this).show();
                     });
 
                 },
-                close: function (divId) {
+                close: function(divId) {
 
                     var tObj;
                     if (typeof divId == "string") { //参数为 id 的情况
@@ -1577,7 +1581,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      x：保留小数点后位数
              ** 返回类型：value
              */
-            this.toDecimal = function (x) {
+            this.toDecimal = function(x) {
                 var f = parseFloat(x);
                 if (isNaN(f)) {
                     return;
@@ -1592,7 +1596,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      x：保留小数点后位数
              ** 返回类型：value
              */
-            this.toDecimal2 = function (x) {
+            this.toDecimal2 = function(x) {
                 var f = parseFloat(x);
                 if (isNaN(f)) {
                     return false;
@@ -1619,7 +1623,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      accuracy：保留小数点后位数
              ** 返回类型：value
              */
-            this.toAccuracy = function (value, accuracy) {
+            this.toAccuracy = function(value, accuracy) {
                 if (isNaN(parseFloat(value))) {
                     return value;
                 } else {
@@ -1651,7 +1655,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **      str：要去掉空格的字符串
              ** 返回类型：去掉空格后的字符串
              */
-            this.Trim = function (str) {
+            this.Trim = function(str) {
                 return str.replace(/(^\s*)|(\s*$)/g, "");
             };
             /*
@@ -1668,7 +1672,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             //软件参数验证
             //司徒
             //2016年2月24日16:07:50
-            this.rjcszValidate = function (MRZ, CSZLX, YZSTR) {
+            this.rjcszValidate = function(MRZ, CSZLX, YZSTR) {
                 if (angular.isUndefined(MRZ)) MRZ = "";
                 MRZ = this.Trim(MRZ);
                 if (MRZ == "") {
@@ -1695,7 +1699,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             //验证是否为整数，包括正负数，可以是科学计数法
             //司徒 2016年2月22日11:13:55
-            this.checkInt = function (value) {
+            this.checkInt = function(value) {
                 value = value.toString().toUpperCase();
                 if (value.indexOf("E") >= 0) {
                     value = this.getNumberValue(value).toString();
@@ -1712,7 +1716,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             };
             //验证是否为数字，包括正负数，整形，浮点型，科学计数法
             //司徒 2016年2月22日11:13:55
-            this.checkNumber = function (value) {
+            this.checkNumber = function(value) {
                 value = value.toString();
                 var reg = /^[\+\-]?[\d]+([\.][\d]*)?([Ee][+-]?[\d]+)?$/;
                 if (!reg.test(value)) {
@@ -1723,7 +1727,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             };
             //验证录入的软件参数
             //司徒 2016年2月22日11:13:55
-            this.checkSoftWareParameter = function (value, yzStr) {
+            this.checkSoftWareParameter = function(value, yzStr) {
                 value = value.toString();
                 var A = this.getNumberValue(value);
                 if (eval(yzStr)) {
@@ -1734,7 +1738,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             };
             //得到数字的值，如果是科学计数法，则返回所表示的实际值，如果不是 返回本身
             //司徒 2016年2月22日11:13:55
-            this.getNumberValue = function (value) {
+            this.getNumberValue = function(value) {
                 value = value.toString().toUpperCase();
                 if (!this.checkNumber(value)) {
                     return "Error";
@@ -1755,7 +1759,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 参数：order：asc or desc      sortBy：数组中排序的字段名字
              ** 补充人：高洪涛   2016年6月1日23:07:50
              */
-            this.getSortFun = function (order, sortBy) {
+            this.getSortFun = function(order, sortBy) {
                 var ordAlpah = (order == "ASC") ? '>' : '<';
                 var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
                 return sortFun;
@@ -1765,7 +1769,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 功能说明：获得Guid妈
              ** 返回类型：string
              */
-            this.getGuid = function () {
+            this.getGuid = function() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
                 for (var i = 0; i < 36; i++) {
@@ -1790,12 +1794,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             3、返回运行平台: BrowserDetect.OS
             */
             this.BrowserDetect = {
-                init: function () {
+                init: function() {
                     this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
                     this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || "an unknown version";
                     this.OS = this.searchString(this.dataOS) || "an unknown OS";
                 },
-                searchString: function (data) {
+                searchString: function(data) {
                     for (var i = 0; i < data.length; i++) {
                         var dataString = data[i].string;
                         var dataProp = data[i].prop;
@@ -1807,7 +1811,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             return data[i].identity;
                     }
                 },
-                searchVersion: function (dataString) {
+                searchVersion: function(dataString) {
                     var index = dataString.indexOf(this.versionSearchString);
                     if (index == -1) return;
                     return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
@@ -1908,7 +1912,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：pageFindEntity
              ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
              */
-            this.GetGridFilterFindEntity = function (pageFindEntity, filterFindEntity) {
+            this.GetGridFilterFindEntity = function(pageFindEntity, filterFindEntity) {
                 if (filterFindEntity != null) {
                     //实体操作信息 none：什么都不做   add：添加   remove：删除   extend：覆盖
                     var entityFlag = "none";
@@ -1935,7 +1939,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //首先判断当前查询实体中有没有指令传过来的实体，
                         //如果有则执行覆盖更新操作，如果没有则执行添加查询实体操作
                         entityFlag = "add";
-                        angular.forEach(pageFindEntity.searchContentList, function (item, key) {
+                        angular.forEach(pageFindEntity.searchContentList, function(item, key) {
                             //$log.log("filterName1 = " + item.filterName);
                             //$log.log("filterName2 = " + filterFindEntity.filterName);
                             if (angular.equals(item.filterName, filterFindEntity.filterName)) {
@@ -1963,7 +1967,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             }
                             break;
                         case "remove":
-                            angular.forEach(pageFindEntity.searchContentList, function (item, key) {
+                            angular.forEach(pageFindEntity.searchContentList, function(item, key) {
                                 //$log.log("filterName1 = " + item.filterName);
                                 //$log.log("filterName2 = " + filterFindEntity.filterName);
                                 if (angular.equals(item.filterName, filterFindEntity.filterName)) {
@@ -2003,7 +2007,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：pageFindEntity
              ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
              */
-            this.SetGridFilterFindEntity = function (pageFindEntity, filterName, filtertype, searchType, searchOne, isTopFilter) {
+            this.SetGridFilterFindEntity = function(pageFindEntity, filterName, filtertype, searchType, searchOne, isTopFilter) {
                 if (filterName == "") {
                     return pageFindEntity;
                 } else {
@@ -2049,7 +2053,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              * @description 删除表格过滤查询参数 （只适合通过可以新增删除的表头，基础表头不适用）
              * @author joke <277637411@qq.com>
              */
-            this.DeleteFilterFindEntity = function (pageFindEntity, text) {
+            this.DeleteFilterFindEntity = function(pageFindEntity, text) {
                 for (var i = 0, len = pageFindEntity.searchContentList.length; i < len; i++) {
                     if (pageFindEntity.searchContentList[i].filternamezh === text) {
                         // 如果有排序  重置排序
@@ -2073,7 +2077,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              ** 返回类型：$scope.trustAsHtml()
              ** 说明：pageFindEntity结果中，必须要 pageFindEntity{searchContentList:[]}结构
              */
-            this.GetFilterContentText = function (pageFindEntity) {
+            this.GetFilterContentText = function(pageFindEntity) {
                 var filterText = [];
                 var sortText = "";
                 var filterType = "";
@@ -2219,12 +2223,12 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             3、返回运行平台: BrowserDetect.OS
             */
             this.BrowserDetect = {
-                init: function () {
+                init: function() {
                     this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
                     this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || "an unknown version";
                     this.OS = this.searchString(this.dataOS) || "an unknown OS";
                 },
-                searchString: function (data) {
+                searchString: function(data) {
                     for (var i = 0; i < data.length; i++) {
                         var dataString = data[i].string;
                         var dataProp = data[i].prop;
@@ -2236,7 +2240,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                             return data[i].identity;
                     }
                 },
-                searchVersion: function (dataString) {
+                searchVersion: function(dataString) {
                     var index = dataString.indexOf(this.versionSearchString);
                     if (index == -1) return;
                     return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
@@ -2334,7 +2338,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              **传入参数为cookie存放的路径和域名
              **
              */
-            this.popBDWindow = function () {
+            this.popBDWindow = function() {
                 var domain = $window.document.domain;
                 if ($cookies.get('browserDetectFlag')) {
                     return false;
@@ -2360,24 +2364,24 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
              * 打开重新授权窗口
              */
             this.reaccessPop = {
-                open: function () {
+                open: function() {
                     return ngDialog.openConfirm({
                         title: "重新授权提示",
                         closeByDocument: false,
-                        controller: ['$scope', 'toolService', function ($scope, toolService) {
+                        controller: ['$scope', 'toolService', function($scope, toolService) {
                             $scope.password = '';
                             $scope.focus = false;
-                            $scope.handlercloseThisDialog = function () {
+                            $scope.handlercloseThisDialog = function() {
                                 $scope.closeThisDialog(0);
                                 toolService.localStorage.remove('token');
                             }
 
-                            $scope.handlerconfirm = function () {
+                            $scope.handlerconfirm = function() {
                                 $scope.confirm($scope.password);
                                 $scope.password = '';
                             }
 
-                            $scope.handlerKeyUp = function (event) {
+                            $scope.handlerKeyUp = function(event) {
                                 if (event.keyCode === 13) {
                                     $scope.handlerconfirm();
                                 }
@@ -2392,13 +2396,13 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             // gooal-chart 图改色
             // panelid 面板的id  scale 默认宽度缩放比例1  chartObj图对象
-            this.chartChangeColor = function (panelid, scale, chartObj) {
+            this.chartChangeColor = function(panelid, scale, chartObj) {
                 var scale = scale || 1;
                 var index = '';
                 groupedbarGetItem();
 
                 function groupedbarGetItem() {
-                    chartObj.getLegendItem(function (d, i) {
+                    chartObj.getLegendItem(function(d, i) {
                         reportService.selectColor(changeColorCallback);
                         index = i;
                     })
@@ -2419,14 +2423,14 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
 
             // 转换 key 到key1
             // 要转换的数据基本类型
-            this.formatterDataByOrderKey = function (srcKey, targetKey, thead, srcData, type) {
+            this.formatterDataByOrderKey = function(srcKey, targetKey, thead, srcData, type) {
                 var mapJson = {};
 
-                thead.forEach(function (d, i) {
+                thead.forEach(function(d, i) {
                     mapJson[d[srcKey]] = d[targetKey];
                 })
 
-                srcData.forEach(function (val, index) {
+                srcData.forEach(function(val, index) {
                     for (var key in val) {
                         if (type) {
                             if (typeof val[key] == type) {
@@ -2445,7 +2449,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
             }
 
             // 切分svgxml后拼接base64 解决svg转base64过长的问题
-            this.spliceSvgxml = function (svgxml) {
+            this.spliceSvgxml = function(svgxml) {
                 var flag = 800; // 以1000个长度为限制
                 var count = Math.ceil(svgxml.length / flag);
                 var svgxmlList = [];

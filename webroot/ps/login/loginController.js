@@ -92,6 +92,17 @@ define(['loginApp'], function(loginApp) {
                     toolLoginService.sessionStorage.set('LCID', jumpLCID);
                     window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
                 }
+
+                //用户名+密码 跳转
+                if (queryArr[0].split("=")[0].toLowerCase() == "lcid" && queryArr[1].split("=")[0].toLowerCase() == "password") {
+                    var lcid = query.split("&")[0].split("=")[1];
+                    var password = query.split("&")[1].split("=")[1];
+                    alert(lcid, password);
+                    $scope.isLCSubmit = true;
+                    $scope.formEntity.LCID = lcid;
+                    $scope.formEntity.Password = password;
+                    LoginOn();
+                }
             }
         }
 

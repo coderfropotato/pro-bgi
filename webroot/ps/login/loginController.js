@@ -138,7 +138,6 @@ define(['loginApp'], function(loginApp) {
         $scope.resError = false;
 
         function LoginOn() {
-            console.log($scope.formEntity);
             $.ajax({
                 url: options.api.base_url + '/login',
                 type: 'POST',
@@ -153,7 +152,7 @@ define(['loginApp'], function(loginApp) {
                         toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', $scope.formEntity.LCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
-                        window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE + '/index.html');
+                        window.location.href = window.location.href.replace('login/login.html', responseData.LCTYPE || 'mrna' + '/index.html');
                         // window.location.href = window.location.href.replace('login/login.html', "dna" + '/index.html');
                         $scope.resError = false;
                     } else {

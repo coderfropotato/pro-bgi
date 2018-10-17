@@ -94,16 +94,14 @@ define(['loginApp'], function(loginApp) {
                 }
 
                 //用户名+密码 跳转
-                alert(query);
-                alert(queryArr);
-                alert(queryArr[0], queryArr[1]);
-                if (queryArr[0].split("=")[0].toLowerCase() == "lcid" && queryArr[1].split("=")[0].toLowerCase() == "password") {
+                if (queryArr[0].split("=")[0].toLowerCase() == "lcid" && queryArr[1].split("=")[0].toLowerCase() == "password" && queryArr[2].split("=")[0].toLowerCase() == "code") {
                     var lcid = query.split("&")[0].split("=")[1];
                     var password = query.split("&")[1].split("=")[1];
-                    alert(lcid, password);
+                    var code = query.split("&")[2].split("=")[1];
                     $scope.isLCSubmit = true;
                     $scope.formEntity.LCID = lcid;
                     $scope.formEntity.Password = password;
+                    $scope.formEntity.code = code;
                     LoginOn();
                 }
             }

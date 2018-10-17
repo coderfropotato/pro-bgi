@@ -101,7 +101,7 @@ define(['loginApp'], function(loginApp) {
                     $scope.isLCSubmit = true;
                     $scope.formEntity.LCID = lcid;
                     $scope.formEntity.Password = password;
-                    $scope.formEntity.code = code;
+                    $scope.formEntity.code = decodeURIComponent(code);
                     LoginOn();
                 }
             }
@@ -138,6 +138,7 @@ define(['loginApp'], function(loginApp) {
         $scope.resError = false;
 
         function LoginOn() {
+            console.log($scope.formEntity);
             $.ajax({
                 url: options.api.base_url + '/login',
                 type: 'POST',

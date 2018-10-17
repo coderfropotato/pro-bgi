@@ -124,7 +124,7 @@ define("superApp.reportDire", ["angular", "super.superMessage", "select2"],
                     }
                     //判断是否属于大数据模块
                     var isInBigDataList = false;
-                    var bigDataModuleList = ["005001001", "006001001", "006001002", "006004001"]
+                    var bigDataModuleList = ["006001002", "006002002", "006004001", "007004001", "007005001"];
                     $scope.project_type = toolService.sessionStorage.get('projectType');
                     // if($scope.project_type == "RNAdenovo"){
                     for (var t = 0; t < bigDataModuleList.length; t++) {

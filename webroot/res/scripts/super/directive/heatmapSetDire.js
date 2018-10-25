@@ -70,10 +70,12 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                     isTopCluster: "=",
                     setOptions: "=",
                     isRefresh: "=",
-                    getSetOptions: "&"
+                    getSetOptions: "&",
+                    compareGroup: "="
                 },
                 link: function(scope, element, attrs) {
                     scope.initOptions = angular.copy(scope.setOptions);
+                    scope.confirmOptions = angular.copy(scope.setOptions);
                 },
                 controller: "heatmapSetCtr"
             }
@@ -84,7 +86,6 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
 
         function heatmapSetCtr($scope) {
             $scope.isShow = false;
-            $scope.confirmOptions = angular.copy($scope.setOptions);
 
             //阻止冒泡
             function clearEventBubble(evt) {
@@ -108,7 +109,8 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                 $scope.isShowTipText = false;
                 $("#setoptionWidth").val($scope.confirmOptions.width);
                 $("#setoptionHeight").val($scope.confirmOptions.height);
-                $scope.setOptions = angular.copy($scope.confirmOptions);
+                apply($scope.setOptions, $scope.confirmOptions);
+                // $scope.setOptions = angular.copy($scope.confirmOptions);
             }
 
             //基因名 switch开关点击
@@ -181,8 +183,8 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                 $scope.isShowTipText = false;
                 $("#setoptionWidth").val($scope.confirmOptions.width);
                 $("#setoptionHeight").val($scope.confirmOptions.height);
-
-                $scope.setOptions = angular.copy($scope.confirmOptions);
+                // $scope.setOptions = angular.copy($scope.confirmOptions);
+                apply($scope.setOptions, $scope.confirmOptions);
                 $scope.isShow = false;
             }
 
@@ -190,11 +192,39 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                 if (newVal) {
                     $scope.isShow = false;
                     $scope.confirmOptions = angular.copy($scope.initOptions);
-                    $scope.setOptions = angular.copy($scope.initOptions);
+                    // $scope.setOptions = angular.copy($scope.initOptions);
+                    apply($scope.setOptions, $scope.confirmOptions);
                     $("#setoptionWidth").val($scope.initOptions.width);
                     $("#setoptionHeight").val($scope.initOptions.height);
                 }
             })
+
+            $scope.change = false;
+
+            if ($scope.compareGroup) {
+                $scope.$watch('compareGroup', function(newVal, oldVal) {
+                    if (newVal != oldVal && !$scope.change) {
+                        $scope.change = true;
+                    }
+                })
+            }
+
+            $scope.$watch('setOptions', function(newVal) {
+                if (newVal) {
+                    if ($scope.change) {
+                        apply($scope.confirmOptions, newVal);
+                        $scope.change = false;
+                    }
+                    apply($scope.setOptions, newVal);
+                }
+            }, true)
+
+
+            function apply(src, target) {
+                for (var name in src) {
+                    src[name] = angular.copy(target[name]);
+                }
+            }
 
         }
     });

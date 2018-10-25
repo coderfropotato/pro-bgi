@@ -47,8 +47,8 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                     scope.searchOne = attrs.searchone;
                     scope.geneidtruekey = attrs.geneidtruekey;
 
-                    scope.filterInTableSwitch = !!attrs.filterintableswitch;
-
+                    scope.filterInTableSwitch = attrs.filterintableswitch;
+                    
                     scope.filterFindEntity = {
                         filterName: scope.filterName, //查询字段名字
                         filternamezh: scope.filternamezh, //查询字段中文
@@ -216,7 +216,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                                 tsgPanelLeft -= tsgPanel.width();
                             }
 
-                            if(scope.filterInTableSwitch){
+                            if(scope.filterInTableSwitch==='true'){
                                 tsgPanelTop-=57;
                                 tsgPanelLeft-=27;
                             }
@@ -734,7 +734,7 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 var filternamezh = el.attr("filternamezh");
                 //查询字段类型 filtertype：datetime、 string、double、int、boolean（新增）
                 var filtertype = el.attr("filtertype");
-                var filterintableswitch = el.attr('filterintableswitch');
+                var filterintableswitch = !!el.attr('filterintableswitch');
                 // 接受自定义参数
                 var searchType = el.attr('searchtype');
                 var searchOne = el.attr('searchone');

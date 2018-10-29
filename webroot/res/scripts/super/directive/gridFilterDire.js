@@ -290,9 +290,9 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
                 }
             }, 30);
 
-            // 验证输入 非法字符\ / * ? : "<> | 
+            // 验证输入 排除 \ ? * < > “ ” @ # $ % ^ &
             $scope.keyup = function(searchText){
-                var reg = /[\\,\/,\?,\*,:,<,>,|,_]/g;
+                var reg = /[\\\?\*\<\>\"\"\@\#\$\%\^\&]/g;
                 if(reg.test($scope.filterFindEntity[searchText])){
                     $scope.filterFindEntity[searchText] = '';
                 }

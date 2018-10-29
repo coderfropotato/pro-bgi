@@ -148,7 +148,6 @@ define(['loginApp'], function(loginApp) {
                 withCredentials: true,
                 cache: false,
                 success: function(responseData) {
-                    debugger;
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
 

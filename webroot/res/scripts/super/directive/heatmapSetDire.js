@@ -213,6 +213,7 @@ define("superApp.heatmapSetDire", ["angular", "super.superMessage", "select2"],
                 if (newVal) {
                     if ($scope.change) {
                         apply($scope.confirmOptions, newVal);
+                        $scope.initOptions = angular.copy(newVal);
                         $scope.change = false;
                     }
                     apply($scope.setOptions, newVal);

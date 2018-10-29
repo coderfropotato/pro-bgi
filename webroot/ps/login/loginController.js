@@ -100,6 +100,7 @@ define(['loginApp'], function(loginApp) {
                     var code = query.split("&")[2].split("=")[1];
                     $scope.isLCSubmit = true;
                     $scope.formEntity.LCID = lcid;
+                    toolLoginService.sessionStorage.set('LCID', lcid);
                     $scope.formEntity.Password = password;
                     $scope.formEntity.code = decodeURIComponent(code);
                     LoginOn();

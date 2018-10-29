@@ -148,12 +148,15 @@ define(['loginApp'], function(loginApp) {
                 withCredentials: true,
                 cache: false,
                 success: function(responseData) {
+                    debugger;
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
+
                         toolLoginService.localStorage.set('token', responseData.Token);
                         toolLoginService.sessionStorage.set('LCID', $scope.formEntity.LCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
                         window.location.href = window.location.href.replace('login/login.html', (responseData.LCTYPE || 'mrna') + '/index.html');
+                        window.location.search = '';
                         // window.location.href = window.location.href.replace('login/login.html', "dna" + '/index.html');
                         $scope.resError = false;
                     } else {

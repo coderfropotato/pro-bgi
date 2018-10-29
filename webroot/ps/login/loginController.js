@@ -155,7 +155,6 @@ define(['loginApp'], function(loginApp) {
                         toolLoginService.sessionStorage.set('LCID', $scope.formEntity.LCID);
                         toolLoginService.sessionStorage.set('LCMC', responseData.LCMC);
                         window.location.href = window.location.href.replace('login/login.html', (responseData.LCTYPE || 'mrna') + '/index.html');
-                        window.location.search = '';
                         // window.location.href = window.location.href.replace('login/login.html', "dna" + '/index.html');
                         $scope.resError = false;
                     } else {

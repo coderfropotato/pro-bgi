@@ -370,6 +370,24 @@ define("superApp.superDire",
             }
         }
 
+        // url编码
+        superApp.filter('encodeURIComponentFilter', encodeURIComponentFilter);
+        encodeURIComponentFilter.$inject = ['$log'];
+        function encodeURIComponentFilter($log) {
+            return function (input) {
+                return window.encodeURIComponent(input)
+            }
+        }
+
+        // url解码
+        superApp.filter('decodeURIComponentFilter', decodeURIComponentFilter);
+        decodeURIComponentFilter.$inject = ['$log'];
+        function decodeURIComponentFilter($log) {
+            return function (input) {
+                return window.decodeURIComponent(input)
+            }
+        }
+
         // filter  按照特定的表头字段 把对应的内容转成分段的锚点并找出id
         superApp.filter('orderTheadToAnchor', orderTheadToAnchor);
         orderTheadToAnchor.$inject = ['$log', '$sce'];

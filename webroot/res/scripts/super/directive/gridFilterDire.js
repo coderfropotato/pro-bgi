@@ -291,12 +291,12 @@ define("superApp.gridFilterDire", ["angular", "super.superMessage", "select2"],
             }, 30);
 
             // 验证输入 排除 \ ? * < > “ ” @ # $ % ^ & %
-            $scope.keyup = function(searchText){
-                var reg = /[\\\?\*\<\>\"\"\@\#\$\^\&]/g;
-                if(reg.test($scope.filterFindEntity[searchText])){
-                    $scope.filterFindEntity[searchText] = '';
-                }
-            }
+            // $scope.keyup = function(searchText){
+            //     var reg = /[\\\?\*\<\>\"\"\@\#\$\^\&]/g;
+            //     if(reg.test($scope.filterFindEntity[searchText])){
+            //         $scope.filterFindEntity[searchText] = '';
+            //     }
+            // }
 
             //确定按钮点击事件
             $scope.btn_QueDing_OnClick = function () {

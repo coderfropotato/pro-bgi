@@ -91,7 +91,7 @@
                                         | accuracyFilter: accuracy):(val.searchType==='int'?(row[val.true_key] |
                                         number):row[val.true_key])}}</span>
                                 </span>
-                                <span ng-if="row[val.true_key]== '' || (!row[val.true_key] && row[val.true_key]!=0) || !row[val.true_key]">—</span>
+                                <span ng-if="!row[val.true_key] && row[val.true_key]!=0">—</span>
                             </td>
                         </tr>
                     </tbody>

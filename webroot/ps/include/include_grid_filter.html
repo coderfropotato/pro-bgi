@@ -34,27 +34,27 @@
                 <option value="$lte" ng-hide="(filtertype == 'string')">小于等于（ < = ）</option>
             </select>
             <div ng-if="filtertype=='all'">
-                <textarea ng-keyup = "keyup('searchOne')"  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
+                <textarea  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
                 />
-                <input ng-keyup = "keyup('searchOne')" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')"
+                <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType!='$gt' && filterFindEntity.searchType!='$lt' && filterFindEntity.searchType!='$gte' && filterFindEntity.searchType!='$lte' && filterFindEntity.searchType!='range')"
                     type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
-                <input ng-keyup = "keyup('searchOne')"  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')"
+                <input  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filterFindEntity.searchType=='$gt' || filterFindEntity.searchType=='$lt' || filterFindEntity.searchType=='$gte' || filterFindEntity.searchType=='$lte' || filterFindEntity.searchType=='range')"
                     type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;" search-keyup="" callback="btn_QueDing_OnClick()" />
-                <input ng-keyup = "keyup('searchTwo')"  ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                <input  ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
                 />
             </div>
             <div ng-if="filtertype!='all' && filtertype != 'boolean'">
                 <!-- $in -->
-                <textarea ng-keyup = "keyup('searchOne')"  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
+                <textarea  ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType == '$in')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;height:120px;" callback="btn_QueDing_OnClick()"
                 />
                 <!-- !=$in string datetime -->
-                <input ng-keyup = "keyup('searchOne')" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
+                <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='string'|| filtertype=='datetime')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
                     search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- !=$in type double || int -->
-                <input ng-keyup = "keyup('searchOne')" ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
+                <input ng-model="filterFindEntity.searchOne" placeholder="{{placeholderOne}}" ng-show="(filterFindEntity.searchType != '$in') && (filtertype=='double'|| filtertype=='int')" type="text" class="form-control filter_input" style="margin-top:8px; margin-bottom:11px;"
                     search-keyup="" callback="btn_QueDing_OnClick()" />
                 <!-- range -->
-                <input ng-keyup = "keyup('searchTwo')" ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
+                <input ng-model="filterFindEntity.searchTwo" placeholder="{{placeholderTwo}}" ng-show="(filterFindEntity.searchType == 'range')" type="text" class="form-control filter_input" style="margin-bottom:2px;" search-keyup="" callback="btn_QueDing_OnClick()"
                 />
             </div>
             <div ng-if="filtertype =='boolean'">

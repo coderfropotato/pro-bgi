@@ -440,6 +440,11 @@ p.help-title{
     min-width: 880px;
     margin-top: 36px!important;
 }
+.help-title .kfz_class{
+    color: red;
+    font-size: 12px;
+    margin-left: 12px;
+}
 .help-page p.help-sub-title{
     padding-left: 20px!important;
 }

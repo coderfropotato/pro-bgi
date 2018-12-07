@@ -83,7 +83,10 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
                     // 是否清除geneUnselectList
                     isClearGeneUnselectList: "=",
                     // 外部更新表格
-                    outerUpdate: "="
+                    outerUpdate: "=",
+
+                    // 点击基因 弹窗查看基因详情页的回调
+                    showGeneInfoCallback:"&"
                 },
                 replace: false,
                 transclude: true,
@@ -92,10 +95,12 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
         }
 
         superApp.controller("addDeletBigTableCtr", addDeletBigTableCtr);
-        addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService"];
+        addDeletBigTableCtr.$inject = ["$rootScope", "$scope", "$log", "$state", "$window", "$timeout", "ajaxService", "toolService", "reportService","pageFactory"];
 
-        function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService) {
+        function addDeletBigTableCtr($rootScope, $scope, $log, $state, $window, $timeout, ajaxService, toolService, reportService,pageFactory) {
             $scope.InitPage = function() {
+                $scope.env = SUPER_CONSOLE_MESSAGE.env;
+
                 $scope.isBeginFilter = false;
                 // 重置时使用
                 $scope.initPageEntity = $scope.pageEntity;
@@ -464,13 +469,7 @@ define("superApp.addDeleteBigTableDire", ["angular", "super.superMessage", "sele
 
             // 点击GeneID获取Gene信息
             $scope.showGeneInfo = function(GeneID) {
-                var genomeVersion = toolService.sessionStorage.get('GenomeID');
-                var geneInfo = {
-                    genomeVersion: genomeVersion,
-                    geneID: GeneID
-                };
-                pageFactory.set(geneInfo);
-                toolService.popWindow("cyjyfx_2_pop.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
+                $scope.showGeneInfoCallback && $scope.showGeneInfoCallback({"arg":GeneID});
             }
 
             // delete one filter content

@@ -163,7 +163,7 @@ define(['toolsApp'], function(toolsApp) {
                     "title": $scope.curType
                 },
                 "yAxis": {
-                    "title": "log10(FPKM+1)"
+                    "title": "FPKM"
                 }
             },
             "dataBox": {

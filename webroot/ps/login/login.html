@@ -250,7 +250,8 @@
                 <img src="./res/images/login_close.png" />
             </div>
             <div class="login_logo">
-                <img src="./res/images/dr.tom.png" />
+                <img ng-if="env==='bgi'" src="./res/images/dr.tom.png" />
+                <img width="200" ng-if="env!=='bgi'" src="./res/images/index_logo_gooal.png" />
             </div>
             <p>为了给您良好的用户体验</p>
             <p>强烈建议使用 <a href="https://www.google.cn/chrome/" target="_blank">Chrome</a> 浏览器</p>

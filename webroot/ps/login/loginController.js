@@ -84,13 +84,14 @@ define(['loginApp'], function(loginApp) {
                 //校验查询条件关键字
                 var queryArr = query.substring(1, query.length).split("&");
                 //Token跳转
-                if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token") {
+                if (queryArr[0].split("=")[0] == "LCID" && queryArr[1].split("=")[0] == "Token" && queryArr[2].split("=")[0] == "type") {
                     var jumpLCID = query.split("&")[0].split("=")[1];
                     var Token = query.split("&")[1].split("=")[1];
+                    var type = query.split("&")[2].split("=")[1];
                     $scope.isLCSubmit = true;
                     toolLoginService.localStorage.set('token', Token);
                     toolLoginService.sessionStorage.set('LCID', jumpLCID);
-                    window.location.href = window.location.href.replace(/login\/login\.html.*/, "mrna" + '/index.html');
+                    window.location.href = window.location.href.replace(/login\/login\.html.*/, (type || 'mrna') + '/index.html');
                 }
 
                 //用户名+密码 跳转
@@ -148,6 +149,7 @@ define(['loginApp'], function(loginApp) {
                 withCredentials: true,
                 cache: false,
                 success: function(responseData) {
+                    console.log(responseData);
                     if (responseData.Status === 'success') {
                         // 如果登录成功，那么这里要存储后天返回的LCID、XMID等信息，因为到跳转之后的页面会对这些信息进行有效性验证
 

@@ -77,7 +77,9 @@ require.config({
         "lineController": "ps/tools/pages/lineController",
         "geneDetailController": "ps/tools/pages/geneDetailController",
         "loadingController": "ps/tools/pages/loadingController",
-        "helpController": "ps/tools/pages/helpController"
+        "helpController": "ps/tools/pages/helpController",
+
+        "geneInfoController":"ps/tools/pages/geneInfoController",
     },
     shim: {
         "jQuery": { exports: "$" },
@@ -103,6 +105,12 @@ require([
     'jQuery',
     'angular',
     "d3",
+    "highcharts",
+    "highcharts3d",
+    "highcharts-more",
+    "heatmap",
+    "highcharts-data",
+
     "pageFactory",
     'toolsApp',
     'toolsController',
@@ -121,7 +129,8 @@ require([
     "lineController",
     "geneDetailController",
     "loadingController",
-    "helpController"
+    "helpController",
+    "geneInfoController"
 ], function(jquery, angular, d3) {
     window.d3 = d3;
     angular.element(document).ready(function() {

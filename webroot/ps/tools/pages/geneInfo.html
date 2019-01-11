@@ -1,0 +1,102 @@
+<style>
+    .partTitle {
+        font-weight: bold;
+        padding: 20px 0;
+    }
+    #table1 tr td:first-child {
+        width: 25%;
+        border-right: 1px solid #bbb;
+    }
+    #table2 tr *:not(:last-child){
+        border-right: 1px solid #bbb;
+    }
+    #table2 tr th:first-child {
+        width: 22%;
+    }
+    #table2 tr th:nth-child(2) {
+        width: 22%;
+    }
+    #table3 tr td:first-child {
+        width: 25%;
+        border-right: 1px solid #bbb;
+    }
+    #table4 tr td:first-child {
+        width: 25%;
+        border-right: 1px solid #bbb;
+    }
+</style>
+<div out-to="app" ng-controller="geneInfoController" ng-init="InitPage()" style="height: 400px; overflow-y: scroll">
+    <div ng-show="isGeneInfoLoaded && !isNoData" class="table_scroll_wrap">
+        <div id="basicInformation">
+            <div class="partTitle">Basic Information</div>
+            <table id="table1" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                <tr><td>ChromID</td><td ng-bind="message.RapeExondbInfo[0].ChromID"></td></tr>
+                <tr><td>Gene Name</td><td ng-bind="message.RapeExondbInfo[0].Gene_Name"></td></tr>
+                <tr><td>Orientation</td><td ng-bind="message.RapeExondbInfo[0].Oreitation"></td></tr>
+                <tr><td>Locus Start</td><td ng-bind="message.RapeExondbInfo[0].LocusStart"></td></tr>
+                <tr><td>Locus End</td><td ng-bind="message.RapeExondbInfo[0].LocusEnd"></td></tr>
+                <tr><td>Exon number</td><td ng-bind="message.RapeExondbInfo[0].ExonNumber"></td></tr>
+                <tr><td>Cds Length</td><td ng-bind="message.RapeExondbInfo[0].CdsLength"></td></tr>
+                <tr><td>Protein Length</td><td ng-bind="message.RapeExondbInfo[0].ProteinLength"></td></tr>
+                <tr><td>Exon Region</td><td ng-bind="message.RapeExondbInfo[0].ExonRegion"></td></tr>
+                <tr><td>Exon Position</td><td ng-bind="message.RapeExondbInfo[0].ExonPosition"></td></tr>
+                <tr><td>Gene Group</td><td ng-bind="message.RapeExondbInfo[0].Gene_Group"></td></tr>
+            </table>
+        </div>
+        <hr>
+        <div id="geneStructure">
+            <div class="partTitle">Gene Structure</div>
+            <div id="geneStructureGraph" style="width: 100%;"></div>
+        </div>
+        <hr>
+        <div id="domainStructure">
+            <div class="partTitle">Domain Structure</div>
+            <div ng-hide="message.returnPfamdbDT.length==0">
+                <table id="table2" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                    <thead>
+                        <tr><th>Protein Domain</th><th>Desc</th><th>Start</th><th>End</th><th>E_value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in message.returnPfamdbDT">
+                            <td ng-bind="row.PfamID"></td>
+                            <td ng-bind="row.Anno"></td>
+                            <td ng-bind="row.Start"></td>
+                            <td ng-bind="row.End"></td>
+                            <td ng-bind="row.Evalue"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="domainStructureGraph" style="width: 100%"></div>
+            </div>
+            <div ng-show="message.returnPfamdbDT.length==0">抱歉，没有相关数据。</div>
+        </div>
+        <hr>
+        <div id="goAnnotation">
+            <div class="partTitle">Go Annotation</div>
+            <div ng-hide="message.returnGoannoDT.length==0">
+                <table id="table3" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                    <tr ng-repeat="row in message.returnGoannoDT">
+                        <td width="25%"><a ng-href="http://amigo.geneontology.org/amigo/medial_search?q={{row.GOanno}}" ng-bind="row.GOanno" target="_blank"></a></td>
+                        <td ng-bind="row.Anno"></td>
+                    </tr>
+                </table>    
+            </div>
+            <div ng-show="message.returnGoannoDT.length==0">抱歉，没有相关数据。</div>
+        </div>
+        <hr>
+        <div id="iprAnnotation">
+            <div class="partTitle">IPR Annotation</div>
+            <div ng-hide="message.returnIprannoDT.length==0">
+                <table id="table4" class="table table-bordered table-hover table-striped table_grid table-fixed">
+                    <tr ng-repeat="row in message.returnIprannoDT">
+                        <td width="25%"><a ng-href="http://www.ebi.ac.uk/interpro/entry/{{row.IPRanno}}" ng-bind="row.IPRanno" target="_blank"></a></td>
+                        <td ng-bind="row.Anno"></td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="message.returnIprannoDT.length==0">抱歉，没有相关数据。</div>
+        </div>
+    </div>
+    <div ng-hide="isGeneInfoLoaded">加载中...</div>
+    <div class="table-nodata" error-type="geneInfoError" style="border: none;"></div>
+</div>

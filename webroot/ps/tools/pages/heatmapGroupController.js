@@ -1,9 +1,9 @@
 define(["toolsApp"], function(toolsApp) {
     toolsApp.controller("heatmapGroupController", heatmapGroupController);
-    heatmapGroupController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+    heatmapGroupController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService","pageFactory"];
 
 
-    function heatmapGroupController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+    function heatmapGroupController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService,pageFactory) {
         toolService.pageLoading.open();
         $scope.InitPage = function() {
             //定时关闭等待框
@@ -709,6 +709,16 @@ define(["toolsApp"], function(toolsApp) {
                 // success
                 $window.open('../tools/index.html#/home/' + type + '/' + item.id);
             }
+        }
+
+        $scope.showGeneInfo = function(GeneID) {
+            var genomeVersion = toolService.sessionStorage.get('speciesWeb') +'_' + JSON.parse(toolService.sessionStorage.get('refInfo'))['genome_version'];
+            var geneInfo = {
+                genomeVersion: genomeVersion,
+                geneID: GeneID
+            };
+            pageFactory.set(geneInfo);
+            toolService.popWindow("pages/geneInfo.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
         }
     };
 });

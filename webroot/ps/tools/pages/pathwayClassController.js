@@ -1,8 +1,8 @@
 define(['toolsApp'], function(toolsApp) {
     toolsApp.controller('pathwayClassController', pathwayClassController);
-    pathwayClassController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+    pathwayClassController.$inject = ["$rootScope", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService","pageFactory"];
 
-    function pathwayClassController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+    function pathwayClassController($rootScope, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService,pageFactory) {
 
         toolService.pageLoading.open();
         $scope.InitPage = function() {
@@ -154,6 +154,16 @@ define(['toolsApp'], function(toolsApp) {
                 d3.select(this).select("title").remove();
             })
             return $scope.barchart;
+        }
+
+        $scope.showGeneInfo = function(GeneID) {
+            var genomeVersion = toolService.sessionStorage.get('speciesWeb') +'_' + JSON.parse(toolService.sessionStorage.get('refInfo'))['genome_version'];
+            var geneInfo = {
+                genomeVersion: genomeVersion,
+                geneID: GeneID
+            };
+            pageFactory.set(geneInfo);
+            toolService.popWindow("pages/geneInfo.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
         }
     }
 });

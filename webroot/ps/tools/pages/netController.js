@@ -11,7 +11,7 @@ define(['toolsApp'], function(toolsApp) {
             $scope.id = $state.params.id;
             $scope.title = '蛋白网络图 ( ID：' + $scope.id + " ) ";
             $scope.isShowSetPanel = false;
-
+            $scope.env = options.env;
             // 默认force
             $scope.forceValue = 30;
 

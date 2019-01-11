@@ -1,8 +1,8 @@
 define(['toolsApp'], function(toolsApp) {
     toolsApp.controller('mapIdController', mapIdController);
-    mapIdController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService"];
+    mapIdController.$inject = ["$rootScope", "$http", "$scope", "$log", "$state", "$timeout", "$window", "$compile", "ajaxService", "toolService", "svgService", "reportService","pageFactory"];
 
-    function mapIdController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService) {
+    function mapIdController($rootScope, $http, $scope, $log, $state, $timeout, $window, $compile, ajaxService, toolService, svgService, reportService,pageFactory) {
 
         $scope.InitPage = function() {
             toolService.pageLoading.open();
@@ -108,6 +108,16 @@ define(['toolsApp'], function(toolsApp) {
                 $scope.geneList = selectList;
             })
         })
+
+        $scope.showGeneInfo = function(GeneID) {
+            var genomeVersion = toolService.sessionStorage.get('speciesWeb') +'_' + JSON.parse(toolService.sessionStorage.get('refInfo'))['genome_version'];
+            var geneInfo = {
+                genomeVersion: genomeVersion,
+                geneID: GeneID
+            };
+            pageFactory.set(geneInfo);
+            toolService.popWindow("pages/geneInfo.html", "基因" + GeneID + "信息", 640, 100, "dialog-default", 50, true, null);
+        }
 
     }
 });

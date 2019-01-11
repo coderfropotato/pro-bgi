@@ -92,7 +92,8 @@
 
     <div ng-if="!myOptions.isMultiChoose && selectGeneId.length" style="margin-top: 30px;margin-left: 26px;word-wrap: break-word;word-break: break-word;">
         <span>下表为与</span>
-        <a href="../tools/index.html#/home/geneDetail/{{selectGeneId}}" target="_blank">{{selectGeneId}}</a>
+        <a ng-if="env==='bgi'" href="javascript:;" ng-click="showGeneInfo(selectGeneId)">{{selectGeneId}}</a>
+        <a ng-if="env==='gooal' || env === 'gooal-dna'" href="../tools/index.html#/home/geneDetail/{{selectGeneId}}" target="_blank">{{selectGeneId}}</a>
         <span>基因有直接互作关系的基因：</span>
     </div>
 

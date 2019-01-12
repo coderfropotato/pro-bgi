@@ -1,17 +1,17 @@
 ﻿define([], function() {
     // 测试
-    var base_url = "http://172.168.1.210:5000/api/1"; //远程
-    var java_url = "http://172.168.1.210:8021/reportweb";
-    var staticImg_url = "http://172.168.1.210:5000/"; //静态图片
-    var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
-    var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
-    
-    // 线上
-    // var base_url = "http://ureport.gooalgene.com/api/1"; //远程
-    // var java_url = "http://ureport.gooalgene.com/reportweb";
-    // var staticImg_url = "http://ureport.gooalgene.com/"; //静态图片
+    // var base_url = "http://172.168.1.210:5000/api/1"; //远程
+    // var java_url = "http://172.168.1.210:8021/reportweb";
+    // var staticImg_url = "http://172.168.1.210:5000/"; //静态图片
     // var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
     // var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
+    
+    // 线上
+    var base_url = "http://ureport.gooalgene.com/api/1"; //远程
+    var java_url = "http://ureport.gooalgene.com/reportweb";
+    var staticImg_url = "http://ureport.gooalgene.com/"; //静态图片
+    var manager_base_url = "http://172.168.1.115:5007/api/1" //管理员
+    var geneInfo_url = "http://47.96.185.131:82/api"; // 新环境
 
     var SUPER_CONSOLE_MESSAGE = {
         testTitle: "生物云计算平台",

@@ -26,8 +26,8 @@ gulp.task('env', function() {
     } else {
         return gulp.src(config.src)
             .pipe(gulpif(env === 'develop', replace(/var base_url.*;/g, 'var base_url = "http://120.26.51.59:5006/api/1";'))) // 开发环境
-            .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://172.168.1.210:5000/api/1";'))) // 测试环境
-            // .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://ureport.gooalgene.com/api/1";'))) // 线上环境
+            // .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://172.168.1.210:5000/api/1";'))) // 测试环境
+            .pipe(gulpif(env === 'production', replace(/var base_url.*;/g, 'var base_url = "http://ureport.gooalgene.com/api/1";'))) // 线上环境
             .pipe(gulpif(env === 'inner', replace(/var base_url.*;/g, 'var base_url = "http://120.26.51.59:5006/api/1";'))) // 内部环境
             .pipe(gulp.dest(argv.build + config.dest));
     }

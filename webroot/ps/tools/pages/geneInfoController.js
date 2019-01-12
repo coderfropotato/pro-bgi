@@ -17,7 +17,7 @@ define(["toolsApp"], function (toolsApp)
                 }
             );
             promise.then(function(responseData) {
-                if (responseData.Result === 'Error') {
+                if (responseData.Error) {
                     $scope.isGeneInfoLoaded = true;
                     $scope.isNoData = true;
                     $scope.geneInfoError = 'syserror';
@@ -60,6 +60,8 @@ define(["toolsApp"], function (toolsApp)
                         drawDomainStructureGraph(series2);
                     }
                 }
+                $scope.geneInfoError = false;
+                $scope.isNoData = false;
                 $scope.isGeneInfoLoaded = true;
             });
         }

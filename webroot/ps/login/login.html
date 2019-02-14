@@ -20,6 +20,14 @@
     <script src="../../res/scripts/lib/requirejs/2.1.20/require.min.js" defer data-main="loginMain.js"></script>
     <script ng-if="env==='bgi'" src="../../res/scripts/super/baiDuTongJi.js"></script>
     <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?56ff35f8be0e46fbd076bcb9a086eff1";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+
         document.addEventListener('DOMMouseScroll', function(event) {
             if (event.ctrlKey === true || event.metaKey) {
                 event.preventDefault();
@@ -41,8 +49,6 @@
             }
         }, false);
     </script>
-
-
 </head>
 
 <body ng-cloak>

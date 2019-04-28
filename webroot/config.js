@@ -1,5 +1,5 @@
 ﻿define([], function() {
-    // 测试
+    // 测试 
     // var base_url = "http://172.168.1.210:5000/api/1"; //远程
     // var java_url = "http://172.168.1.210:8021/reportweb";
     // var staticImg_url = "http://172.168.1.210:5000/"; //静态图片

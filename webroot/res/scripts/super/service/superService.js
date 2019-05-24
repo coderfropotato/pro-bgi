@@ -566,7 +566,7 @@ define("superApp.superService", ["super.superMessage", "ngDialog", "ngCookies"],
                         //     $scope.isError = true;
                         // }
                         $scope.confirm = function() {
-                            var val = $("#TextInput").val().replace(/\s/g, "");
+                            var val = $("#TextInput").val(); //.replace(/\s/g, "")
                             if (val.length > 25) {
                                 $scope.isError = true;
                             } else {

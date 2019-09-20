@@ -5100,6 +5100,6 @@ span.gray-it{
     color: rgba(102, 101, 101, 0.548);
 }
 #d4-chart-tooltip-wrap{
-    z-index: 999999999999;
+    z-index: 999999999999!important;
 }
 

@@ -54,11 +54,12 @@
 <body ng-cloak>
     <div class="main">
         <ul class="main_ul">
-            <li class="content content1">
+            <li class="content" ng-class="{'content1':env==='bgi','content2':env!=='bgi'}">
                 <div class="bgi_top">
                     <ul class="logo_ul logo_gooal">
                         <li>
-                            <img style="height:100%;" src="./res/images/index_logo_gooal.png" />
+                            <!-- <img style="height:100%;" src="./res/images/index_logo_gooal.png" /> -->
+                            <img style="height:100%;" src="./res/images/index_logo_gooal2.png" />
                         </li>
                     </ul>
                     <ul class="logo_ul logo_bgi">
@@ -75,13 +76,13 @@
                     <ul class="setUp">
                         <li ng-if="env==='bgi'">帮助</li>
                         <li ng-if="env==='bgi'" class="nav-concat">联系我们</li>
-                        <li ng-style="{'float':'{{env!='bgi'?'right':'left'}}'}">
+                        <li ng-if="env==='bgi'">
                             <button class="loginBtn">登录</button>
                         </li>
                     </ul>
                     <div style="clear:both"></div>
                 </div>
-                <div class="bgi_conter">
+                <div class="bgi_conter" ng-show="env==='bgi'">
                     <ul class="bgi_conter_ul">
                         <li class="bgi_conter_li">
                             <div class="bgi_conter1_flex">
@@ -94,6 +95,19 @@
                         </li>
                         <li class="bgi_conter_li">
                             <img src="./res/images/macbook.png" class="macbook" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="bgi_conter" ng-show="env!=='bgi'">
+                    <ul class="bgi_conter_ul">
+                        <li class="bgi_conter_li" style="text-align: center;float: right;justify-content: flex-end;">
+                            <div class="bgi_conter1_flex">
+                                <p class="bgi_conter1_p1" style="color: #386CCA;">U-report交互式报告系统</p>
+                                <p class="bgi_conter1_p2">生物大数据分析平台</p>
+                                <div class="bgi_conter1_p3">
+                                    <button class="gooal_conter1_btn loginBtn">登录</button>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>

@@ -119,6 +119,13 @@ li {
     background-size: contain;
 }
 
+.content2 {
+    background: url(images/gooal_bg1.png) no-repeat;
+    /* padding-top:56.48%; */
+    background-size: cover;
+    background-position:center;
+}
+
 .bgi_conter {
     width: 1680px;
     height: 504px;
@@ -150,6 +157,19 @@ li {
     border: none;
     font-size: 18px;
     box-shadow: 0px 2px 10px #7D9AFF;
+    outline: none;
+    cursor: pointer;
+}
+
+.bgi_conter1_p3 .gooal_conter1_btn {
+    width:210px;
+    height:60px;
+    background:linear-gradient(89deg,rgba(2,109,255,1),rgba(0,183,239,1));
+    box-shadow:0px 6px 3px 1px rgba(2,125,252,0.15);
+    border-radius:30px;
+    color: #fff;
+    border: none;
+    font-size: 20px;
     outline: none;
     cursor: pointer;
 }
